@@ -6,8 +6,8 @@ Because including the respective libraries for Android and iOS means working wit
 
 You can also find a sample application demonstrating how everything is put together and how the API gets called in JavaScript, with instructions in the Tealium Learning Community.
 
-
-## For full documentation, please see the Tealium Learning Community:
+## Documentation
+For full documentation, please see the Tealium Learning Community:
 
 [Tealium React Native Documentation on TLC](https://community.tealiumiq.com/t5/React-Native/tkb-p/react-native)
 
