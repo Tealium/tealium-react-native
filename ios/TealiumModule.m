@@ -1,11 +1,3 @@
-//
-//  TealiumRNModule.m
-//  DoOver
-//
-//  Created by Christopher Anderberg on 1/8/18.
-//  Copyright © 2018 650 Industries, Inc. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import "TealiumModule.h"
 #import <React/RCTConvert.h>
