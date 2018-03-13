@@ -17,7 +17,6 @@ let allTests = [
           "testkey": "testval",
           "anotherkey": "anotherval"
         });
-        //Alert.alert("Event Sent");
       } catch(err) {
         Alert.alert(`Issue tracking event: ${err}`);
       }
@@ -126,7 +125,6 @@ export default class App extends React.Component {
 
     // For each item in the "allTests" array, copy into this component's state initializing count to 0
     this.state = {tests: allTests.map(test => ({title: test.title, run: test.run, count: 0}))};
-    //Tealium.initialize();
 
     Tealium.initialize(
       'your-account', 'your-profile', 'your-environment',

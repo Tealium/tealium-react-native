@@ -143,6 +143,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void setPersistentData(ReadableMap data) {
         final Tealium instance = Tealium.getInstance(mTealiumInstanceName);
+
         if (instance == null) {
             Log.e(BuildConfig.TAG, "SetPersistentData attempted, but Tealium not enabled for instance name: " + mTealiumInstanceName);
             return;
@@ -217,6 +218,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void getVolatileData(String key, Callback callback) {
         final Tealium instance = Tealium.getInstance(mTealiumInstanceName);
+
         if (instance == null) {
             Log.e(BuildConfig.TAG, "Attempt to get volatile data, but Tealium not enabled for instance name: " + mTealiumInstanceName);
             return;
@@ -228,6 +230,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void getPersistentData(String key, Callback callback) {
         final Tealium instance = Tealium.getInstance(mTealiumInstanceName);
+        
         if (instance == null) {
             Log.e(BuildConfig.TAG, "Attempt to get persistent data, but Tealium not enabled for instance name: " + mTealiumInstanceName);
             return;
