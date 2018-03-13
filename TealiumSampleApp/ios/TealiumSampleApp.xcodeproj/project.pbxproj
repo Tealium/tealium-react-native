@@ -35,14 +35,14 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* TealiumSampleAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* TealiumSampleAppTests.m */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
+		83014504205878040065B46B /* TealiumIOSLifecycle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83014503205878040065B46B /* TealiumIOSLifecycle.framework */; };
+		83014505205878150065B46B /* TealiumIOSLifecycle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83014503205878040065B46B /* TealiumIOSLifecycle.framework */; };
+		83014506205878150065B46B /* TealiumIOSLifecycle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 83014503205878040065B46B /* TealiumIOSLifecycle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		835A5812204DE5DF00A22419 /* TealiumIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835A57DC204DE5DF00A22419 /* TealiumIOS.framework */; };
 		835A5815204DE7AE00A22419 /* TealiumIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835A57DC204DE5DF00A22419 /* TealiumIOS.framework */; };
 		835A5816204DE7AE00A22419 /* TealiumIOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 835A57DC204DE5DF00A22419 /* TealiumIOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		835A581C204DF56900A22419 /* TealiumModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 835A581B204DF56900A22419 /* TealiumModule.m */; };
-		835A581E204E08F700A22419 /* TealiumIOSLifecycle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835A581D204E08F600A22419 /* TealiumIOSLifecycle.framework */; };
-		835A581F204E090600A22419 /* TealiumIOSLifecycle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835A581D204E08F600A22419 /* TealiumIOSLifecycle.framework */; };
-		835A5820204E090600A22419 /* TealiumIOSLifecycle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 835A581D204E08F600A22419 /* TealiumIOSLifecycle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 /* End PBXBuildFile section */
 
@@ -330,7 +330,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				835A5816204DE7AE00A22419 /* TealiumIOS.framework in Embed Frameworks */,
-				835A5820204E090600A22419 /* TealiumIOSLifecycle.framework in Embed Frameworks */,
+				83014506205878150065B46B /* TealiumIOSLifecycle.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -362,11 +362,11 @@
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		83014503205878040065B46B /* TealiumIOSLifecycle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TealiumIOSLifecycle.framework; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		835A57DC204DE5DF00A22419 /* TealiumIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TealiumIOS.framework; sourceTree = "<group>"; };
 		835A581A204DF56900A22419 /* TealiumModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TealiumModule.h; sourceTree = "<group>"; };
 		835A581B204DF56900A22419 /* TealiumModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TealiumModule.m; sourceTree = "<group>"; };
-		835A581D204E08F600A22419 /* TealiumIOSLifecycle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TealiumIOSLifecycle.framework; path = ../../reactnative/ios/TealiumIOSLifecycle.framework; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -386,10 +386,10 @@
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
-				835A581F204E090600A22419 /* TealiumIOSLifecycle.framework in Frameworks */,
+				83014505205878150065B46B /* TealiumIOSLifecycle.framework in Frameworks */,
+				83014504205878040065B46B /* TealiumIOSLifecycle.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
-				835A581E204E08F700A22419 /* TealiumIOSLifecycle.framework in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
@@ -575,7 +575,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				835A581D204E08F600A22419 /* TealiumIOSLifecycle.framework */,
+				83014503205878040065B46B /* TealiumIOSLifecycle.framework */,
 				835A57DC204DE5DF00A22419 /* TealiumIOS.framework */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
