@@ -9,7 +9,7 @@ You can also find a sample application demonstrating how everything is put toget
 ## Documentation
 For full documentation, please see the Tealium Learning Community:
 
-[Tealium React Native Documentation on TLC](https://community.tealiumiq.com/t5/React-Native/tkb-p/react-native)
+[Tealium React Native Documentation on TLC](https://community.tealiumiq.com/t5/Mobile-Libraries/Tealium-for-React-Native/ta-p/22449)
 
 ## License
 
