@@ -92,9 +92,9 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         }
 
         if (data != null) {
-            instance.trackView(eventName, data.toHashMap());
+            instance.trackEvent(eventName, data.toHashMap());
         } else {
-            instance.trackView(eventName, null);
+            instance.trackEvent(eventName, null);
         }
     }
 
