@@ -1,0 +1,5 @@
+node_modules
+android/build/intermediates
+android/build/outputs/logs
+android/local.properties
+ios/**/xcuserdata
