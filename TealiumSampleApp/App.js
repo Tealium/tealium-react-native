@@ -80,10 +80,12 @@ let allTests = [
     title: "Remove Persistent Data",
     run: () => {
       try {
-        Tealium.removePersistentData([
-          "persistent_var",
-          "persistent_var2"
-        ]);
+        // Tealium.removePersistentData([
+        //   "persistent_var",
+        //   "persistent_var2"
+        // ]);
+        // Tealium.getVisitorID();
+        // Tealium.foobar("2foobar");
       } catch(err) {
         Alert.alert(`Issue removing persistent data: ${err}`);
       }
