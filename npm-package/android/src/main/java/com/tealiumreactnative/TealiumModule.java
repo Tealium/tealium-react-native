@@ -54,11 +54,6 @@ public class TealiumModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void show(String message) {
-        Toast.makeText(getReactApplicationContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    @ReactMethod
     public void initialize(String account,
                            String profile,
                            String environment,
