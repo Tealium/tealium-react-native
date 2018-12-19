@@ -4,12 +4,42 @@ const { TealiumModule } = NativeModules;
 
 export default class Tealium {
     static initialize(
-        account, profile, environment, iosDatasource,
-        androidDatasource, instanceName = 'MAIN', isLifecycleEnabled = true,
+        account, 
+        profile, 
+        environment, 
+        iosDatasource,
+        androidDatasource, 
+        instanceName = 'MAIN', 
+        isLifecycleEnabled = true,
     ) {
         TealiumModule.initialize(
-            account, profile, environment, iosDatasource, androidDatasource,
-            instanceName, isLifecycleEnabled,
+            account, 
+            profile, 
+            environment, 
+            iosDatasource, 
+            androidDatasource,
+            instanceName, 
+            isLifecycleEnabled,
+        );
+    }
+
+    static initializeWithConsentManager(
+        account, 
+        profile, 
+        environment, 
+        iosDatasource,
+        androidDatasource, 
+        instanceName = 'MAIN', 
+        isLifecycleEnabled = true,
+    ) {
+        TealiumModule.initializeWithConsentManager(
+            account, 
+            profile, 
+            environment, 
+            iosDatasource, 
+            androidDatasource,
+            instanceName, 
+            isLifecycleEnabled,
         );
     }
 
@@ -162,7 +192,15 @@ export default class Tealium {
         TealiumModule.setConsentLoggingEnabled(enabled);
     }
 
+    static setConsentLoggingEnabledForInstanceName(name, enabled) {
+        TealiumModule.setConsentLoggingEnabledForInstance(name, enabled);
+    }
+
     static isConsentLoggingEnabled(enabled) {
         TealiumModule.isConsentLoggingEnabled(enabled);
+    }
+
+    static isConsentLoggingEnabledForInstanceName(name, enabled) {
+        TealiumModule.isConsentLoggingEnabledForInstance(name, enabled);
     }
 }

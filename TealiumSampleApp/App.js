@@ -19,7 +19,7 @@ let allTests = [
         });
         Tealium.trackEventForInstanceName("instance-2", "test_event_2");
         Tealium.getUserConsentStatusForInstanceName("instance-2", function(userConsentStatus) {
-            console.log("consent status: " + userConsentStatus);
+            console.log("consent status 'instance-2': " + userConsentStatus);
         });
       } catch(err) {
         Alert.alert(`Issue tracking event: ${err}`);
@@ -127,21 +127,36 @@ let allTests = [
     title: "Consented",
     run: () => {
       try {
-        Tealium.setUserConsentStatusForInstanceName("instance-2", 1);
-        Tealium.getUserConsentStatusForInstanceName("instance-2", function (userConsentStatus) {
-          console.log("consent status: " + userConsentStatus);
+        // Main
+        Tealium.setUserConsentStatus(1);
+        Tealium.getUserConsentStatus(function (userConsentStatus) {
+          console.log("consent status 'main': " + userConsentStatus);
         });
-        Tealium.getUserConsentCategories( (consentCategories) => {
-          console.log("categories: " + consentCategories);
+        Tealium.getUserConsentCategories(function (consentCategories) {
+          console.log("categories 'main': " + consentCategories);
         });
-
         Tealium.isConsentLoggingEnabled(function (enabled) {
-          console.log("consent logging enabled: " + enabled);
+          console.log("consent logging enabled 'main': " + enabled);
         });
-
         Tealium.setConsentLoggingEnabled(true);
         Tealium.isConsentLoggingEnabled(function (enabled) {
-          console.log("consent logging enabled: " + enabled);
+          console.log("consent logging enabled 'main': " + enabled);
+        });
+
+        // Instance-2
+        Tealium.setUserConsentStatusForInstanceName("instance-2", 1);
+        Tealium.getUserConsentStatusForInstanceName("instance-2", function (userConsentStatus) {
+          console.log("consent status 'instance-2': " + userConsentStatus);
+        });
+        Tealium.getUserConsentCategoriesForInstanceName("instance-2", function (consentCategories) {
+          console.log("consent categories 'instance-2': " + consentCategories);
+        });
+        Tealium.isConsentLoggingEnabledForInstanceName("instance-2", function (enabled) {
+          console.log("consent logging enabled 'instance-2': " + enabled);
+        });
+        Tealium.setConsentLoggingEnabledForInstanceName("instance-2", true);
+        Tealium.isConsentLoggingEnabledForInstanceName("instance-2", function (enabled) {
+          console.log("consent logging enabled 'instance-2': " + enabled);
         });
       } catch(err) {
         Alert.alert(`Issue setting user consent status: ${err}`);
@@ -152,12 +167,19 @@ let allTests = [
     title: "Not Consented",
     run: () => {
       try {
-        Tealium.setUserConsentStatusForInstanceName("instance-2", 2);
+        // Main
+        Tealium.setUserConsentStatus(2);
         Tealium.getUserConsentStatus(function (userConsentStatus) {
-          console.log("consent status: " + userConsentStatus);
+          console.log("consent status 'main': " + userConsentStatus);
         });
-        Tealium.getUserConsentCategories( function(consentCategories) {
-          console.log("categories: " + consentCategories);
+        Tealium.getUserConsentCategories(function (consentCategories) {
+          console.log("categories 'main': " + consentCategories);
+        });
+
+        // Instance-2
+        Tealium.setUserConsentStatusForInstanceName("instance-2", 2);
+        Tealium.getUserConsentStatusForInstanceName("instance-2", function (userConsentStatus) {
+          console.log("consent status 'instance-2': " + userConsentStatus);
         });
       } catch(err) {
         Alert.alert(`Issue rsetting user consent status: ${err}`);
@@ -168,9 +190,15 @@ let allTests = [
     title: "Partial Consent",
     run: () => {
       try {
+        // Main
+        Tealium.setUserConsentCategories(["email", "personalization"]);
+        Tealium.getUserConsentCategories(function (consentCategories) {
+          console.log("categories 'main': " + consentCategories);
+        });
+        // Instance-2
         Tealium.setUserConsentCategoriesForInstanceName("instance-2", ["analytics", "big_data"]);
-        Tealium.getUserConsentCategoriesForInstanceName("instance-2", function(consentCategories) {
-          console.log("categories: " + consentCategories);
+        Tealium.getUserConsentCategoriesForInstanceName("instance-2", function (consentCategories) {
+          console.log("categories 'instance-2': " + consentCategories);
         });
       } catch(err) {
         Alert.alert(`Issue rsetting user consent status: ${err}`);
@@ -181,10 +209,22 @@ let allTests = [
     title: "Reset Consent",
     run: () => {
       try {
+        // Main
         Tealium.resetUserConsentPreferences();
+        Tealium.getUserConsentStatus(function (userConsentStatus) {
+          console.log("consent status 'main': " + userConsentStatus);
+        });
+        Tealium.getUserConsentCategories(function (consentCategories) {
+          console.log("categories 'main': " + consentCategories);
+        });
+
+        // Instance-2
         Tealium.resetUserConsentPreferencesForInstanceName("instance-2");
-        Tealium.getUserConsentCategories( function(consentCategories) {
-          console.log("categories: " + consentCategories);
+        Tealium.getUserConsentStatusForInstanceName("instance-2", function (userConsentStatus) {
+          console.log("consent status 'instance-2': " + userConsentStatus);
+        });
+        Tealium.getUserConsentCategoriesForInstanceName("instance-2", function (consentCategories) {
+          console.log("consent categories 'instance-2': " + consentCategories);
         });
       } catch(err) {
         Alert.alert(`Issue rsetting user consent status: ${err}`);
@@ -228,7 +268,13 @@ export default class App extends React.Component {
     // For each item in the "allTests" array, copy into this component's state initializing count to 0
     this.state = {tests: allTests.map(test => ({title: test.title, run: test.run, count: 0}))};
 
-    Tealium.initialize(
+    // Basic Tealium instance
+    // Tealium.initialize(
+    //   'tealiummobile', 'react-native', 'qa',
+    //   'your-ios-datasource', 'your-android-datasource'
+    // );
+
+    Tealium.initializeWithConsentManager(
       'tealiummobile', 'react-native', 'qa',
       'your-ios-datasource', 'your-android-datasource'
     );

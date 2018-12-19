@@ -2,7 +2,6 @@ package com.tealiumreactnative;
 
 import android.content.SharedPreferences;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -22,6 +21,7 @@ import com.tealium.lifecycle.LifeCycle;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -54,11 +54,6 @@ public class TealiumModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void show(String message) {
-        Toast.makeText(getReactApplicationContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    @ReactMethod
     public void initialize(String account,
                            String profile,
                            String environment,
@@ -88,17 +83,47 @@ public class TealiumModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void initializeCustom(String account,
+    public void initializeWithConsentManager(String account,
                            String profile,
                            String environment,
                            String iosDatasource,
                            String androidDatasource,
                            String instance,
-                           boolean isLifecycleEnabled,
-                           String overridePublishSettingsUrl,
-                           String overrideTagManagementUrl,
-                           boolean enableCollectUrl,
-                           boolean enableConsentManager) {
+                           boolean isLifecycleEnabled) {
+
+        if (account == null || profile == null || environment == null) {
+            throw new IllegalArgumentException("Account, profile, and environment parameters must be provided and non-null");
+        }
+
+        final Tealium.Config config = Tealium.Config.create(mReactApplicationContext.getCurrentActivity().getApplication(), account, profile, environment);
+        if (androidDatasource != null) {
+            config.setDatasourceId(androidDatasource);
+        }
+        config.enableConsentManager(mTealiumInstanceName);
+
+        mTealiumInstanceName = instance;
+        if (isLifecycleEnabled) {
+            final boolean isAutoTracking = false;
+            LifeCycle.setupInstance(mTealiumInstanceName, config, isAutoTracking);
+            mIsLifecycleAutotracking = isLifecycleEnabled;
+            mReactApplicationContext.addLifecycleEventListener(createLifecycleEventListener(mTealiumInstanceName));
+        }
+
+        Tealium.createInstance(instance, config);
+    }
+
+    @ReactMethod
+    public void initializeCustom(String account,
+                                 String profile,
+                                 String environment,
+                                 String iosDatasource,
+                                 String androidDatasource,
+                                 String instance,
+                                 boolean isLifecycleEnabled,
+                                 String overridePublishSettingsUrl,
+                                 String overrideTagManagementUrl,
+                                 boolean enableCollectUrl,
+                                 boolean enableConsentManager) {
 
         if (account == null || profile == null || environment == null) {
             throw new IllegalArgumentException("Account, profile, and environment parameters must be provided and non-null");
@@ -372,53 +397,81 @@ public class TealiumModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public String getVisitorID() {
-        return getVisitorIDForInstance(mTealiumInstanceName);
+    public void getVisitorID(Callback callback) {
+        getVisitorIDForInstance(mTealiumInstanceName, callback);
     }
 
     @ReactMethod
-    public String getVisitorIDForInstance(String instanceName) {
-        return Tealium.getInstance(instanceName).getDataSources().getVisitorId();
+    public void getVisitorIDForInstance(String instanceName, Callback callback) {
+        callback.invoke(Tealium.getInstance(instanceName).getDataSources().getVisitorId());
     }
 
     @ReactMethod
-    public String getUserConsentStatus() {
-        return getUserConsentStatusForInstance(mTealiumInstanceName);
+    public void getUserConsentStatus(Callback callback) {
+        getUserConsentStatusForInstance(mTealiumInstanceName, callback);
     }
 
     @ReactMethod
-    public String getUserConsentStatusForInstance(String instanceName) {
-        return Tealium.getInstance(instanceName).getConsentManager().getUserConsentStatus();
+    public void getUserConsentStatusForInstance(String instanceName, Callback callback) {
+        Tealium tealium = Tealium.getInstance(instanceName);
+        if (tealium.getConsentManager() != null) {
+            tealium.getConsentManager().getUserConsentStatus();
+        }
     }
 
     @ReactMethod
-    public void setUserConsentStatus(String userConsentStatus) {
+    public void setUserConsentStatus(int userConsentStatus) {
         setUserConsentStatusForInstance(mTealiumInstanceName, userConsentStatus);
     }
 
     @ReactMethod
-    public void setUserConsentStatusForInstance(String instanceName, String userConsentStatus) {
-        Tealium.getInstance(instanceName).getConsentManager().setUserConsentStatus(userConsentStatus);
+    public void setUserConsentStatusForInstance(String instanceName, int userConsentStatus) {
+        String consentStatus = mapUserConsentStatus(userConsentStatus);
+        Tealium tealium = Tealium.getInstance(instanceName);
+        if (tealium.getConsentManager() != null) {
+            tealium.getConsentManager().setUserConsentStatus(consentStatus);
+        }
     }
 
     @ReactMethod
-    public void getUserConsentCategories() {
-        getUserConsentCategoriesForInstance(mTealiumInstanceName);
+    public void getUserConsentCategories(Callback callback) {
+        getUserConsentCategoriesForInstance(mTealiumInstanceName, callback);
     }
 
     @ReactMethod
-    public void getUserConsentCategoriesForInstance(String instanceName) {
-        Tealium.getInstance(instanceName).getConsentManager().getUserConsentCategories();
+    public void getUserConsentCategoriesForInstance(String instanceName, Callback callback) {
+        Tealium tealium = Tealium.getInstance(instanceName);
+        if (tealium.getConsentManager() != null) {
+            callback.invoke(tealium.getConsentManager().getUserConsentCategories());
+        }
     }
 
     @ReactMethod
-    public void setUserConsentCategories(String[] categories) {
+    public void setUserConsentCategories(ReadableArray categories) {
         setUserConsentCategoriesForInstance(mTealiumInstanceName, categories);
     }
 
     @ReactMethod
-    public void setUserConsentCategoriesForInstance(String instanceName, String[] categories) {
-        Tealium.getInstance(instanceName).getConsentManager().setUserConsentCategories(categories);
+    public void setUserConsentCategoriesForInstance(String instanceName, ReadableArray categories) {
+        Tealium tealium = Tealium.getInstance(instanceName);
+        if (tealium.getConsentManager() != null) {
+            String[] userConsentCategories = new String[categories.toArrayList().size()];
+            for (int i = 0; i < categories.size(); i++) {
+                ReadableType type = categories.getType(i);
+                switch (type) {
+                    case String:
+                        userConsentCategories[i] = categories.getString(i);
+                        break;
+                    default:
+                        Log.e(BuildConfig.TAG, "Invalid key type. Use array of strings");
+                        break;
+                }
+            }
+            for (String s : userConsentCategories) {
+                Log.i("zz", s);
+            }
+            tealium.getConsentManager().setUserConsentCategories(userConsentCategories);
+        }
     }
 
     @ReactMethod
@@ -428,7 +481,10 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void resetUserConsentPreferencesForInstance(String instanceName) {
-        Tealium.getInstance(instanceName).getConsentManager().resetUserConsentPreferences();
+        Tealium tealium = Tealium.getInstance(instanceName);
+        if (tealium.getConsentManager() != null) {
+            tealium.getConsentManager().getUserConsentCategories();
+        }
     }
 
     @ReactMethod
@@ -438,17 +494,23 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setConsentLoggingEnabledForInstance(String instanceName, boolean isLogging) {
-        Tealium.getInstance(instanceName).getConsentManager().setConsentLoggingEnabled(isLogging);
+        Tealium tealium = Tealium.getInstance(instanceName);
+        if (tealium.getConsentManager() != null) {
+            tealium.getConsentManager().setConsentLoggingEnabled(isLogging);
+        }
     }
 
     @ReactMethod
-    public void isConsentLoggingEnabled() {
-        Tealium.getInstance(mTealiumInstanceName).getConsentManager().isConsentLogging();
+    public void isConsentLoggingEnabled(Callback callback) {
+        isConsentLoggingEnabledForInstance(mTealiumInstanceName, callback);
     }
 
     @ReactMethod
-    public void isConsentLoggingEnabledForInstance(String instanceName) {
-        Tealium.getInstance(instanceName).getConsentManager().isConsentLogging();
+    public void isConsentLoggingEnabledForInstance(String instanceName, Callback callback) {
+        Tealium tealium = Tealium.getInstance(instanceName);
+        if (tealium.getConsentManager() != null) {
+            callback.invoke(tealium.getConsentManager().isConsentLogging());
+        }
     }
 
 
@@ -474,6 +536,19 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         }
 
         return array;
+    }
+
+    private String mapUserConsentStatus(int userConsentStatus) {
+        switch (userConsentStatus) {
+            case 0:
+                return ConsentManager.ConsentStatus.UNKNOWN;
+            case 1:
+                return ConsentManager.ConsentStatus.CONSENTED;
+            case 2:
+                return ConsentManager.ConsentStatus.NOT_CONSENTED;
+            default:
+                return ConsentManager.ConsentStatus.UNKNOWN;
+        }
     }
 
 }

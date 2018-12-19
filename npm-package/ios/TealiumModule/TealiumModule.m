@@ -47,6 +47,26 @@ RCT_EXPORT_METHOD(initialize:(NSString *)account
     [Tealium newInstanceForKey:tealiumInternalInstanceName configuration:configuration];
 }
 
+RCT_EXPORT_METHOD(initializeWithConsentManager:(NSString *)account
+                  profile:(NSString *)profile
+                  environment:(NSString *)environment
+                  iosDatasource:(NSString *)iosDatasource
+                  androidDatasource:(NSString *)androidDatasource
+                  instance:(NSString *)instance
+                  isLifeCycleEnabled:(BOOL)isLifeCycleEnabled) {
+    // Set your account, profile, and environment
+    TEALConfiguration *configuration = [TEALConfiguration configurationWithAccount:account
+                                                                           profile:profile
+                                                                       environment:environment
+                                                                        datasource:iosDatasource];
+    [configuration setAutotrackingLifecycleEnabled:isLifeCycleEnabled];
+    configuration.enableConsentManager = YES;
+    tealiumInternalInstanceName = instance;
+    
+    // Initialize with a unique key for this instance
+    [Tealium newInstanceForKey:tealiumInternalInstanceName configuration:configuration];
+}
+
 RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
                   profile:(NSString *)profile
                   environment:(NSString *)environment

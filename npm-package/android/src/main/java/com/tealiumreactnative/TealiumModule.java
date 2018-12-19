@@ -3,7 +3,6 @@ package com.tealiumreactnative;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.LifecycleEventListener;
@@ -14,14 +13,14 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.ReadableType;
-import com.tealium.library.*;
 import com.tealium.library.BuildConfig;
+import com.tealium.library.ConsentManager;
+import com.tealium.library.Tealium;
 import com.tealium.lifecycle.LifeCycle;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -70,6 +69,36 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         if (androidDatasource != null) {
             config.setDatasourceId(androidDatasource);
         }
+
+        mTealiumInstanceName = instance;
+        if (isLifecycleEnabled) {
+            final boolean isAutoTracking = false;
+            LifeCycle.setupInstance(mTealiumInstanceName, config, isAutoTracking);
+            mIsLifecycleAutotracking = isLifecycleEnabled;
+            mReactApplicationContext.addLifecycleEventListener(createLifecycleEventListener(mTealiumInstanceName));
+        }
+
+        Tealium.createInstance(instance, config);
+    }
+
+    @ReactMethod
+    public void initializeWithConsentManager(String account,
+                           String profile,
+                           String environment,
+                           String iosDatasource,
+                           String androidDatasource,
+                           String instance,
+                           boolean isLifecycleEnabled) {
+
+        if (account == null || profile == null || environment == null) {
+            throw new IllegalArgumentException("Account, profile, and environment parameters must be provided and non-null");
+        }
+
+        final Tealium.Config config = Tealium.Config.create(mReactApplicationContext.getCurrentActivity().getApplication(), account, profile, environment);
+        if (androidDatasource != null) {
+            config.setDatasourceId(androidDatasource);
+        }
+        config.enableConsentManager(mTealiumInstanceName);
 
         mTealiumInstanceName = instance;
         if (isLifecycleEnabled) {
