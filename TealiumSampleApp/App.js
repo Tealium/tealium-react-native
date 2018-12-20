@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Tealium from './TealiumModule';
+import Tealium from 'tealium-react-native';
 import { Alert, AppRegistry, Button, StyleSheet, View, Text, ScrollView } from 'react-native';
 
 /*
@@ -17,6 +17,10 @@ let allTests = [
           "testkey": "testval",
           "anotherkey": "anotherval"
         });
+        Tealium.trackEventForInstanceName("instance-2", "test_event_2");
+        Tealium.getUserConsentStatusForInstanceName("instance-2", function(userConsentStatus) {
+            console.log("consent status 'instance-2': " + userConsentStatus);
+        });
       } catch(err) {
         Alert.alert(`Issue tracking event: ${err}`);
       }
@@ -32,6 +36,7 @@ let allTests = [
           "testkey": "testval",
           "anotherkey": "anotherval"
         });
+        Tealium.trackViewForInstanceName("instance-2", "test_view_2");
       } catch(err) {
         Alert.alert(`Issue tracking view: ${err}`);
       }
@@ -45,6 +50,7 @@ let allTests = [
           "volatile_var": "volatile_val",
           "volatile_var2": "volatile_val2"
         });
+        Tealium.setVolatileDataForInstanceName("instance-2", {"foo" : "bar"});
       } catch(err) {
         Alert.alert(`Issue setting volatile data: ${err}`);
       }
@@ -58,6 +64,7 @@ let allTests = [
           "persistent_var": "persistent_val",
           "persistent_var2": "persistent_val2"
         });
+        Tealium.setPersistentDataForInstanceName("instance-2", {"persistent_key2" : "persistent_val2"});
       } catch(err) {
         Alert.alert(`Issue setting persistent data: ${err}`);
       }
@@ -71,6 +78,7 @@ let allTests = [
           "volatile_var",
           "volatile_var2"
         ]);
+        Tealium.removeVolatileDataForInstanceName("instance-2", ["foo"]);
       } catch(err) {
         Alert.alert(`Issue removing volatile data: ${err}`);
       }
@@ -84,11 +92,145 @@ let allTests = [
           "persistent_var",
           "persistent_var2"
         ]);
+  
+        Tealium.getVisitorID(function (visitorID) {
+          console.log("visitorID: " + visitorID);
+        });
+        Tealium.getVisitorIDForInstanceName("instance-2", function(visitorID) {
+          console.log("visitorID: " + visitorID);
+        });
+
+        Tealium.setVolatileDataForInstanceName("instance-2", {"foo": "bar"});
+        Tealium.trackViewForInstanceName("instance-2", "instance_2_view");
+        Tealium.removeVolatileDataForInstanceName("instance-2", ["foo"]);
+        Tealium.trackViewForInstanceName("instance-2", "instance_2_event");
+
+        Tealium.getVolatileData("foo", function(value) {
+            console.log("get volatile: " + value);
+        });
+
+        Tealium.getVolatileDataForInstanceName("instance-2", "foo", function(value) {
+          console.log("value for instance-2 " + value);
+        });
+        
+        Tealium.removePersistentDataForInstanceName("instance-2", ["persistent_key2"]);
+
+        Tealium.getPersistentDataForInstanceName("instance-2", "persistent_key2", function(value) {
+          console.log("persistent data: " + value);
+        });
       } catch(err) {
         Alert.alert(`Issue removing persistent data: ${err}`);
       }
     }
-  }
+  },
+  {
+    title: "Consented",
+    run: () => {
+      try {
+        // Main
+        Tealium.setUserConsentStatus(1);
+        Tealium.getUserConsentStatus(function (userConsentStatus) {
+          console.log("consent status 'main': " + userConsentStatus);
+        });
+        Tealium.getUserConsentCategories(function (consentCategories) {
+          console.log("categories 'main': " + consentCategories);
+        });
+        Tealium.isConsentLoggingEnabled(function (enabled) {
+          console.log("consent logging enabled 'main': " + enabled);
+        });
+        Tealium.setConsentLoggingEnabled(true);
+        Tealium.isConsentLoggingEnabled(function (enabled) {
+          console.log("consent logging enabled 'main': " + enabled);
+        });
+
+        // Instance-2
+        Tealium.setUserConsentStatusForInstanceName("instance-2", 1);
+        Tealium.getUserConsentStatusForInstanceName("instance-2", function (userConsentStatus) {
+          console.log("consent status 'instance-2': " + userConsentStatus);
+        });
+        Tealium.getUserConsentCategoriesForInstanceName("instance-2", function (consentCategories) {
+          console.log("consent categories 'instance-2': " + consentCategories);
+        });
+        Tealium.isConsentLoggingEnabledForInstanceName("instance-2", function (enabled) {
+          console.log("consent logging enabled 'instance-2': " + enabled);
+        });
+        Tealium.setConsentLoggingEnabledForInstanceName("instance-2", true);
+        Tealium.isConsentLoggingEnabledForInstanceName("instance-2", function (enabled) {
+          console.log("consent logging enabled 'instance-2': " + enabled);
+        });
+      } catch(err) {
+        Alert.alert(`Issue setting user consent status: ${err}`);
+      }
+    }
+  },
+  {
+    title: "Not Consented",
+    run: () => {
+      try {
+        // Main
+        Tealium.setUserConsentStatus(2);
+        Tealium.getUserConsentStatus(function (userConsentStatus) {
+          console.log("consent status 'main': " + userConsentStatus);
+        });
+        Tealium.getUserConsentCategories(function (consentCategories) {
+          console.log("categories 'main': " + consentCategories);
+        });
+
+        // Instance-2
+        Tealium.setUserConsentStatusForInstanceName("instance-2", 2);
+        Tealium.getUserConsentStatusForInstanceName("instance-2", function (userConsentStatus) {
+          console.log("consent status 'instance-2': " + userConsentStatus);
+        });
+      } catch(err) {
+        Alert.alert(`Issue rsetting user consent status: ${err}`);
+      }
+    }
+  },
+  {
+    title: "Partial Consent",
+    run: () => {
+      try {
+        // Main
+        Tealium.setUserConsentCategories(["email", "personalization"]);
+        Tealium.getUserConsentCategories(function (consentCategories) {
+          console.log("categories 'main': " + consentCategories);
+        });
+        // Instance-2
+        Tealium.setUserConsentCategoriesForInstanceName("instance-2", ["analytics", "big_data"]);
+        Tealium.getUserConsentCategoriesForInstanceName("instance-2", function (consentCategories) {
+          console.log("categories 'instance-2': " + consentCategories);
+        });
+      } catch(err) {
+        Alert.alert(`Issue rsetting user consent status: ${err}`);
+      }
+    }
+  },
+  {
+    title: "Reset Consent",
+    run: () => {
+      try {
+        // Main
+        Tealium.resetUserConsentPreferences();
+        Tealium.getUserConsentStatus(function (userConsentStatus) {
+          console.log("consent status 'main': " + userConsentStatus);
+        });
+        Tealium.getUserConsentCategories(function (consentCategories) {
+          console.log("categories 'main': " + consentCategories);
+        });
+
+        // Instance-2
+        Tealium.resetUserConsentPreferencesForInstanceName("instance-2");
+        Tealium.getUserConsentStatusForInstanceName("instance-2", function (userConsentStatus) {
+          console.log("consent status 'instance-2': " + userConsentStatus);
+        });
+        Tealium.getUserConsentCategoriesForInstanceName("instance-2", function (consentCategories) {
+          console.log("consent categories 'instance-2': " + consentCategories);
+        });
+      } catch(err) {
+        Alert.alert(`Issue rsetting user consent status: ${err}`);
+      }
+    }
+  },
 ];
 
 /*
@@ -126,9 +268,22 @@ export default class App extends React.Component {
     // For each item in the "allTests" array, copy into this component's state initializing count to 0
     this.state = {tests: allTests.map(test => ({title: test.title, run: test.run, count: 0}))};
 
-    Tealium.initialize(
-      'your-account', 'your-profile', 'your-environment',
+    // Basic Tealium instance
+    // Tealium.initialize(
+    //   'tealiummobile', 'react-native', 'qa',
+    //   'your-ios-datasource', 'your-android-datasource'
+    // );
+
+    Tealium.initializeWithConsentManager(
+      'tealiummobile', 'react-native', 'qa',
       'your-ios-datasource', 'your-android-datasource'
+    );
+
+    // Multiton example
+    Tealium.initializeCustom(
+      'tealiummobile', 'react-native', 'qa',
+      'your-ios-datasource', 'your-android-datasource', 'instance-2',
+      true, null, null, true, true
     );
   }
 

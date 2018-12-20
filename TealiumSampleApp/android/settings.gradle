@@ -1,3 +1,5 @@
 rootProject.name = 'TealiumSampleApp'
+include ':tealium-react-native'
+project(':tealium-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/tealium-react-native/android')
 
 include ':app'

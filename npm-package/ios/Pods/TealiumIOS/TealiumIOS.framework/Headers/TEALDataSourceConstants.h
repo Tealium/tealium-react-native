@@ -86,6 +86,7 @@ extern NSString *const TEALDataSourceKey_Timestamp;
 extern NSString *const TEALDataSourceKey_TimestampLocal;
 extern NSString *const TEALDataSourceKey_TimestampOffset;
 extern NSString *const TEALDataSourceKey_TimestampUnix;
+extern NSString *const TEALDataSourceKey_TimestampUnixMilliseconds;
 extern NSString *const TEALDataSourceKey_Tealium_Account;
 extern NSString *const TEALDataSourceKey_Tealium_Datasource;
 extern NSString *const TEALDataSourceKey_Tealium_Environment;
@@ -95,7 +96,8 @@ extern NSString *const TEALDataSourceKey_Tealium_Library_Name;
 extern NSString *const TEALDataSourceKey_Tealium_Library_Version;
 extern NSString *const TEALDataSourceKey_Tealium_Profile;
 extern NSString *const TEALDataSourceKey_Tealium_Random;
-extern NSString *const TEALDataSourceKey_Tealium_Session_Id;
+extern NSString *const TEALDataSourceKey_Tealium_SessionID;
+extern NSString *const TEALDataSourceKey_Tealium_LastTrackEvent;
 extern NSString *const TEALDataSourceKey_Tealium_Timestamp_Epoch;
 extern NSString *const TEALDataSourceKey_Tealium_Visitor_Id;
 extern NSString *const TEALDataSourceKey_TealiumID;
@@ -108,7 +110,6 @@ extern NSString *const TEALDataSourceKey_VisitorID;
 extern NSString *const TEALDataSourceKey_WasQueued;
 extern NSString *const TEALDataSourceKey_WebViewServiceType;
 extern NSString *const TEALDataSourceKey_WebViewURL;
-
 
 #pragma mark - UDO / Datasource Values
 

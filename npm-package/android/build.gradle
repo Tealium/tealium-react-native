@@ -35,6 +35,6 @@ android {
 
 dependencies {
     compile 'com.facebook.react:react-native:+'
-    compile 'com.tealium:library:5.4.2'
+    compile 'com.tealium:library:5.5.2'
     compile 'com.tealium:lifecycle:1.1'
 }
