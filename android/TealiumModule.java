@@ -3,7 +3,6 @@ package com.tealiumreactnative;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.LifecycleEventListener;
@@ -14,14 +13,14 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.ReadableType;
-import com.tealium.library.*;
 import com.tealium.library.BuildConfig;
+import com.tealium.library.ConsentManager;
+import com.tealium.library.Tealium;
 import com.tealium.lifecycle.LifeCycle;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -169,9 +168,9 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         }
 
         if (data != null) {
-            instance.trackView(eventName, data.toHashMap());
+            instance.trackEvent(eventName, data.toHashMap());
         } else {
-            instance.trackView(eventName, null);
+            instance.trackEvent(eventName, null);
         }
     }
 
@@ -466,9 +465,6 @@ public class TealiumModule extends ReactContextBaseJavaModule {
                         Log.e(BuildConfig.TAG, "Invalid key type. Use array of strings");
                         break;
                 }
-            }
-            for (String s : userConsentCategories) {
-                Log.i("zz", s);
             }
             tealium.getConsentManager().setUserConsentCategories(userConsentCategories);
         }
