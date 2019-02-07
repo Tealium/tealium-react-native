@@ -1,5 +1,8 @@
 # Change Log
 
+- 1.0.2
+  - Bug fix
+    - Fixed public trackEvent to call trackEvent on Tealium instance
 - 1.0.1
   - Additional public-facing methods of Tealium iOS and Tealium Android exposed
     - Consent Management
