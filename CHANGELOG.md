@@ -1,5 +1,6 @@
 # Change Log
 
+- 1.0.4
 - 1.0.3
   - Bug fix
     - Handling of possible null Activity from ReactApplicationContext
