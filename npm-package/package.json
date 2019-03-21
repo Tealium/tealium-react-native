@@ -1,6 +1,6 @@
 {
   "name": "tealium-react-native",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A native module for using Tealium's Android and iOS libraries from a React Native app.",
   "main": "index.js",
   "homepage": "https://github.com/Tealium/tealium-react-native",
@@ -19,7 +19,8 @@
     "Chris Anderberg",
     "Karen Tamayo",
     "Jonathan Wong",
-    "Craig Rouse"
+    "Craig Rouse",
+    "James Keith"
   ],
   "license": "SEE LICENSE IN LICENSE.txt",
   "devDependencies": {
