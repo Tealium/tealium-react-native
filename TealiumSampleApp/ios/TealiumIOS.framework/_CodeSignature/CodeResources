@@ -10,11 +10,11 @@
 		</data>
 		<key>Headers/TEALConfiguration+TagManagement.h</key>
 		<data>
-		PLcpFM6mhp8jV8OsjvqzcQBgba0=
+		HVKzxDUh4R7Dde3sbHV9E8zxHpM=
 		</data>
 		<key>Headers/TEALConfiguration.h</key>
 		<data>
-		xe5xzKGTXnOBXOXkezgJAL6spcU=
+		NS9n5GXZ5ayQADnho+s2do6UGCA=
 		</data>
 		<key>Headers/TEALConsentConstants.h</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>Headers/TEALConsentManager.h</key>
 		<data>
-		w7clI7r8ZLlwdYtm/AJUSppkIA0=
+		QnZEgWfBQv21qw+rCNBpogaZz/w=
 		</data>
 		<key>Headers/TEALConsentManagerDelegate.h</key>
 		<data>
@@ -38,7 +38,7 @@
 		</data>
 		<key>Headers/TEALDispatch.h</key>
 		<data>
-		vqZtDy3lnuzPQnuZJNPBs0+/nlo=
+		6j566bwQ/65/i7QT/wNUFF3GtbU=
 		</data>
 		<key>Headers/TEALLogLevels.h</key>
 		<data>
@@ -54,15 +54,47 @@
 		</data>
 		<key>Headers/TEALVisitorProfile.h</key>
 		<data>
-		Co7NozReVnNzNtDu2xFV9fzek1k=
+		sNEvRIEAWt2F6Y1VZx6hW/18EgE=
+		</data>
+		<key>Headers/TEALVisitorProfileAudienceAttribute.h</key>
+		<data>
+		SBL7bw+sjd6XKNyDuQjkoo9xYus=
+		</data>
+		<key>Headers/TEALVisitorProfileBadgeAttribute.h</key>
+		<data>
+		s1NRFvTseuAX+2AIb6v1mEwldos=
+		</data>
+		<key>Headers/TEALVisitorProfileBaseAttribute.h</key>
+		<data>
+		qmfAJRTuAYsjxsKbyHk86JovJDo=
 		</data>
 		<key>Headers/TEALVisitorProfileCurrentVisit.h</key>
 		<data>
-		VYooBirc9uBm6iT1Jg9m2Xw3gc8=
+		huutZfkLAQ/E7TolUcA9x8ZP+30=
+		</data>
+		<key>Headers/TEALVisitorProfileDateAttribute.h</key>
+		<data>
+		7Pzy7by7afccP4pMWjSey7RwsFk=
+		</data>
+		<key>Headers/TEALVisitorProfileFlagAttribute.h</key>
+		<data>
+		MX+O929RUYC7kL/g74pIACnKk5c=
+		</data>
+		<key>Headers/TEALVisitorProfileMetricAttribute.h</key>
+		<data>
+		xoquvtcNBCB/zs5QC7SyA+Fnl88=
+		</data>
+		<key>Headers/TEALVisitorProfilePropertyAttribute.h</key>
+		<data>
+		iPQVCRycpl+T8fSmjmoHyaNtcvM=
 		</data>
 		<key>Headers/TEALWKConstants.h</key>
 		<data>
 		VW/w3ISYj1RtwXyd/LuGPHW3bYI=
+		</data>
+		<key>Headers/TEALWebView.h</key>
+		<data>
+		zQwrxvKrk6c4kAt+PwoRVcQH8jg=
 		</data>
 		<key>Headers/Tealium+Collect.h</key>
 		<data>
@@ -74,7 +106,7 @@
 		</data>
 		<key>Headers/Tealium+WatchKit.h</key>
 		<data>
-		pCU8dWzVjdi8EqMFAFc09vH4luY=
+		ZNNzba3sXrY2mrEsjTSbERIxr3c=
 		</data>
 		<key>Headers/Tealium.h</key>
 		<data>
@@ -82,15 +114,15 @@
 		</data>
 		<key>Headers/TealiumDelegate.h</key>
 		<data>
-		zk8hrYiKhkakCyottUrsowpt57U=
+		Ap5vOpMBUZsau8q/I9cGoLC+FLM=
 		</data>
 		<key>Headers/TealiumIOS.h</key>
 		<data>
-		4ixRANXiQ7p05T76Dfpob3rojzU=
+		PvE2o2WIYZ5IssK21q2CZfiNUag=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Ubhl67GJ+vrfBnzaA8VWAMPYajA=
+		ZVLiUsx3ThidFlZM3DJxoo3Wou4=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -114,22 +146,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			PLcpFM6mhp8jV8OsjvqzcQBgba0=
+			HVKzxDUh4R7Dde3sbHV9E8zxHpM=
 			</data>
 			<key>hash2</key>
 			<data>
-			312VakAwb7aoe+GIJzCRNiRDbmW3+ZtTrZueEANzi3E=
+			IIfRczz6cNZHIq2zhZW/JU8gtUBkfVOUdRV7NeBbW18=
 			</data>
 		</dict>
 		<key>Headers/TEALConfiguration.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			xe5xzKGTXnOBXOXkezgJAL6spcU=
+			NS9n5GXZ5ayQADnho+s2do6UGCA=
 			</data>
 			<key>hash2</key>
 			<data>
-			mzHMvG4lLoauaM6VZHiQ81xlhDai0C4+GY/qN9CkXao=
+			Ve3mMUjA4bVbQ3ExncKZY98dsPyHmXrFmvvWGnppWow=
 			</data>
 		</dict>
 		<key>Headers/TEALConsentConstants.h</key>
@@ -147,11 +179,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			w7clI7r8ZLlwdYtm/AJUSppkIA0=
+			QnZEgWfBQv21qw+rCNBpogaZz/w=
 			</data>
 			<key>hash2</key>
 			<data>
-			YZWYPvriFmCShxG1hR/KFvI0xk4o1QcuElZxAT9NMo4=
+			MQ8v18UynKCqu2tgE5igTTbf0iOKWXoPWkBRALSXfVE=
 			</data>
 		</dict>
 		<key>Headers/TEALConsentManagerDelegate.h</key>
@@ -191,11 +223,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			vqZtDy3lnuzPQnuZJNPBs0+/nlo=
+			6j566bwQ/65/i7QT/wNUFF3GtbU=
 			</data>
 			<key>hash2</key>
 			<data>
-			PfRPft5hQZGg0PtJdOxAihaMDgmZB1Mm6R/ce2N1xdk=
+			u1KNUi5fj8Z07V5Nnti/X1fw4kK2Pjs6dc+IOyR86eQ=
 			</data>
 		</dict>
 		<key>Headers/TEALLogLevels.h</key>
@@ -235,22 +267,99 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Co7NozReVnNzNtDu2xFV9fzek1k=
+			sNEvRIEAWt2F6Y1VZx6hW/18EgE=
 			</data>
 			<key>hash2</key>
 			<data>
-			/3rImrmuRPXKP1dZiBIqyxEf19b/+kbSPe1ksP9L2/U=
+			AP6BA/yjUw0bUPYIpoXZVZpVpz3HgfUka+OGXXWe73Y=
+			</data>
+		</dict>
+		<key>Headers/TEALVisitorProfileAudienceAttribute.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			SBL7bw+sjd6XKNyDuQjkoo9xYus=
+			</data>
+			<key>hash2</key>
+			<data>
+			BH+pbQhkb2Ap9qoTPLsnRnJ7u+4b2KHI3MI3YIq0yxw=
+			</data>
+		</dict>
+		<key>Headers/TEALVisitorProfileBadgeAttribute.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			s1NRFvTseuAX+2AIb6v1mEwldos=
+			</data>
+			<key>hash2</key>
+			<data>
+			eCJIMMzaYNoqK1lyCoQXLhRtjLMJF1RNCbxv4EvqTCk=
+			</data>
+		</dict>
+		<key>Headers/TEALVisitorProfileBaseAttribute.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			qmfAJRTuAYsjxsKbyHk86JovJDo=
+			</data>
+			<key>hash2</key>
+			<data>
+			iQf+gby2rS0ZpCbWDlR9U1RtSbfOSnKDJjcxboAJPQc=
 			</data>
 		</dict>
 		<key>Headers/TEALVisitorProfileCurrentVisit.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			VYooBirc9uBm6iT1Jg9m2Xw3gc8=
+			huutZfkLAQ/E7TolUcA9x8ZP+30=
 			</data>
 			<key>hash2</key>
 			<data>
-			t3VJ10uqEqtZViIdmQtB+tpZ94/T9m1GKTeEFdmcezw=
+			hY2j3me3EuqoHfynC/pJTGDbKF+xfBbMlasMSBcZ/uU=
+			</data>
+		</dict>
+		<key>Headers/TEALVisitorProfileDateAttribute.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			7Pzy7by7afccP4pMWjSey7RwsFk=
+			</data>
+			<key>hash2</key>
+			<data>
+			/QjXKri7S4Qv04HJrxZbOwvaAqd4eRwxuOlhvOFwy5I=
+			</data>
+		</dict>
+		<key>Headers/TEALVisitorProfileFlagAttribute.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			MX+O929RUYC7kL/g74pIACnKk5c=
+			</data>
+			<key>hash2</key>
+			<data>
+			3v5RFVAS8YVrbvDdt66WE83GDgLATfwpmKL4TjA+MTk=
+			</data>
+		</dict>
+		<key>Headers/TEALVisitorProfileMetricAttribute.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			xoquvtcNBCB/zs5QC7SyA+Fnl88=
+			</data>
+			<key>hash2</key>
+			<data>
+			y3g/7VZSdb6rtm3f/6D0ESxMEdACCKW+KeaXKr1XSw0=
+			</data>
+		</dict>
+		<key>Headers/TEALVisitorProfilePropertyAttribute.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			iPQVCRycpl+T8fSmjmoHyaNtcvM=
+			</data>
+			<key>hash2</key>
+			<data>
+			HMEa18uOWQcg8IbalUmGH1PseV/sqDPyXsXGoKXz5SY=
 			</data>
 		</dict>
 		<key>Headers/TEALWKConstants.h</key>
@@ -262,6 +371,17 @@
 			<key>hash2</key>
 			<data>
 			G0JCo/OCd7idEFws5ru0WnstPRneyhKJjNliJ5TcDsM=
+			</data>
+		</dict>
+		<key>Headers/TEALWebView.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			zQwrxvKrk6c4kAt+PwoRVcQH8jg=
+			</data>
+			<key>hash2</key>
+			<data>
+			PykqamsBYHVeZNilfJxrIgr5ZQyn/d4OqzKMomOmOno=
 			</data>
 		</dict>
 		<key>Headers/Tealium+Collect.h</key>
@@ -290,11 +410,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			pCU8dWzVjdi8EqMFAFc09vH4luY=
+			ZNNzba3sXrY2mrEsjTSbERIxr3c=
 			</data>
 			<key>hash2</key>
 			<data>
-			un/HL87tow45sot9+imCrnZ99DaapIAqqGwWI9Pwq9A=
+			a52cniVcVGCunXVmzvzgLXPI6U0T4MxbPQR5p+60tMY=
 			</data>
 		</dict>
 		<key>Headers/Tealium.h</key>
@@ -312,22 +432,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			zk8hrYiKhkakCyottUrsowpt57U=
+			Ap5vOpMBUZsau8q/I9cGoLC+FLM=
 			</data>
 			<key>hash2</key>
 			<data>
-			mdlDWuvxjI/v9ct8APiSTdNYVvLtmDDmgtBwAwdKrFk=
+			R2Cdm/f9kAgCG2mvng/hPOLFV0E7NzmS7QYka3xxr5s=
 			</data>
 		</dict>
 		<key>Headers/TealiumIOS.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			4ixRANXiQ7p05T76Dfpob3rojzU=
+			PvE2o2WIYZ5IssK21q2CZfiNUag=
 			</data>
 			<key>hash2</key>
 			<data>
-			Ba2GSYfv7vC/yBVkj6kvrnmzHj5ehKQp+oY5VxOZXyM=
+			JTjyR1Th5dzo+01uPH6Egmb6r4qioFVHVqdH8wgEUlM=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -344,7 +464,7 @@
 	</dict>
 	<key>rules</key>
 	<dict>
-		<key>^</key>
+		<key>^.*</key>
 		<true/>
 		<key>^.*\.lproj/</key>
 		<dict>
@@ -375,24 +495,12 @@
 			<key>weight</key>
 			<real>11</real>
 		</dict>
-		<key>^</key>
-		<dict>
-			<key>weight</key>
-			<real>20</real>
-		</dict>
 		<key>^(.*/)?\.DS_Store$</key>
 		<dict>
 			<key>omit</key>
 			<true/>
 			<key>weight</key>
 			<real>2000</real>
-		</dict>
-		<key>^(Frameworks|SharedFrameworks|PlugIns|Plug-ins|XPCServices|Helpers|MacOS|Library/(Automator|Spotlight|LoginItems))/</key>
-		<dict>
-			<key>nested</key>
-			<true/>
-			<key>weight</key>
-			<real>10</real>
 		</dict>
 		<key>^.*</key>
 		<true/>
@@ -428,13 +536,6 @@
 			<true/>
 			<key>weight</key>
 			<real>20</real>
-		</dict>
-		<key>^[^/]+$</key>
-		<dict>
-			<key>nested</key>
-			<true/>
-			<key>weight</key>
-			<real>10</real>
 		</dict>
 		<key>^embedded\.provisionprofile$</key>
 		<dict>
