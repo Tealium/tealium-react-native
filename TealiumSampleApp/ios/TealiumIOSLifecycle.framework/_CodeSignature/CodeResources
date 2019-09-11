@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/TEALConfiguration+Lifecycle.h</key>
 		<data>
-		ENh/j2+UKxbaEr2M8aqgRZIATQw=
+		yK3iIOE3m8auYJHDKNZJ/ShtQMg=
 		</data>
 		<key>Headers/Tealium+Lifecycle.h</key>
 		<data>
-		HzxNGo1ETfrZaCC1cNokr+q/ojY=
+		Be+fYcjKzTFtxPsZoJFCpSmg9eQ=
 		</data>
 		<key>Headers/TealiumIOSLifecycle.h</key>
 		<data>
@@ -18,7 +18,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		RLwYumJiVZapg2zAO5aXHA/YW/Q=
+		BmTFtQy4eqU/RmO/+Jql4mT6UNo=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -31,22 +31,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ENh/j2+UKxbaEr2M8aqgRZIATQw=
+			yK3iIOE3m8auYJHDKNZJ/ShtQMg=
 			</data>
 			<key>hash2</key>
 			<data>
-			d968qWNCJRn5BbTEfdmfIwaQlXRL6yZvUGcvtReoh2E=
+			2liSOfg6DnuL/Q9YeanDhOXkexAbDO9xzLLVMuvQa0o=
 			</data>
 		</dict>
 		<key>Headers/Tealium+Lifecycle.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			HzxNGo1ETfrZaCC1cNokr+q/ojY=
+			Be+fYcjKzTFtxPsZoJFCpSmg9eQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			OuZS+RWMPd2XggdvqFEdi12SKlRJ0SfQUGj9TdVQftI=
+			n6OJBDCPeZTFCNSPTAVauKZG/24Y/Oq9FmGz2Ws6mPA=
 			</data>
 		</dict>
 		<key>Headers/TealiumIOSLifecycle.h</key>
@@ -74,7 +74,7 @@
 	</dict>
 	<key>rules</key>
 	<dict>
-		<key>^</key>
+		<key>^.*</key>
 		<true/>
 		<key>^.*\.lproj/</key>
 		<dict>
@@ -105,24 +105,12 @@
 			<key>weight</key>
 			<real>11</real>
 		</dict>
-		<key>^</key>
-		<dict>
-			<key>weight</key>
-			<real>20</real>
-		</dict>
 		<key>^(.*/)?\.DS_Store$</key>
 		<dict>
 			<key>omit</key>
 			<true/>
 			<key>weight</key>
 			<real>2000</real>
-		</dict>
-		<key>^(Frameworks|SharedFrameworks|PlugIns|Plug-ins|XPCServices|Helpers|MacOS|Library/(Automator|Spotlight|LoginItems))/</key>
-		<dict>
-			<key>nested</key>
-			<true/>
-			<key>weight</key>
-			<real>10</real>
 		</dict>
 		<key>^.*</key>
 		<true/>
@@ -158,13 +146,6 @@
 			<true/>
 			<key>weight</key>
 			<real>20</real>
-		</dict>
-		<key>^[^/]+$</key>
-		<dict>
-			<key>nested</key>
-			<true/>
-			<key>weight</key>
-			<real>10</real>
 		</dict>
 		<key>^embedded\.provisionprofile$</key>
 		<dict>
