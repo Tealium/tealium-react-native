@@ -1,8 +1,10 @@
 module.exports = {
-    project: {
-      ios: {},
-      android: {}, 
-    },
-    commands: [require('node ./node_modules/tealium-react-native/scripts/postlink.js'),
-               require('node ./node_modules/tealium-react-native/scripts/preunlink.js')]
+  project: {
+    ios: {},
+    android: {},
+  },
+  commands: [
+    { name: 'postlink', func: () => require('./scripts/postlink.js') },
+    { name: 'preunlink', func: () => require('./scripts/preunlink.js') },
+  ],
 };
