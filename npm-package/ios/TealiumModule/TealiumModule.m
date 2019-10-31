@@ -16,9 +16,9 @@ RCT_ENUM_CONVERTER(TEALConsentStatus, (@{
 
 @implementation RCTConvert (CollectURL)
 RCT_ENUM_CONVERTER(TEALCollectURL, (@{
-                                      @"vdata" : @(Vdata),
-                                      @"collect" : @(Event),
-                                      }), Event, integerValue)
+                                      @"vdata" : @(TEALCollectURLVdata),
+                                      @"collect" : @(TEALCollectURLEvent),
+                                      }), TEALCollectURLEvent, integerValue)
 @end
 
 @implementation TealiumModule
@@ -93,7 +93,7 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
         configuration.overrideTagManagementURL = overrideTagManagementURL;
     }
     if (!enableCollectURL) {
-        configuration.collectURL = Vdata;
+        configuration.collectURL = TEALCollectURLVdata;
     }
     configuration.enableConsentManager = enableConsentManager;
     
