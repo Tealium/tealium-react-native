@@ -1,1 +1,0 @@
-../../../../TealiumIOSLifecycle/TealiumIOSLifecycle.framework/Headers/Tealium+Lifecycle.h
