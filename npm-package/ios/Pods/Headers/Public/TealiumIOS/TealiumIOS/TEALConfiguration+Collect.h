@@ -1,1 +1,0 @@
-../../../../TealiumIOS/TealiumIOS.framework/Headers/TEALConfiguration+Collect.h

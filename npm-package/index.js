@@ -4,52 +4,52 @@ const { TealiumModule } = NativeModules;
 
 export default class Tealium {
     static initialize(
-        account, 
-        profile, 
-        environment, 
+        account,
+        profile,
+        environment,
         iosDatasource,
-        androidDatasource, 
-        instanceName = 'MAIN', 
+        androidDatasource,
+        instanceName = 'MAIN',
         isLifecycleEnabled = true,
     ) {
         TealiumModule.initialize(
-            account, 
-            profile, 
-            environment, 
-            iosDatasource, 
+            account,
+            profile,
+            environment,
+            iosDatasource,
             androidDatasource,
-            instanceName, 
+            instanceName,
             isLifecycleEnabled,
         );
     }
 
     static initializeWithConsentManager(
-        account, 
-        profile, 
-        environment, 
+        account,
+        profile,
+        environment,
         iosDatasource,
-        androidDatasource, 
-        instanceName = 'MAIN', 
+        androidDatasource,
+        instanceName = 'MAIN',
         isLifecycleEnabled = true,
     ) {
         TealiumModule.initializeWithConsentManager(
-            account, 
-            profile, 
-            environment, 
-            iosDatasource, 
+            account,
+            profile,
+            environment,
+            iosDatasource,
             androidDatasource,
-            instanceName, 
+            instanceName,
             isLifecycleEnabled,
         );
     }
 
     static initializeCustom(
-        account, 
-        profile, 
-        environment, 
+        account,
+        profile,
+        environment,
         iosDatasource,
-        androidDatasource, 
-        instanceName, 
+        androidDatasource,
+        instanceName,
         isLifecycleEnabled,
         overridePublishSettingsURL,
         overrideTagManagementURL,
@@ -57,12 +57,12 @@ export default class Tealium {
         enableConsentManager
     ) {
         TealiumModule.initializeCustom(
-            account, 
-            profile, 
-            environment, 
-            iosDatasource, 
+            account,
+            profile,
+            environment,
+            iosDatasource,
             androidDatasource,
-            instanceName, 
+            instanceName,
             isLifecycleEnabled,
             overridePublishSettingsURL,
             overrideTagManagementURL,
@@ -78,7 +78,7 @@ export default class Tealium {
     static trackView(stringTitle, data) {
         TealiumModule.trackView(stringTitle, data);
     }
-    
+
     static trackViewForInstanceName(name, stringTitle, data) {
         TealiumModule.trackViewForInstance(name, stringTitle, data);
     }
@@ -111,8 +111,8 @@ export default class Tealium {
         TealiumModule.setPersistentDataForInstance(name, data);
     }
 
-    static getPersistentData(data) {
-        TealiumModule.getPersistentData(data);
+    static getPersistentData(key, value) {
+        TealiumModule.getPersistentData(key, value);
     }
 
     static getPersistentDataForInstanceName(name, key, data) {
@@ -173,7 +173,7 @@ export default class Tealium {
 
     static setUserConsentCategoriesForInstanceName(name, userConsentCategories) {
         TealiumModule.setUserConsentCategoriesForInstance(name, userConsentCategories);
-    } 
+    }
 
     static resetUserConsentPreferences() {
         TealiumModule.resetUserConsentPreferences();

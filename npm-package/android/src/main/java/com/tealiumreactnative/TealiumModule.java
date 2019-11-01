@@ -19,6 +19,7 @@ import com.tealium.library.ConsentManager;
 import com.tealium.library.Tealium;
 import com.tealium.lifecycle.LifeCycle;
 
+import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -166,7 +167,8 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         }
 
         if (data != null) {
-            instance.trackEvent(eventName, data.toHashMap());
+            Map<String, Object> mapData = convertMapsToJson(data.toHashMap());
+            instance.trackEvent(eventName, mapData);
         } else {
             instance.trackEvent(eventName, null);
         }
@@ -187,10 +189,21 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         }
 
         if (data != null) {
-            instance.trackView(viewName, data.toHashMap());
+            Map<String, Object> mapData = convertMapsToJson(data.toHashMap());
+            instance.trackView(viewName, mapData);
         } else {
             instance.trackView(viewName, null);
         }
+    }
+
+    private Map<String, Object> convertMapsToJson(Map<String, Object> mapData) {
+        Set<String> keySet = mapData.keySet();
+        for (String key : keySet) {
+            if (mapData.get(key) instanceof Map) {
+                mapData.put(key, new JSONObject((Map)mapData.get(key)));
+            }
+        }
+        return mapData;
     }
 
     @ReactMethod
