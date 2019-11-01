@@ -1,5 +1,16 @@
 # Change Log
 
+- 1.0.7
+  - Support for ReactNative Autolinking in 0.60 and above
+  - Better support for nested event data
+  - Underlying Tealium libraries updated to versions 5.5.5 (Android) and 5.6.3 (iOS)
+  - Bug Fixes
+    - Corrected method signature for `Tealium.getPersistentData(key, callback)`
+    - Build errors in iOS relating to Vdata/Event enums have been fixed
+    - Fixed crashes on some iPad versions
+- 1.0.6
+- 1.0.5
+  - Migration away from rnpm
 - 1.0.4
 - 1.0.3
   - Bug fix
