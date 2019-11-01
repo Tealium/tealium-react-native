@@ -19,6 +19,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.dependency "React"
-  s.dependency "TealiumIOS", "5.6.2"
-  s.dependency "TealiumIOSLifecycle", "5.6.2"
+  s.dependency "TealiumIOS", "5.6.3"
+  s.dependency "TealiumIOSLifecycle", "5.6.3"
 end
