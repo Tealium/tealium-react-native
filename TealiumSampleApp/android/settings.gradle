@@ -1,7 +1,3 @@
 rootProject.name = 'TealiumSampleApp'
-include ':tealium-react-native'
-project(':tealium-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/tealium-react-native/android')
-include ':tealium-react-native'
-project(':tealium-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/tealium-react-native/android')
-
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
