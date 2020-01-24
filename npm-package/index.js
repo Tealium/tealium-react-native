@@ -1,8 +1,10 @@
-import { NativeModules } from 'react-native';
-
+import { NativeEventEmitter, NativeModules } from 'react-native';
 const { TealiumModule } = NativeModules;
 
 export default class Tealium {
+
+    static remoteCommandEmitter = new NativeEventEmitter(TealiumModule);
+    
     static initialize(
         account,
         profile,
@@ -203,4 +205,21 @@ export default class Tealium {
     static isConsentLoggingEnabledForInstanceName(name, enabled) {
         TealiumModule.isConsentLoggingEnabledForInstance(name, enabled);
     }
+
+    static addRemoteCommand(commandID, description) {
+        TealiumModule.addRemoteCommand(commandID, description);
+    }
+
+    static addRemoteCommandForInstance(name, commandID, description) {
+        TealiumModule.addRemoteCommandForInstance(name, commandID, description);
+    }
+
+    static removeRemoteCommand(commandID) {
+        TealiumModule.removeRemoteCommand(commandID);
+    }
+
+    static removeRemoteCommandForInstance(name, commandID) {
+        TealiumModule.removeRemoteCommandForInstance(commandID, name);
+    }
+  
 }
