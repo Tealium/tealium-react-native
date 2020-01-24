@@ -306,11 +306,11 @@ RCT_EXPORT_METHOD(addRemoteCommandForInstance:(NSString *)instanceName
 }
 
 RCT_EXPORT_METHOD(removeRemoteCommand:(NSString *)commandID) {
-    [self removeRemoteCommandForInstance:commandID instanceName:tealiumInternalInstanceName];
+    [self removeRemoteCommandForInstance:tealiumInternalInstanceName commandID:commandID];
 }
 
-RCT_EXPORT_METHOD(removeRemoteCommandForInstance:(NSString *)commandID
-                  instanceName:(NSString *)instanceName) {
+RCT_EXPORT_METHOD(removeRemoteCommandForInstance:(NSString *)instanceName
+                  commandID:(NSString *)commandID) {
     Tealium *tealium = [Tealium instanceForKey:instanceName];
     [tealium removeRemoteCommandID:commandID];
 }

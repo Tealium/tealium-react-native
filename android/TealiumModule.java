@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.Log;
+
 import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.Callback;
@@ -219,7 +220,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         Set<String> keySet = mapData.keySet();
         for (String key : keySet) {
             if (mapData.get(key) instanceof Map) {
-                mapData.put(key, new JSONObject((Map)mapData.get(key)));
+                mapData.put(key, new JSONObject((Map) mapData.get(key)));
             }
         }
         return mapData;
@@ -607,11 +608,11 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void removeRemoteCommand(String commandID) {
-        removeRemoteCommandForInstance(commandID, mTealiumInstanceName);
+        removeRemoteCommandForInstance(mTealiumInstanceName, commandID);
     }
 
     @ReactMethod
-    public void removeRemoteCommandForInstance(String commandID, String instanceName) {
+    public void removeRemoteCommandForInstance(String instanceName, String commandID) {
 
         final Tealium instance = Tealium.getInstance(instanceName);
 
@@ -624,7 +625,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
             RemoteCommand rc = mRemoteCommands.get(i);
             if (commandID.equals(rc.toString())) {
                 instance.removeRemoteCommand(rc);
-                Log.d(BuildConfig.TAG,"Remote command with id `" + commandID + "` has been removed from `" + instanceName + "`");
+                Log.d(BuildConfig.TAG, "Remote command with id `" + commandID + "` has been removed from `" + instanceName + "`");
             }
         }
 
@@ -675,7 +676,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         try {
             if (getReactApplicationContext().hasCurrentActivity()) {
                 app = getReactApplicationContext().getCurrentActivity().getApplication();
-            } else if (getCurrentActivity() != null){
+            } else if (getCurrentActivity() != null) {
                 app = getCurrentActivity().getApplication();
             } else {
                 app = (Application) getReactApplicationContext().getApplicationContext();
@@ -697,15 +698,15 @@ public class TealiumModule extends ReactContextBaseJavaModule {
             Object value = jsonObject.get(key);
             if (value instanceof JSONObject) {
                 map.putMap(key, convertJsonToMap((JSONObject) value));
-            } else if (value instanceof  JSONArray) {
+            } else if (value instanceof JSONArray) {
                 map.putArray(key, convertJsonToArray((JSONArray) value));
-            } else if (value instanceof  Boolean) {
+            } else if (value instanceof Boolean) {
                 map.putBoolean(key, (Boolean) value);
-            } else if (value instanceof  Integer) {
+            } else if (value instanceof Integer) {
                 map.putInt(key, (Integer) value);
-            } else if (value instanceof  Double) {
+            } else if (value instanceof Double) {
                 map.putDouble(key, (Double) value);
-            } else if (value instanceof String)  {
+            } else if (value instanceof String) {
                 map.putString(key, (String) value);
             } else {
                 map.putString(key, value.toString());
@@ -721,15 +722,15 @@ public class TealiumModule extends ReactContextBaseJavaModule {
             Object value = jsonArray.get(i);
             if (value instanceof JSONObject) {
                 array.pushMap(convertJsonToMap((JSONObject) value));
-            } else if (value instanceof  JSONArray) {
+            } else if (value instanceof JSONArray) {
                 array.pushArray(convertJsonToArray((JSONArray) value));
-            } else if (value instanceof  Boolean) {
+            } else if (value instanceof Boolean) {
                 array.pushBoolean((Boolean) value);
-            } else if (value instanceof  Integer) {
+            } else if (value instanceof Integer) {
                 array.pushInt((Integer) value);
-            } else if (value instanceof  Double) {
+            } else if (value instanceof Double) {
                 array.pushDouble((Double) value);
-            } else if (value instanceof String)  {
+            } else if (value instanceof String) {
                 array.pushString((String) value);
             } else {
                 array.pushString(value.toString());

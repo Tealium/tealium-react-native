@@ -219,7 +219,7 @@ export default class Tealium {
     }
 
     static removeRemoteCommandForInstance(name, commandID) {
-        TealiumModule.removeRemoteCommandForInstance(commandID, name);
+        TealiumModule.removeRemoteCommandForInstance(name, commandID);
     }
   
 }
