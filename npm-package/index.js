@@ -210,7 +210,7 @@ export default class Tealium {
         TealiumModule.addRemoteCommand(commandID, description);
     }
 
-    static addRemoteCommandForInstance(name, commandID, description) {
+    static addRemoteCommandForInstanceName(name, commandID, description) {
         TealiumModule.addRemoteCommandForInstance(name, commandID, description);
     }
 
@@ -218,7 +218,7 @@ export default class Tealium {
         TealiumModule.removeRemoteCommand(commandID);
     }
 
-    static removeRemoteCommandForInstance(name, commandID) {
+    static removeRemoteCommandForInstanceName(name, commandID) {
         TealiumModule.removeRemoteCommandForInstance(name, commandID);
     }
   

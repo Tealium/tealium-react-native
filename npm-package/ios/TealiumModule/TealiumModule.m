@@ -2,6 +2,7 @@
 #import "TealiumModule.h"
 #import <React/RCTConvert.h>
 
+
 @import TealiumIOSLifecycle;
 
 @implementation RCTConvert (ConsentStatus)
@@ -25,6 +26,12 @@ RCT_ENUM_CONVERTER(TEALCollectURL, (@{
 RCT_EXPORT_MODULE();
 
 NSString *tealiumInternalInstanceName;
+
+// MARK: - Remote Command Emitter
+NSString *remoteCommandEventName = @"RemoteCommandEvent";
+- (NSArray<NSString *> *)supportedEvents {
+    return @[remoteCommandEventName];
+}
 
 // MARK: - Init
 RCT_EXPORT_METHOD(initialize:(NSString *)account
@@ -273,6 +280,39 @@ RCT_EXPORT_METHOD(isConsentLoggingEnabled:(RCTResponseSenderBlock)callback) {
 RCT_EXPORT_METHOD(isConsentLoggingEnabledForInstance:(NSString *)instanceName callback:(RCTResponseSenderBlock)callback) {
     Tealium *tealium = [Tealium instanceForKey:instanceName];
     [[tealium consentManager] isConsentLoggingEnabled];
+}
+
+RCT_EXPORT_METHOD(addRemoteCommand:(NSString *_Nonnull)commandID
+                  description:(NSString *)description) {
+    [self addRemoteCommandForInstance:tealiumInternalInstanceName commandID:commandID description:description];
+}
+
+
+
+RCT_EXPORT_METHOD(addRemoteCommandForInstance:(NSString *)instanceName
+                  commandID:(NSString *)commandID
+                  description:(NSString *)description) {
+    
+    Tealium *tealium = [Tealium instanceForKey:instanceName];
+    
+    [tealium addRemoteCommandID:commandID description:description targetQueue:dispatch_get_main_queue() responseBlock:^(TEALRemoteCommandResponse *_Nullable response) {
+        
+        if ([[response requestPayload] count] > 0) {
+            [self sendEventWithName: remoteCommandEventName body:[response requestPayload]];
+        } else {
+            RCTLogInfo(@"No response.");
+        }
+    }];
+}
+
+RCT_EXPORT_METHOD(removeRemoteCommand:(NSString *)commandID) {
+    [self removeRemoteCommandForInstance:tealiumInternalInstanceName commandID:commandID];
+}
+
+RCT_EXPORT_METHOD(removeRemoteCommandForInstance:(NSString *)instanceName
+                  commandID:(NSString *)commandID) {
+    Tealium *tealium = [Tealium instanceForKey:instanceName];
+    [tealium removeRemoteCommandID:commandID];
 }
 
 @end

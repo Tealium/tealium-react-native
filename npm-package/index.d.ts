@@ -361,7 +361,7 @@ declare module 'tealium-react-native' {
      * @param commandID Name of the Remote Command (if using TiQ, this is whatever is in the tag config)
      * @param description A description of the remote command
      */
-    static addRemoteCommandForInstance(
+    static addRemoteCommandForInstanceName(
       instanceName: string,
       commandID: string,
       description: string,
@@ -382,7 +382,7 @@ declare module 'tealium-react-native' {
      * @param instanceName Name of the Tealium instance
      * @param commandID Name of the Remote Command (if using TiQ, this is whatever is in the tag config)
      */
-    static removeRemoteCommandForInstance(
+    static removeRemoteCommandForInstanceName(
       instanceName: string,
       commandID: string,
     ): void;
