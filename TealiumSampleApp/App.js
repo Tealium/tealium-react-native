@@ -256,7 +256,7 @@ let allTests = [
         });
 
         // Instance-2
-        Tealium.addRemoteCommandForInstance("instance-2", "test_command2", "Hello remote command 2");
+        Tealium.addRemoteCommandForInstanceName("instance-2", "test_command2", "Hello remote command 2");
 
         // Need to send an event to get results back
         Tealium.trackEventForInstanceName("instance-2", "test_event_2");
@@ -320,7 +320,7 @@ let allTests = [
         Tealium.removeRemoteCommand("test_command");
 
         // Instance-2
-        Tealium.removeRemoteCommandForInstance("instance-2", "test_command2");
+        Tealium.removeRemoteCommandForInstanceName("instance-2", "test_command2");
 
         // HTTP Command
         Tealium.removeRemoteCommand("display");

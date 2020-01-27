@@ -203,7 +203,7 @@ export default class Tealium {
     }
 
     static isConsentLoggingEnabledForInstanceName(name, enabled) {
-        TealiumModule.isConsentLoggingEnabledForInstance(name, enabled);
+        TealiumModule.isConsentLoggingEnabledForInstanceName(name, enabled);
     }
 
     static addRemoteCommand(commandID, description) {
@@ -211,7 +211,7 @@ export default class Tealium {
     }
 
     static addRemoteCommandForInstanceName(name, commandID, description) {
-        TealiumModule.addRemoteCommandForInstance(name, commandID, description);
+        TealiumModule.addRemoteCommandForInstanceName(name, commandID, description);
     }
 
     static removeRemoteCommand(commandID) {
@@ -219,7 +219,7 @@ export default class Tealium {
     }
 
     static removeRemoteCommandForInstanceName(name, commandID) {
-        TealiumModule.removeRemoteCommandForInstance(name, commandID);
+        TealiumModule.removeRemoteCommandForInstanceName(name, commandID);
     }
   
 }

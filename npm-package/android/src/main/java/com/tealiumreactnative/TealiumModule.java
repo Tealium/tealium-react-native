@@ -558,7 +558,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void isConsentLoggingEnabled(Callback callback) {
-        isConsentLoggingEnabledForInstance(mTealiumInstanceName, callback);
+        isConsentLoggingEnabledForInstanceName(mTealiumInstanceName, callback);
     }
 
     @ReactMethod

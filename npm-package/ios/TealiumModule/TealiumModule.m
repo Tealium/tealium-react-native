@@ -274,10 +274,10 @@ RCT_EXPORT_METHOD(setConsentLoggingEnabledForInstance:(NSString *)instanceName e
 }
 
 RCT_EXPORT_METHOD(isConsentLoggingEnabled:(RCTResponseSenderBlock)callback) {
-    [self isConsentLoggingEnabledForInstance:tealiumInternalInstanceName callback:callback];
+    [self isConsentLoggingEnabledForInstanceName:tealiumInternalInstanceName callback:callback];
 }
 
-RCT_EXPORT_METHOD(isConsentLoggingEnabledForInstance:(NSString *)instanceName callback:(RCTResponseSenderBlock)callback) {
+RCT_EXPORT_METHOD(isConsentLoggingEnabledForInstanceName:(NSString *)instanceName callback:(RCTResponseSenderBlock)callback) {
     Tealium *tealium = [Tealium instanceForKey:instanceName];
     [[tealium consentManager] isConsentLoggingEnabled];
 }

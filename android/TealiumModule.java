@@ -558,11 +558,11 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void isConsentLoggingEnabled(Callback callback) {
-        isConsentLoggingEnabledForInstance(mTealiumInstanceName, callback);
+        isConsentLoggingEnabledForInstanceName(mTealiumInstanceName, callback);
     }
 
     @ReactMethod
-    public void isConsentLoggingEnabledForInstance(String instanceName, Callback callback) {
+    public void isConsentLoggingEnabledForInstanceName(String instanceName, Callback callback) {
         final Tealium instance = Tealium.getInstance(instanceName);
         if (instance == null) {
             Log.e(BuildConfig.TAG, "ResetUserConsentPreferences attempted, but Tealium not enabled for instance name: " + instanceName);
