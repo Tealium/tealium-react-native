@@ -284,12 +284,12 @@ RCT_EXPORT_METHOD(isConsentLoggingEnabledForInstance:(NSString *)instanceName ca
 
 RCT_EXPORT_METHOD(addRemoteCommand:(NSString *_Nonnull)commandID
                   description:(NSString *)description) {
-    [self addRemoteCommandForInstance:tealiumInternalInstanceName commandID:commandID description:description];
+    [self addRemoteCommandForInstanceName:tealiumInternalInstanceName commandID:commandID description:description];
 }
 
 
 
-RCT_EXPORT_METHOD(addRemoteCommandForInstance:(NSString *)instanceName
+RCT_EXPORT_METHOD(addRemoteCommandForInstanceName:(NSString *)instanceName
                   commandID:(NSString *)commandID
                   description:(NSString *)description) {
     
@@ -306,10 +306,10 @@ RCT_EXPORT_METHOD(addRemoteCommandForInstance:(NSString *)instanceName
 }
 
 RCT_EXPORT_METHOD(removeRemoteCommand:(NSString *)commandID) {
-    [self removeRemoteCommandForInstance:tealiumInternalInstanceName commandID:commandID];
+    [self removeRemoteCommandForInstanceName:tealiumInternalInstanceName commandID:commandID];
 }
 
-RCT_EXPORT_METHOD(removeRemoteCommandForInstance:(NSString *)instanceName
+RCT_EXPORT_METHOD(removeRemoteCommandForInstanceName:(NSString *)instanceName
                   commandID:(NSString *)commandID) {
     Tealium *tealium = [Tealium instanceForKey:instanceName];
     [tealium removeRemoteCommandID:commandID];

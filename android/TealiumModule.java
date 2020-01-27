@@ -575,11 +575,11 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void addRemoteCommand(String commandID, String description) {
-        addRemoteCommandForInstance(mTealiumInstanceName, commandID, description);
+        addRemoteCommandForInstanceName(mTealiumInstanceName, commandID, description);
     }
 
     @ReactMethod
-    public void addRemoteCommandForInstance(String instanceName, final String commandID, String description) {
+    public void addRemoteCommandForInstanceName(String instanceName, final String commandID, String description) {
 
         final Tealium instance = Tealium.getInstance(instanceName);
 
@@ -608,11 +608,11 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void removeRemoteCommand(String commandID) {
-        removeRemoteCommandForInstance(mTealiumInstanceName, commandID);
+        removeRemoteCommandForInstanceName(mTealiumInstanceName, commandID);
     }
 
     @ReactMethod
-    public void removeRemoteCommandForInstance(String instanceName, String commandID) {
+    public void removeRemoteCommandForInstanceName(String instanceName, String commandID) {
 
         final Tealium instance = Tealium.getInstance(instanceName);
 
