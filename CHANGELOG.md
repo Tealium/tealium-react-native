@@ -1,5 +1,9 @@
 # Change Log
 
+- 1.0.8
+  - Added support for [Remote Commands](https://docs.tealium.com/platforms/remote-commands/)
+  - Underlying Tealium libraries updated to versions 5.6.2 (Android) and 5.6.6 (iOS) 
+  - Added TypeScript typings. Thanks, [@jbristol-trav](https://github.com/jbristol-trav)!
 - 1.0.7
   - Support for ReactNative Autolinking in 0.60 and above
   - Better support for nested event data
