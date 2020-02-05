@@ -4,7 +4,8 @@ const { TealiumModule } = NativeModules;
 export default class Tealium {
 
     static remoteCommandEmitter = new NativeEventEmitter(TealiumModule);
-    
+    static remoteCommandCallbacks = {};
+
     static initialize(
         account,
         profile,
@@ -23,6 +24,19 @@ export default class Tealium {
             instanceName,
             isLifecycleEnabled,
         );
+
+        this.remoteCommandEmitter.addListener('RemoteCommandEvent',
+            (payload) => {
+                var commandId = payload["command_id"];
+                if (commandId) {
+                    var callback = this.remoteCommandCallbacks[commandId]
+                    if (callback) {
+                        callback(payload);
+                    }
+                }
+                // remoteCommandResult.push(payload)
+            }
+        )
     }
 
     static initializeWithConsentManager(
@@ -43,6 +57,20 @@ export default class Tealium {
             instanceName,
             isLifecycleEnabled,
         );
+
+        this.remoteCommandEmitter.addListener('RemoteCommandEvent',
+            (payload) => {
+                console.log("handling callback")
+                var commandId = payload["command_id"];
+                if (commandId) {
+                    var callback = this.remoteCommandCallbacks[commandId]
+                    if (callback) {
+                        callback(payload);
+                    }
+                }
+                // remoteCommandResult.push(payload)
+            }
+        )
     }
 
     static initializeCustom(
@@ -222,4 +250,9 @@ export default class Tealium {
         TealiumModule.removeRemoteCommandForInstanceName(name, commandID);
     }
   
+
+    static addRemoteCommandCallback(commandID, description, callback) {
+        this.addRemoteCommand(commandID, description)
+        this.remoteCommandCallbacks[commandID] = callback;
+    }
 }
