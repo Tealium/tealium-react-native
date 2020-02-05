@@ -20,9 +20,10 @@ let allTests = [
     title: "Track Event",
     run: () => {
       try {
-        Tealium.trackEvent("test_event", {
+        Tealium.trackEvent("second_verify", {
           "title": "test_event",
           "event_title": "test_event",
+          "event_name": "second_verify",
           "testkey": "testval",
           "anotherkey": "anotherval"
         });
@@ -246,13 +247,17 @@ let allTests = [
       try {
         // Main
         Tealium.addRemoteCommand("test_command", "Hello remote command");
+        Tealium.addRemoteCommandCallback("test_command2", "someStuff", function(payload) {
+          console.log("Callback Payload: " + JSON.stringify(payload))
+        })
 
         // Need to send an event to get results back
-        Tealium.trackEvent("test_event", {
+        Tealium.trackEvent("second_verify", {
           "title": "test_event",
           "event_title": "test_event",
           "testkey": "testval",
-          "anotherkey": "anotherval"
+          "anotherkey": "anotherval",
+          "event_name": "second_verify"
         });
 
         // Instance-2
@@ -375,7 +380,7 @@ export default class App extends React.Component {
     // );
 
     Tealium.initializeWithConsentManager(
-      'tealiummobile', 'react-native', 'qa',
+      'services-james', 'lib-mobile', 'qa',
       'your-ios-datasource', 'your-android-datasource'
     );
 
