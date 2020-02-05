@@ -6110,10 +6110,8 @@ tar@^4:
     safe-buffer "^5.1.2"
     yallist "^3.0.3"
 
-tealium-react-native@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/tealium-react-native/-/tealium-react-native-1.0.7.tgz#7e3d73f873261274d762cb6166112ac2eebec08f"
-  integrity sha512-1VM5Ie/bY8yAZdzhxnxMpr76ywdaBZNZE6SVO2kdZFTxTQGKT5q1Fn4573KGEf6HcGAA50POMGBMucDfiyqE9A==
+tealium-react-native@../npm-package:
+  version "1.0.8"
 
 temp@0.8.3:
   version "0.8.3"

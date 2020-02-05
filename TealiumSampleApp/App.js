@@ -2,15 +2,6 @@ import React, { Component } from 'react';
 import Tealium from 'tealium-react-native';
 import { Alert, AppRegistry, Button, StyleSheet, View, Text, ScrollView } from 'react-native';
 
-let remoteCommandResult = [];
-
-// Add RemoteCommandCallback listener - Don't forget to unsubscribe, typically in componentWillUnmount 
-const testCommandSubscription = Tealium.remoteCommandEmitter.addListener(
-  'RemoteCommandEvent',
-  (payload) => remoteCommandResult.push(payload)
-);
-
-
 /*
  * All tests go here. Each will show as a button in the app labeled with the title, and run
  * the "run" callback on press.
@@ -246,74 +237,49 @@ let allTests = [
     run: () => {
       try {
         // Main
-        Tealium.addRemoteCommand("test_command", "Hello remote command");
-        Tealium.addRemoteCommandCallback("test_command2", "someStuff", function(payload) {
-          console.log("Callback Payload: " + JSON.stringify(payload))
-        })
+        Tealium.addRemoteCommand("test_command", "Hello remote command", function(payload) {
+          console.log("test_command data: ")
+          console.log(JSON.stringify(payload))
+        });
 
         // Need to send an event to get results back
-        Tealium.trackEvent("second_verify", {
+        Tealium.trackEvent("test_event", {
           "title": "test_event",
           "event_title": "test_event",
           "testkey": "testval",
           "anotherkey": "anotherval",
-          "event_name": "second_verify"
+          "event_name": "second_verify",
+          "instance": "MAIN"
         });
 
         // Instance-2
-        Tealium.addRemoteCommandForInstanceName("instance-2", "test_command2", "Hello remote command 2");
+        Tealium.addRemoteCommandForInstanceName("instance-2", "test_command2", "Hello remote command 2", function(payload) {
+          console.log("test_command2 data: ")
+          console.log(JSON.stringify(payload))
+        });
 
         // Need to send an event to get results back
-        Tealium.trackEventForInstanceName("instance-2", "test_event_2");
+        Tealium.trackEventForInstanceName("instance-2", "test_event_2", {"instance": "instance-2"});
 
         // HTTP Command
-        Tealium.addRemoteCommand("display", "Hello remote command");
+        Tealium.addRemoteCommand("display", "Hello remote command", function(payload) {
+          console.log("display data: ")
+          console.log(JSON.stringify(payload))
+          Alert.alert(`display data: ${JSON.stringify(payload)}`)
+        });
 
         // Need to send an event to get results back
         Tealium.trackEvent("display_data", {
           "title": "display_data_event",
           "event_title": "display_data_test_event",
           "testkey": "testval",
-          "anotherkey": "anotherval"
+          "anotherkey": "anotherval",
+          "instance": "MAIN"
         });
 
       } catch(err) {
         Alert.alert(`Issue adding remote command: ${err}`);
         console.log(err)
-      }
-    }
-  },
-    {
-    title: "Handle Remote Command Results",
-    run: () => {
-      try {
-        let resultTestCommand = {},
-        resultTestCommand2 = {},
-        resultDisplay = {};
-        for (let command of remoteCommandResult) {
-              switch(command["command_id"]) {
-                case "test_command":
-                  resultTestCommand = command;
-                    break;
-                case "test_command2":
-                  resultTestCommand2 = command;
-                  break;
-                case "display":
-                  resultDisplay = command;
-                  break;
-                default:
-                  break;
-              }
-        }
-        console.log("test_command data: ")
-        console.log(JSON.stringify(resultTestCommand));
-        console.log("test_command2 data: ")
-        console.log(JSON.stringify(resultTestCommand2));
-        console.log("display data: ")
-        console.log(JSON.stringify(resultDisplay));
-        Alert.alert(`display data: ${JSON.stringify(resultDisplay)}`)
-      } catch(err) {
-        Alert.alert(`Issue displaying remote command results: ${err}`);
       }
     }
   },
@@ -380,7 +346,7 @@ export default class App extends React.Component {
     // );
 
     Tealium.initializeWithConsentManager(
-      'services-james', 'lib-mobile', 'qa',
+      'tealiummobile', 'react-native', 'qa',
       'your-ios-datasource', 'your-android-datasource'
     );
 
@@ -432,10 +398,6 @@ export default class App extends React.Component {
    */
   reset() {
     this.setState({tests: allTests.map(test => ({title: test.title, run: test.run, count: 0}))});
-  }
-
-  componentWillUnmount() {
-        testCommandSubscription.remove();
   }
 
   render() {

@@ -24,19 +24,7 @@ export default class Tealium {
             instanceName,
             isLifecycleEnabled,
         );
-
-        this.remoteCommandEmitter.addListener('RemoteCommandEvent',
-            (payload) => {
-                var commandId = payload["command_id"];
-                if (commandId) {
-                    var callback = this.remoteCommandCallbacks[commandId]
-                    if (callback) {
-                        callback(payload);
-                    }
-                }
-                // remoteCommandResult.push(payload)
-            }
-        )
+        this.addRemoteCommandListener('RemoteCommandEvent');
     }
 
     static initializeWithConsentManager(
@@ -57,20 +45,7 @@ export default class Tealium {
             instanceName,
             isLifecycleEnabled,
         );
-
-        this.remoteCommandEmitter.addListener('RemoteCommandEvent',
-            (payload) => {
-                console.log("handling callback")
-                var commandId = payload["command_id"];
-                if (commandId) {
-                    var callback = this.remoteCommandCallbacks[commandId]
-                    if (callback) {
-                        callback(payload);
-                    }
-                }
-                // remoteCommandResult.push(payload)
-            }
-        )
+        this.addRemoteCommandListener('RemoteCommandEvent');
     }
 
     static initializeCustom(
@@ -99,6 +74,7 @@ export default class Tealium {
             collectURL,
             enableConsentManager
         );
+        this.addRemoteCommandListener('RemoteCommandEvent');
     }
 
     static trackEvent(stringTitle, data) {
@@ -234,25 +210,39 @@ export default class Tealium {
         TealiumModule.isConsentLoggingEnabledForInstanceName(name, enabled);
     }
 
-    static addRemoteCommand(commandID, description) {
+    static addRemoteCommand(commandID, description, callback) {
         TealiumModule.addRemoteCommand(commandID, description);
+        this.remoteCommandCallbacks[commandID] = callback;
     }
 
-    static addRemoteCommandForInstanceName(name, commandID, description) {
+    static addRemoteCommandForInstanceName(name, commandID, description, callback) {
         TealiumModule.addRemoteCommandForInstanceName(name, commandID, description);
+        if (this.remoteCommandCallbacks[commandID] == undefined) {
+            this.remoteCommandCallbacks[commandID] = callback;
+        }
     }
 
     static removeRemoteCommand(commandID) {
         TealiumModule.removeRemoteCommand(commandID);
+        delete this.remoteCommandCallbacks[commandID];
     }
 
     static removeRemoteCommandForInstanceName(name, commandID) {
         TealiumModule.removeRemoteCommandForInstanceName(name, commandID);
+        delete this.remoteCommandCallbacks[commandID];
     }
-  
 
-    static addRemoteCommandCallback(commandID, description, callback) {
-        this.addRemoteCommand(commandID, description)
-        this.remoteCommandCallbacks[commandID] = callback;
-    }
+    static addRemoteCommandListener(eventName) {
+        this.remoteCommandEmitter.addListener(eventName,
+            (payload) => {
+                var commandID = payload["command_id"];
+                if (commandID) {
+                    var callback = this.remoteCommandCallbacks[commandID]
+                    if (callback) {
+                        callback(payload);
+                    }
+                }
+            }
+        )
+    }       
 }
