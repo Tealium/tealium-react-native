@@ -36,7 +36,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.ArrayList;
 
 
 /**
@@ -50,7 +49,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
     private boolean mDidTrackInitialLaunch = false;
     private static ReactApplicationContext mReactContext;
     private static String mRemoteCommandEvent = "RemoteCommandEvent";
-    private static List<RemoteCommand> mRemoteCommands = new ArrayList<RemoteCommand>();
+    private static Map<String, RemoteCommand> mRemoteCommandsMap = new HashMap<>();
 
 
     public TealiumModule(ReactApplicationContext context) {
@@ -603,7 +602,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         };
 
         instance.addRemoteCommand(remoteCommand);
-        mRemoteCommands.add(remoteCommand);
+        mRemoteCommandsMap.put(commandID, remoteCommand);
     }
 
     @ReactMethod
@@ -621,12 +620,11 @@ public class TealiumModule extends ReactContextBaseJavaModule {
             return;
         }
 
-        for (int i = 0; i < mRemoteCommands.size(); i++) {
-            RemoteCommand rc = mRemoteCommands.get(i);
-            if (commandID.equals(rc.toString())) {
-                instance.removeRemoteCommand(rc);
-                Log.d(BuildConfig.TAG, "Remote command with id `" + commandID + "` has been removed from `" + instanceName + "`");
-            }
+        if (mRemoteCommandsMap.get(commandID) != null) {
+            instance.removeRemoteCommand(mRemoteCommandsMap.get(commandID));
+            Log.i(BuildConfig.TAG, "Remote command with id `" + commandID + "` has been removed from `" + instanceName + "`");
+        } else {
+            Log.d(BuildConfig.TAG, "Remote command with id `" + commandID + "` does not exist");
         }
 
     }
