@@ -38,7 +38,6 @@ android {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    // api 'com.tealium:library:5.7.0'
-    api 'com.tealium:library:5.6.2'
+    api 'com.tealium:library:5.7.0'
     api 'com.tealium:lifecycle:1.1.3'
 }
