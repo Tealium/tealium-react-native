@@ -1,8 +1,11 @@
-import { NativeModules } from 'react-native';
-
+import { NativeEventEmitter, NativeModules } from 'react-native';
 const { TealiumModule } = NativeModules;
 
 export default class Tealium {
+
+    static remoteCommandEmitter = new NativeEventEmitter(TealiumModule);
+    static remoteCommandCallbacks = {};
+
     static initialize(
         account,
         profile,
@@ -21,6 +24,7 @@ export default class Tealium {
             instanceName,
             isLifecycleEnabled,
         );
+        this.addRemoteCommandListener('RemoteCommandEvent');
     }
 
     static initializeWithConsentManager(
@@ -41,6 +45,7 @@ export default class Tealium {
             instanceName,
             isLifecycleEnabled,
         );
+        this.addRemoteCommandListener('RemoteCommandEvent');
     }
 
     static initializeCustom(
@@ -69,6 +74,7 @@ export default class Tealium {
             collectURL,
             enableConsentManager
         );
+        this.addRemoteCommandListener('RemoteCommandEvent');
     }
 
     static trackEvent(stringTitle, data) {
@@ -201,6 +207,42 @@ export default class Tealium {
     }
 
     static isConsentLoggingEnabledForInstanceName(name, enabled) {
-        TealiumModule.isConsentLoggingEnabledForInstance(name, enabled);
+        TealiumModule.isConsentLoggingEnabledForInstanceName(name, enabled);
     }
+
+    static addRemoteCommand(commandID, description, callback) {
+        TealiumModule.addRemoteCommand(commandID, description);
+        this.remoteCommandCallbacks[commandID] = callback;
+    }
+
+    static addRemoteCommandForInstanceName(name, commandID, description, callback) {
+        TealiumModule.addRemoteCommandForInstanceName(name, commandID, description);
+        if (this.remoteCommandCallbacks[commandID] == undefined) {
+            this.remoteCommandCallbacks[commandID] = callback;
+        }
+    }
+
+    static removeRemoteCommand(commandID) {
+        TealiumModule.removeRemoteCommand(commandID);
+        delete this.remoteCommandCallbacks[commandID];
+    }
+
+    static removeRemoteCommandForInstanceName(name, commandID) {
+        TealiumModule.removeRemoteCommandForInstanceName(name, commandID);
+        delete this.remoteCommandCallbacks[commandID];
+    }
+
+    static addRemoteCommandListener(eventName) {
+        this.remoteCommandEmitter.addListener(eventName,
+            (payload) => {
+                var commandID = payload["command_id"];
+                if (commandID) {
+                    var callback = this.remoteCommandCallbacks[commandID]
+                    if (callback) {
+                        callback(payload);
+                    }
+                }
+            }
+        )
+    }       
 }

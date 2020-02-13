@@ -436,18 +436,14 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TealiumSampleApp/Pods-TealiumSampleApp-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-TealiumSampleApp/Pods-TealiumSampleApp-frameworks.sh",
 				"${PODS_ROOT}/TealiumIOS/TealiumIOS.framework",
 				"${PODS_ROOT}/TealiumIOS/TealiumIOS.framework.dSYM",
 				"${PODS_ROOT}/TealiumIOSLifecycle/TealiumIOSLifecycle.framework",
 				"${PODS_ROOT}/TealiumIOSLifecycle/TealiumIOSLifecycle.framework.dSYM",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TealiumIOS.framework",
 				"${DWARF_DSYM_FOLDER_PATH}/TealiumIOS.framework.dSYM",
@@ -456,7 +452,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TealiumSampleApp/Pods-TealiumSampleApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TealiumSampleApp/Pods-TealiumSampleApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C3DBE9DBD3A593D188E186AE /* [CP] Check Pods Manifest.lock */ = {

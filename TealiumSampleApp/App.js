@@ -11,16 +11,17 @@ let allTests = [
     title: "Track Event",
     run: () => {
       try {
-        Tealium.trackEvent("test_event", {
+        Tealium.trackEvent("second_verify", {
           "title": "test_event",
           "event_title": "test_event",
+          "event_name": "second_verify",
           "testkey": "testval",
           "anotherkey": "anotherval"
         });
         Tealium.trackEventForInstanceName("instance-2", "test_event_2");
         Tealium.getUserConsentStatusForInstanceName("instance-2", function(userConsentStatus) {
-            console.log("consent status 'instance-2': " + userConsentStatus);
-        });
+           console.log("consent status 'instance-2': " + userConsentStatus);
+       });
       } catch(err) {
         Alert.alert(`Issue tracking event: ${err}`);
       }
@@ -231,6 +232,76 @@ let allTests = [
       }
     }
   },
+    {
+    title: "Add Remote Command",
+    run: () => {
+      try {
+        // Main
+        Tealium.addRemoteCommand("test_command", "Hello remote command", function(payload) {
+          console.log("test_command data: ")
+          console.log(JSON.stringify(payload))
+        });
+
+        // Need to send an event to get results back
+        Tealium.trackEvent("test_event", {
+          "title": "test_event",
+          "event_title": "test_event",
+          "testkey": "testval",
+          "anotherkey": "anotherval",
+          "event_name": "second_verify",
+          "instance": "MAIN"
+        });
+
+        // Instance-2
+        Tealium.addRemoteCommandForInstanceName("instance-2", "test_command2", "Hello remote command 2", function(payload) {
+          console.log("test_command2 data: ")
+          console.log(JSON.stringify(payload))
+        });
+
+        // Need to send an event to get results back
+        Tealium.trackEventForInstanceName("instance-2", "test_event_2", {"instance": "instance-2"});
+
+        // HTTP Command
+        Tealium.addRemoteCommand("display", "Hello remote command", function(payload) {
+          console.log("display data: ")
+          console.log(JSON.stringify(payload))
+          Alert.alert(`display data: ${JSON.stringify(payload)}`)
+        });
+
+        // Need to send an event to get results back
+        Tealium.trackEvent("display_data", {
+          "title": "display_data_event",
+          "event_title": "display_data_test_event",
+          "testkey": "testval",
+          "anotherkey": "anotherval",
+          "instance": "MAIN"
+        });
+
+      } catch(err) {
+        Alert.alert(`Issue adding remote command: ${err}`);
+        console.log(err)
+      }
+    }
+  },
+  {
+    title: "Remove Remote Command",
+    run: () => {
+      try {
+        // Main
+        Tealium.removeRemoteCommand("test_command");
+
+        // Instance-2
+        Tealium.removeRemoteCommandForInstanceName("instance-2", "test_command2");
+
+        // HTTP Command
+        Tealium.removeRemoteCommand("display");
+
+      } catch(err) {
+        Alert.alert(`Issue removing remote command: ${err}`);
+        console.log(err)
+      }
+    }
+  }
 ];
 
 /*

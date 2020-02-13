@@ -12,7 +12,7 @@
     "dependencies": {
         "react": "16.9.0",
         "react-native": "0.61.3",
-        "tealium-react-native": "^1.0.7"
+        "tealium-react-native": "../npm-package"
     },
     "devDependencies": {
         "@babel/core": "^7.6.4",

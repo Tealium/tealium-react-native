@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -14,10 +16,15 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.ReadableType;
+import com.facebook.react.bridge.WritableArray;
 import com.tealium.library.BuildConfig;
 import com.tealium.library.ConsentManager;
 import com.tealium.library.Tealium;
 import com.tealium.lifecycle.LifeCycle;
+import com.tealium.internal.tagbridge.RemoteCommand;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.Arguments;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -40,10 +47,22 @@ public class TealiumModule extends ReactContextBaseJavaModule {
     private static String mTealiumInstanceName;
     private static boolean mIsLifecycleAutotracking = false;
     private boolean mDidTrackInitialLaunch = false;
+    private static ReactApplicationContext mReactContext;
+    private static String mRemoteCommandEvent = "RemoteCommandEvent";
+    private static Map<String, RemoteCommand> mRemoteCommandsMap = new HashMap<>();
 
-    public TealiumModule(ReactApplicationContext reactContext) {
-        super(reactContext);
 
+    public TealiumModule(ReactApplicationContext context) {
+        super(context);
+        mReactContext = context;
+    }
+
+    private void sendEvent(ReactApplicationContext reactContext,
+                           String eventName,
+                           @Nullable WritableMap params) {
+        reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(eventName, params);
     }
 
     @Override
@@ -82,12 +101,12 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void initializeWithConsentManager(String account,
-                           String profile,
-                           String environment,
-                           String iosDatasource,
-                           String androidDatasource,
-                           String instance,
-                           boolean isLifecycleEnabled) {
+                                             String profile,
+                                             String environment,
+                                             String iosDatasource,
+                                             String androidDatasource,
+                                             String instance,
+                                             boolean isLifecycleEnabled) {
 
         if (account == null || profile == null || environment == null) {
             throw new IllegalArgumentException("Account, profile, and environment parameters must be provided and non-null");
@@ -200,7 +219,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         Set<String> keySet = mapData.keySet();
         for (String key : keySet) {
             if (mapData.get(key) instanceof Map) {
-                mapData.put(key, new JSONObject((Map)mapData.get(key)));
+                mapData.put(key, new JSONObject((Map) mapData.get(key)));
             }
         }
         return mapData;
@@ -538,11 +557,11 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void isConsentLoggingEnabled(Callback callback) {
-        isConsentLoggingEnabledForInstance(mTealiumInstanceName, callback);
+        isConsentLoggingEnabledForInstanceName(mTealiumInstanceName, callback);
     }
 
     @ReactMethod
-    public void isConsentLoggingEnabledForInstance(String instanceName, Callback callback) {
+    public void isConsentLoggingEnabledForInstanceName(String instanceName, Callback callback) {
         final Tealium instance = Tealium.getInstance(instanceName);
         if (instance == null) {
             Log.e(BuildConfig.TAG, "ResetUserConsentPreferences attempted, but Tealium not enabled for instance name: " + instanceName);
@@ -551,6 +570,63 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         if (instance.getConsentManager() != null) {
             callback.invoke(instance.getConsentManager().isConsentLogging());
         }
+    }
+
+    @ReactMethod
+    public void addRemoteCommand(String commandID, String description) {
+        addRemoteCommandForInstanceName(mTealiumInstanceName, commandID, description);
+    }
+
+    @ReactMethod
+    public void addRemoteCommandForInstanceName(String instanceName, final String commandID, String description) {
+
+        final Tealium instance = Tealium.getInstance(instanceName);
+
+        if (instance == null) {
+            Log.e(BuildConfig.TAG, "addRemoteCommand attempted, but Tealium not enabled for instance name: " + instanceName);
+            return;
+        }
+
+        RemoteCommand remoteCommand = new RemoteCommand(commandID, description) {
+            @Override
+            protected void onInvoke(Response remoteCommandResponse) throws Exception {
+                JSONObject payload = remoteCommandResponse.getRequestPayload();
+                WritableMap params = convertJsonToMap(payload);
+                sendEvent(mReactContext, mRemoteCommandEvent, params);
+            }
+
+            @Override
+            public String toString() {
+                return commandID;
+            }
+        };
+
+        instance.addRemoteCommand(remoteCommand);
+        mRemoteCommandsMap.put(commandID, remoteCommand);
+    }
+
+    @ReactMethod
+    public void removeRemoteCommand(String commandID) {
+        removeRemoteCommandForInstanceName(mTealiumInstanceName, commandID);
+    }
+
+    @ReactMethod
+    public void removeRemoteCommandForInstanceName(String instanceName, String commandID) {
+
+        final Tealium instance = Tealium.getInstance(instanceName);
+
+        if (instance == null) {
+            Log.e(BuildConfig.TAG, "addRemoteCommand attempted, but Tealium not enabled for instance name: " + instanceName);
+            return;
+        }
+
+        if (mRemoteCommandsMap.get(commandID) != null) {
+            instance.removeRemoteCommand(mRemoteCommandsMap.get(commandID));
+            Log.i(BuildConfig.TAG, "Remote command with id `" + commandID + "` has been removed from `" + instanceName + "`");
+        } else {
+            Log.d(BuildConfig.TAG, "Remote command with id `" + commandID + "` does not exist");
+        }
+
     }
 
 
@@ -598,7 +674,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         try {
             if (getReactApplicationContext().hasCurrentActivity()) {
                 app = getReactApplicationContext().getCurrentActivity().getApplication();
-            } else if (getCurrentActivity() != null){
+            } else if (getCurrentActivity() != null) {
                 app = getCurrentActivity().getApplication();
             } else {
                 app = (Application) getReactApplicationContext().getApplicationContext();
@@ -609,6 +685,56 @@ public class TealiumModule extends ReactContextBaseJavaModule {
             Log.d(BuildConfig.TAG, "getApplication: failed to cast to Application. ", ex);
         }
         return app;
+    }
+
+    private static WritableMap convertJsonToMap(JSONObject jsonObject) throws JSONException {
+        WritableMap map = Arguments.createMap();
+
+        Iterator<String> iterator = jsonObject.keys();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            Object value = jsonObject.get(key);
+            if (value instanceof JSONObject) {
+                map.putMap(key, convertJsonToMap((JSONObject) value));
+            } else if (value instanceof JSONArray) {
+                map.putArray(key, convertJsonToArray((JSONArray) value));
+            } else if (value instanceof Boolean) {
+                map.putBoolean(key, (Boolean) value);
+            } else if (value instanceof Integer) {
+                map.putInt(key, (Integer) value);
+            } else if (value instanceof Double) {
+                map.putDouble(key, (Double) value);
+            } else if (value instanceof String) {
+                map.putString(key, (String) value);
+            } else {
+                map.putString(key, value.toString());
+            }
+        }
+        return map;
+    }
+
+    private static WritableArray convertJsonToArray(JSONArray jsonArray) throws JSONException {
+        WritableArray array = Arguments.createArray();
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            Object value = jsonArray.get(i);
+            if (value instanceof JSONObject) {
+                array.pushMap(convertJsonToMap((JSONObject) value));
+            } else if (value instanceof JSONArray) {
+                array.pushArray(convertJsonToArray((JSONArray) value));
+            } else if (value instanceof Boolean) {
+                array.pushBoolean((Boolean) value);
+            } else if (value instanceof Integer) {
+                array.pushInt((Integer) value);
+            } else if (value instanceof Double) {
+                array.pushDouble((Double) value);
+            } else if (value instanceof String) {
+                array.pushString((String) value);
+            } else {
+                array.pushString(value.toString());
+            }
+        }
+        return array;
     }
 
 }
