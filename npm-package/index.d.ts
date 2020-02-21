@@ -18,7 +18,7 @@ declare module 'tealium-react-native' {
      * @param iosDataSource A data source key from UDH eg. “abc123”
      * @param androidDataSource A data source key from UDH eg. “def456”
      */
-    export default static initialize(
+    static initialize(
       account: string,
       profile = string,
       environment: string,
@@ -34,7 +34,7 @@ declare module 'tealium-react-native' {
      * @param iosDataSource A data source key from UDH eg. “abc123”
      * @param androidDataSource A data source key from UDH eg. “def456”
      */
-    export default static initializeWithConsentManager(
+    static initializeWithConsentManager(
       account: string,
       profile = string,
       environment: string,
@@ -56,7 +56,7 @@ declare module 'tealium-react-native' {
      * @param enableCollectEndpoint True sends data to the Collect endpoint (default: true)
      * @param enableConsentManager True enables Consent Management
      */
-    export default static initializeCustom(
+    static initializeCustom(
       account: string,
       profile = string,
       environment: string,
