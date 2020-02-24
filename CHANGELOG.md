@@ -1,5 +1,8 @@
 # Change Log
 
+- 1.0.9
+  - Bug fix
+    - Removed duplicate default keywords from Typescript definitions file
 - 1.0.8
   - Added support for [Remote Commands](https://docs.tealium.com/platforms/remote-commands/)
   - Underlying Tealium libraries updated to versions 5.7.0 (Android) and 5.6.6 (iOS) 
