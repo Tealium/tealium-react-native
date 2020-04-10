@@ -83,7 +83,7 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
                   isLifeCycleEnabled:(BOOL)isLifeCycleEnabled
                   overridePublisthSettingsURL:(NSString *)overridePublisthSettingsURL
                   overrideTagManagementURL:(NSString *)overrideTagManagementURL
-                  collectURL:(BOOL)enableCollectURL
+                  overrideCollectURL:(NSString *)overrideCollectURL
                   enableConsentManager:(BOOL)enableConsentManager
                   ) {
     // Set your account, profile, and environment
@@ -99,8 +99,8 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
     if (overrideTagManagementURL) {
         configuration.overrideTagManagementURL = overrideTagManagementURL;
     }
-    if (!enableCollectURL) {
-        configuration.collectURL = TEALCollectURLVdata;
+    if (overrideCollectURL) {
+        configuration.setOverrideCollectDispatchURL = overrideCollectURL;
     }
     configuration.enableConsentManager = enableConsentManager;
     

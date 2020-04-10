@@ -16,8 +16,10 @@ let allTests = [
           "event_title": "test_event",
           "event_name": "second_verify",
           "testkey": "testval",
-          "anotherkey": "anotherval"
+          "anotherkey": "anotherval",
+          "test_int": 1
         });
+        console.log("HELLO WORLD")
         Tealium.trackEventForInstanceName("instance-2", "test_event_2");
         Tealium.getUserConsentStatusForInstanceName("instance-2", function(userConsentStatus) {
            console.log("consent status 'instance-2': " + userConsentStatus);
@@ -31,11 +33,13 @@ let allTests = [
     title: "Track View",
     run: () => {
       try {
+        console.log("HEEELLLLOOO")
         Tealium.trackView("test_view", {
           "title": "test_view",
           "event_title": "test_view",
           "testkey": "testval",
-          "anotherkey": "anotherval"
+          "anotherkey": "anotherval",
+          "test_int": 1
         });
         Tealium.trackViewForInstanceName("instance-2", "test_view_2");
       } catch(err) {
@@ -345,16 +349,16 @@ export default class App extends React.Component {
     //   'your-ios-datasource', 'your-android-datasource'
     // );
 
-    Tealium.initializeWithConsentManager(
-      'tealiummobile', 'react-native', 'qa',
-      'your-ios-datasource', 'your-android-datasource'
-    );
+    // Tealium.initializeWithConsentManager(
+    //   'tealiummobile', 'react-native', 'qa',
+    //   'your-ios-datasource', 'your-android-datasource'
+    // );
 
     // Multiton example
     Tealium.initializeCustom(
       'tealiummobile', 'react-native', 'qa',
       'your-ios-datasource', 'your-android-datasource', 'instance-2',
-      true, null, null, true, true
+      true, null, null, "https://collect.tealiumiq.com/event", true
     );
   }
 

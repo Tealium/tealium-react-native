@@ -187,6 +187,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
         if (data != null) {
             Map<String, Object> mapData = convertMapsToJson(data.toHashMap());
+            Log.wtf("TEST", mapData);
             instance.trackEvent(eventName, mapData);
         } else {
             instance.trackEvent(eventName, null);
