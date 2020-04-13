@@ -92,6 +92,7 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
                                                                            profile:profile
                                                                        environment:environment
                                                                         datasource:iosDatasource];
+    tealiumInternalInstanceName = instance;
     [configuration setAutotrackingLifecycleEnabled:isLifeCycleEnabled];
     
     if (overridePublisthSettingsURL) {

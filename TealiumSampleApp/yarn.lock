@@ -6111,7 +6111,7 @@ tar@^4:
     yallist "^3.0.3"
 
 tealium-react-native@../npm-package:
-  version "1.0.8"
+  version "1.1.0"
 
 temp@0.8.3:
   version "0.8.3"

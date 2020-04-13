@@ -146,7 +146,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         if (account == null || profile == null || environment == null) {
             throw new IllegalArgumentException("Account, profile, and environment parameters must be provided and non-null");
         }
-
+        mTealiumInstanceName = instance;
         final Tealium.Config config = Tealium.Config.create(getApplication(), account, profile, environment);
         if (androidDatasource != null) {
             config.setDatasourceId(androidDatasource);

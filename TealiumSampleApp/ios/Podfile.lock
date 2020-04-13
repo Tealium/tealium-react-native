@@ -217,7 +217,7 @@ PODS:
     - React-cxxreact (= 0.61.3)
     - React-jsi (= 0.61.3)
     - ReactCommon/jscallinvoker (= 0.61.3)
-  - tealium-react-native (1.0.9):
+  - tealium-react-native (1.1.0):
     - React
     - TealiumIOS (= 5.6.6)
     - TealiumIOSLifecycle (= 5.6.6)
@@ -342,7 +342,7 @@ SPEC CHECKSUMS:
   React-RCTText: b8f895b94aa0e7778fef28d13f3d71eed4a10c3d
   React-RCTVibration: 262588c97551b0b1c675468cda857466ba5af18f
   ReactCommon: c2c63d9290b422ca6ad5b3663073a015dd892ae9
-  tealium-react-native: 7224246de28d4ca8b93adba54b3fd3b502fc9362
+  tealium-react-native: 909c20e1ed01a6e82a21350a21c2001f93c700e4
   TealiumIOS: 6fa0157ef4ea13ff56b576e17d90085dc2fe9c4d
   TealiumIOSLifecycle: f26daa58f08ea3a76b96363b966698c5c79af6ed
   Yoga: 02036f6383c0008edb7ef0773a0e6beb6ce82bd1

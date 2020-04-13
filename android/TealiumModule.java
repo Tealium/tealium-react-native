@@ -146,7 +146,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         if (account == null || profile == null || environment == null) {
             throw new IllegalArgumentException("Account, profile, and environment parameters must be provided and non-null");
         }
-
+        mTealiumInstanceName = instance;
         final Tealium.Config config = Tealium.Config.create(getApplication(), account, profile, environment);
         if (androidDatasource != null) {
             config.setDatasourceId(androidDatasource);
@@ -187,7 +187,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         }
 
         if (data != null) {
-            Map<String, Object> mapData = com.tealiumreactnative.MapUtil.toMap(data);
+            Map<String, Object> mapData = toMap(data);
             instance.trackEvent(eventName, mapData);
         } else {
             instance.trackEvent(eventName, null);
@@ -592,8 +592,8 @@ public class TealiumModule extends ReactContextBaseJavaModule {
             @Override
             protected void onInvoke(Response remoteCommandResponse) throws Exception {
                 JSONObject payload = remoteCommandResponse.getRequestPayload();
-                Map<String, Object> map = com.tealiumreactnative.MapUtil.toMap(payload);
-                WritableMap params = com.tealiumreactnative.MapUtil.toWritableMap(map);
+                Map<String, Object> map = toMap(payload);
+                WritableMap params = toWritableMap(map);
                 sendEvent(mReactContext, mRemoteCommandEvent, params);
             }
 
@@ -631,6 +631,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     }
 
+    // Helper Methods
 
     private Set<String> jsonArrayToStringSet(JSONArray json) {
         Set<String> strSet = new HashSet<>();
@@ -688,15 +689,6 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         }
         return app;
     }
-}
-
-/*
-  ArrayUtil exposes a set of helper methods for working with
-  ReadableArray (by React Native), Object[], and JSONArray.
-  https://gist.github.com/mfmendiola/bb8397162df9f76681325ab9f705748b
- */
-
-class ArrayUtil {
 
     public static JSONArray toJSONArray(ReadableArray readableArray) throws JSONException {
         JSONArray jsonArray = new JSONArray();
@@ -723,10 +715,10 @@ class ArrayUtil {
                     jsonArray.put(i, readableArray.getString(i));
                     break;
                 case Map:
-                    jsonArray.put(i, com.tealiumreactnative.MapUtil.toJSONObject(readableArray.getMap(i)));
+                    jsonArray.put(i, toJSONObject(readableArray.getMap(i)));
                     break;
                 case Array:
-                    jsonArray.put(i, com.tealiumreactnative.ArrayUtil.toJSONArray(readableArray.getArray(i)));
+                    jsonArray.put(i, toJSONArray(readableArray.getArray(i)));
                     break;
             }
         }
@@ -741,10 +733,10 @@ class ArrayUtil {
             Object value = jsonArray.get(i);
 
             if (value instanceof JSONObject) {
-                value = com.tealiumreactnative.MapUtil.toMap((JSONObject) value);
+                value = toMap((JSONObject) value);
             }
             if (value instanceof JSONArray) {
-                value = com.tealiumreactnative.ArrayUtil.toArray((JSONArray) value);
+                value = toArray((JSONArray) value);
             }
 
             array[i] = value;
@@ -777,10 +769,10 @@ class ArrayUtil {
                     array[i] = readableArray.getString(i);
                     break;
                 case Map:
-                    array[i] = com.tealiumreactnative.MapUtil.toMap(readableArray.getMap(i));
+                    array[i] = toMap(readableArray.getMap(i));
                     break;
                 case Array:
-                    array[i] = com.tealiumreactnative.ArrayUtil.toArray(readableArray.getArray(i));
+                    array[i] = toArray(readableArray.getArray(i));
                     break;
             }
         }
@@ -810,24 +802,15 @@ class ArrayUtil {
                 writableArray.pushString((String) value);
             }
             if (value instanceof Map) {
-                writableArray.pushMap(com.tealiumreactnative.MapUtil.toWritableMap((Map<String, Object>) value));
+                writableArray.pushMap(toWritableMap((Map<String, Object>) value));
             }
             if (value.getClass().isArray()) {
-                writableArray.pushArray(com.tealiumreactnative.ArrayUtil.toWritableArray((Object[]) value));
+                writableArray.pushArray(toWritableArray((Object[]) value));
             }
         }
 
         return writableArray;
     }
-}
-
-/*
-  MapUtil exposes a set of helper methods for working with
-  ReadableMap (by React Native), Map<String, Object>, and JSONObject.
-  https://gist.github.com/mfmendiola/bb8397162df9f76681325ab9f705748b
- */
-
-class MapUtil {
 
     public static JSONObject toJSONObject(ReadableMap readableMap) throws JSONException {
         JSONObject jsonObject = new JSONObject();
@@ -856,10 +839,10 @@ class MapUtil {
                     jsonObject.put(key, readableMap.getString(key));
                     break;
                 case Map:
-                    jsonObject.put(key, com.tealiumreactnative.MapUtil.toJSONObject(readableMap.getMap(key)));
+                    jsonObject.put(key, toJSONObject(readableMap.getMap(key)));
                     break;
                 case Array:
-                    jsonObject.put(key, com.tealiumreactnative.ArrayUtil.toJSONArray(readableMap.getArray(key)));
+                    jsonObject.put(key, toJSONArray(readableMap.getArray(key)));
                     break;
             }
         }
@@ -876,10 +859,10 @@ class MapUtil {
             Object value = jsonObject.get(key);
 
             if (value instanceof JSONObject) {
-                value = com.tealiumreactnative.MapUtil.toMap((JSONObject) value);
+                value = toMap((JSONObject) value);
             }
             if (value instanceof JSONArray) {
-                value = com.tealiumreactnative.ArrayUtil.toArray((JSONArray) value);
+                value = toArray((JSONArray) value);
             }
 
             map.put(key, value);
@@ -914,10 +897,10 @@ class MapUtil {
                     map.put(key, readableMap.getString(key));
                     break;
                 case Map:
-                    map.put(key, com.tealiumreactnative.MapUtil.toMap(readableMap.getMap(key)));
+                    map.put(key, toMap(readableMap.getMap(key)));
                     break;
                 case Array:
-                    map.put(key, com.tealiumreactnative.ArrayUtil.toArray(readableMap.getArray(key)));
+                    map.put(key, toArray(readableMap.getArray(key)));
                     break;
             }
         }
@@ -944,9 +927,9 @@ class MapUtil {
             } else if (value instanceof String) {
                 writableMap.putString((String) pair.getKey(), (String) value);
             } else if (value instanceof Map) {
-                writableMap.putMap((String) pair.getKey(), com.tealiumreactnative.MapUtil.toWritableMap((Map<String, Object>) value));
+                writableMap.putMap((String) pair.getKey(), toWritableMap((Map<String, Object>) value));
             } else if (value.getClass() != null && value.getClass().isArray()) {
-                writableMap.putArray((String) pair.getKey(), com.tealiumreactnative.ArrayUtil.toWritableArray((Object[]) value));
+                writableMap.putArray((String) pair.getKey(), toWritableArray((Object[]) value));
             }
 
             iterator.remove();

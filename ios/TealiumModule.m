@@ -3,6 +3,7 @@
 #import <React/RCTConvert.h>
 
 
+@import TealiumIOS;
 @import TealiumIOSLifecycle;
 
 @implementation RCTConvert (ConsentStatus)
@@ -83,7 +84,7 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
                   isLifeCycleEnabled:(BOOL)isLifeCycleEnabled
                   overridePublisthSettingsURL:(NSString *)overridePublisthSettingsURL
                   overrideTagManagementURL:(NSString *)overrideTagManagementURL
-                  collectURL:(BOOL)enableCollectURL
+                  overrideCollectURL:(NSString *)overrideCollectURL
                   enableConsentManager:(BOOL)enableConsentManager
                   ) {
     // Set your account, profile, and environment
@@ -91,6 +92,7 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
                                                                            profile:profile
                                                                        environment:environment
                                                                         datasource:iosDatasource];
+    tealiumInternalInstanceName = instance;
     [configuration setAutotrackingLifecycleEnabled:isLifeCycleEnabled];
     
     if (overridePublisthSettingsURL) {
@@ -99,8 +101,8 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
     if (overrideTagManagementURL) {
         configuration.overrideTagManagementURL = overrideTagManagementURL;
     }
-    if (!enableCollectURL) {
-        configuration.collectURL = TEALCollectURLVdata;
+    if (overrideCollectURL) {
+        configuration.overrideCollectDispatchURL = overrideCollectURL;
     }
     configuration.enableConsentManager = enableConsentManager;
     
@@ -274,10 +276,10 @@ RCT_EXPORT_METHOD(setConsentLoggingEnabledForInstance:(NSString *)instanceName e
 }
 
 RCT_EXPORT_METHOD(isConsentLoggingEnabled:(RCTResponseSenderBlock)callback) {
-    [self isConsentLoggingEnabledForInstance:tealiumInternalInstanceName callback:callback];
+    [self isConsentLoggingEnabledForInstanceName:tealiumInternalInstanceName callback:callback];
 }
 
-RCT_EXPORT_METHOD(isConsentLoggingEnabledForInstance:(NSString *)instanceName callback:(RCTResponseSenderBlock)callback) {
+RCT_EXPORT_METHOD(isConsentLoggingEnabledForInstanceName:(NSString *)instanceName callback:(RCTResponseSenderBlock)callback) {
     Tealium *tealium = [Tealium instanceForKey:instanceName];
     [[tealium consentManager] isConsentLoggingEnabled];
 }
