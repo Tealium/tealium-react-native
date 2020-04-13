@@ -1,5 +1,7 @@
 # Change Log
-
+- 1.1.0
+  - Check for specific number type (integer or double) in data payload for Android (always converted to double previously)
+  - Add ability to override collect endpoint in the initialize custom api method
 - 1.0.9
   - Bug fix
     - Removed duplicate default keywords from Typescript definitions file

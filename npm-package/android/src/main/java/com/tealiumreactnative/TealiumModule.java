@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -139,7 +140,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
                                  boolean isLifecycleEnabled,
                                  String overridePublishSettingsUrl,
                                  String overrideTagManagementUrl,
-                                 boolean enableCollectUrl,
+                                 String overrideCollectURL,
                                  boolean enableConsentManager) {
 
         if (account == null || profile == null || environment == null) {
@@ -156,8 +157,8 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         if (overrideTagManagementUrl != null) {
             config.setOverrideTagManagementUrl(overrideTagManagementUrl);
         }
-        if (!enableCollectUrl) {
-            config.setVdataCollectEndpointEnabled(true);
+        if (overrideCollectURL != null) {
+            config.setOverrideCollectDispatchUrl(overrideCollectURL);
         }
         if (enableConsentManager) {
             config.enableConsentManager(instance);
@@ -186,8 +187,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         }
 
         if (data != null) {
-            Map<String, Object> mapData = convertMapsToJson(data.toHashMap());
-            Log.wtf("TEST", mapData);
+            Map<String, Object> mapData = toMap(data);
             instance.trackEvent(eventName, mapData);
         } else {
             instance.trackEvent(eventName, null);
@@ -592,7 +592,8 @@ public class TealiumModule extends ReactContextBaseJavaModule {
             @Override
             protected void onInvoke(Response remoteCommandResponse) throws Exception {
                 JSONObject payload = remoteCommandResponse.getRequestPayload();
-                WritableMap params = convertJsonToMap(payload);
+                Map<String, Object> map = toMap(payload);
+                WritableMap params = toWritableMap(map);
                 sendEvent(mReactContext, mRemoteCommandEvent, params);
             }
 
@@ -630,6 +631,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     }
 
+    // Helper Methods
 
     private Set<String> jsonArrayToStringSet(JSONArray json) {
         Set<String> strSet = new HashSet<>();
@@ -688,54 +690,251 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         return app;
     }
 
-    private static WritableMap convertJsonToMap(JSONObject jsonObject) throws JSONException {
-        WritableMap map = Arguments.createMap();
+    public static JSONArray toJSONArray(ReadableArray readableArray) throws JSONException {
+        JSONArray jsonArray = new JSONArray();
 
-        Iterator<String> iterator = jsonObject.keys();
-        while (iterator.hasNext()) {
-            String key = iterator.next();
-            Object value = jsonObject.get(key);
-            if (value instanceof JSONObject) {
-                map.putMap(key, convertJsonToMap((JSONObject) value));
-            } else if (value instanceof JSONArray) {
-                map.putArray(key, convertJsonToArray((JSONArray) value));
-            } else if (value instanceof Boolean) {
-                map.putBoolean(key, (Boolean) value);
-            } else if (value instanceof Integer) {
-                map.putInt(key, (Integer) value);
-            } else if (value instanceof Double) {
-                map.putDouble(key, (Double) value);
-            } else if (value instanceof String) {
-                map.putString(key, (String) value);
-            } else {
-                map.putString(key, value.toString());
+        for (int i = 0; i < readableArray.size(); i++) {
+            ReadableType type = readableArray.getType(i);
+
+            switch (type) {
+                case Null:
+                    jsonArray.put(i, null);
+                    break;
+                case Boolean:
+                    jsonArray.put(i, readableArray.getBoolean(i));
+                    break;
+                case Number:
+                    ArrayList arr = readableArray.toArrayList();
+                    if (arr.get(i).toString().contains(".")) {
+                        jsonArray.put(i, readableArray.getDouble(i));
+                    } else {
+                        jsonArray.put(i, readableArray.getInt(i));
+                    }
+                    break;
+                case String:
+                    jsonArray.put(i, readableArray.getString(i));
+                    break;
+                case Map:
+                    jsonArray.put(i, toJSONObject(readableArray.getMap(i)));
+                    break;
+                case Array:
+                    jsonArray.put(i, toJSONArray(readableArray.getArray(i)));
+                    break;
             }
         }
-        return map;
+
+        return jsonArray;
     }
 
-    private static WritableArray convertJsonToArray(JSONArray jsonArray) throws JSONException {
-        WritableArray array = Arguments.createArray();
+    public static Object[] toArray(JSONArray jsonArray) throws JSONException {
+        Object[] array = new Object[jsonArray.length()];
 
         for (int i = 0; i < jsonArray.length(); i++) {
             Object value = jsonArray.get(i);
+
             if (value instanceof JSONObject) {
-                array.pushMap(convertJsonToMap((JSONObject) value));
-            } else if (value instanceof JSONArray) {
-                array.pushArray(convertJsonToArray((JSONArray) value));
-            } else if (value instanceof Boolean) {
-                array.pushBoolean((Boolean) value);
-            } else if (value instanceof Integer) {
-                array.pushInt((Integer) value);
-            } else if (value instanceof Double) {
-                array.pushDouble((Double) value);
-            } else if (value instanceof String) {
-                array.pushString((String) value);
-            } else {
-                array.pushString(value.toString());
+                value = toMap((JSONObject) value);
             }
+            if (value instanceof JSONArray) {
+                value = toArray((JSONArray) value);
+            }
+
+            array[i] = value;
         }
+
         return array;
     }
 
+    public static Object[] toArray(ReadableArray readableArray) {
+        Object[] array = new Object[readableArray.size()];
+
+        for (int i = 0; i < readableArray.size(); i++) {
+            ReadableType type = readableArray.getType(i);
+
+            switch (type) {
+                case Null:
+                    array[i] = null;
+                    break;
+                case Boolean:
+                    array[i] = readableArray.getBoolean(i);
+                    break;
+                case Number:
+                    if (array[i].toString().contains(".")) {
+                        array[i] = readableArray.getDouble(i);
+                    } else {
+                        array[i] = readableArray.getInt(i);
+                    }
+                    break;
+                case String:
+                    array[i] = readableArray.getString(i);
+                    break;
+                case Map:
+                    array[i] = toMap(readableArray.getMap(i));
+                    break;
+                case Array:
+                    array[i] = toArray(readableArray.getArray(i));
+                    break;
+            }
+        }
+
+        return array;
+    }
+
+    public static WritableArray toWritableArray(Object[] array) {
+        WritableArray writableArray = Arguments.createArray();
+
+        for (int i = 0; i < array.length; i++) {
+            Object value = array[i];
+
+            if (value == null) {
+                writableArray.pushNull();
+            }
+            if (value instanceof Boolean) {
+                writableArray.pushBoolean((Boolean) value);
+            }
+            if (value instanceof Double) {
+                writableArray.pushDouble((Double) value);
+            }
+            if (value instanceof Integer) {
+                writableArray.pushInt((Integer) value);
+            }
+            if (value instanceof String) {
+                writableArray.pushString((String) value);
+            }
+            if (value instanceof Map) {
+                writableArray.pushMap(toWritableMap((Map<String, Object>) value));
+            }
+            if (value.getClass().isArray()) {
+                writableArray.pushArray(toWritableArray((Object[]) value));
+            }
+        }
+
+        return writableArray;
+    }
+
+    public static JSONObject toJSONObject(ReadableMap readableMap) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+
+        ReadableMapKeySetIterator iterator = readableMap.keySetIterator();
+
+        while (iterator.hasNextKey()) {
+            String key = iterator.nextKey();
+            ReadableType type = readableMap.getType(key);
+
+            switch (type) {
+                case Null:
+                    jsonObject.put(key, null);
+                    break;
+                case Boolean:
+                    jsonObject.put(key, readableMap.getBoolean(key));
+                    break;
+                case Number:
+                    if (key.contains(".")) {
+                        jsonObject.put(key, readableMap.getDouble(key));
+                    } else {
+                        jsonObject.put(key, readableMap.getDouble(key));
+                    }
+                    break;
+                case String:
+                    jsonObject.put(key, readableMap.getString(key));
+                    break;
+                case Map:
+                    jsonObject.put(key, toJSONObject(readableMap.getMap(key)));
+                    break;
+                case Array:
+                    jsonObject.put(key, toJSONArray(readableMap.getArray(key)));
+                    break;
+            }
+        }
+
+        return jsonObject;
+    }
+
+    public static Map<String, Object> toMap(JSONObject jsonObject) throws JSONException {
+        Map<String, Object> map = new HashMap<>();
+        Iterator<String> iterator = jsonObject.keys();
+
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            Object value = jsonObject.get(key);
+
+            if (value instanceof JSONObject) {
+                value = toMap((JSONObject) value);
+            }
+            if (value instanceof JSONArray) {
+                value = toArray((JSONArray) value);
+            }
+
+            map.put(key, value);
+        }
+
+        return map;
+    }
+
+    public static Map<String, Object> toMap(ReadableMap readableMap) {
+        Map<String, Object> map = new HashMap<>();
+        ReadableMapKeySetIterator iterator = readableMap.keySetIterator();
+
+        while (iterator.hasNextKey()) {
+            String key = iterator.nextKey();
+            ReadableType type = readableMap.getType(key);
+
+            switch (type) {
+                case Null:
+                    map.put(key, null);
+                    break;
+                case Boolean:
+                    map.put(key, readableMap.getBoolean(key));
+                    break;
+                case Number:
+                    if (key.contains(".")) {
+                        map.put(key, readableMap.getDouble(key));
+                    } else {
+                        map.put(key, readableMap.getInt(key));
+                    }
+                    break;
+                case String:
+                    map.put(key, readableMap.getString(key));
+                    break;
+                case Map:
+                    map.put(key, toMap(readableMap.getMap(key)));
+                    break;
+                case Array:
+                    map.put(key, toArray(readableMap.getArray(key)));
+                    break;
+            }
+        }
+
+        return map;
+    }
+
+    public static WritableMap toWritableMap(Map<String, Object> map) {
+        WritableMap writableMap = Arguments.createMap();
+        Iterator iterator = map.entrySet().iterator();
+
+        while (iterator.hasNext()) {
+            Map.Entry pair = (Map.Entry)iterator.next();
+            Object value = pair.getValue();
+
+            if (value == null) {
+                writableMap.putNull((String) pair.getKey());
+            } else if (value instanceof Boolean) {
+                writableMap.putBoolean((String) pair.getKey(), (Boolean) value);
+            } else if (value instanceof Double) {
+                writableMap.putDouble((String) pair.getKey(), (Double) value);
+            } else if (value instanceof Integer) {
+                writableMap.putInt((String) pair.getKey(), (Integer) value);
+            } else if (value instanceof String) {
+                writableMap.putString((String) pair.getKey(), (String) value);
+            } else if (value instanceof Map) {
+                writableMap.putMap((String) pair.getKey(), toWritableMap((Map<String, Object>) value));
+            } else if (value.getClass() != null && value.getClass().isArray()) {
+                writableMap.putArray((String) pair.getKey(), toWritableArray((Object[]) value));
+            }
+
+            iterator.remove();
+        }
+
+        return writableMap;
+    }
 }

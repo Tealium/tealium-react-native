@@ -3,6 +3,7 @@
 #import <React/RCTConvert.h>
 
 
+@import TealiumIOS;
 @import TealiumIOSLifecycle;
 
 @implementation RCTConvert (ConsentStatus)
@@ -100,7 +101,7 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
         configuration.overrideTagManagementURL = overrideTagManagementURL;
     }
     if (overrideCollectURL) {
-        configuration.setOverrideCollectDispatchURL = overrideCollectURL;
+        configuration.overrideCollectDispatchURL = overrideCollectURL;
     }
     configuration.enableConsentManager = enableConsentManager;
     
