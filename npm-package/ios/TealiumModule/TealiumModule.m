@@ -83,6 +83,7 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
                   isLifeCycleEnabled:(BOOL)isLifeCycleEnabled
                   overridePublisthSettingsURL:(NSString *)overridePublisthSettingsURL
                   overrideTagManagementURL:(NSString *)overrideTagManagementURL
+                  overrideCollectDispatchURL:(NSString *)overrideCollectDispatchURL
                   collectURL:(BOOL)enableCollectURL
                   enableConsentManager:(BOOL)enableConsentManager
                   ) {
@@ -98,6 +99,9 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
     }
     if (overrideTagManagementURL) {
         configuration.overrideTagManagementURL = overrideTagManagementURL;
+    }
+    if (overrideCollectDispatchURL) {
+        configuration.overrideCollectDispatchURL = overrideCollectDispatchURL;
     }
     if (!enableCollectURL) {
         configuration.collectURL = TEALCollectURLVdata;

@@ -58,6 +58,7 @@ export default class Tealium {
         isLifecycleEnabled,
         overridePublishSettingsURL,
         overrideTagManagementURL,
+        overrideCollectDispatchURL,
         collectURL,
         enableConsentManager
     ) {
@@ -71,6 +72,7 @@ export default class Tealium {
             isLifecycleEnabled,
             overridePublishSettingsURL,
             overrideTagManagementURL,
+            overrideCollectDispatchURL,
             collectURL,
             enableConsentManager
         );

@@ -1,5 +1,7 @@
 # Change Log
 
+- 2.0.0
+  - Added Collect Dispatch URL to the `initializeCustom` method
 - 1.0.9
   - Bug fix
     - Removed duplicate default keywords from Typescript definitions file

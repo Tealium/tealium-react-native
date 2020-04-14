@@ -139,6 +139,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
                                  boolean isLifecycleEnabled,
                                  String overridePublishSettingsUrl,
                                  String overrideTagManagementUrl,
+                                 String overrideCollectDispatchUrl,
                                  boolean enableCollectUrl,
                                  boolean enableConsentManager) {
 
@@ -155,6 +156,9 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         }
         if (overrideTagManagementUrl != null) {
             config.setOverrideTagManagementUrl(overrideTagManagementUrl);
+        }
+        if (overrideCollectDispatchUrl != null) {
+            config.setOverrideCollectDispatchUrl(overrideCollectDispatchUrl);
         }
         if (!enableCollectUrl) {
             config.setVdataCollectEndpointEnabled(true);
