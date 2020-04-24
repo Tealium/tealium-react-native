@@ -354,7 +354,7 @@ export default class App extends React.Component {
     Tealium.initializeCustom(
       'tealiummobile', 'react-native', 'qa',
       'your-ios-datasource', 'your-android-datasource', 'instance-2',
-      true, null, null, 'https://your.custom.endpoint/here', true, false
+      true, null, null, true, false, 'https://your.custom.endpoint/here'
     );
   }
 

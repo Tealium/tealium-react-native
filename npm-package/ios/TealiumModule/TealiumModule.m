@@ -83,9 +83,9 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
                   isLifeCycleEnabled:(BOOL)isLifeCycleEnabled
                   overridePublisthSettingsURL:(NSString *)overridePublisthSettingsURL
                   overrideTagManagementURL:(NSString *)overrideTagManagementURL
-                  overrideCollectDispatchURL:(NSString *)overrideCollectDispatchURL
                   collectURL:(BOOL)enableCollectURL
                   enableConsentManager:(BOOL)enableConsentManager
+                  overrideCollectDispatchURL:(NSString *)overrideCollectDispatchURL
                   ) {
     // Set your account, profile, and environment
     TEALConfiguration *configuration = [TEALConfiguration configurationWithAccount:account

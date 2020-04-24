@@ -139,9 +139,9 @@ public class TealiumModule extends ReactContextBaseJavaModule {
                                  boolean isLifecycleEnabled,
                                  String overridePublishSettingsUrl,
                                  String overrideTagManagementUrl,
-                                 String overrideCollectDispatchUrl,
                                  boolean enableCollectUrl,
-                                 boolean enableConsentManager) {
+                                 boolean enableConsentManager,
+                                 String overrideCollectDispatchUrl) {
 
         if (account == null || profile == null || environment == null) {
             throw new IllegalArgumentException("Account, profile, and environment parameters must be provided and non-null");

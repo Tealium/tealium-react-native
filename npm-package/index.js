@@ -58,9 +58,9 @@ export default class Tealium {
         isLifecycleEnabled,
         overridePublishSettingsURL,
         overrideTagManagementURL,
-        overrideCollectDispatchURL,
         collectURL,
-        enableConsentManager
+        enableConsentManager,
+        overrideCollectDispatchURL
     ) {
         TealiumModule.initializeCustom(
             account,
@@ -72,9 +72,9 @@ export default class Tealium {
             isLifecycleEnabled,
             overridePublishSettingsURL,
             overrideTagManagementURL,
-            overrideCollectDispatchURL,
             collectURL,
-            enableConsentManager
+            enableConsentManager,
+            overrideCollectDispatchURL
         );
         this.addRemoteCommandListener('RemoteCommandEvent');
     }

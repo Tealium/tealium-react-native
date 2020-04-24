@@ -1,6 +1,6 @@
 # Change Log
 
-- 2.0.0
+- 1.0.10
   - Added Collect Dispatch URL to the `initializeCustom` method
 - 1.0.9
   - Bug fix
