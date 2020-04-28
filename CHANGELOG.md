@@ -2,6 +2,8 @@
 
 - 1.0.10
   - Added Collect Dispatch URL to the `initializeCustom` method
+  - Enabled `null` in TypeScript definition for parameters that accept it
+  - Fixed TypeScript definition for Remote Command methods
 - 1.0.9
   - Bug fix
     - Removed duplicate default keywords from Typescript definitions file
