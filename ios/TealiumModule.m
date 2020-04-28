@@ -85,6 +85,7 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
                   overrideTagManagementURL:(NSString *)overrideTagManagementURL
                   collectURL:(BOOL)enableCollectURL
                   enableConsentManager:(BOOL)enableConsentManager
+                  overrideCollectDispatchURL:(NSString *)overrideCollectDispatchURL
                   ) {
     // Set your account, profile, and environment
     TEALConfiguration *configuration = [TEALConfiguration configurationWithAccount:account
@@ -98,6 +99,9 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
     }
     if (overrideTagManagementURL) {
         configuration.overrideTagManagementURL = overrideTagManagementURL;
+    }
+    if (overrideCollectDispatchURL) {
+        configuration.overrideCollectDispatchURL = overrideCollectDispatchURL;
     }
     if (!enableCollectURL) {
         configuration.collectURL = TEALCollectURLVdata;
@@ -274,10 +278,10 @@ RCT_EXPORT_METHOD(setConsentLoggingEnabledForInstance:(NSString *)instanceName e
 }
 
 RCT_EXPORT_METHOD(isConsentLoggingEnabled:(RCTResponseSenderBlock)callback) {
-    [self isConsentLoggingEnabledForInstance:tealiumInternalInstanceName callback:callback];
+    [self isConsentLoggingEnabledForInstanceName:tealiumInternalInstanceName callback:callback];
 }
 
-RCT_EXPORT_METHOD(isConsentLoggingEnabledForInstance:(NSString *)instanceName callback:(RCTResponseSenderBlock)callback) {
+RCT_EXPORT_METHOD(isConsentLoggingEnabledForInstanceName:(NSString *)instanceName callback:(RCTResponseSenderBlock)callback) {
     Tealium *tealium = [Tealium instanceForKey:instanceName];
     [[tealium consentManager] isConsentLoggingEnabled];
 }

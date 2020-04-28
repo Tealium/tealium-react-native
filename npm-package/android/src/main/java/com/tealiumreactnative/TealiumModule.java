@@ -140,7 +140,8 @@ public class TealiumModule extends ReactContextBaseJavaModule {
                                  String overridePublishSettingsUrl,
                                  String overrideTagManagementUrl,
                                  boolean enableCollectUrl,
-                                 boolean enableConsentManager) {
+                                 boolean enableConsentManager,
+                                 String overrideCollectDispatchUrl) {
 
         if (account == null || profile == null || environment == null) {
             throw new IllegalArgumentException("Account, profile, and environment parameters must be provided and non-null");
@@ -155,6 +156,9 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         }
         if (overrideTagManagementUrl != null) {
             config.setOverrideTagManagementUrl(overrideTagManagementUrl);
+        }
+        if (overrideCollectDispatchUrl != null) {
+            config.setOverrideCollectDispatchUrl(overrideCollectDispatchUrl);
         }
         if (!enableCollectUrl) {
             config.setVdataCollectEndpointEnabled(true);

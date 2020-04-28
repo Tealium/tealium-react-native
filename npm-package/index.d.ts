@@ -22,8 +22,8 @@ declare module 'tealium-react-native' {
       account: string,
       profile = string,
       environment: string,
-      iosDataSource?: string,
-      androidDataSource?: string,
+      iosDataSource?: string | null,
+      androidDataSource?: string | null,
     ): void;
 
     /**
@@ -38,8 +38,8 @@ declare module 'tealium-react-native' {
       account: string,
       profile = string,
       environment: string,
-      iosDataSource?: string,
-      androidDataSource?: string,
+      iosDataSource?: string | null,
+      androidDataSource?: string | null,
     ): void;
 
     /**
@@ -55,19 +55,21 @@ declare module 'tealium-react-native' {
      * @param overrideTagManagementUrl String representing the tag management URL if overriding, otherwise null (default: null)
      * @param enableCollectEndpoint True sends data to the Collect endpoint (default: true)
      * @param enableConsentManager True enables Consent Management
+     * @param overrideCollectDispatchURL String representing the HTTP endpoint to send all event data (default: null)
      */
     static initializeCustom(
       account: string,
       profile = string,
       environment: string,
-      iosDataSource?: string,
-      androidDataSource?: string,
+      iosDataSource?: string | null,
+      androidDataSource?: string | null,
       instance: string,
       enableLifeCycle = boolean,
-      overridePublishSettingsUrl: string,
-      overrideTagManagementUrl: string,
+      overridePublishSettingsUrl: string | null,
+      overrideTagManagementUrl: string | null,
       enableCollectEndpoint = boolean,
       enableConsentManager = boolean,
+      overrideCollectDispatchURL: string | null
     ): void;
 
     /**
@@ -344,27 +346,31 @@ declare module 'tealium-react-native' {
 
     /**
      * Adds a remote command to the remote command manager. 
-     * Don't forget to subscribe to the `RemoteCommandEvent` emitter.
+     * 
      * @param commandID Name of the Remote Command (if using TiQ, this is whatever is in the tag config)
      * @param description A description of the remote command
+     * @param callback Callback to execute with the Remote Command payload
      */
     static addRemoteCommand(
       commandID: string,
       description: string,
+      callback: (payload: object) => void
     ): void;
 
     /**
      * Adds a remote command to the remote command manager. 
-     * Don't forget to subscribe to the `RemoteCommandEvent` emitter.
+     * 
      * This method should be used if you have multiple instances of Tealium in your app.
      * @param instanceName Name of the Tealium instance
      * @param commandID Name of the Remote Command (if using TiQ, this is whatever is in the tag config)
      * @param description A description of the remote command
+     * @param callback Callback to execute with the Remote Command payload
      */
     static addRemoteCommandForInstanceName(
       instanceName: string,
       commandID: string,
       description: string,
+      callback: (payload: object) => void
     ): void;
 
 
