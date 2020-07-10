@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "TealiumModule.h"
 #import <React/RCTConvert.h>
+#import <AdSupport/AdSupport.h>
 
 
 @import TealiumIOSLifecycle;
@@ -31,6 +32,22 @@ NSString *tealiumInternalInstanceName;
 NSString *remoteCommandEventName = @"RemoteCommandEvent";
 - (NSArray<NSString *> *)supportedEvents {
     return @[remoteCommandEventName];
+}
+
+- (NSDictionary *) getIdentifiers {
+    
+    NSString* idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSString* idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    BOOL adTrackingEnabled = [[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled];
+    NSString* adTracking = adTrackingEnabled == YES ? @"true" : @"false";
+    
+    NSDictionary* dict = @{
+                           @"device_advertising_id": idfa,
+                           @"device_advertising_vendor_id": idfv,
+                           @"device_advertising_enabled": adTracking
+                           };
+
+    return dict;
 }
 
 // MARK: - Init
@@ -86,6 +103,7 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
                   collectURL:(BOOL)enableCollectURL
                   enableConsentManager:(BOOL)enableConsentManager
                   overrideCollectDispatchURL:(NSString *)overrideCollectDispatchURL
+                  enableAdIdentifierCollection:(BOOL)enableAdIdentifierCollection
                   ) {
     // Set your account, profile, and environment
     TEALConfiguration *configuration = [TEALConfiguration configurationWithAccount:account
@@ -109,6 +127,9 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
     configuration.enableConsentManager = enableConsentManager;
     
     [Tealium newInstanceForKey:instance configuration:configuration];
+    if (enableAdIdentifierCollection) {
+        [[Tealium instanceForKey:instance] addPersistentDataSources: [self getIdentifiers]];
+    }
 }
 
 // MARK: - Tracking

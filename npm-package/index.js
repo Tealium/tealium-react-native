@@ -60,7 +60,8 @@ export default class Tealium {
         overrideTagManagementURL,
         collectURL,
         enableConsentManager,
-        overrideCollectDispatchURL
+        overrideCollectDispatchURL,
+        enableAdIdentifierCollection
     ) {
         TealiumModule.initializeCustom(
             account,
@@ -74,7 +75,8 @@ export default class Tealium {
             overrideTagManagementURL,
             collectURL,
             enableConsentManager,
-            overrideCollectDispatchURL
+            overrideCollectDispatchURL,
+            enableAdIdentifierCollection
         );
         this.addRemoteCommandListener('RemoteCommandEvent');
     }

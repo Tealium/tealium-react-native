@@ -1,6 +1,7 @@
 package com.tealiumreactnative;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.tealium.library.ConsentManager;
 import com.tealium.library.Tealium;
 import com.tealium.lifecycle.LifeCycle;
 import com.tealium.internal.tagbridge.RemoteCommand;
+import com.tealium.adidentifier.AdIdentifier;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.Arguments;
@@ -141,7 +143,8 @@ public class TealiumModule extends ReactContextBaseJavaModule {
                                  String overrideTagManagementUrl,
                                  boolean enableCollectUrl,
                                  boolean enableConsentManager,
-                                 String overrideCollectDispatchUrl) {
+                                 String overrideCollectDispatchUrl,
+                                 boolean enableAdIdentifierCollection) {
 
         if (account == null || profile == null || environment == null) {
             throw new IllegalArgumentException("Account, profile, and environment parameters must be provided and non-null");
@@ -166,14 +169,18 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         if (enableConsentManager) {
             config.enableConsentManager(instance);
         }
-
         if (isLifecycleEnabled) {
             final boolean isAutoTracking = false;
             LifeCycle.setupInstance(instance, config, isAutoTracking);
             mIsLifecycleAutotracking = isLifecycleEnabled;
             getReactApplicationContext().addLifecycleEventListener(createLifecycleEventListener(instance));
         }
+
         Tealium.createInstance(instance, config);
+
+        if (enableAdIdentifierCollection) {
+            AdIdentifier.setIdPersistent(instance, getApplication());
+        }
     }
 
     @ReactMethod
