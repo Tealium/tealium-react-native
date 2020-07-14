@@ -31,7 +31,6 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -803,14 +802,6 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     }
 
-    private ArrayList<String> unique(ArrayList<String> array) {
-        ArrayList<String> out = new ArrayList<String>();
-        for(String item : array)
-            if(!out.contains(item))
-                out.add(item);
-        return out;
-    }
-
     private Set<String> jsonArrayToStringSet(JSONArray json) {
         Set<String> strSet = new HashSet<>();
         for (int i = 0; i < json.length(); i++) {
@@ -919,4 +910,3 @@ public class TealiumModule extends ReactContextBaseJavaModule {
     }
 
 }
-
