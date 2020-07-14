@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "TealiumModule.h"
 #import <React/RCTConvert.h>
+#import <AdSupport/AdSupport.h>
 
 
 @import TealiumIOSLifecycle;
@@ -25,12 +26,31 @@ RCT_ENUM_CONVERTER(TEALCollectURL, (@{
 @implementation TealiumModule
 RCT_EXPORT_MODULE();
 
-NSString *tealiumInternalInstanceName;
+NSString *tealiumCurrentInstanceName;
+NSString *tealiumSingleInstanceName = @"MAIN";
+NSMutableDictionary *tealiumInstances;
+
 
 // MARK: - Remote Command Emitter
 NSString *remoteCommandEventName = @"RemoteCommandEvent";
 - (NSArray<NSString *> *)supportedEvents {
     return @[remoteCommandEventName];
+}
+
+- (NSDictionary *) getIdentifiers {
+    
+    NSString* idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSString* idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    BOOL adTrackingEnabled = [[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled];
+    NSString* adTracking = adTrackingEnabled == YES ? @"true" : @"false";
+    
+    NSDictionary* dict = @{
+                           @"device_advertising_id": idfa,
+                           @"device_advertising_vendor_id": idfv,
+                           @"device_advertising_enabled": adTracking
+                           };
+
+    return dict;
 }
 
 // MARK: - Init
@@ -48,10 +68,12 @@ RCT_EXPORT_METHOD(initialize:(NSString *)account
                                                                         datasource:iosDatasource];
     [configuration setAutotrackingLifecycleEnabled:isLifeCycleEnabled];
     
-    tealiumInternalInstanceName = instance;
+    tealiumCurrentInstanceName = instance == nil ? tealiumSingleInstanceName : instance;
+    tealiumInstances = tealiumInstances == nil ? [[NSMutableDictionary alloc] init] : tealiumInstances;
+    [tealiumInstances setValue:@1 forKey:tealiumCurrentInstanceName];
     
     // Initialize with a unique key for this instance
-    [Tealium newInstanceForKey:tealiumInternalInstanceName configuration:configuration];
+    [Tealium newInstanceForKey:tealiumCurrentInstanceName configuration:configuration];
 }
 
 RCT_EXPORT_METHOD(initializeWithConsentManager:(NSString *)account
@@ -68,10 +90,13 @@ RCT_EXPORT_METHOD(initializeWithConsentManager:(NSString *)account
                                                                         datasource:iosDatasource];
     [configuration setAutotrackingLifecycleEnabled:isLifeCycleEnabled];
     configuration.enableConsentManager = YES;
-    tealiumInternalInstanceName = instance;
+    
+    tealiumCurrentInstanceName = instance == nil ? tealiumSingleInstanceName : instance;
+    tealiumInstances = tealiumInstances == nil ? [[NSMutableDictionary alloc] init] : tealiumInstances;
+    [tealiumInstances setValue:@1 forKey:tealiumCurrentInstanceName];
     
     // Initialize with a unique key for this instance
-    [Tealium newInstanceForKey:tealiumInternalInstanceName configuration:configuration];
+    [Tealium newInstanceForKey:tealiumCurrentInstanceName configuration:configuration];
 }
 
 RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
@@ -86,6 +111,7 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
                   collectURL:(BOOL)enableCollectURL
                   enableConsentManager:(BOOL)enableConsentManager
                   overrideCollectDispatchURL:(NSString *)overrideCollectDispatchURL
+                  enableAdIdentifierCollection:(BOOL)enableAdIdentifierCollection
                   ) {
     // Set your account, profile, and environment
     TEALConfiguration *configuration = [TEALConfiguration configurationWithAccount:account
@@ -108,76 +134,133 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
     }
     configuration.enableConsentManager = enableConsentManager;
     
-    [Tealium newInstanceForKey:instance configuration:configuration];
+    tealiumCurrentInstanceName = instance == nil ? tealiumSingleInstanceName : instance;
+    tealiumInstances = tealiumInstances == nil ? [[NSMutableDictionary alloc] init] : tealiumInstances;
+    [tealiumInstances setValue:@1 forKey:tealiumCurrentInstanceName];
+    
+    [Tealium newInstanceForKey:tealiumCurrentInstanceName configuration:configuration];
+    if (enableAdIdentifierCollection) {
+        [[Tealium instanceForKey:tealiumCurrentInstanceName] addPersistentDataSources: [self getIdentifiers]];
+    }
 }
 
 // MARK: - Tracking
 RCT_EXPORT_METHOD(trackEvent:(NSString *)eventName data:(NSDictionary *)data) {
-    if (tealiumInternalInstanceName == nil) {
-        return RCTLogError(@"Tealium is not initialized");
-    }
-    [self trackEventForInstance:tealiumInternalInstanceName event:eventName data:data];
+    [self trackEventForInstance:tealiumSingleInstanceName event:eventName data:data];
 }
 
 RCT_EXPORT_METHOD(trackEventForInstance:(NSString *)instanceName event:(NSString *)eventName data:(NSDictionary *)data) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to call trackEvent, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to call trackEvent, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     [tealium trackEventWithTitle:eventName dataSources:data];
 }
 
 RCT_EXPORT_METHOD(trackView:(NSString *)viewName data:(NSDictionary *)data) {
-    if (tealiumInternalInstanceName == nil) {
-        return RCTLogError(@"Tealium is not initialized");
-    }
-    [self trackViewForInstance:tealiumInternalInstanceName view:viewName data:data];
+    [self trackViewForInstance:tealiumSingleInstanceName view:viewName data:data];
 }
 
 RCT_EXPORT_METHOD(trackViewForInstance:(NSString *)instanceName view:(NSString *)viewName data:(NSDictionary *)data) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to call trackView, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to call trackView, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     [tealium trackViewWithTitle:viewName dataSources:data];
 }
 
 RCT_EXPORT_METHOD(setVolatileData:(NSDictionary *)data) {
-    [self setVolatileDataForInstance:tealiumInternalInstanceName data:data];
+    [self setVolatileDataForInstance:tealiumSingleInstanceName data:data];
 }
 
 RCT_EXPORT_METHOD(setVolatileDataForInstance:(NSString *)instanceName data:(NSDictionary *)data) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to set volatile data, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to set volatile data, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     [tealium addVolatileDataSources:data];
 }
 
 RCT_EXPORT_METHOD(setPersistentData:(NSDictionary *)data) {
-    [self setPersistentDataForInstance:tealiumInternalInstanceName data:data];
+    [self setPersistentDataForInstance:tealiumSingleInstanceName data:data];
 }
 
 RCT_EXPORT_METHOD(setPersistentDataForInstance:(NSString *)instanceName data:(NSDictionary *)data) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to set persistent data, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to set persistent data, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     [tealium addPersistentDataSources:data];
 }
 
 RCT_EXPORT_METHOD(removeVolatileData:(NSArray<NSString *> *)keys) {
-    [self removeVolatileDataForInstance:tealiumInternalInstanceName keys:keys];
+    [self removeVolatileDataForInstance:tealiumSingleInstanceName keys:keys];
 }
 
 RCT_EXPORT_METHOD(removeVolatileDataForInstance:(NSString *)instanceName keys:(NSArray<NSString *> *)keys) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to remove volatile data, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to remove volatile data, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     [tealium removeVolatileDataSourcesForKeys:keys];
 }
 
 RCT_EXPORT_METHOD(removePersistentData:(NSArray<NSString *> *)keys) {
-    [self removePersistentDataForInstance:tealiumInternalInstanceName keys:keys];
+    [self removePersistentDataForInstance:tealiumSingleInstanceName keys:keys];
 }
 
 RCT_EXPORT_METHOD(removePersistentDataForInstance:(NSString *)instanceName keys:(NSArray<NSString *> *)keys) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to remove persistent data, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to remove persistent data, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     [tealium removePersistentDataSourcesForKeys:keys];
 }
 
 RCT_EXPORT_METHOD(getVolatileData:(NSString *)key callback:(RCTResponseSenderBlock)callback) {
-    [self getVolatileDataForInstance:tealiumInternalInstanceName key:key callback:callback];
+    [self getVolatileDataForInstance:tealiumSingleInstanceName key:key callback:callback];
 }
 
 RCT_EXPORT_METHOD(getVolatileDataForInstance:(NSString *)instanceName key:(NSString *)key callback:(RCTResponseSenderBlock)callback) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to get volatile data, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to get volatile data, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     id value = [tealium volatileDataSourcesCopy][key];
     if (!value) {
         RCTLogInfo(@"Value for key: %@ is nil.", key);
@@ -187,11 +270,19 @@ RCT_EXPORT_METHOD(getVolatileDataForInstance:(NSString *)instanceName key:(NSStr
 }
 
 RCT_EXPORT_METHOD(getPersistentData:(NSString *)key callback:(RCTResponseSenderBlock)callback) {
-    [self getPersistentDataForInstance:tealiumInternalInstanceName key:key callback:callback];
+    [self getPersistentDataForInstance:tealiumSingleInstanceName key:key callback:callback];
 }
 
 RCT_EXPORT_METHOD(getPersistentDataForInstance:(NSString *)instanceName key:(NSString *)key callback:(RCTResponseSenderBlock)callback) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to get persistent data, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to get persistent data, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     id value = [tealium persistentDataSourcesCopy][key];
     if (!value) {
         RCTLogInfo(@"Value for key: %@ is nil.", key);
@@ -202,40 +293,72 @@ RCT_EXPORT_METHOD(getPersistentDataForInstance:(NSString *)instanceName key:(NSS
 
 // MARK: Visitor
 RCT_EXPORT_METHOD(getVisitorID:(RCTResponseSenderBlock)callback) {
-    [self getVisitorIDForInstance:tealiumInternalInstanceName callback:callback];
+    [self getVisitorIDForInstance:tealiumSingleInstanceName callback:callback];
 }
 
 RCT_EXPORT_METHOD(getVisitorIDForInstance:(NSString *)instanceName callback:(RCTResponseSenderBlock)callback) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to get the Visitor ID, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to get the Visitor ID, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     callback(@[[tealium visitorIDCopy]]);
 }
 
 // MARK: Consent Manager
 RCT_EXPORT_METHOD(getUserConsentStatus:(RCTResponseSenderBlock)callback) {
-    [self getUserConsentStatusForInstance:tealiumInternalInstanceName callback:callback];
+    [self getUserConsentStatusForInstance:tealiumSingleInstanceName callback:callback];
 }
 
 RCT_EXPORT_METHOD(getUserConsentStatusForInstance:(NSString *)instanceName callback:(RCTResponseSenderBlock)callback) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to get user consent status, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to get user consent status, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     [TEALConsentManager consentStatusString:[[tealium consentManager] userConsentStatus]];
     callback(@[[TEALConsentManager consentStatusString:[[tealium consentManager] userConsentStatus]]]);
 }
 
 RCT_EXPORT_METHOD(setUserConsentStatus:(TEALConsentStatus)userConsentStatus) {
-    [self setUserConsentStatusForInstance:tealiumInternalInstanceName userConsentStatus:userConsentStatus];
+    [self setUserConsentStatusForInstance:tealiumSingleInstanceName userConsentStatus:userConsentStatus];
 }
 
 RCT_EXPORT_METHOD(setUserConsentStatusForInstance:(NSString *)instanceName userConsentStatus:(TEALConsentStatus)userConsentStatus) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to set user consent status, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to set user consent status, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     [[tealium consentManager] setUserConsentStatus:userConsentStatus];
 }
 
 RCT_EXPORT_METHOD(getUserConsentCategories:(RCTResponseSenderBlock)callback) {
-    [self getUserConsentCategoriesForInstance:tealiumInternalInstanceName callback:callback];
+    [self getUserConsentCategoriesForInstance:tealiumSingleInstanceName callback:callback];
 }
 
 RCT_EXPORT_METHOD(getUserConsentCategoriesForInstance:(NSString *)instanceName callback:(RCTResponseSenderBlock)callback) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to get user consent categories, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to get user consent categories, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     NSArray *userConsentCategories = [[tealium consentManager] userConsentCategories];
     if ([userConsentCategories count] > 0) {
         callback(@[userConsentCategories]);
@@ -245,50 +368,82 @@ RCT_EXPORT_METHOD(getUserConsentCategoriesForInstance:(NSString *)instanceName c
 }
 
 RCT_EXPORT_METHOD(setUserConsentCategories:(NSArray *)categories) {
-    [self setUserConsentCategoriesForInstance:tealiumInternalInstanceName categories:categories];
+    [self setUserConsentCategoriesForInstance:tealiumSingleInstanceName categories:categories];
 }
 
 RCT_EXPORT_METHOD(setUserConsentCategoriesForInstance:(NSString *)instanceName categories:(NSArray *)categories) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to set user consent categories, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to set user consent categories, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     [[tealium consentManager] setUserConsentCategories:categories];
 }
 
 RCT_EXPORT_METHOD(resetUserConsentPreferences) {
-    [self resetUserConsentPreferencesForInstance:tealiumInternalInstanceName];
+    [self resetUserConsentPreferencesForInstance:tealiumSingleInstanceName];
 }
 
 RCT_EXPORT_METHOD(resetUserConsentPreferencesForInstance:(NSString *)instanceName) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to reset user consent preferences, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to reset user consent preferences, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     [[tealium consentManager] resetUserConsentPreferences];
 }
 
 // Note: Waiting for next Android release to have this method public
 //RCT_EXPORT_METHOD(allCategories:(RCTResponseSenderBlock)callback) {
-//    Tealium *tealium = [Tealium instanceForKey:tealiumInternalInstanceName];
+//    Tealium *tealium = [Tealium instanceForKey:tealiumSingleInstanceName];
 //    callback(@[[[tealium consentManager] allCategories]]);
 //}
 
 RCT_EXPORT_METHOD(setConsentLoggingEnabled:(BOOL)enable) {
-    [self setConsentLoggingEnabledForInstance:tealiumInternalInstanceName enable:enable];
+    [self setConsentLoggingEnabledForInstance:tealiumSingleInstanceName enable:enable];
 }
 
 RCT_EXPORT_METHOD(setConsentLoggingEnabledForInstance:(NSString *)instanceName enable:(BOOL)enable) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to toggle consent loggine, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to toggle consent loggine, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     [[tealium consentManager] setConsentLoggingEnabled:enable];
 }
 
 RCT_EXPORT_METHOD(isConsentLoggingEnabled:(RCTResponseSenderBlock)callback) {
-    [self isConsentLoggingEnabledForInstanceName:tealiumInternalInstanceName callback:callback];
+    [self isConsentLoggingEnabledForInstanceName:tealiumSingleInstanceName callback:callback];
 }
 
 RCT_EXPORT_METHOD(isConsentLoggingEnabledForInstanceName:(NSString *)instanceName callback:(RCTResponseSenderBlock)callback) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to check if consent logging is enabled, \
+                           but instance name: %@ has not yet been created.", instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to check if consent logging is enabled, \
+                           but Tealium not enabled for instance name: %@", instanceName);
+    }
     [[tealium consentManager] isConsentLoggingEnabled];
 }
 
 RCT_EXPORT_METHOD(addRemoteCommand:(NSString *_Nonnull)commandID
                   description:(NSString *)description) {
-    [self addRemoteCommandForInstanceName:tealiumInternalInstanceName commandID:commandID description:description];
+    [self addRemoteCommandForInstanceName:tealiumSingleInstanceName commandID:commandID description:description];
 }
 
 
@@ -296,8 +451,15 @@ RCT_EXPORT_METHOD(addRemoteCommand:(NSString *_Nonnull)commandID
 RCT_EXPORT_METHOD(addRemoteCommandForInstanceName:(NSString *)instanceName
                   commandID:(NSString *)commandID
                   description:(NSString *)description) {
-    
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to add remote command %@, \
+                           but instance name: %@ has not yet been created.", commandID, instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to add remote command %@, \
+                           but Tealium not enabled for instance name: %@", commandID, instanceName);
+    }
     
     [tealium addRemoteCommandID:commandID description:description targetQueue:dispatch_get_main_queue() responseBlock:^(TEALRemoteCommandResponse *_Nullable response) {
         
@@ -310,12 +472,20 @@ RCT_EXPORT_METHOD(addRemoteCommandForInstanceName:(NSString *)instanceName
 }
 
 RCT_EXPORT_METHOD(removeRemoteCommand:(NSString *)commandID) {
-    [self removeRemoteCommandForInstanceName:tealiumInternalInstanceName commandID:commandID];
+    [self removeRemoteCommandForInstanceName:tealiumSingleInstanceName commandID:commandID];
 }
 
 RCT_EXPORT_METHOD(removeRemoteCommandForInstanceName:(NSString *)instanceName
                   commandID:(NSString *)commandID) {
+    if ([tealiumInstances objectForKey:instanceName] == nil) {
+        return RCTLogError(@"Attempted to remove remote command %@, \
+                           but instance name: %@ has not yet been created.", commandID, instanceName);
+    }
     Tealium *tealium = [Tealium instanceForKey:instanceName];
+    if (tealium == nil) {
+        return RCTLogError(@"Attempted to remove remote command %@, \
+                           but Tealium not enabled for instance name: %@", commandID, instanceName);
+    }
     [tealium removeRemoteCommandID:commandID];
 }
 

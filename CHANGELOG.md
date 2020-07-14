@@ -1,5 +1,7 @@
 # Change Log
-
+- 1.0.11
+  - Added ability to enable ad identifier (ADID/IDFA) collection in the `initializeCustom` method
+  - Improved multiple instance handling
 - 1.0.10
   - Added Collect Dispatch URL to the `initializeCustom` method
   - Enabled `null` in TypeScript definition for parameters that accept it
