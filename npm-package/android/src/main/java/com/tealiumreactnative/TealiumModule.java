@@ -490,6 +490,10 @@ public class TealiumModule extends ReactContextBaseJavaModule {
                                 public void run() {
                                     if (mIsLifecycleAutotracking) {
                                         LifeCycle lf = LifeCycle.getInstance(instanceName);
+                                        if (lf == null) {
+                                            Log.e(BuildConfig.TAG, "Couldn't find LifeCycle instance named: " + instanceName);
+                                            return;
+                                        }
                                         Map<String, Object> data = new HashMap<>();
                                         data.put("autotracked", "true");
                                         lf.trackLaunchEvent(data);
@@ -501,6 +505,10 @@ public class TealiumModule extends ReactContextBaseJavaModule {
                 } else {
                     if (mIsLifecycleAutotracking) {
                         LifeCycle lf = LifeCycle.getInstance(instanceName);
+                        if (lf == null) {
+                            Log.e(BuildConfig.TAG, "Couldn't find LifeCycle instance named: " + instanceName);
+                            return;
+                        }
                         Map<String, Object> data = new HashMap<>();
                         data.put("autotracked", "true");
                         lf.trackWakeEvent(data);
@@ -512,6 +520,10 @@ public class TealiumModule extends ReactContextBaseJavaModule {
             public void onHostPause() {
                 if (mIsLifecycleAutotracking) {
                     LifeCycle lf = LifeCycle.getInstance(instanceName);
+                    if (lf == null) {
+                        Log.e(BuildConfig.TAG, "Couldn't find LifeCycle instance named: " + instanceName);
+                        return;
+                    }
                     Map<String, Object> data = new HashMap<>();
                     data.put("autotracked", "true");
                     lf.trackSleepEvent(data);
