@@ -203,7 +203,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void trackEvent(String eventName, ReadableMap data) {
-        trackEventForInstance(mTealiumSingleInstanceName, eventName, data);
+        trackEventForInstance(mTealiumCurrentInstanceName, eventName, data);
     }
 
     @ReactMethod
@@ -232,7 +232,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void trackView(String viewName, ReadableMap data) {
-        trackViewForInstance(mTealiumSingleInstanceName, viewName, data);
+        trackViewForInstance(mTealiumCurrentInstanceName, viewName, data);
     }
 
     @ReactMethod
@@ -271,7 +271,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setVolatileData(ReadableMap data) {
-        setVolatileDataForInstance(mTealiumSingleInstanceName, data);
+        setVolatileDataForInstance(mTealiumCurrentInstanceName, data);
     }
 
     @ReactMethod
@@ -309,7 +309,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setPersistentData(ReadableMap data) {
-        setPersistentDataForInstance(mTealiumSingleInstanceName, data);
+        setPersistentDataForInstance(mTealiumCurrentInstanceName, data);
     }
 
     @ReactMethod
@@ -354,7 +354,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void removeVolatileData(ReadableArray keyArray) {
-        removeVolatileDataForInstance(mTealiumSingleInstanceName, keyArray);
+        removeVolatileDataForInstance(mTealiumCurrentInstanceName, keyArray);
     }
 
     @ReactMethod
@@ -389,7 +389,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void removePersistentData(ReadableArray keyArray) {
-        removePersistentDataForInstance(mTealiumSingleInstanceName, keyArray);
+        removePersistentDataForInstance(mTealiumCurrentInstanceName, keyArray);
     }
 
     @ReactMethod
@@ -425,7 +425,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getVolatileData(String key, Callback callback) {
-        getVolatileDataForInstance(mTealiumSingleInstanceName, key, callback);
+        getVolatileDataForInstance(mTealiumCurrentInstanceName, key, callback);
     }
 
     @ReactMethod
@@ -449,7 +449,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getPersistentData(String key, Callback callback) {
-        getPersistentDataForInstance(mTealiumSingleInstanceName, key, callback);
+        getPersistentDataForInstance(mTealiumCurrentInstanceName, key, callback);
     }
 
     @ReactMethod
@@ -538,7 +538,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getVisitorID(Callback callback) {
-        getVisitorIDForInstance(mTealiumSingleInstanceName, callback);
+        getVisitorIDForInstance(mTealiumCurrentInstanceName, callback);
     }
 
     @ReactMethod
@@ -561,7 +561,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getUserConsentStatus(Callback callback) {
-        getUserConsentStatusForInstance(mTealiumSingleInstanceName, callback);
+        getUserConsentStatusForInstance(mTealiumCurrentInstanceName, callback);
     }
 
     @ReactMethod
@@ -586,7 +586,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setUserConsentStatus(int userConsentStatus) {
-        setUserConsentStatusForInstance(mTealiumSingleInstanceName, userConsentStatus);
+        setUserConsentStatusForInstance(mTealiumCurrentInstanceName, userConsentStatus);
     }
 
     @ReactMethod
@@ -612,7 +612,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getUserConsentCategories(Callback callback) {
-        getUserConsentCategoriesForInstance(mTealiumSingleInstanceName, callback);
+        getUserConsentCategoriesForInstance(mTealiumCurrentInstanceName, callback);
     }
 
     @ReactMethod
@@ -637,7 +637,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setUserConsentCategories(ReadableArray categories) {
-        setUserConsentCategoriesForInstance(mTealiumSingleInstanceName, categories);
+        setUserConsentCategoriesForInstance(mTealiumCurrentInstanceName, categories);
     }
 
     @ReactMethod
@@ -674,7 +674,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void resetUserConsentPreferences() {
-        resetUserConsentPreferencesForInstance(mTealiumSingleInstanceName);
+        resetUserConsentPreferencesForInstance(mTealiumCurrentInstanceName);
     }
 
     @ReactMethod
@@ -699,7 +699,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setConsentLoggingEnabled(boolean isLogging) {
-        setConsentLoggingEnabledForInstance(mTealiumSingleInstanceName, isLogging);
+        setConsentLoggingEnabledForInstance(mTealiumCurrentInstanceName, isLogging);
     }
 
     @ReactMethod
@@ -722,7 +722,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void isConsentLoggingEnabled(Callback callback) {
-        isConsentLoggingEnabledForInstanceName(mTealiumSingleInstanceName, callback);
+        isConsentLoggingEnabledForInstanceName(mTealiumCurrentInstanceName, callback);
     }
 
     @ReactMethod
@@ -747,7 +747,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void addRemoteCommand(String commandID, String description) {
-        addRemoteCommandForInstanceName(mTealiumSingleInstanceName, commandID, description);
+        addRemoteCommandForInstanceName(mTealiumCurrentInstanceName, commandID, description);
     }
 
     @ReactMethod
@@ -786,7 +786,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void removeRemoteCommand(String commandID) {
-        removeRemoteCommandForInstanceName(mTealiumSingleInstanceName, commandID);
+        removeRemoteCommandForInstanceName(mTealiumCurrentInstanceName, commandID);
     }
 
     @ReactMethod

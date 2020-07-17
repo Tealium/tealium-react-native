@@ -146,7 +146,7 @@ RCT_EXPORT_METHOD(initializeCustom:(NSString *)account
 
 // MARK: - Tracking
 RCT_EXPORT_METHOD(trackEvent:(NSString *)eventName data:(NSDictionary *)data) {
-    [self trackEventForInstance:tealiumSingleInstanceName event:eventName data:data];
+    [self trackEventForInstance:tealiumCurrentInstanceName event:eventName data:data];
 }
 
 RCT_EXPORT_METHOD(trackEventForInstance:(NSString *)instanceName event:(NSString *)eventName data:(NSDictionary *)data) {
@@ -163,7 +163,7 @@ RCT_EXPORT_METHOD(trackEventForInstance:(NSString *)instanceName event:(NSString
 }
 
 RCT_EXPORT_METHOD(trackView:(NSString *)viewName data:(NSDictionary *)data) {
-    [self trackViewForInstance:tealiumSingleInstanceName view:viewName data:data];
+    [self trackViewForInstance:tealiumCurrentInstanceName view:viewName data:data];
 }
 
 RCT_EXPORT_METHOD(trackViewForInstance:(NSString *)instanceName view:(NSString *)viewName data:(NSDictionary *)data) {
@@ -180,7 +180,7 @@ RCT_EXPORT_METHOD(trackViewForInstance:(NSString *)instanceName view:(NSString *
 }
 
 RCT_EXPORT_METHOD(setVolatileData:(NSDictionary *)data) {
-    [self setVolatileDataForInstance:tealiumSingleInstanceName data:data];
+    [self setVolatileDataForInstance:tealiumCurrentInstanceName data:data];
 }
 
 RCT_EXPORT_METHOD(setVolatileDataForInstance:(NSString *)instanceName data:(NSDictionary *)data) {
@@ -197,7 +197,7 @@ RCT_EXPORT_METHOD(setVolatileDataForInstance:(NSString *)instanceName data:(NSDi
 }
 
 RCT_EXPORT_METHOD(setPersistentData:(NSDictionary *)data) {
-    [self setPersistentDataForInstance:tealiumSingleInstanceName data:data];
+    [self setPersistentDataForInstance:tealiumCurrentInstanceName data:data];
 }
 
 RCT_EXPORT_METHOD(setPersistentDataForInstance:(NSString *)instanceName data:(NSDictionary *)data) {
@@ -214,7 +214,7 @@ RCT_EXPORT_METHOD(setPersistentDataForInstance:(NSString *)instanceName data:(NS
 }
 
 RCT_EXPORT_METHOD(removeVolatileData:(NSArray<NSString *> *)keys) {
-    [self removeVolatileDataForInstance:tealiumSingleInstanceName keys:keys];
+    [self removeVolatileDataForInstance:tealiumCurrentInstanceName keys:keys];
 }
 
 RCT_EXPORT_METHOD(removeVolatileDataForInstance:(NSString *)instanceName keys:(NSArray<NSString *> *)keys) {
@@ -231,7 +231,7 @@ RCT_EXPORT_METHOD(removeVolatileDataForInstance:(NSString *)instanceName keys:(N
 }
 
 RCT_EXPORT_METHOD(removePersistentData:(NSArray<NSString *> *)keys) {
-    [self removePersistentDataForInstance:tealiumSingleInstanceName keys:keys];
+    [self removePersistentDataForInstance:tealiumCurrentInstanceName keys:keys];
 }
 
 RCT_EXPORT_METHOD(removePersistentDataForInstance:(NSString *)instanceName keys:(NSArray<NSString *> *)keys) {
@@ -248,7 +248,7 @@ RCT_EXPORT_METHOD(removePersistentDataForInstance:(NSString *)instanceName keys:
 }
 
 RCT_EXPORT_METHOD(getVolatileData:(NSString *)key callback:(RCTResponseSenderBlock)callback) {
-    [self getVolatileDataForInstance:tealiumSingleInstanceName key:key callback:callback];
+    [self getVolatileDataForInstance:tealiumCurrentInstanceName key:key callback:callback];
 }
 
 RCT_EXPORT_METHOD(getVolatileDataForInstance:(NSString *)instanceName key:(NSString *)key callback:(RCTResponseSenderBlock)callback) {
@@ -270,7 +270,7 @@ RCT_EXPORT_METHOD(getVolatileDataForInstance:(NSString *)instanceName key:(NSStr
 }
 
 RCT_EXPORT_METHOD(getPersistentData:(NSString *)key callback:(RCTResponseSenderBlock)callback) {
-    [self getPersistentDataForInstance:tealiumSingleInstanceName key:key callback:callback];
+    [self getPersistentDataForInstance:tealiumCurrentInstanceName key:key callback:callback];
 }
 
 RCT_EXPORT_METHOD(getPersistentDataForInstance:(NSString *)instanceName key:(NSString *)key callback:(RCTResponseSenderBlock)callback) {
@@ -293,7 +293,7 @@ RCT_EXPORT_METHOD(getPersistentDataForInstance:(NSString *)instanceName key:(NSS
 
 // MARK: Visitor
 RCT_EXPORT_METHOD(getVisitorID:(RCTResponseSenderBlock)callback) {
-    [self getVisitorIDForInstance:tealiumSingleInstanceName callback:callback];
+    [self getVisitorIDForInstance:tealiumCurrentInstanceName callback:callback];
 }
 
 RCT_EXPORT_METHOD(getVisitorIDForInstance:(NSString *)instanceName callback:(RCTResponseSenderBlock)callback) {
@@ -311,7 +311,7 @@ RCT_EXPORT_METHOD(getVisitorIDForInstance:(NSString *)instanceName callback:(RCT
 
 // MARK: Consent Manager
 RCT_EXPORT_METHOD(getUserConsentStatus:(RCTResponseSenderBlock)callback) {
-    [self getUserConsentStatusForInstance:tealiumSingleInstanceName callback:callback];
+    [self getUserConsentStatusForInstance:tealiumCurrentInstanceName callback:callback];
 }
 
 RCT_EXPORT_METHOD(getUserConsentStatusForInstance:(NSString *)instanceName callback:(RCTResponseSenderBlock)callback) {
@@ -329,7 +329,7 @@ RCT_EXPORT_METHOD(getUserConsentStatusForInstance:(NSString *)instanceName callb
 }
 
 RCT_EXPORT_METHOD(setUserConsentStatus:(TEALConsentStatus)userConsentStatus) {
-    [self setUserConsentStatusForInstance:tealiumSingleInstanceName userConsentStatus:userConsentStatus];
+    [self setUserConsentStatusForInstance:tealiumCurrentInstanceName userConsentStatus:userConsentStatus];
 }
 
 RCT_EXPORT_METHOD(setUserConsentStatusForInstance:(NSString *)instanceName userConsentStatus:(TEALConsentStatus)userConsentStatus) {
@@ -346,7 +346,7 @@ RCT_EXPORT_METHOD(setUserConsentStatusForInstance:(NSString *)instanceName userC
 }
 
 RCT_EXPORT_METHOD(getUserConsentCategories:(RCTResponseSenderBlock)callback) {
-    [self getUserConsentCategoriesForInstance:tealiumSingleInstanceName callback:callback];
+    [self getUserConsentCategoriesForInstance:tealiumCurrentInstanceName callback:callback];
 }
 
 RCT_EXPORT_METHOD(getUserConsentCategoriesForInstance:(NSString *)instanceName callback:(RCTResponseSenderBlock)callback) {
@@ -368,7 +368,7 @@ RCT_EXPORT_METHOD(getUserConsentCategoriesForInstance:(NSString *)instanceName c
 }
 
 RCT_EXPORT_METHOD(setUserConsentCategories:(NSArray *)categories) {
-    [self setUserConsentCategoriesForInstance:tealiumSingleInstanceName categories:categories];
+    [self setUserConsentCategoriesForInstance:tealiumCurrentInstanceName categories:categories];
 }
 
 RCT_EXPORT_METHOD(setUserConsentCategoriesForInstance:(NSString *)instanceName categories:(NSArray *)categories) {
@@ -385,7 +385,7 @@ RCT_EXPORT_METHOD(setUserConsentCategoriesForInstance:(NSString *)instanceName c
 }
 
 RCT_EXPORT_METHOD(resetUserConsentPreferences) {
-    [self resetUserConsentPreferencesForInstance:tealiumSingleInstanceName];
+    [self resetUserConsentPreferencesForInstance:tealiumCurrentInstanceName];
 }
 
 RCT_EXPORT_METHOD(resetUserConsentPreferencesForInstance:(NSString *)instanceName) {
@@ -403,12 +403,12 @@ RCT_EXPORT_METHOD(resetUserConsentPreferencesForInstance:(NSString *)instanceNam
 
 // Note: Waiting for next Android release to have this method public
 //RCT_EXPORT_METHOD(allCategories:(RCTResponseSenderBlock)callback) {
-//    Tealium *tealium = [Tealium instanceForKey:tealiumSingleInstanceName];
+//    Tealium *tealium = [Tealium instanceForKey:tealiumCurrentInstanceName];
 //    callback(@[[[tealium consentManager] allCategories]]);
 //}
 
 RCT_EXPORT_METHOD(setConsentLoggingEnabled:(BOOL)enable) {
-    [self setConsentLoggingEnabledForInstance:tealiumSingleInstanceName enable:enable];
+    [self setConsentLoggingEnabledForInstance:tealiumCurrentInstanceName enable:enable];
 }
 
 RCT_EXPORT_METHOD(setConsentLoggingEnabledForInstance:(NSString *)instanceName enable:(BOOL)enable) {
@@ -425,7 +425,7 @@ RCT_EXPORT_METHOD(setConsentLoggingEnabledForInstance:(NSString *)instanceName e
 }
 
 RCT_EXPORT_METHOD(isConsentLoggingEnabled:(RCTResponseSenderBlock)callback) {
-    [self isConsentLoggingEnabledForInstanceName:tealiumSingleInstanceName callback:callback];
+    [self isConsentLoggingEnabledForInstanceName:tealiumCurrentInstanceName callback:callback];
 }
 
 RCT_EXPORT_METHOD(isConsentLoggingEnabledForInstanceName:(NSString *)instanceName callback:(RCTResponseSenderBlock)callback) {
@@ -443,7 +443,7 @@ RCT_EXPORT_METHOD(isConsentLoggingEnabledForInstanceName:(NSString *)instanceNam
 
 RCT_EXPORT_METHOD(addRemoteCommand:(NSString *_Nonnull)commandID
                   description:(NSString *)description) {
-    [self addRemoteCommandForInstanceName:tealiumSingleInstanceName commandID:commandID description:description];
+    [self addRemoteCommandForInstanceName:tealiumCurrentInstanceName commandID:commandID description:description];
 }
 
 
@@ -472,7 +472,7 @@ RCT_EXPORT_METHOD(addRemoteCommandForInstanceName:(NSString *)instanceName
 }
 
 RCT_EXPORT_METHOD(removeRemoteCommand:(NSString *)commandID) {
-    [self removeRemoteCommandForInstanceName:tealiumSingleInstanceName commandID:commandID];
+    [self removeRemoteCommandForInstanceName:tealiumCurrentInstanceName commandID:commandID];
 }
 
 RCT_EXPORT_METHOD(removeRemoteCommandForInstanceName:(NSString *)instanceName
