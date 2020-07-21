@@ -56,6 +56,7 @@ declare module 'tealium-react-native' {
      * @param enableCollectEndpoint True sends data to the Collect endpoint (default: true)
      * @param enableConsentManager True enables Consent Management
      * @param overrideCollectDispatchURL String representing the HTTP endpoint to send all event data (default: null)
+     * @param enableAdIdentifierCollection To enable collection of ADID (Android) and IDFA (iOS)
      */
     static initializeCustom(
       account: string,
@@ -69,7 +70,8 @@ declare module 'tealium-react-native' {
       overrideTagManagementUrl: string | null,
       enableCollectEndpoint = boolean,
       enableConsentManager = boolean,
-      overrideCollectDispatchURL: string | null
+      overrideCollectDispatchURL: string | null,
+      enableAdIdentifierCollection = boolean
     ): void;
 
     /**

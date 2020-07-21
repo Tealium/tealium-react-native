@@ -1,6 +1,6 @@
 {
     "name": "tealium-react-native",
-    "version": "1.0.10",
+    "version": "1.1.0",
     "description": "A native module for using Tealium's Android and iOS libraries from a React Native app.",
     "main": "index.js",
     "types": "index.d.ts",

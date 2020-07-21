@@ -22,6 +22,7 @@ import com.tealium.library.ConsentManager;
 import com.tealium.library.Tealium;
 import com.tealium.lifecycle.LifeCycle;
 import com.tealium.internal.tagbridge.RemoteCommand;
+import com.tealium.adidentifier.AdIdentifier;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.Arguments;
@@ -44,13 +45,13 @@ import java.util.Set;
 
 public class TealiumModule extends ReactContextBaseJavaModule {
 
-    private static String mTealiumInstanceName;
+    private static String mTealiumCurrentInstanceName;
+    private static String mTealiumSingleInstanceName = "MAIN";
     private static boolean mIsLifecycleAutotracking = false;
     private boolean mDidTrackInitialLaunch = false;
     private static ReactApplicationContext mReactContext;
     private static String mRemoteCommandEvent = "RemoteCommandEvent";
     private static Map<String, RemoteCommand> mRemoteCommandsMap = new HashMap<>();
-
 
     public TealiumModule(ReactApplicationContext context) {
         super(context);
@@ -88,12 +89,13 @@ public class TealiumModule extends ReactContextBaseJavaModule {
             config.setDatasourceId(androidDatasource);
         }
 
-        mTealiumInstanceName = instance;
+        mTealiumCurrentInstanceName = instance == null ? mTealiumSingleInstanceName : instance;
+
         if (isLifecycleEnabled) {
             final boolean isAutoTracking = false;
-            LifeCycle.setupInstance(mTealiumInstanceName, config, isAutoTracking);
+            LifeCycle.setupInstance(mTealiumCurrentInstanceName, config, isAutoTracking);
             mIsLifecycleAutotracking = isLifecycleEnabled;
-            getReactApplicationContext().addLifecycleEventListener(createLifecycleEventListener(mTealiumInstanceName));
+            getReactApplicationContext().addLifecycleEventListener(createLifecycleEventListener(mTealiumCurrentInstanceName));
         }
 
         Tealium.createInstance(instance, config);
@@ -116,14 +118,16 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         if (androidDatasource != null) {
             config.setDatasourceId(androidDatasource);
         }
-        config.enableConsentManager(mTealiumInstanceName);
 
-        mTealiumInstanceName = instance;
+        mTealiumCurrentInstanceName = instance == null ? mTealiumSingleInstanceName : instance;
+
+        config.enableConsentManager(mTealiumCurrentInstanceName);
+
         if (isLifecycleEnabled) {
             final boolean isAutoTracking = false;
-            LifeCycle.setupInstance(mTealiumInstanceName, config, isAutoTracking);
+            LifeCycle.setupInstance(mTealiumCurrentInstanceName, config, isAutoTracking);
             mIsLifecycleAutotracking = isLifecycleEnabled;
-            getReactApplicationContext().addLifecycleEventListener(createLifecycleEventListener(mTealiumInstanceName));
+            getReactApplicationContext().addLifecycleEventListener(createLifecycleEventListener(mTealiumCurrentInstanceName));
         }
 
         Tealium.createInstance(instance, config);
@@ -141,7 +145,8 @@ public class TealiumModule extends ReactContextBaseJavaModule {
                                  String overrideTagManagementUrl,
                                  boolean enableCollectUrl,
                                  boolean enableConsentManager,
-                                 String overrideCollectDispatchUrl) {
+                                 String overrideCollectDispatchUrl,
+                                 boolean enableAdIdentifierCollection) {
 
         if (account == null || profile == null || environment == null) {
             throw new IllegalArgumentException("Account, profile, and environment parameters must be provided and non-null");
@@ -163,29 +168,38 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         if (!enableCollectUrl) {
             config.setVdataCollectEndpointEnabled(true);
         }
-        if (enableConsentManager) {
-            config.enableConsentManager(instance);
-        }
 
+        mTealiumCurrentInstanceName = instance == null ? mTealiumSingleInstanceName : instance;
+
+        if (enableConsentManager) {
+            config.enableConsentManager(mTealiumCurrentInstanceName);
+        }
         if (isLifecycleEnabled) {
             final boolean isAutoTracking = false;
-            LifeCycle.setupInstance(instance, config, isAutoTracking);
+            LifeCycle.setupInstance(mTealiumCurrentInstanceName, config, isAutoTracking);
             mIsLifecycleAutotracking = isLifecycleEnabled;
-            getReactApplicationContext().addLifecycleEventListener(createLifecycleEventListener(instance));
+            getReactApplicationContext().addLifecycleEventListener(createLifecycleEventListener(mTealiumCurrentInstanceName));
         }
-        Tealium.createInstance(instance, config);
+
+        Tealium.createInstance(mTealiumCurrentInstanceName, config);
+
+        if (enableAdIdentifierCollection) {
+            AdIdentifier.setIdPersistent(mTealiumCurrentInstanceName, getApplication());
+        }
     }
 
     @ReactMethod
     public void trackEvent(String eventName, ReadableMap data) {
-        trackEventForInstance(mTealiumInstanceName, eventName, data);
+        trackEventForInstance(mTealiumCurrentInstanceName, eventName, data);
     }
 
     @ReactMethod
     public void trackEventForInstance(String instanceName, String eventName, ReadableMap data) {
         final Tealium instance = Tealium.getInstance(instanceName);
+
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "TrackEvent attempted, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to call trackEvent, " +
+                    "but Tealium not enabled for instance name: " + instanceName);
             return;
         }
 
@@ -199,7 +213,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void trackView(String viewName, ReadableMap data) {
-        trackViewForInstance(mTealiumInstanceName, viewName, data);
+        trackViewForInstance(mTealiumCurrentInstanceName, viewName, data);
     }
 
     @ReactMethod
@@ -207,7 +221,8 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         final Tealium instance = Tealium.getInstance(instanceName);
 
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "TrackView attempted, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to call trackView, " +
+                    "but Tealium not enabled for instance name: " + instanceName);
             return;
         }
 
@@ -231,7 +246,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setVolatileData(ReadableMap data) {
-        setVolatileDataForInstance(mTealiumInstanceName, data);
+        setVolatileDataForInstance(mTealiumCurrentInstanceName, data);
     }
 
     @ReactMethod
@@ -239,7 +254,8 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         final Tealium instance = Tealium.getInstance(instanceName);
 
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "SetVolatileData attempted, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to set volatile data, " +
+                    "but Tealium not enabled for instance name: " + instanceName);
             return;
         }
 
@@ -262,14 +278,16 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setPersistentData(ReadableMap data) {
-        setPersistentDataForInstance(mTealiumInstanceName, data);
+        setPersistentDataForInstance(mTealiumCurrentInstanceName, data);
     }
 
     @ReactMethod
     public void setPersistentDataForInstance(String instanceName, ReadableMap data) {
         final Tealium instance = Tealium.getInstance(instanceName);
+
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "SetPersistentData attempted, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to set persistent data, " +
+                    "but Tealium not enabled for instance name: " + instanceName);
             return;
         }
         SharedPreferences sp = instance.getDataSources().getPersistentDataSources();
@@ -299,12 +317,18 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void removeVolatileData(ReadableArray keyArray) {
-        removeVolatileDataForInstance(mTealiumInstanceName, keyArray);
+        removeVolatileDataForInstance(mTealiumCurrentInstanceName, keyArray);
     }
 
     @ReactMethod
     public void removeVolatileDataForInstance(String instanceName, ReadableArray keyArray) {
         final Tealium instance = Tealium.getInstance(instanceName);
+
+        if (instance == null) {
+            Log.e(BuildConfig.TAG, "Attempted to remove volatile data, " +
+                    "but Tealium not enabled for instance name: " + instanceName);
+            return;
+        }
 
         for (int i = 0; i < keyArray.size(); i++) {
             ReadableType type = keyArray.getType(i);
@@ -322,7 +346,7 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void removePersistentData(ReadableArray keyArray) {
-        removePersistentDataForInstance(mTealiumInstanceName, keyArray);
+        removePersistentDataForInstance(mTealiumCurrentInstanceName, keyArray);
     }
 
     @ReactMethod
@@ -330,7 +354,8 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         final Tealium instance = Tealium.getInstance(instanceName);
 
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "RemovePersistentData attempted, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to remove persistent data, " +
+                    "but Tealium not enabled for instance name: " + instanceName);
             return;
         }
 
@@ -351,14 +376,16 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getVolatileData(String key, Callback callback) {
-        getVolatileDataForInstance(mTealiumInstanceName, key, callback);
+        getVolatileDataForInstance(mTealiumCurrentInstanceName, key, callback);
     }
 
     @ReactMethod
     public void getVolatileDataForInstance(String instanceName, String key, Callback callback) {
         final Tealium instance = Tealium.getInstance(instanceName);
+
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "Attempt to get volatile data, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to get volatile data, " +
+                    "but Tealium not enabled for instance name: " + instanceName);
             return;
         }
 
@@ -367,14 +394,16 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getPersistentData(String key, Callback callback) {
-        getPersistentDataForInstance(mTealiumInstanceName, key, callback);
+        getPersistentDataForInstance(mTealiumCurrentInstanceName, key, callback);
     }
 
     @ReactMethod
     public void getPersistentDataForInstance(String instanceName, String key, Callback callback) {
         final Tealium instance = Tealium.getInstance(instanceName);
+
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "Attempt to get persistent data, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to get persistent data, " +
+                    "but Tealium not enabled for instance name: " + instanceName);
             return;
         }
 
@@ -383,7 +412,6 @@ public class TealiumModule extends ReactContextBaseJavaModule {
     }
 
     private LifecycleEventListener createLifecycleEventListener(final String instanceName) {
-
         return new LifecycleEventListener() {
             @Override
             public void onHostResume() {
@@ -395,6 +423,10 @@ public class TealiumModule extends ReactContextBaseJavaModule {
                                 public void run() {
                                     if (mIsLifecycleAutotracking) {
                                         LifeCycle lf = LifeCycle.getInstance(instanceName);
+                                        if (lf == null) {
+                                            Log.e(BuildConfig.TAG, "Couldn't find LifeCycle instance named: " + instanceName);
+                                            return;
+                                        }
                                         Map<String, Object> data = new HashMap<>();
                                         data.put("autotracked", "true");
                                         lf.trackLaunchEvent(data);
@@ -406,6 +438,10 @@ public class TealiumModule extends ReactContextBaseJavaModule {
                 } else {
                     if (mIsLifecycleAutotracking) {
                         LifeCycle lf = LifeCycle.getInstance(instanceName);
+                        if (lf == null) {
+                            Log.e(BuildConfig.TAG, "Couldn't find LifeCycle instance named: " + instanceName);
+                            return;
+                        }
                         Map<String, Object> data = new HashMap<>();
                         data.put("autotracked", "true");
                         lf.trackWakeEvent(data);
@@ -417,6 +453,10 @@ public class TealiumModule extends ReactContextBaseJavaModule {
             public void onHostPause() {
                 if (mIsLifecycleAutotracking) {
                     LifeCycle lf = LifeCycle.getInstance(instanceName);
+                    if (lf == null) {
+                        Log.e(BuildConfig.TAG, "Couldn't find LifeCycle instance named: " + instanceName);
+                        return;
+                    }
                     Map<String, Object> data = new HashMap<>();
                     data.put("autotracked", "true");
                     lf.trackSleepEvent(data);
@@ -431,14 +471,16 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getVisitorID(Callback callback) {
-        getVisitorIDForInstance(mTealiumInstanceName, callback);
+        getVisitorIDForInstance(mTealiumCurrentInstanceName, callback);
     }
 
     @ReactMethod
     public void getVisitorIDForInstance(String instanceName, Callback callback) {
         final Tealium instance = Tealium.getInstance(instanceName);
+
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "GetVisitorID attempted, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to get the Visitor ID, " +
+                    "but Tealium not enabled for instance name: " + instanceName);
             return;
         }
         callback.invoke(instance.getDataSources().getVisitorId());
@@ -446,14 +488,16 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getUserConsentStatus(Callback callback) {
-        getUserConsentStatusForInstance(mTealiumInstanceName, callback);
+        getUserConsentStatusForInstance(mTealiumCurrentInstanceName, callback);
     }
 
     @ReactMethod
     public void getUserConsentStatusForInstance(String instanceName, Callback callback) {
         final Tealium instance = Tealium.getInstance(instanceName);
+
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "GetUserConsentStatus attempted, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to get user consent status," +
+                    " but Tealium not enabled for instance name: " + instanceName);
             return;
         }
         if (instance.getConsentManager() != null) {
@@ -463,15 +507,17 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setUserConsentStatus(int userConsentStatus) {
-        setUserConsentStatusForInstance(mTealiumInstanceName, userConsentStatus);
+        setUserConsentStatusForInstance(mTealiumCurrentInstanceName, userConsentStatus);
     }
 
     @ReactMethod
     public void setUserConsentStatusForInstance(String instanceName, int userConsentStatus) {
         String consentStatus = mapUserConsentStatus(userConsentStatus);
         final Tealium instance = Tealium.getInstance(instanceName);
+
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "SetUserConsentStatus attempted, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to set user consent status, " +
+                    "but Tealium not enabled for instance name: " + instanceName);
             return;
         }
         if (instance.getConsentManager() != null) {
@@ -481,14 +527,16 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getUserConsentCategories(Callback callback) {
-        getUserConsentCategoriesForInstance(mTealiumInstanceName, callback);
+        getUserConsentCategoriesForInstance(mTealiumCurrentInstanceName, callback);
     }
 
     @ReactMethod
     public void getUserConsentCategoriesForInstance(String instanceName, Callback callback) {
         final Tealium instance = Tealium.getInstance(instanceName);
+
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "GetUserConsentCategories attempted, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to get user consent categories, " +
+                    "but Tealium not enabled for instance name: " + instanceName);
             return;
         }
         if (instance.getConsentManager() != null) {
@@ -498,14 +546,16 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setUserConsentCategories(ReadableArray categories) {
-        setUserConsentCategoriesForInstance(mTealiumInstanceName, categories);
+        setUserConsentCategoriesForInstance(mTealiumCurrentInstanceName, categories);
     }
 
     @ReactMethod
     public void setUserConsentCategoriesForInstance(String instanceName, ReadableArray categories) {
         final Tealium instance = Tealium.getInstance(instanceName);
+
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "SetUserConsentCategories attempted, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to set user consent categories, " +
+                    "but Tealium not enabled for instance name: " + instanceName);
             return;
         }
         if (instance.getConsentManager() != null) {
@@ -527,14 +577,16 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void resetUserConsentPreferences() {
-        resetUserConsentPreferencesForInstance(mTealiumInstanceName);
+        resetUserConsentPreferencesForInstance(mTealiumCurrentInstanceName);
     }
 
     @ReactMethod
     public void resetUserConsentPreferencesForInstance(String instanceName) {
         final Tealium instance = Tealium.getInstance(instanceName);
+
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "ResetUserConsentPreferences attempted, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to reset user consent preferences, " +
+                    "but Tealium not enabled for instance name: " + instanceName);
             return;
         }
         if (instance.getConsentManager() != null) {
@@ -544,14 +596,15 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setConsentLoggingEnabled(boolean isLogging) {
-        setConsentLoggingEnabledForInstance(mTealiumInstanceName, isLogging);
+        setConsentLoggingEnabledForInstance(mTealiumCurrentInstanceName, isLogging);
     }
 
     @ReactMethod
     public void setConsentLoggingEnabledForInstance(String instanceName, boolean isLogging) {
         final Tealium instance = Tealium.getInstance(instanceName);
+
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "SetConsentLoggingEnabled attempted, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to toggle consent loggine, but Tealium not enabled for instance name: " + instanceName);
             return;
         }
         if (instance.getConsentManager() != null) {
@@ -561,14 +614,16 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void isConsentLoggingEnabled(Callback callback) {
-        isConsentLoggingEnabledForInstanceName(mTealiumInstanceName, callback);
+        isConsentLoggingEnabledForInstanceName(mTealiumCurrentInstanceName, callback);
     }
 
     @ReactMethod
     public void isConsentLoggingEnabledForInstanceName(String instanceName, Callback callback) {
         final Tealium instance = Tealium.getInstance(instanceName);
+
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "ResetUserConsentPreferences attempted, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to check if consent logging is enabled, " +
+                    "but Tealium not enabled for instance name: " + instanceName);
             return;
         }
         if (instance.getConsentManager() != null) {
@@ -578,16 +633,16 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void addRemoteCommand(String commandID, String description) {
-        addRemoteCommandForInstanceName(mTealiumInstanceName, commandID, description);
+        addRemoteCommandForInstanceName(mTealiumCurrentInstanceName, commandID, description);
     }
 
     @ReactMethod
     public void addRemoteCommandForInstanceName(String instanceName, final String commandID, String description) {
-
         final Tealium instance = Tealium.getInstance(instanceName);
 
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "addRemoteCommand attempted, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to add remote command " + commandID + " , " +
+                    "but Tealium not enabled for instance name: " + instanceName);
             return;
         }
 
@@ -611,16 +666,16 @@ public class TealiumModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void removeRemoteCommand(String commandID) {
-        removeRemoteCommandForInstanceName(mTealiumInstanceName, commandID);
+        removeRemoteCommandForInstanceName(mTealiumCurrentInstanceName, commandID);
     }
 
     @ReactMethod
     public void removeRemoteCommandForInstanceName(String instanceName, String commandID) {
-
         final Tealium instance = Tealium.getInstance(instanceName);
 
         if (instance == null) {
-            Log.e(BuildConfig.TAG, "addRemoteCommand attempted, but Tealium not enabled for instance name: " + instanceName);
+            Log.e(BuildConfig.TAG, "Attempted to remove remote command " + commandID + " , "  +
+                    "but Tealium not enabled for instance name: " + instanceName);
             return;
         }
 
@@ -632,7 +687,6 @@ public class TealiumModule extends ReactContextBaseJavaModule {
         }
 
     }
-
 
     private Set<String> jsonArrayToStringSet(JSONArray json) {
         Set<String> strSet = new HashSet<>();
