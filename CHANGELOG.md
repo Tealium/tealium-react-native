@@ -1,5 +1,5 @@
 # Change Log
-- 1.0.11
+- 1.1.0
   - Added ability to enable ad identifier (ADID/IDFA) collection in the `initializeCustom` method
   - Improved multiple instance handling
 - 1.0.10
