@@ -1,252 +1,108 @@
 import { NativeEventEmitter, NativeModules } from 'react-native';
-const { TealiumModule } = NativeModules;
+import { Expiry, Dispatchers, EventListenerNames } from './common';
+const { TealiumWrapper, TealiumReactNative } = NativeModules;
 
 export default class Tealium {
 
-    static remoteCommandEmitter = new NativeEventEmitter(TealiumModule);
-    static remoteCommandCallbacks = {};
+    static emitter = new NativeEventEmitter(TealiumReactNative);
+    static emitterCallbacks = {};
+    static emitterSubscriptions = [];
 
-    static initialize(
-        account,
-        profile,
-        environment,
-        iosDatasource,
-        androidDatasource,
-        instanceName = 'MAIN',
-        isLifecycleEnabled = true,
-    ) {
-        TealiumModule.initialize(
-            account,
-            profile,
-            environment,
-            iosDatasource,
-            androidDatasource,
-            instanceName,
-            isLifecycleEnabled,
-        );
-        this.addRemoteCommandListener('RemoteCommandEvent');
-    }
-
-    static initializeWithConsentManager(
-        account,
-        profile,
-        environment,
-        iosDatasource,
-        androidDatasource,
-        instanceName = 'MAIN',
-        isLifecycleEnabled = true,
-    ) {
-        TealiumModule.initializeWithConsentManager(
-            account,
-            profile,
-            environment,
-            iosDatasource,
-            androidDatasource,
-            instanceName,
-            isLifecycleEnabled,
-        );
-        this.addRemoteCommandListener('RemoteCommandEvent');
-    }
-
-    static initializeCustom(
-        account,
-        profile,
-        environment,
-        iosDatasource,
-        androidDatasource,
-        instanceName,
-        isLifecycleEnabled,
-        overridePublishSettingsURL,
-        overrideTagManagementURL,
-        collectURL,
-        enableConsentManager,
-        overrideCollectDispatchURL,
-        enableAdIdentifierCollection
-    ) {
-        TealiumModule.initializeCustom(
-            account,
-            profile,
-            environment,
-            iosDatasource,
-            androidDatasource,
-            instanceName,
-            isLifecycleEnabled,
-            overridePublishSettingsURL,
-            overrideTagManagementURL,
-            collectURL,
-            enableConsentManager,
-            overrideCollectDispatchURL,
-            enableAdIdentifierCollection
-        );
-        this.addRemoteCommandListener('RemoteCommandEvent');
-    }
-
-    static trackEvent(stringTitle, data) {
-        TealiumModule.trackEvent(stringTitle, data);
-    }
-
-    static trackView(stringTitle, data) {
-        TealiumModule.trackView(stringTitle, data);
-    }
-
-    static trackViewForInstanceName(name, stringTitle, data) {
-        TealiumModule.trackViewForInstance(name, stringTitle, data);
-    }
-
-    static trackEventForInstanceName(name, stringTitle, data) {
-        TealiumModule.trackEventForInstance(name, stringTitle, data);
-    }
-
-    static setVolatileData(data) {
-        TealiumModule.setVolatileData(data);
-    }
-
-    static getVolatileData(key, value) {
-        TealiumModule.getVolatileData(key, value);
-    }
-
-    static getVolatileDataForInstanceName(name, key, data) {
-        TealiumModule.getVolatileDataForInstance(name, key, data);
-    }
-
-    static setVolatileDataForInstanceName(name, data) {
-        TealiumModule.setVolatileDataForInstance(name, data);
-    }
-
-    static setPersistentData(data) {
-        TealiumModule.setPersistentData(data);
-    }
-
-    static setPersistentDataForInstanceName(name, data) {
-        TealiumModule.setPersistentDataForInstance(name, data);
-    }
-
-    static getPersistentData(key, value) {
-        TealiumModule.getPersistentData(key, value);
-    }
-
-    static getPersistentDataForInstanceName(name, key, data) {
-        TealiumModule.getPersistentDataForInstance(name, key, data);
-    }
-
-    static removeVolatileData(keys) {
-        TealiumModule.removeVolatileData(keys);
-    }
-
-    static removeVolatileDataForInstanceName(name, keys) {
-        TealiumModule.removeVolatileDataForInstance(name, keys);
-    }
-
-    static removePersistentData(keys) {
-        TealiumModule.removePersistentData(keys);
-    }
-
-    static removePersistentDataForInstanceName(name, keys) {
-        TealiumModule.removePersistentDataForInstance(name, keys);
-    }
-
-    static getVisitorID(visitorID) {
-        TealiumModule.getVisitorID(visitorID);
-    }
-
-    static getVisitorIDForInstanceName(name, visitorID) {
-        TealiumModule.getVisitorIDForInstance(name, visitorID);
-    }
-
-    static getUserConsentStatus(userConsentStatus) {
-        TealiumModule.getUserConsentStatus(userConsentStatus);
-    }
-
-    static getUserConsentStatusForInstanceName(name, userConsentStatus) {
-        TealiumModule.getUserConsentStatusForInstance(name, userConsentStatus);
-    }
-
-    static setUserConsentStatus(userConsentStatus) {
-        TealiumModule.setUserConsentStatus(userConsentStatus);
-    }
-
-    static setUserConsentStatusForInstanceName(name, userConsentStatus) {
-        TealiumModule.setUserConsentStatusForInstance(name, userConsentStatus);
-    }
-
-    static getUserConsentCategories(userConsentCategories) {
-        TealiumModule.getUserConsentCategories(userConsentCategories);
-    }
-
-    static getUserConsentCategoriesForInstanceName(name, userConsentCategories) {
-        TealiumModule.getUserConsentCategoriesForInstance(name, userConsentCategories);
-    }
-
-    static setUserConsentCategories(userConsentCategories) {
-        TealiumModule.setUserConsentCategories(userConsentCategories);
-    }
-
-    static setUserConsentCategoriesForInstanceName(name, userConsentCategories) {
-        TealiumModule.setUserConsentCategoriesForInstance(name, userConsentCategories);
-    }
-
-    static resetUserConsentPreferences() {
-        TealiumModule.resetUserConsentPreferences();
-    }
-
-    static resetUserConsentPreferencesForInstanceName(name) {
-        TealiumModule.resetUserConsentPreferencesForInstance(name);
-    }
-
-    // Note: Waiting for next Android release
-    // static allCategories(userConsentCategories) {
-    //     TealiumModule.allCategories(userConsentCategories);
-    // }
-
-    static setConsentLoggingEnabled(enabled) {
-        TealiumModule.setConsentLoggingEnabled(enabled);
-    }
-
-    static setConsentLoggingEnabledForInstanceName(name, enabled) {
-        TealiumModule.setConsentLoggingEnabledForInstance(name, enabled);
-    }
-
-    static isConsentLoggingEnabled(enabled) {
-        TealiumModule.isConsentLoggingEnabled(enabled);
-    }
-
-    static isConsentLoggingEnabledForInstanceName(name, enabled) {
-        TealiumModule.isConsentLoggingEnabledForInstanceName(name, enabled);
-    }
-
-    static addRemoteCommand(commandID, description, callback) {
-        TealiumModule.addRemoteCommand(commandID, description);
-        this.remoteCommandCallbacks[commandID] = callback;
-    }
-
-    static addRemoteCommandForInstanceName(name, commandID, description, callback) {
-        TealiumModule.addRemoteCommandForInstanceName(name, commandID, description);
-        if (this.remoteCommandCallbacks[commandID] == undefined) {
-            this.remoteCommandCallbacks[commandID] = callback;
+    static initialize(config) {
+        TealiumWrapper.initialize(config);
+        TealiumWrapper.addToDataLayer({'plugin_name': 'Tealium-ReactNative', 'plugin_version': '2.0.0'}, Expiry.forever);
+        if (config["dispatchers"].includes(Dispatchers.RemoteCommands)) {
+            this.setRemoteCommandListener();
         }
     }
 
-    static removeRemoteCommand(commandID) {
-        TealiumModule.removeRemoteCommand(commandID);
-        delete this.remoteCommandCallbacks[commandID];
+    static track(dispatch) {
+        TealiumWrapper.track(dispatch);
     }
 
-    static removeRemoteCommandForInstanceName(name, commandID) {
-        TealiumModule.removeRemoteCommandForInstanceName(name, commandID);
-        delete this.remoteCommandCallbacks[commandID];
+    static terminateInstance() {
+        TealiumWrapper.terminateInstance();
     }
 
-    static addRemoteCommandListener(eventName) {
-        this.remoteCommandEmitter.addListener(eventName,
-            (payload) => {
-                var commandID = payload["command_id"];
-                if (commandID) {
-                    var callback = this.remoteCommandCallbacks[commandID]
-                    if (callback) {
-                        callback(payload);
-                    }
+    static addData(data, expiry) {
+        TealiumWrapper.addToDataLayer(data, expiry);
+    }
+
+    static getData(key, callback) {
+        TealiumWrapper.getFromDataLayer(key, callback);
+    }
+
+    static removeData(keys) {
+        TealiumWrapper.removeFromDataLayer(keys);
+    }
+
+    static getConsentStatus(callback) {
+        TealiumWrapper.getConsentStatus(callback);
+    }
+
+    static setConsentStatus(consentStatus) {
+        TealiumWrapper.setConsentStatus(consentStatus);
+    }
+
+    static getConsentCategories(callback) {
+        TealiumWrapper.getConsentCategories(callback);
+    }
+
+    static setConsentCategories(consentCategories) {
+        TealiumWrapper.setConsentCategories(consentCategories);
+    }
+
+    static joinTrace(id) {
+        TealiumWrapper.joinTrace(id);
+    }
+
+    static leaveTrace() {
+        TealiumWrapper.leaveTrace();
+    }
+
+    static getVisitorId(callback) {
+        TealiumWrapper.getVisitorId(callback);
+    }
+
+    static setVisitorServiceListener(callback) {
+        const visitor = this.emitter.addListener(EventListenerNames.visitor, profile => {
+            callback(profile);
+        });
+        this.emitterSubscriptions.push(visitor);
+    }
+
+    static setConsentExpiryListener(callback) {
+        const consent = this.emitter.addListener(EventListenerNames.consentExpired, () => {
+            callback();
+        });
+        this.emitterSubscriptions.push(consent);
+    }
+
+    static addRemoteCommand(id, callback) {
+        TealiumWrapper.addRemoteCommand(id);
+        this.emitterCallbacks[id] = callback;
+    }
+
+    static removeRemoteCommand(id) {
+        TealiumWrapper.removeRemoteCommand(id);
+        delete this.emitterCallbacks[id];
+    }
+
+    static setRemoteCommandListener() {
+        var remoteCommand = this.emitter.addListener(EventListenerNames.remoteCommand,
+            payload => {
+            	let callback = this.emitterCallbacks[payload["command_id"]]
+                if (payload["command_id"] && callback) {
+                    callback(payload);
                 }
             }
-        )
-    }       
+        );
+        this.emitterSubscriptions.push(remoteCommand);
+    }
+
+    static removeListeners() {
+        this.emitterSubscriptions.forEach(subscription => {
+            subscription.remove();
+        });
+    }
 }

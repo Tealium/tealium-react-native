@@ -1,8 +1,34 @@
 ## Tealium React Native
 
-This repository contains the necessary assets for exposing Tealium's native [Android](https://docs.tealium.com/platforms/android-java/) and [iOS](https://docs.tealium.com/platforms/ios-objective-c/) mobile libraries to the JavaScript code in your React Native project. This includes code for exposing the native APIs for both platforms through React Native's bridging system, and a basic helper class in JavaScript to create a single cross platform API.
+This repository contains the necessary assets for exposing Tealium's native [Android](https://docs.tealium.com/platforms/android-kotlin/) and [iOS](https://docs.tealium.com/platforms/ios-swift/) mobile libraries to the JavaScript code in your React Native project. This includes code for exposing the native APIs for both platforms through React Native's bridging system, and a basic helper class in JavaScript to create a single cross platform API.
 
-You can also find a sample application demonstrating how everything is put together and how the API gets called in JavaScript.
+You can also find a example application demonstrating how everything is put together and how the API gets called in JavaScript.
+
+### Example App Instructions
+
+In order to run the example application, follow these steps using [yarn](https://yarnpkg.com/package/react-native):
+
+`$ cd example`
+
+`$ yarn add ../npm-package`
+
+#### iOS
+
+`$ cd ios && pod install && cd ..`
+
+`$ react-native start`
+
+In a separate terminal tab (but still in the example app directory): 
+
+`$ yarn ios`
+
+#### Android
+
+`$ react-native start`
+
+In a separate terminal tab (but still in the example app directory):
+
+`$ yarn android`
 
 ## Documentation
 For full documentation, please see the Tealium Developer Docs website:
