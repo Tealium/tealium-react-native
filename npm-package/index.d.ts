@@ -1,398 +1,108 @@
-// Based off of https://docs.tealium.com/platforms/react-native/functions/
+import { ConsentCategories, ConsentStatus, Expiry, TealiumCommon, TealiumConfig, TealiumDispatch } from './common';
 
 declare module 'tealium-react-native' {
-  export type TealiumData = { [key: string]: string | string[] };
+	export default Tealium;
+	class Tealium extends TealiumCommon {
+		/**
+		 * Retrieves the Tealium Visitor ID
+		 */
+		public static getVisitorId(callback: (response: string) => void): void;
+		/**
+		 * Initializes the Tealium SDK
+		 * @param config Config options to change SDK behavior
+		 */
+		public static initialize(config: TealiumConfig): void;
 
-  /** 0 - Unknown, 1 - Consented, 2 - Not Consented, 3 - Disabled (Objective-C Only) */
-  export type TealiumUserConsentStatus = 0 | 1 | 2 | 3;
+		/**
+		 * Tracks an event/view
+		 * @param dispatch A `TealiumEvent` or `TealiumView` object
+		 */
+		public static track(dispatch: TealiumDispatch): void;
 
-  export type remoteCommandEmitter = { NativeEventEmitter };
+		/**
+		 * Sets up a remote command for later execution
+		 * @param id The ID used to invoke the remote command
+		 */
+		public static addRemoteCommand(id: string): void;
 
-  export default Tealium;
-  class Tealium {
-    /**
-     * Initialize Tealium before calling any other method.
-     * @param account Tealium account name
-     * @param profile Tealium profile name (default: “main”)
-     * @param environment Tealium environment
-     * @param iosDataSource A data source key from UDH eg. “abc123”
-     * @param androidDataSource A data source key from UDH eg. “def456”
-     */
-    static initialize(
-      account: string,
-      profile = string,
-      environment: string,
-      iosDataSource?: string | null,
-      androidDataSource?: string | null,
-    ): void;
+		/**
+		 * Removes a remote command
+		 * @param id The ID used to invoke the remote command
+		 */
+		public static removeRemoteCommand(id: string): void;
 
-    /**
-     * Initialize Tealium with Consent Management before calling any other method.
-     * @param account Tealium account name
-     * @param profile Tealium profile name (default: “main”)
-     * @param environment Tealium environment
-     * @param iosDataSource A data source key from UDH eg. “abc123”
-     * @param androidDataSource A data source key from UDH eg. “def456”
-     */
-    static initializeWithConsentManager(
-      account: string,
-      profile = string,
-      environment: string,
-      iosDataSource?: string | null,
-      androidDataSource?: string | null,
-    ): void;
+		/**
+		 * Adds data to the data layer
+		 * @param data A dictionary containing the key-value pairs to be added to the data layer
+		 * @param expiry When the data should expire. Choose `Expiry.session` if unsure.
+		 */
+		public static addData(data: Object, expiry: Expiry): void;
 
-    /**
-     * Initialize Tealium with Consent Management before calling any other method.
-     * @param account Tealium account name
-     * @param profile Tealium profile name (default: “main”)
-     * @param environment Tealium environment
-     * @param iosDataSource A data source key from UDH eg. “abc123”
-     * @param androidDataSource A data source key from UDH eg. “def456”
-     * @param instance Name of Tealium instance (e.g. can be any String)
-     * @param enableLifeCycle To enable life cycle tracking (default: true)
-     * @param overridePublishSettingsUrl String representing the publish settings URL if overriding, otherwise null (default: null)
-     * @param overrideTagManagementUrl String representing the tag management URL if overriding, otherwise null (default: null)
-     * @param enableCollectEndpoint True sends data to the Collect endpoint (default: true)
-     * @param enableConsentManager True enables Consent Management
-     * @param overrideCollectDispatchURL String representing the HTTP endpoint to send all event data (default: null)
-     * @param enableAdIdentifierCollection To enable collection of ADID (Android) and IDFA (iOS)
-     */
-    static initializeCustom(
-      account: string,
-      profile = string,
-      environment: string,
-      iosDataSource?: string | null,
-      androidDataSource?: string | null,
-      instance: string,
-      enableLifeCycle = boolean,
-      overridePublishSettingsUrl: string | null,
-      overrideTagManagementUrl: string | null,
-      enableCollectEndpoint = boolean,
-      enableConsentManager = boolean,
-      overrideCollectDispatchURL: string | null,
-      enableAdIdentifierCollection = boolean
-    ): void;
+		/**
+		 * Retrieves the value for the specified key from the data layer
+		 * @param key A string key from the data layer
+		 */
+		public static getData(key: string, callback: (response: any) => void): void;
 
-    /**
-     * Track an event, where the title is a string and the data is a JSON object of key-value pairs where keys are strings and the values are either a string or array of strings.
-     * @param eventName Name of event (becomes the event_name attribute in UDH)
-     * @param data JSON object of key value pairs
-     */
-    static trackEvent(eventName: string, data: TealiumData): void;
+		/**
+		 * Removes data from the data layer
+		 * @param keys The keys of the data to be removed
+		 */
+		public static removeData(keys: string[]): void;
 
-    /**
-     * Track an event, where the title is a string and the data is a JSON object of key-value pairs where keys are strings and the values are either a string or array of strings.
-     * This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param eventName Name of event (becomes the event_name attribute in UDH)
-     * @param data JSON object of key value pairs
-     */
-    static trackEventForInstanceName(
-      instanceName: string,
-      eventName: string,
-      data: TealiumData,
-    ): void;
+		/**
+		 * Retrieves the user's consent status
+		 */
+		public static getConsentStatus(callback: (response: ConsentStatus) => void): void;
 
-    /**
-     * Track a view, where the title is a string and the data is a JSON object of key-value pairs where keys are strings and the values are either a string or array of strings.
-     * @param screenName Name of event (becomes the screen_title attribute in UDH)
-     * @param data JSON object of key value pairs
-     */
-    static trackView(screenName: string, data: TealiumData): void;
+		/**
+		 * Sets the user's consent status
+		 * @param consentStatus The user's consent status
+		 */
+		public static setConsentStatus(consentStatus: ConsentStatus): void;
 
-    /**
-     * Track a view, where the title is a string and the data is a JSON object of key-value pairs where keys are strings and the values are either a string or array of strings.
-     * This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param screenName Name of event (becomes the screen_title attribute in UDH)
-     * @param data JSON object of key value pairs
-     */
-    static trackViewForInstanceName(
-      instanceName: string,
-      screenName: string,
-      data: TealiumData,
-    ): void;
+		/**
+		 * Retrieves the user's consented categories
+		 */
+		public static getConsentCategories(callback: (response: ConsentCategories[]) => void): void;
 
-    /**
-     * Set volatile data to be sent with each subsequent event or view until the app is terminated,
-     * where data is a JSON object of key-value pairs where keys are strings and the values are either a string or array of strings.
-     * @param data JSON object of key value pairs
-     */
-    static setVolatileData(data: TealiumData): void;
+		/**
+		 * Sets the user's chosen consent categories
+		 * @param consentCategories Array of categories the user has opted in to
+		 */
+		public static setConsentCategories(consentCategories: ConsentCategories[]): void;
 
-    /**
-     * Set volatile data to be sent with each subsequent event or view until the app is terminated,
-     * where data is a JSON object of key-value pairs where keys are strings and the values are either a string or array of strings.
-     * This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param data JSON object of key value pairs
-     */
-    static setVolatileDataForInstanceName(
-      instanceName: string,
-      data: TealiumData,
-    ): void;
+		/**
+		 * Joins a trace session with the specified Trace ID
+		 * @param id Trace ID
+		 */
+		public static joinTrace(id: string): void;
 
-    /**
-     * Gets the value for the key passed in.
-     * @param key Key name
-     * @param callback A callback with a single parameter representing the value
-     */
-    static getVolatileData(
-      key: string,
-      callback: (value: string | string[]) => {},
-    ): void;
+		/**
+		 * Leaves a trace session
+		 */
+		public static leaveTrace(): void;
 
-    /**
-     * Gets the value for the key passed in for the instance name. This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param key Key name
-     * @param callback A callback with a single parameter representing the value
-     */
-    static getVolatileDataForInstanceName(
-      instanceName: string,
-      key: string,
-      callback: (value: string | string[]) => {},
-    ): void;
+		/**
+		 * Sets a listener to be called when the AudienceStream visitor profile is updated
+		 * @param callback Callback function to be called when the vistior profile is updated
+		 */
+		public static setVisitorServiceListener(callback: (response: any) => void): void;
 
-    /**
-     * Set persistent data to be sent with each subsequent event or view, even between app restarts,
-     * where data is a JSON object of key-value pairs where keys are strings and the values are either a string or array of strings.
-     * @param data JSON object of key value pairs
-     */
-    static setPersistentData(data: TealiumData): void;
+		/**
+		 * Sets a listener to be called when the the user's saved consent status has expired
+		 * @param callback Callback function to be called when the consent status has expired
+		 */
+		public static setConsentExpiryListener(callback: () => void): void;
 
-    /**
-     * Set persistent data to be sent with each subsequent event or view, even between app restarts,
-     * where data is a JSON object of key-value pairs where keys are strings and the values are either a string or array of strings.
-     * This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param data JSON object of key value pairs
-     */
-    static setPersistentDataForInstanceName(
-      instanceName: string,
-      data: TealiumData,
-    ): void;
+		/**
+		 * Terminates the current Tealium instance
+		 */
+		public static terminateInstance(): void;
 
-    /**
-     * Remove volatile data that has been previously set using Tealium.setVolatileData() by taking an array of key names.
-     * @param keys Array of key names
-     */
-    static removeVolatileData(keys: string[]): void;
-
-    /**
-     * setVolatileData() by taking an array of key names. This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param keys Array of key names
-     */
-    static removeVolatileDataForInstanceName(
-      instanceName: string,
-      keys: string[],
-    ): void;
-
-    /**
-     * Remove persistent data that has been previously set using Tealium.setPersistentData() by taking an array of key names.
-     * @param keys Array of key names
-     */
-    static removePersistentData(keys: string[]): void;
-
-    /**
-     * Remove persistent data that has been previously set using Tealium.setPersistentData() by taking an array of key names.
-     * This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param keys Array of key names
-     */
-    static removePersistentDataForInstanceName(
-      instanceName: string,
-      keys: string[],
-    ): void;
-
-    /**
-     * Gets the visitorID of a user. Pass in a callback to use the visitorID.
-     * @param callback A callback with a single parameter representing the visitor id
-     */
-    static getVisitorID(callback: (visitorId: string) => {}): void;
-
-    /**
-     * Gets the visitorID of a user. Pass in a callback to use the visitorID.
-     * This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param callback A callback with a single parameter representing the visitor id
-     */
-    static getVisitorIDForInstanceName(
-      instanceName: string,
-      callback: (visitorId: string) => {},
-    ): void;
-
-    /**
-     * Gets the consent status of a user. Pass in a callback to use the userConsentStatus.
-     * @param callback A callback with a single parameter representing the user consent status
-     */
-    static getUserConsentStatus(
-      callback: (userConsentStatus: TealiumUserConsentStatus) => {},
-    ): void;
-
-    /**
-     * Gets the consent status of a user. Pass in a callback to use the userConsentStatus.
-     * This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param callback A callback with a single parameter representing the user consent status
-     */
-    static getUserConsentStatusForInstanceName(
-      instanceName: string,
-      callback: (userConsentStatus: TealiumUserConsentStatus) => {},
-    ): void;
-
-    /**
-     * Sets the consent status of a user.
-     * @param userConsentStatus The consent status of the user
-     */
-    static setUserConsentStatus(
-      userConsentStatus: TealiumUserConsentStatus,
-    ): void;
-
-    /**
-     * Sets the consent status of a user.
-     * This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param userConsentStatus The consent status of the user
-     */
-    static setUserConsentStatusForInstanceName(
-      instanceName: string,
-      userConsentStatus: TealiumUserConsentStatus,
-    ): void;
-
-    /**
-     * Gets the consent categories of a user. Pass in a callback to use the userConsentCategories.
-     * @param callback A callback with a single parameter that represents the user consent categories
-     */
-    static getUserConsentCategories(
-      callback: (userConsentCategories: string[]) => {},
-    ): void;
-
-    /**
-     * Gets the consent categories of a user. Pass in a callback to use the userConsentCategories.
-     * This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param callback A callback with a single parameter that represents the user consent categories
-     */
-    static getUserConsentCatgoriesForInstanceName(
-      instanceName: string,
-      callback: (userConsentCategories: string[]) => {},
-    ): void;
-
-    /**
-     * Sets the consent categories of a user. Pass in an array of Strings to set the categories.
-     * @param userConsentCategories Array of consent categories names
-     */
-    static setUserConsentCategories(userConsentCategories: string[]): void;
-
-    /**
-     * Sets the consent ;categories of a user. Pass in an array of Strings to set the categories.
-     * This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param userConsentCategories Array of consent categories names
-     */
-    static setUserConsentCatgoriesForInstanceName(
-      instanceName: string,
-      userConsentCategories: string[],
-    ): void;
-
-    /**
-     * Resets the user consent status and categories of a user.
-     */
-    static resetUserConsentPreferences(): void;
-
-    /**
-     * Resets the user consent status and categories of a user.
-     * This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     */
-    static resetUserConsentPreferencesForInstanceName(
-      instanceName: string,
-    ): void;
-
-    /**
-     * Sets consent logging for a user.
-     * @param enabled true to enable consent logging, false to disable it
-     */
-    static setConsentLoggingEnabled(enabled: boolean): void;
-
-    /**
-     * Sets consent logging for a user.
-     * This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param enabled true to enable consent logging, false to disable it
-     */
-    static setConsentLoggingEnabledForInstanceName(
-      instanceName: string,
-      enabled: boolean,
-    ): void;
-
-    /**
-     * Checks if consent logging is enabled for a user. Pass in a callback to use the value of consent logging.
-     * @param callback A callback with a single parameter representing enabled status
-     */
-    static isConsentLoggingEnabled(callback: (enabled: boolean) => {}): void;
-
-    /**
-     * Checks if consent logging is enabled for a user. Pass in a callback to use the value of consent logging.
-     * This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param callback A callback with a single parameter representing enabled status
-     */
-    static isConsentLoggingEnabledForInstanceName(
-      instanceName: string,
-      callback: (enabled: boolean) => {},
-    ): void;
-
-    /**
-     * Adds a remote command to the remote command manager. 
-     * 
-     * @param commandID Name of the Remote Command (if using TiQ, this is whatever is in the tag config)
-     * @param description A description of the remote command
-     * @param callback Callback to execute with the Remote Command payload
-     */
-    static addRemoteCommand(
-      commandID: string,
-      description: string,
-      callback: (payload: object) => void
-    ): void;
-
-    /**
-     * Adds a remote command to the remote command manager. 
-     * 
-     * This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param commandID Name of the Remote Command (if using TiQ, this is whatever is in the tag config)
-     * @param description A description of the remote command
-     * @param callback Callback to execute with the Remote Command payload
-     */
-    static addRemoteCommandForInstanceName(
-      instanceName: string,
-      commandID: string,
-      description: string,
-      callback: (payload: object) => void
-    ): void;
-
-
-    /**
-     * Removes a remote command to the remote command manager. 
-     * @param commandID Name of the Remote Command (if using TiQ, this is whatever is in the tag config)
-     */
-    static removeRemoteCommand(
-      commandID: string,
-    ): void;
-
-    /**
-     * Removes a remote command to the remote command manager. 
-     * This method should be used if you have multiple instances of Tealium in your app.
-     * @param instanceName Name of the Tealium instance
-     * @param commandID Name of the Remote Command (if using TiQ, this is whatever is in the tag config)
-     */
-    static removeRemoteCommandForInstanceName(
-      instanceName: string,
-      commandID: string,
-    ): void;
-  }
+		/**
+		 * Removes all EventEmitter listeners
+		 */
+		public static removeListeners(): void;
+	}
 }

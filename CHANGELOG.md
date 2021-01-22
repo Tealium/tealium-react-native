@@ -1,4 +1,14 @@
 # Change Log
+
+## 2.X
+
+- 2.0.0
+	- Initial release. Updated the module to use the Kotlin and Swift libraries.
+
+	[Full documentation](https://docs.tealium.com/platforms/react-native/install/)
+
+## 1.X
+
 - 1.1.0
   - Added ability to enable ad identifier (ADID/IDFA) collection in the `initializeCustom` method
   - Improved multiple instance handling

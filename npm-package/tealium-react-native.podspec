@@ -7,18 +7,24 @@ Pod::Spec.new do |s|
   s.version      = package["version"]
   s.summary      = package["description"]
   s.description  = <<-DESC
-                  react-native-tealium-module
+                  Tealium React Native Plugin
                    DESC
-  s.homepage     = "https://github.com/Tealium/tealium-react-native"
-  s.license      = "SEE LICENSE IN LICENSE.txt"
-  s.authors      = { "Tealium" => "https://tealium.com/" }
-  s.platforms    = { :ios => "9.0", :tvos => "10.0" }
-  s.source       = { :git => "https://github.com/Tealium/tealium-react-native.git", :tag => "#{s.version}" }
+  s.homepage     = "https://github.com/tealium/tealium-react-native"
+  s.license    = { :type => "Commercial", :file => "LICENSE.txt" }
+  s.authors      = { "Christina Sund" => "christina.sund@tealium.com", "James Keith" => "james.keith@tealium.com" }
+  s.platforms    = { :ios => "9.0" }
+  s.source       = { :git => "https://github.com/tealium/tealium-react-native.git", :tag => "#{s.version}" }
 
-  s.source_files = "ios/**/*.{h,m,swift}"
+  s.source_files = "ios/**/*.{h,c,m,swift}"
   s.requires_arc = true
 
   s.dependency "React"
-  s.dependency "TealiumIOS", "5.6.6"
-  s.dependency "TealiumIOSLifecycle", "5.6.6"
+  s.dependency "tealium-swift/Core", ~> "2.2.2"
+  s.dependency "tealium-swift/TagManagement", ~> "2.2.2"
+  s.dependency "tealium-swift/Collect", ~> "2.2.2"
+  s.dependency "tealium-swift/Lifecycle", ~> "2.2.2"
+  s.dependency "tealium-swift/RemoteCommands", ~> "2.2.2"
+  s.dependency "tealium-swift/VisitorService", ~> "2.2.2"
+
 end
+
