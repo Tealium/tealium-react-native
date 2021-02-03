@@ -15,16 +15,23 @@ Pod::Spec.new do |s|
   s.platforms    = { :ios => "9.0" }
   s.source       = { :git => "https://github.com/tealium/tealium-react-native.git", :tag => "#{s.version}" }
 
-  s.source_files = "ios/**/*.{h,c,m,swift}"
+  s.source_files = "**/*.{h,c,m,swift}"
   s.requires_arc = true
 
+  s.swift_version = "5.0"
+  s.platform     = :ios, "10.0"
+  s.ios.deployment_target = "10.0"
+
+  s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64 i386' }
+  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64 i386' } 
+
   s.dependency "React"
-  s.dependency "tealium-swift/Core", ~> "2.2.2"
-  s.dependency "tealium-swift/TagManagement", ~> "2.2.2"
-  s.dependency "tealium-swift/Collect", ~> "2.2.2"
-  s.dependency "tealium-swift/Lifecycle", ~> "2.2.2"
-  s.dependency "tealium-swift/RemoteCommands", ~> "2.2.2"
-  s.dependency "tealium-swift/VisitorService", ~> "2.2.2"
+  s.dependency "tealium-swift/Core"
+  s.dependency "tealium-swift/TagManagement"
+  s.dependency "tealium-swift/Collect"
+  s.dependency "tealium-swift/Lifecycle"
+  s.dependency "tealium-swift/RemoteCommands"
+  s.dependency "tealium-swift/VisitorService"
 
 end
 
