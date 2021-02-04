@@ -13,22 +13,10 @@ Pod::Spec.new do |s|
   s.license = { :type => "Commercial", :file => "LICENSE.txt" }
   s.authors = { "Christina Sund" => "christina.sund@tealium.com", "James Keith" => "james.keith@tealium.com" }
   s.platforms = { :ios => "9.0" }
-  s.source = { :git => "https://github.com/christinasund/rntest.git", :tag => "#{s.version}" }
-
-  #s.source_files = "ios/**"
-  #s.exclude_files = "example/**"
-  #s.ios.source_files = "npm-package/ios/*.{h,c,m,swift}"
-  #s.requires_arc = true
-
-  s.platform            = :ios, '10.0'
-  s.source_files        = 'ios/**/*.{m,h,swift}'
-  s.static_framework    = true
-
+  s.source = { :git => "https://github.com/tealium/tealium-react-native.git", :tag => "#{s.version}" }
+  s.source_files = 'npm-package/ios/*.{m,h,swift}'
+  s.requires_arc = true
   s.swift_version = "5.0"
-  s.ios.deployment_target = "10.0"
-
-  s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64 i386' }
-  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64 i386' } 
 
   s.dependency "React"
   s.dependency "tealium-swift/Core"
