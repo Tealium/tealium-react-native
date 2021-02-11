@@ -296,6 +296,14 @@ PODS:
     - React-Core (= 0.63.4)
     - React-cxxreact (= 0.63.4)
     - React-jsi (= 0.63.4)
+  - tealium-react-native (2.0.0):
+    - React
+    - tealium-swift/Collect
+    - tealium-swift/Core
+    - tealium-swift/Lifecycle
+    - tealium-swift/RemoteCommands
+    - tealium-swift/TagManagement
+    - tealium-swift/VisitorService
   - tealium-swift/Collect (2.2.2):
     - tealium-swift/Core
   - tealium-swift/Core (2.2.2)
@@ -307,14 +315,6 @@ PODS:
     - tealium-swift/Core
   - tealium-swift/VisitorService (2.2.2):
     - tealium-swift/Core
-  - TealiumReactNative (2.0.0):
-    - React
-    - tealium-swift/Collect
-    - tealium-swift/Core
-    - tealium-swift/Lifecycle
-    - tealium-swift/RemoteCommands
-    - tealium-swift/TagManagement
-    - tealium-swift/VisitorService
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -366,7 +366,7 @@ DEPENDENCIES:
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - TealiumReactNative (from `../node_modules/tealium-react-native`)
+  - tealium-react-native (from `../node_modules/tealium-react-native`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -436,7 +436,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
-  TealiumReactNative:
+  tealium-react-native:
     :path: "../node_modules/tealium-react-native"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
@@ -478,11 +478,11 @@ SPEC CHECKSUMS:
   React-RCTText: 5c51df3f08cb9dedc6e790161195d12bac06101c
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
+  tealium-react-native: 8b7ba4b3ed5bb05ac6ef2a30920bb483357d3d1a
   tealium-swift: 3fed069f2066953da4b02491f5e9aadd87cc3845
-  TealiumReactNative: 641edf0f55baf083a6673f071ae231ab748bbbdc
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: 06ca387ef554c7e71ded14b29349a94c99360845
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

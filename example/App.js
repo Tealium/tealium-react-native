@@ -6,7 +6,7 @@ import { TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatcher
 export default class App extends Component < {} > {
 
     componentDidMount() {
-        let config: TealiumConfig = { account: 'tealiummobile', profile: 'demo', environment: TealiumEnvironment.dev, dispatchers: [Dispatchers.Collect, Dispatchers.TagManagement, Dispatchers.RemoteCommands], collectors: [Collectors.AppData, Collectors.DeviceData, Collectors.Lifecycle, Collectors.Connectivity], consentLoggingEnabled: true, consentExpiry: {'time': 1, 'unit': 'minutes' }, consentPolicy: ConsentPolicy.gdpr, batchingEnabled: false, visitorServiceEnabled: true, useRemoteLibrarySettings: false };
+        let config: TealiumConfig = { account: 'tealiummobile', profile: 'demo', environment: TealiumEnvironment.dev, dispatchers: [Dispatchers.Collect, Dispatchers.TagManagement, Dispatchers.RemoteCommands], collectors: [Collectors.AppData, Collectors.DeviceData, Collectors.Lifecycle, Collectors.Connectivity], consentLoggingEnabled: true, consentExpiry: {'time': 5, 'unit': 'minutes' }, consentPolicy: ConsentPolicy.gdpr, batchingEnabled: false, visitorServiceEnabled: true, useRemoteLibrarySettings: false };
         Tealium.initialize(config);
         Tealium.setVisitorServiceListener(profile => {
             console.log("audiences: ");
