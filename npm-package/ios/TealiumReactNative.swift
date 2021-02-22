@@ -145,10 +145,6 @@ class TealiumReactNative: RCTEventEmitter {
     public static func leaveTrace() {
         tealium?.leaveTrace()
     }
-
-    deinit {
-        EventEmitter.shared.allEvents = []
-    }
     
 }
 

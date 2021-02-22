@@ -296,14 +296,14 @@ PODS:
     - React-Core (= 0.63.4)
     - React-cxxreact (= 0.63.4)
     - React-jsi (= 0.63.4)
-  - tealium-react-native (2.0.0):
+  - tealium-react-native (2.0.2):
     - React
-    - tealium-swift/Collect
-    - tealium-swift/Core
-    - tealium-swift/Lifecycle
-    - tealium-swift/RemoteCommands
-    - tealium-swift/TagManagement
-    - tealium-swift/VisitorService
+    - tealium-swift/Collect (~> 2.2.2)
+    - tealium-swift/Core (~> 2.2.2)
+    - tealium-swift/Lifecycle (~> 2.2.2)
+    - tealium-swift/RemoteCommands (~> 2.2.2)
+    - tealium-swift/TagManagement (~> 2.2.2)
+    - tealium-swift/VisitorService (~> 2.2.2)
   - tealium-swift/Collect (2.2.2):
     - tealium-swift/Core
   - tealium-swift/Core (2.2.2)
@@ -478,7 +478,7 @@ SPEC CHECKSUMS:
   React-RCTText: 5c51df3f08cb9dedc6e790161195d12bac06101c
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
-  tealium-react-native: 8b7ba4b3ed5bb05ac6ef2a30920bb483357d3d1a
+  tealium-react-native: f48425fee6daf49803b4c8cc38cfac6943a65b29
   tealium-swift: 3fed069f2066953da4b02491f5e9aadd87cc3845
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
