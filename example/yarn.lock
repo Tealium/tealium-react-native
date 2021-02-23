@@ -6505,12 +6505,7 @@ table@^5.2.3:
     string-width "^3.0.0"
 
 tealium-react-native@../npm-package:
-  version "2.0.0"
-
-tealium-react-native@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/tealium-react-native/-/tealium-react-native-2.0.0.tgz#3231e67c7b84115919a619ce6e806a3d18d2fa25"
-  integrity sha512-bNKmD2leFD/aJOcnNStlfZEy33dxpIW31OI+YiKGtLKh7P0hW3zY4dS0LBhRPtyrDWuZVfjvxlrwlw8KbUgC5Q==
+  version "2.0.1"
 
 temp@0.8.3:
   version "0.8.3"

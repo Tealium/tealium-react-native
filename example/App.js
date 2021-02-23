@@ -158,7 +158,7 @@ export default class App extends Component < {} > {
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity style={styles.buttonContainer} onPress={this.resetConsent}>
-            <Text style={styles.textStyle}>RESENT CONSENT</Text>
+            <Text style={styles.textStyle}>RESET CONSENT</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity style={styles.buttonContainer} onPress={this.setRandomConsentCategories}>
