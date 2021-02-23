@@ -2,6 +2,13 @@
 
 ## 2.X
 
+- 2.0.2
+  - Bug fix
+    - Removed deinit in `TealiumReactNative.swift` that was clearing event names
+- 2.0.1
+  - Bug fixes
+    - Added all `.ts` files in the package
+    - Updated syntax and source path in `.podspec`
 - 2.0.0
 	- Initial release. Updated the module to use the Kotlin and Swift libraries.
 
