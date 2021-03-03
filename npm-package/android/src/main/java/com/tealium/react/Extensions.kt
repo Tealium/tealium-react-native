@@ -58,43 +58,58 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
     }
 
     val collectors = getArray(KEY_CONFIG_COLLECTORS)?.toCollectorFactories()
-    val modules = getArray(KEY_CONFIG_MODULES)?.toModuleFactories()
+    var modules = mutableSetOf<ModuleFactory>()
+    if (hasKey(KEY_CONFIG_MODULES)) {
+        modules = getArray(KEY_CONFIG_MODULES)?.toModuleFactories() ?: mutableSetOf()
+    }
     val dispatchers = getArray(KEY_CONFIG_DISPATCHERS)?.toDispatcherFactories()
 
     val config = TealiumConfig(application, account, profile, environment,
             collectors = collectors ?: Collectors.core,
-            modules = modules ?: mutableSetOf(),
+            modules = modules,
             dispatchers = dispatchers ?: mutableSetOf())
 
 
     config.apply {
         // Data Source Id
-        getString(KEY_CONFIG_DATA_SOURCE)?.let {
-            dataSourceId = it
+        if (hasKey(KEY_CONFIG_DATA_SOURCE)) {
+            getString(KEY_CONFIG_DATA_SOURCE)?.let {
+                dataSourceId = it
+            }
         }
 
         // Collect Settings
-        getString(KEY_COLLECT_OVERRIDE_URL)?.let {
-            overrideCollectUrl = it
+        if (hasKey(KEY_COLLECT_OVERRIDE_URL)) {
+            getString(KEY_COLLECT_OVERRIDE_URL)?.let {
+                overrideCollectUrl = it
+            }
         }
-        getString(KEY_COLLECT_OVERRIDE_BATCH_URL)?.let {
-            overrideCollectBatchUrl = it
+        if (hasKey(KEY_COLLECT_OVERRIDE_BATCH_URL)) {
+            getString(KEY_COLLECT_OVERRIDE_BATCH_URL)?.let {
+                overrideCollectBatchUrl = it
+            }
         }
-        getString(KEY_COLLECT_OVERRIDE_DOMAIN)?.let {
-            overrideCollectDomain = it
+        if (hasKey(KEY_COLLECT_OVERRIDE_DOMAIN)) {
+            getString(KEY_COLLECT_OVERRIDE_DOMAIN)?.let {
+                overrideCollectDomain = it
+            }
         }
 
         // Library Settings
         if (hasKey(KEY_SETTINGS_USE_REMOTE)) {
             useRemoteLibrarySettings = getBoolean(KEY_SETTINGS_USE_REMOTE)
         }
-        getString(KEY_SETTINGS_OVERRIDE_URL)?.let {
-            overrideLibrarySettingsUrl = it
+        if (hasKey(KEY_SETTINGS_OVERRIDE_URL)) {
+            getString(KEY_SETTINGS_OVERRIDE_URL)?.let {
+                overrideLibrarySettingsUrl = it
+            }
         }
 
         // Tag Management
-        getString(KEY_TAG_MANAGEMENT_OVERRIDE_URL)?.let {
-            overrideTagManagementUrl = it
+        if (hasKey(KEY_TAG_MANAGEMENT_OVERRIDE_URL)) {
+            getString(KEY_TAG_MANAGEMENT_OVERRIDE_URL)?.let {
+                overrideTagManagementUrl = it
+            }
         }
 
         // Deep Links
@@ -106,29 +121,37 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
         }
 
         // Log Level
-        getString(KEY_LOG_LEVEL)?.let {
-            Logger.logLevel = LogLevel.fromString(it)
+        if (hasKey(KEY_LOG_LEVEL)) {
+            getString(KEY_LOG_LEVEL)?.let {
+                Logger.logLevel = LogLevel.fromString(it)
+            }
         }
 
         // Consent
         if (hasKey(KEY_CONSENT_LOGGING_ENABLED)) {
             consentManagerLoggingEnabled = getBoolean(KEY_CONSENT_LOGGING_ENABLED)
         }
-        getString(KEY_CONSENT_LOGGING_URL)?.let {
-            consentManagerLoggingUrl = it
+        if (hasKey(KEY_CONSENT_LOGGING_URL)) {
+            getString(KEY_CONSENT_LOGGING_URL)?.let {
+                consentManagerLoggingUrl = it
+            }
         }
 
-        getMap(KEY_CONSENT_EXPIRY)?.let { map ->
-            map.getDouble(KEY_CONSENT_EXPIRY_TIME).let { time ->
-                map.getString(KEY_CONSENT_EXPIRY_UNIT)?.let { unit ->
-                    consentExpiry = consentExpiryFromValues(time.toLong(), unit)
+        if (hasKey(KEY_CONSENT_EXPIRY)) {
+            getMap(KEY_CONSENT_EXPIRY)?.let { map ->
+                map.getDouble(KEY_CONSENT_EXPIRY_TIME).let { time ->
+                    map.getString(KEY_CONSENT_EXPIRY_UNIT)?.let { unit ->
+                        consentExpiry = consentExpiryFromValues(time.toLong(), unit)
+                    }
                 }
             }
         }
 
-        getString(KEY_CONSENT_POLICY)?.let {
-            consentManagerEnabled = true
-            consentManagerPolicy = consentPolicyFromString(it)
+        if (hasKey(KEY_CONSENT_POLICY)) {
+            getString(KEY_CONSENT_POLICY)?.let {
+                consentManagerEnabled = true
+                consentManagerPolicy = consentPolicyFromString(it)
+            }
         }
 
         // Lifecycle
