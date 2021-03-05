@@ -30,3 +30,19 @@ Temporary Items
 
 
 # End of https://www.gitignore.io/api/macos
+
+# Android/IntelliJ
+#
+build/
+.idea
+.gradle
+local.properties
+*.iml
+
+# node.js
+#
+node_modules/
+package-lock.json
+npm-debug.log
+yarn-error.log
+yarn.lock
