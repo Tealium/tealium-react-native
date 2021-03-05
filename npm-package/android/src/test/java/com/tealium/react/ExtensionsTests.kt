@@ -28,6 +28,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import io.mockk.spyk
 import org.json.JSONObject
 import org.junit.Assert.*
 import org.junit.Before
@@ -121,6 +122,25 @@ class ExtensionsTests {
         assertEquals("settings.domain", config?.overrideLibrarySettingsUrl)
         assertEquals(true, config?.useRemoteLibrarySettings)
 
+    }
+
+    @Test
+    fun toTealiumConfig_DoesNotFail_WhenError() {
+        // RN 0.63.3 and below throw when key does not exist.
+        val readableMap: WritableMap = spyk(JavaOnlyMap())
+        every { readableMap.getString(KEY_CONFIG_DATA_SOURCE) } throws NoSuchKeyException("string")
+        every { readableMap.getBoolean(KEY_SETTINGS_USE_REMOTE) } throws NoSuchKeyException("boolean")
+        every { readableMap.getMap(KEY_CONSENT_EXPIRY) } throws NoSuchKeyException("boolean")
+
+        assertNull(readableMap.toTealiumConfig(mockApp))
+        readableMap.putString(KEY_CONFIG_ACCOUNT, "test-account")
+        readableMap.putString(KEY_CONFIG_PROFILE, "test-profile")
+        readableMap.putString(KEY_CONFIG_ENV, "dev")
+
+        val config = readableMap.toTealiumConfig(mockApp)
+        assertEquals("test-account", config?.accountName)
+        assertEquals("test-profile", config?.profileName)
+        assertEquals(Environment.DEV, config?.environment)
     }
 
     @Test

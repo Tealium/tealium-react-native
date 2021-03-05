@@ -39,7 +39,7 @@ private fun missingRequiredProperty(name: String) {
 fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
     val account = getString(KEY_CONFIG_ACCOUNT);
     val profile = getString(KEY_CONFIG_PROFILE);
-    val environmentString = getString(KEY_CONFIG_ENV);
+    val environmentString = safeGetString(KEY_CONFIG_ENV);
 
     if (account.isNullOrBlank()) {
         missingRequiredProperty(KEY_CONFIG_ACCOUNT)
@@ -57,9 +57,9 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
         Environment.PROD
     }
 
-    val collectors = getArray(KEY_CONFIG_COLLECTORS)?.toCollectorFactories()
-    val modules = getArray(KEY_CONFIG_MODULES)?.toModuleFactories()
-    val dispatchers = getArray(KEY_CONFIG_DISPATCHERS)?.toDispatcherFactories()
+    val collectors = safeGetArray(KEY_CONFIG_COLLECTORS)?.toCollectorFactories()
+    val modules = safeGetArray(KEY_CONFIG_MODULES)?.toModuleFactories()
+    val dispatchers = safeGetArray(KEY_CONFIG_DISPATCHERS)?.toDispatcherFactories()
 
     val config = TealiumConfig(application, account, profile, environment,
             collectors = collectors ?: Collectors.core,
@@ -69,56 +69,57 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
 
     config.apply {
         // Data Source Id
-        getString(KEY_CONFIG_DATA_SOURCE)?.let {
+        safeGetString(KEY_CONFIG_DATA_SOURCE)?.let {
             dataSourceId = it
         }
 
         // Collect Settings
-        getString(KEY_COLLECT_OVERRIDE_URL)?.let {
+        safeGetString(KEY_COLLECT_OVERRIDE_URL)?.let {
             overrideCollectUrl = it
         }
-        getString(KEY_COLLECT_OVERRIDE_BATCH_URL)?.let {
+        safeGetString(KEY_COLLECT_OVERRIDE_BATCH_URL)?.let {
             overrideCollectBatchUrl = it
         }
-        getString(KEY_COLLECT_OVERRIDE_DOMAIN)?.let {
+        safeGetString(KEY_COLLECT_OVERRIDE_DOMAIN)?.let {
             overrideCollectDomain = it
         }
 
         // Library Settings
-        if (hasKey(KEY_SETTINGS_USE_REMOTE)) {
-            useRemoteLibrarySettings = getBoolean(KEY_SETTINGS_USE_REMOTE)
+        safeGetBoolean(KEY_SETTINGS_USE_REMOTE)?.let {
+            useRemoteLibrarySettings = it
         }
-        getString(KEY_SETTINGS_OVERRIDE_URL)?.let {
+
+        safeGetString(KEY_SETTINGS_OVERRIDE_URL)?.let {
             overrideLibrarySettingsUrl = it
         }
 
         // Tag Management
-        getString(KEY_TAG_MANAGEMENT_OVERRIDE_URL)?.let {
+        safeGetString(KEY_TAG_MANAGEMENT_OVERRIDE_URL)?.let {
             overrideTagManagementUrl = it
         }
 
         // Deep Links
-        if (hasKey(KEY_QR_TRACE_ENABLED)) {
-            qrTraceEnabled = getBoolean(KEY_QR_TRACE_ENABLED)
+        safeGetBoolean(KEY_QR_TRACE_ENABLED)?.let {
+            qrTraceEnabled = it
         }
-        if (hasKey(KEY_DEEPLINK_TRACKING_ENABLED)) {
-            deepLinkTrackingEnabled = getBoolean(KEY_DEEPLINK_TRACKING_ENABLED)
+        safeGetBoolean(KEY_DEEPLINK_TRACKING_ENABLED)?.let {
+            deepLinkTrackingEnabled = it
         }
 
         // Log Level
-        getString(KEY_LOG_LEVEL)?.let {
+        safeGetString(KEY_LOG_LEVEL)?.let {
             Logger.logLevel = LogLevel.fromString(it)
         }
 
         // Consent
-        if (hasKey(KEY_CONSENT_LOGGING_ENABLED)) {
-            consentManagerLoggingEnabled = getBoolean(KEY_CONSENT_LOGGING_ENABLED)
+        safeGetBoolean(KEY_CONSENT_LOGGING_ENABLED)?.let {
+            consentManagerLoggingEnabled = it
         }
-        getString(KEY_CONSENT_LOGGING_URL)?.let {
+        safeGetString(KEY_CONSENT_LOGGING_URL)?.let {
             consentManagerLoggingUrl = it
         }
 
-        getMap(KEY_CONSENT_EXPIRY)?.let { map ->
+        safeGetMap(KEY_CONSENT_EXPIRY)?.let { map ->
             map.getDouble(KEY_CONSENT_EXPIRY_TIME).let { time ->
                 map.getString(KEY_CONSENT_EXPIRY_UNIT)?.let { unit ->
                     consentExpiry = consentExpiryFromValues(time.toLong(), unit)
@@ -126,18 +127,49 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
             }
         }
 
-        getString(KEY_CONSENT_POLICY)?.let {
+        safeGetString(KEY_CONSENT_POLICY)?.let {
             consentManagerEnabled = true
             consentManagerPolicy = consentPolicyFromString(it)
         }
 
         // Lifecycle
-        if (hasKey(KEY_LIFECYCLE_AUTO_TRACKING_ENABLED)) {
-            isAutoTrackingEnabled = getBoolean(KEY_LIFECYCLE_AUTO_TRACKING_ENABLED)
+        safeGetBoolean(KEY_LIFECYCLE_AUTO_TRACKING_ENABLED)?.let {
+            isAutoTrackingEnabled = it
         }
     }
 
     return config
+}
+
+private fun ReadableMap.safeGetString(key: String): String? {
+    return if (hasValue(key, ReadableType.String)) getString(key) else null
+}
+
+private fun ReadableMap.safeGetBoolean(key: String): Boolean? {
+    return if (hasValue(key, ReadableType.Boolean)) getBoolean(key) else null
+}
+
+private fun ReadableMap.safeGetInt(key: String): Int? {
+    return if (hasValue(key, ReadableType.Number)) getInt(key) else null
+}
+
+private fun ReadableMap.safeGetDouble(key: String): Double? {
+    return if (hasValue(key, ReadableType.Number)) getDouble(key) else null
+}
+
+private fun ReadableMap.safeGetArray(key: String): ReadableArray? {
+    return if (hasValue(key, ReadableType.Array)) getArray(key) else null
+}
+
+private fun ReadableMap.safeGetMap(key: String): ReadableMap? {
+    return if (hasValue(key, ReadableType.Map)) getMap(key) else null
+}
+
+/**
+ * Checks that a valid, non-null, value of a given type exists at the given key
+ */
+private fun ReadableMap.hasValue(key: String, type: ReadableType) : Boolean {
+    return this.hasKey(key) && !this.isNull(key) && this.getType(key) == type
 }
 
 fun consentPolicyFromString(name: String): ConsentPolicy? {
