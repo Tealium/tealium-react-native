@@ -253,10 +253,10 @@ fun dispatchFromMap(map: ReadableMap): Dispatch {
     return when (eventType.toLowerCase(Locale.ROOT)) {
         DispatchType.VIEW -> TealiumView(map.getString(KEY_TRACK_VIEW_NAME)
                 ?: DispatchType.VIEW,
-                map.getMap(KEY_TRACK_DATALAYER)?.toHashMap())
+                map.safeGetMap(KEY_TRACK_DATALAYER)?.toHashMap())
         else -> TealiumEvent(map.getString(KEY_TRACK_EVENT_NAME)
                 ?: DispatchType.EVENT,
-                map.getMap(KEY_TRACK_DATALAYER)?.toHashMap())
+                map.safeGetMap(KEY_TRACK_DATALAYER)?.toHashMap())
     }
 }
 
