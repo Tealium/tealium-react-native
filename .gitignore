@@ -35,12 +35,15 @@ Temporary Items
 build/
 .idea
 .gradle
+**/.gradle
 local.properties
 *.iml
 
 # node.js
 node_modules/
-*package-lock.json
+package-lock.json
+**/package-lock.json
 npm-debug.log
 yarn-error.log
 *yarn.lock
+**/yarn.lock
