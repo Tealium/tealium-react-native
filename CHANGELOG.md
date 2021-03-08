@@ -2,17 +2,22 @@
 
 ## 2.X
 
+[Full documentation](https://docs.tealium.com/platforms/react-native/install/)
+
+- 2.0.3
+  - Bug fixes
+	    - `safeGet` extension methods added in Kotlin to check key safety on earlier RN versions (< 0.63.3)
+	    - React module imports added to bridging header in order to accomodate RN versions (< 0.63.3)
+	  - SDK dependency and `package.json` increments
 - 2.0.2
   - Bug fix
-    - Removed deinit in `TealiumReactNative.swift` that was clearing event names
+	    - Removed deinit in `TealiumReactNative.swift` that was clearing event names
 - 2.0.1
   - Bug fixes
-    - Added all `.ts` files in the package
-    - Updated syntax and source path in `.podspec`
+	    - Added all `.ts` files in the package
+	    - Updated syntax and source path in `.podspec`
 - 2.0.0
 	- Initial release. Updated the module to use the Kotlin and Swift libraries.
-
-	[Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
 ## 1.X
 

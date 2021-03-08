@@ -1,2 +1,0 @@
-com/tealium/react/BuildConfig.java
- com.tealium.react.BuildConfig
