@@ -58,7 +58,29 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
     }
 
     val collectors = safeGetArray(KEY_CONFIG_COLLECTORS)?.toCollectorFactories()
-    val modules = safeGetArray(KEY_CONFIG_MODULES)?.toModuleFactories()
+    val modules = Arguments.createArray().let { moduleArray ->
+        // Visitor Service passed as boolean
+        safeGetBoolean(KEY_VISITOR_SERVICE_ENABLED)?.let { vsEnabled ->
+            if (vsEnabled) {
+                moduleArray.pushString(MODULES_VISITOR_SERVICE)
+            }
+        }
+
+        // Lifecycle currently passed in collectors
+        safeGetArray(KEY_CONFIG_COLLECTORS)?.let {
+            if (it.toArrayList().contains(MODULES_LIFECYCLE)) {
+                moduleArray.pushString(MODULES_LIFECYCLE)
+            }
+        }
+
+        // not currently in use; leaving in for possible future extensions
+        safeGetArray(KEY_CONFIG_MODULES)?.let { modules ->
+            for (i in 0 until modules.size()) {
+                moduleArray.pushString(modules.getString(i))
+            }
+        }
+        moduleArray as ReadableArray
+    }.toModuleFactories()
     val dispatchers = safeGetArray(KEY_CONFIG_DISPATCHERS)?.toDispatcherFactories()
 
     val config = TealiumConfig(application, account, profile, environment,
