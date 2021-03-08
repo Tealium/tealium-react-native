@@ -56,7 +56,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 apply plugin: 'kotlin-android'
 
-version = "2.0.0"
+version = "2.0.3"
 android {
     compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
     buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
@@ -99,12 +99,12 @@ dependencies {
     implementation 'com.facebook.react:react-native:+'  // From node_modules
 
     //Tealium
-    implementation 'com.tealium:kotlin-core:1.2.0'
-    implementation 'com.tealium:kotlin-collect-dispatcher:1.0.2'
-    implementation 'com.tealium:kotlin-tagmanagement-dispatcher:1.0.1'
-    implementation 'com.tealium:kotlin-remotecommand-dispatcher:1.0.1'
-    implementation 'com.tealium:kotlin-lifecycle:1.0.2'
-    implementation 'com.tealium:kotlin-visitor-service:1.0.2'
+    implementation 'com.tealium:kotlin-core:1.2.1'
+    implementation 'com.tealium:kotlin-collect-dispatcher:1.0.3'
+    implementation 'com.tealium:kotlin-tagmanagement-dispatcher:1.0.3'
+    implementation 'com.tealium:kotlin-remotecommand-dispatcher:1.0.2'
+    implementation 'com.tealium:kotlin-lifecycle:1.0.3'
+    implementation 'com.tealium:kotlin-visitor-service:1.0.3'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${project.ext.kotlinVersion}"
 
     testImplementation 'com.facebook.react:react-native:+'
