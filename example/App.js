@@ -7,7 +7,17 @@ export default class App extends Component < {} > {
 
     componentDidMount() {
         let config: TealiumConfig = { account: 'tealiummobile', profile: 'demo', environment: TealiumEnvironment.dev, dispatchers: [Dispatchers.Collect, Dispatchers.TagManagement, Dispatchers.RemoteCommands], collectors: [Collectors.AppData, Collectors.DeviceData, Collectors.Lifecycle, Collectors.Connectivity], consentLoggingEnabled: true, consentExpiry: {'time': 10, 'unit': 'minutes' }, consentPolicy: ConsentPolicy.gdpr, batchingEnabled: false, visitorServiceEnabled: true, useRemoteLibrarySettings: false };
-        Tealium.initialize(config);
+        Tealium.initialize(config, success => {
+            if (!success) {
+                console.log("Tealium not initialized")
+                return
+            }
+            Tealium.setConsentStatus(ConsentStatus.consented)
+            Tealium.addRemoteCommand("hello", payload => {
+                console.log('hello remote command');
+                console.log(JSON.stringify(payload));
+            });
+        });
         Tealium.setVisitorServiceListener(profile => {
             console.log("audiences: ");
             console.log(JSON.stringify(profile["audiences"]));
@@ -97,10 +107,6 @@ export default class App extends Component < {} > {
     }
 
     addRemoteCommand() {
-        Tealium.addRemoteCommand('hello', payload => {
-            console.log('hello remote command');
-            console.log(JSON.stringify(payload));
-        });
         Tealium.addRemoteCommand('example', payload => {
             console.log('example remote command');
             console.log(JSON.stringify(payload));

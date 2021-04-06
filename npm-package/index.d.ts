@@ -11,7 +11,7 @@ declare module 'tealium-react-native' {
 		 * Initializes the Tealium SDK
 		 * @param config Config options to change SDK behavior
 		 */
-		public static initialize(config: TealiumConfig): void;
+		public static initialize(config: TealiumConfig, callback: (response: boolean) => void): void;
 
 		/**
 		 * Tracks an event/view

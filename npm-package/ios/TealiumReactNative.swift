@@ -62,12 +62,14 @@ class TealiumReactNative: RCTEventEmitter {
     }
     
     @objc
-    public static func initialize(_ config: [String: Any]) {
+    public static func initialize(_ config: [String: Any], _ completion: @escaping (Bool) -> Void) {
         guard let localConfig = tealiumConfig(from: config) else {
-            return
+            return completion(false)
         }
         TealiumReactNative.config = localConfig.copy
-        tealium = Tealium(config: localConfig)
+        tealium = Tealium(config: localConfig) { _ in
+            completion(true)
+        }
     }
 
     @objc

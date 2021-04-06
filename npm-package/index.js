@@ -8,8 +8,8 @@ export default class Tealium {
     static emitterCallbacks = {};
     static emitterSubscriptions = [];
 
-    static initialize(config) {
-        TealiumWrapper.initialize(config);
+    static initialize(config, callback) {
+        TealiumWrapper.initialize(config, callback);
         TealiumWrapper.addToDataLayer({'plugin_name': 'Tealium-ReactNative', 'plugin_version': '2.0.0'}, Expiry.forever);
         if (config["dispatchers"].includes(Dispatchers.RemoteCommands)) {
             this.setRemoteCommandListener();
