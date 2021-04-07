@@ -1,5 +1,5 @@
 import { NativeEventEmitter, NativeModules } from 'react-native';
-import { Expiry, Dispatchers, EventListenerNames } from './common';
+import { Expiry, Dispatchers, EventListenerNames, RemoteCommand } from './common';
 const { TealiumWrapper, TealiumReactNative } = NativeModules;
 
 export default class Tealium {
@@ -9,8 +9,15 @@ export default class Tealium {
     static emitterSubscriptions = [];
 
     static initialize(config) {
+        if (config.remoteCommands) {
+            config.remoteCommands.forEach((remoteCommand) => {
+                if (remoteCommand.callback) {
+                    this.emitterCallbacks[remoteCommand.id] = remoteCommand.callback
+                }
+            });
+        }
         TealiumWrapper.initialize(config);
-        TealiumWrapper.addToDataLayer({'plugin_name': 'Tealium-ReactNative', 'plugin_version': '2.0.0'}, Expiry.forever);
+        TealiumWrapper.addToDataLayer({'plugin_name': 'Tealium-ReactNative', 'plugin_version': '2.1.0'}, Expiry.forever);
         if (config["dispatchers"].includes(Dispatchers.RemoteCommands)) {
             this.setRemoteCommandListener();
         }

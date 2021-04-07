@@ -1,12 +1,45 @@
 import React, { Component } from 'react';
 import { Platform, Button, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert, ScrollView, SafeAreaView } from 'react-native';
 import Tealium from 'tealium-react-native';
-import { TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors, ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment } from 'tealium-react-native/common';
+import { TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors, ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment, RemoteCommand } from 'tealium-react-native/common';
 
 export default class App extends Component < {} > {
 
     componentDidMount() {
-        let config: TealiumConfig = { account: 'tealiummobile', profile: 'demo', environment: TealiumEnvironment.dev, dispatchers: [Dispatchers.Collect, Dispatchers.TagManagement, Dispatchers.RemoteCommands], collectors: [Collectors.AppData, Collectors.DeviceData, Collectors.Lifecycle, Collectors.Connectivity], consentLoggingEnabled: true, consentExpiry: {'time': 10, 'unit': 'minutes' }, consentPolicy: ConsentPolicy.gdpr, batchingEnabled: false, visitorServiceEnabled: true, useRemoteLibrarySettings: false };
+        let config: TealiumConfig = { 
+            account: 'tealiummobile', 
+            profile: 'demo', 
+            environment: TealiumEnvironment.dev, 
+            dispatchers: [
+                Dispatchers.Collect, 
+                Dispatchers.TagManagement, 
+                Dispatchers.RemoteCommands
+            ], 
+            collectors: [
+                Collectors.AppData, 
+                Collectors.DeviceData, 
+                Collectors.Lifecycle, 
+                Collectors.Connectivity
+            ], 
+            consentLoggingEnabled: true, 
+            consentExpiry: { 
+                'time': 10,
+                'unit': 'minutes' 
+            }, 
+            consentPolicy: ConsentPolicy.gdpr, 
+            batchingEnabled: false, 
+            visitorServiceEnabled: true, 
+            useRemoteLibrarySettings: false,
+            remoteCommands: [{
+                id: "my_remote_command",
+                callback: (payload) => {
+                    console.log("payload: " + JSON.stringify(payload));
+                }
+            }, {
+                id: "built_in_command",
+                path: "vendor.json"
+            }]
+        };
         Tealium.initialize(config);
         Tealium.setVisitorServiceListener(profile => {
             console.log("audiences: ");
