@@ -190,7 +190,41 @@ extension TealiumReactNative {
             return .error
         }
     }
+    
+    public static func remoteCommandsFrom(_ commands: [Any]) -> [RemoteCommandProtocol] {
+        var remoteCommands: [RemoteCommandProtocol] = []
+        for entry in commands {
+            if let cmd = entry as? [String: Any],
+               let id = cmd[TealiumReactConstants.RemoteCommand.id] as? String {
+                
+                var command: RemoteCommand?
+                if let _ = cmd[TealiumReactConstants.RemoteCommand.callback] {
+                    // callback was provided
+                    command = remoteCommandFor(id)
+                } else {
+                    // no callback look for a factory
+                    command = remoteCommandFactories[id]?.create()
+                }
 
+                if let command = command {
+                    if let path = cmd[TealiumReactConstants.RemoteCommand.path] as? String {
+                        command.type = .local(file: path, bundle: nil)
+                    } else if let url = cmd[TealiumReactConstants.RemoteCommand.url] as? String {
+                        command.type = .remote(url: url)
+                    }
+                    remoteCommands.append(command)
+                }
+            }
+        }
+        return remoteCommands
+    }
+    
+    public static func remoteCommandFor(_ id: String) -> RemoteCommand {
+        return RemoteCommand(commandId: id, description: nil) { response in
+            EventEmitter.shared.dispatch(name: TealiumReactConstants.Events.remoteCommand.rawValue,
+                                                 body: response.payload)
+        }
+    }
 }
 
 extension Dictionary where Key: ExpressibleByStringLiteral {
@@ -200,6 +234,11 @@ extension Dictionary where Key: ExpressibleByStringLiteral {
         }
     }
     subscript(key: TealiumReactConstants.Dispatch) -> Value? {
+        get {
+            return self[key.rawValue as! Key]
+        }
+    }
+    subscript(key: TealiumReactConstants.RemoteCommand) -> Value? {
         get {
             return self[key.rawValue as! Key]
         }

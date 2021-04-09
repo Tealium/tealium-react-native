@@ -24,19 +24,19 @@ export default class App extends Component < {} > {
             consentLoggingEnabled: true, 
             consentExpiry: { 
                 'time': 10,
-                'unit': 'minutes' 
+                'unit': 'days' 
             }, 
             consentPolicy: ConsentPolicy.gdpr, 
             batchingEnabled: false, 
             visitorServiceEnabled: true, 
             useRemoteLibrarySettings: false,
             remoteCommands: [{
-                id: "my_remote_command",
+                id: "hello",
                 callback: (payload) => {
-                    console.log("payload: " + JSON.stringify(payload));
+                    console.log("hello-payload: " + JSON.stringify(payload));
                 }
             }, {
-                id: "built_in_command",
+                id: "vendor_name",
                 path: "vendor.json"
             }]
         };
@@ -130,10 +130,6 @@ export default class App extends Component < {} > {
     }
 
     addRemoteCommand() {
-        Tealium.addRemoteCommand('hello', payload => {
-            console.log('hello remote command');
-            console.log(JSON.stringify(payload));
-        });
         Tealium.addRemoteCommand('example', payload => {
             console.log('example remote command');
             console.log(JSON.stringify(payload));

@@ -217,27 +217,29 @@ class ExtensionsTests {
 
     @Test
     fun dispatchFromMap_Payload() {
-        val mockMap: ReadableMap = mockk(relaxed = true)
-        every { mockMap.getMap("dataLayer") } returns mockMap
-        every { mockMap.toHashMap() } returns hashMapOf("key" to "value")
+        val map: WritableMap = JavaOnlyMap()
+        map.putString(KEY_TRACK_EVENT_TYPE, "event")
+        map.putString(KEY_TRACK_EVENT_NAME, "test-event")
 
-        every { mockMap.getString(KEY_TRACK_EVENT_TYPE) } returns "event"
-        every { mockMap.getString(KEY_TRACK_EVENT_NAME) } returns "test-event"
-        val event = dispatchFromMap(mockMap) as TealiumEvent
+        val dataLayer: WritableMap = JavaOnlyMap()
+        dataLayer.putString("key", "value")
+        map.putMap(KEY_TRACK_DATALAYER, dataLayer)
+
+        val event = dispatchFromMap(map) as TealiumEvent
         assertEquals("test-event", event.eventName)
         assertEquals("value", event.payload()["key"])
 
-        every { mockMap.getString(KEY_TRACK_EVENT_TYPE) } returns "view"
-        every { mockMap.getString(KEY_TRACK_VIEW_NAME) } returns "test-view"
-        val view = dispatchFromMap(mockMap) as TealiumView
+        map.putString(KEY_TRACK_EVENT_TYPE, "view")
+        map.putString(KEY_TRACK_VIEW_NAME, "test-view")
+        val view = dispatchFromMap(map) as TealiumView
         assertEquals("test-view", view.viewName)
         assertEquals("value", view.payload()["key"])
 
         // Defaults
-        every { mockMap.getString(KEY_TRACK_EVENT_TYPE) } returns "something-else"
-        every { mockMap.getString(KEY_TRACK_EVENT_NAME) } returns null
-        every { mockMap.getMap(KEY_TRACK_DATALAYER) } returns null
-        val default = dispatchFromMap(mockMap) as TealiumEvent
+        map.putString(KEY_TRACK_EVENT_TYPE, "something-else")
+        map.putString(KEY_TRACK_EVENT_NAME, null)
+        map.putMap(KEY_TRACK_DATALAYER, null)
+        val default = dispatchFromMap(map) as TealiumEvent
         assertEquals(DispatchType.EVENT, default.eventName)
         assertFalse(default.payload().containsKey("key"))
     }

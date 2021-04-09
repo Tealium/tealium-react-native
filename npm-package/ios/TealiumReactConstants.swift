@@ -57,6 +57,7 @@ enum TealiumReactConstants {
         case lifecycleAutotrackingEnabled
         case visitorServiceEnabled
         case memoryReportingEnabled
+        case remoteCommands
     }
     
     enum Dispatch: String {
@@ -87,5 +88,12 @@ enum TealiumReactConstants {
         static let setsOfStrings = "setsOfStrings"
     }
 
+    enum RemoteCommand: String {
+        case id
+        case path
+        case url
+        case callback
+    }
+    
 }
 
