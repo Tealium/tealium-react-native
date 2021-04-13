@@ -192,29 +192,33 @@ extension TealiumReactNative {
     }
     
     public static func remoteCommandsFrom(_ commands: [Any]) -> [RemoteCommandProtocol] {
-        var remoteCommands: [RemoteCommandProtocol] = []
-        for entry in commands {
-            if let cmd = entry as? [String: Any],
-               let id = cmd[TealiumReactConstants.RemoteCommand.id] as? String {
-                
-                var command: RemoteCommand?
-                if let _ = cmd[TealiumReactConstants.RemoteCommand.callback] {
-                    // callback was provided
-                    command = remoteCommandFor(id)
-                } else {
-                    // no callback look for a factory
-                    command = remoteCommandFactories[id]?.create()
-                }
-
-                if let command = command {
-                    if let path = cmd[TealiumReactConstants.RemoteCommand.path] as? String {
-                        command.type = .local(file: path, bundle: nil)
-                    } else if let url = cmd[TealiumReactConstants.RemoteCommand.url] as? String {
-                        command.type = .remote(url: url)
-                    }
-                    remoteCommands.append(command)
-                }
+        var remoteCommands = [RemoteCommandProtocol]()
+        commands.forEach { commandPayload in
+            
+            guard let commandPayload = commandPayload as? [String: Any],
+                  let id = commandPayload[.id] as? String else {
+                return
             }
+            
+            var command: RemoteCommand?
+            if commandPayload[.callback] == nil {
+                // no callback look for a factory
+                command = remoteCommandFactories[id]?.create()
+            } else {
+                // callback was provided
+                command = remoteCommandFor(id)
+            }
+                
+            guard let remoteCommand = command else {
+                return
+            }
+            
+            if let path = commandPayload[.path] as? String {
+                remoteCommand.type = .local(file: path, bundle: nil)
+            } else if let url = commandPayload[.url] as? String {
+                remoteCommand.type = .remote(url: url)
+            }
+            remoteCommands.append(remoteCommand)
         }
         return remoteCommands
     }

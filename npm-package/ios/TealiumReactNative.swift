@@ -20,7 +20,7 @@ class TealiumReactNative: RCTEventEmitter {
     
     static var visitorServiceDelegate: VisitorServiceDelegate = VisitorDelegate()
     static var consentExpiryCallback: (([Any]) -> Void)?
-    static var remoteCommandFactories: [String: RemoteCommandFactory] = [:]
+    static var remoteCommandFactories = [String: RemoteCommandFactory]()
     
     @objc
     public static var consentStatus: String {
@@ -75,13 +75,13 @@ class TealiumReactNative: RCTEventEmitter {
         TealiumReactNative.config = localConfig.copy
         tealium = Tealium(config: localConfig) { _ in
             guard let remoteCommands = self.tealium?.remoteCommands,
-                  let remoteCommandsArray = config[TealiumReactConstants.Config.remoteCommands] as? [Any] else {
+                  let remoteCommandsArray = config[.remoteCommands] as? [Any] else {
                 return
             }
-        
-            let commands = self.remoteCommandsFrom(remoteCommandsArray)
-            for cmd in commands {
-                remoteCommands.add(cmd)
+            
+            let commands = remoteCommandsFrom(remoteCommandsArray)
+            commands.forEach {
+                remoteCommands.add($0)
             }
         }
     }
