@@ -115,6 +115,14 @@ export interface TealiumConfig {
     lifecycleAutotrackingEnabled ? : boolean;
     useRemoteLibrarySettings ? : boolean;
     visitorServiceEnabled ? : boolean;
+    remoteCommands ? : RemoteCommand[];
+}
+
+export interface RemoteCommand {
+    id: string;
+    path?: string;
+    url?: string;
+    callback?(payload: Object) : void;
 }
 
 export class TealiumCommon {}

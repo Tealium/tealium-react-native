@@ -5,12 +5,14 @@ import android.util.Log
 import android.view.View
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.*
+import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.ReactShadowNode
 import com.facebook.react.uimanager.ViewManager
 import com.tealium.core.*
 import com.tealium.core.consent.*
 import com.tealium.react.BuildConfig.TAG
 import com.tealium.remotecommanddispatcher.remoteCommands
+import com.tealium.remotecommands.RemoteCommand
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -26,10 +28,19 @@ class TealiumReactNative : ReactPackage {
     }
 }
 
+@ReactModule(name = MODULE_NAME)
 class TealiumReact(private val reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
     override fun getName(): String = MODULE_NAME
     private var tealium: Tealium? = null
+    private val remoteCommandFactories: MutableMap<String, RemoteCommandFactory> = mutableMapOf()
+
+    fun registerRemoteCommandFactory(factory: RemoteCommandFactory) {
+        if (remoteCommandFactories.containsKey(factory.name)) {
+            Logger.qa(TAG, "RemoteCammand for name ${factory.name} already registered; overwriting.")
+        }
+        remoteCommandFactories[factory.name] = factory
+    }
 
     @ReactMethod
     fun initialize(configMap: ReadableMap) {
@@ -38,6 +49,10 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
                 tealium = Tealium.create(INSTANCE_NAME, config) {
                     Log.d(TAG, "Instance Initialized: ${this.key}")
                     events.subscribe(EmitterListeners(reactContext))
+
+                    configMap.safeGetArray(KEY_REMOTE_COMMANDS_CONFIG)?.let {
+                        createRemoteCommands(it)
+                    }
                 }
             }
         } ?: run {
@@ -59,6 +74,28 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
             Log.d(TAG, "getApplication: failed to cast to Application. ", ex)
         }
         return app
+    }
+
+    private fun createRemoteCommands(commands: ReadableArray) {
+        for (i in 0 until commands.size()) {
+            val cmd = commands.getMap(i)
+            if (cmd is ReadableMap) {
+                val id = cmd.safeGetString(KEY_REMOTE_COMMANDS_ID)
+                if (id != null) {
+                    val path = cmd.safeGetString(KEY_REMOTE_COMMANDS_PATH)
+                    val url = cmd.safeGetString(KEY_REMOTE_COMMANDS_URL)
+                    val command: RemoteCommand? = if (cmd.hasKey(KEY_REMOTE_COMMANDS_CALLBACK)) {
+                        RemoteCommandListener(reactContext, id)
+                    } else {
+                        remoteCommandFactories[id]?.create()
+                    }
+
+                    if (command != null) {
+                        tealium?.remoteCommands?.add(command, path, url)
+                    }
+                }
+            }
+        }
     }
 
     @ReactMethod
