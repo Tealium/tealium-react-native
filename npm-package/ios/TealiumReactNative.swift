@@ -73,15 +73,15 @@ class TealiumReactNative: RCTEventEmitter {
         }
         TealiumReactNative.config = localConfig.copy
         tealium = Tealium(config: localConfig) { _ in
-            guard let remoteCommands = self.tealium?.remoteCommands,
-                  let remoteCommandsArray = config[.remoteCommands] as? [Any] else {
-                return
+            if let remoteCommands = self.tealium?.remoteCommands,
+               let remoteCommandsArray = config[.remoteCommands] as? [Any] {
+                
+                let commands = remoteCommandsFrom(remoteCommandsArray)
+                commands.forEach {
+                    remoteCommands.add($0)
+                }
             }
-
-            let commands = remoteCommandsFrom(remoteCommandsArray)
-            commands.forEach {
-                remoteCommands.add($0)
-            }
+        
             completion(true)
         }
     }

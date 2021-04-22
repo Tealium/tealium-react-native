@@ -43,7 +43,7 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
     }
 
     @ReactMethod
-    fun initialize(configMap: ReadableMap) {
+    fun initialize(configMap: ReadableMap, callback: Callback?) {
         getApplication()?.let { app ->
             configMap.toTealiumConfig(app)?.let { config ->
                 tealium = Tealium.create(INSTANCE_NAME, config) {
@@ -53,10 +53,12 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
                     configMap.safeGetArray(KEY_REMOTE_COMMANDS_CONFIG)?.let {
                         createRemoteCommands(it)
                     }
+                    callback?.invoke(true)
                 }
             }
         } ?: run {
             Log.w(TAG, "Failed to initialize instance.")
+            callback?.invoke(false)
         }
     }
 

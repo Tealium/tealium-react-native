@@ -6,18 +6,49 @@ import { TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatcher
 export default class App extends Component < {} > {
 
     componentDidMount() {
-        let config: TealiumConfig = { account: 'tealiummobile', profile: 'demo', environment: TealiumEnvironment.dev, dispatchers: [Dispatchers.Collect, Dispatchers.TagManagement, Dispatchers.RemoteCommands], collectors: [Collectors.AppData, Collectors.DeviceData, Collectors.Lifecycle, Collectors.Connectivity], consentLoggingEnabled: true, consentExpiry: {'time': 10, 'unit': 'minutes' }, consentPolicy: ConsentPolicy.gdpr, batchingEnabled: false, visitorServiceEnabled: true, useRemoteLibrarySettings: false };
+        let config: TealiumConfig = { 
+            account: 'tealiummobile', 
+            profile: 'demo', 
+            environment: TealiumEnvironment.dev, 
+            dispatchers: [
+                Dispatchers.Collect, 
+                Dispatchers.TagManagement, 
+                Dispatchers.RemoteCommands
+            ], 
+            collectors: [
+                Collectors.AppData, 
+                Collectors.DeviceData, 
+                Collectors.Lifecycle, 
+                Collectors.Connectivity
+            ], 
+            consentLoggingEnabled: true, 
+            consentExpiry: { 
+                'time': 10,
+                'unit': 'days' 
+            }, 
+            consentPolicy: ConsentPolicy.gdpr, 
+            batchingEnabled: false, 
+            visitorServiceEnabled: true, 
+            useRemoteLibrarySettings: false,
+            remoteCommands: [{
+                id: "hello-world",
+                callback: (payload) => {
+                    console.log("hello-world: " + JSON.stringify(payload));
+                }
+            }]
+        };
         Tealium.initialize(config, success => {
-                    if (!success) {
-                        console.log("Tealium not initialized")
-                        return
-                    }
-                    Tealium.setConsentStatus(ConsentStatus.consented)
-                    Tealium.addRemoteCommand("hello", payload => {
-                        console.log('hello remote command');
-                        console.log(JSON.stringify(payload));
-                    });
-                });
+            if (!success) {
+                console.log("Tealium not initialized")
+                return
+            } 
+            console.log("Tealium initialized")
+            Tealium.setConsentStatus(ConsentStatus.consented)
+            Tealium.addRemoteCommand("hello", payload => {
+                console.log('hello remote command');
+                console.log(JSON.stringify(payload));
+            });
+        });
         Tealium.setVisitorServiceListener(profile => {
             console.log("audiences: ");
             console.log(JSON.stringify(profile["audiences"]));
