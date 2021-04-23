@@ -31,16 +31,24 @@ export default class App extends Component < {} > {
             visitorServiceEnabled: true, 
             useRemoteLibrarySettings: false,
             remoteCommands: [{
-                id: "hello",
+                id: "hello-world",
                 callback: (payload) => {
-                    console.log("hello-payload: " + JSON.stringify(payload));
+                    console.log("hello-world: " + JSON.stringify(payload));
                 }
-            }, {
-                id: "vendor_name",
-                path: "vendor.json"
             }]
         };
-        Tealium.initialize(config);
+        Tealium.initialize(config, success => {
+            if (!success) {
+                console.log("Tealium not initialized")
+                return
+            } 
+            console.log("Tealium initialized")
+            Tealium.setConsentStatus(ConsentStatus.consented)
+            Tealium.addRemoteCommand("hello", payload => {
+                console.log('hello remote command');
+                console.log(JSON.stringify(payload));
+            });
+        });
         Tealium.setVisitorServiceListener(profile => {
             console.log("audiences: ");
             console.log(JSON.stringify(profile["audiences"]));

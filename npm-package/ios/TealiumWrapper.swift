@@ -19,9 +19,13 @@ class TealiumWrapper: NSObject {
       return false
     }
     
-    @objc(initialize:)
-    public func initialize(_ config: [String: Any]) {
-        TealiumReactNative.initialize(config)
+    @objc(initialize:callback:)
+    public func initialize(_ config: [String: Any], callback: @escaping RCTResponseSenderBlock) {
+        TealiumReactNative.initialize(config) { result in
+            if result {
+                callback([result])
+            }
+        }
     }
     
     @objc(track:)

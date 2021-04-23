@@ -4,7 +4,7 @@
 
 @interface RCT_EXTERN_MODULE(TealiumWrapper, NSObject)
   
-    RCT_EXTERN_METHOD(initialize:(NSDictionary *)config)
+    RCT_EXTERN_METHOD(initialize:(NSDictionary *)config callback:(RCTResponseSenderBlock)callback)
 
     RCT_EXTERN_METHOD(track:(NSDictionary *)dispatch)
 

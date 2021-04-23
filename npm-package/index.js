@@ -8,7 +8,7 @@ export default class Tealium {
     static emitterCallbacks = {};
     static emitterSubscriptions = [];
 
-    static initialize(config) {
+    static initialize(config, callback) {
         if (config.remoteCommands) {
             config.remoteCommands.forEach((remoteCommand) => {
                 if (remoteCommand.callback) {
@@ -16,7 +16,7 @@ export default class Tealium {
                 }
             });
         }
-        TealiumWrapper.initialize(config);
+        TealiumWrapper.initialize(config, callback || (response => {}));
         TealiumWrapper.addToDataLayer({'plugin_name': 'Tealium-ReactNative', 'plugin_version': '2.1.0'}, Expiry.forever);
         if (config["dispatchers"].includes(Dispatchers.RemoteCommands)) {
             this.setRemoteCommandListener();
