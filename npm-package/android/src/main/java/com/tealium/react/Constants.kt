@@ -57,3 +57,9 @@ const val KEY_CONSENT_EXPIRY_UNIT = "unit"
 const val KEY_LIFECYCLE_AUTO_TRACKING_ENABLED = "lifecycleAutotrackingEnabled"
 
 const val KEY_VISITOR_SERVICE_ENABLED = "visitorServiceEnabled"
+
+const val KEY_REMOTE_COMMANDS_CONFIG = "remoteCommands"
+const val KEY_REMOTE_COMMANDS_ID = "id"
+const val KEY_REMOTE_COMMANDS_PATH = "path"
+const val KEY_REMOTE_COMMANDS_URL = "url"
+const val KEY_REMOTE_COMMANDS_CALLBACK = "callback"

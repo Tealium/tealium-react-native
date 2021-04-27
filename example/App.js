@@ -1,13 +1,54 @@
 import React, { Component } from 'react';
 import { Platform, Button, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert, ScrollView, SafeAreaView } from 'react-native';
 import Tealium from 'tealium-react-native';
-import { TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors, ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment } from 'tealium-react-native/common';
+import { TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors, ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment, RemoteCommand } from 'tealium-react-native/common';
 
 export default class App extends Component < {} > {
 
     componentDidMount() {
-        let config: TealiumConfig = { account: 'tealiummobile', profile: 'demo', environment: TealiumEnvironment.dev, dispatchers: [Dispatchers.Collect, Dispatchers.TagManagement, Dispatchers.RemoteCommands], collectors: [Collectors.AppData, Collectors.DeviceData, Collectors.Lifecycle, Collectors.Connectivity], consentLoggingEnabled: true, consentExpiry: {'time': 10, 'unit': 'minutes' }, consentPolicy: ConsentPolicy.gdpr, batchingEnabled: false, visitorServiceEnabled: true, useRemoteLibrarySettings: false };
-        Tealium.initialize(config);
+        let config: TealiumConfig = { 
+            account: 'tealiummobile', 
+            profile: 'demo', 
+            environment: TealiumEnvironment.dev, 
+            dispatchers: [
+                Dispatchers.Collect, 
+                Dispatchers.TagManagement, 
+                Dispatchers.RemoteCommands
+            ], 
+            collectors: [
+                Collectors.AppData, 
+                Collectors.DeviceData, 
+                Collectors.Lifecycle, 
+                Collectors.Connectivity
+            ], 
+            consentLoggingEnabled: true, 
+            consentExpiry: { 
+                'time': 10,
+                'unit': 'days' 
+            }, 
+            consentPolicy: ConsentPolicy.gdpr, 
+            batchingEnabled: false, 
+            visitorServiceEnabled: true, 
+            useRemoteLibrarySettings: false,
+            remoteCommands: [{
+                id: "hello-world",
+                callback: (payload) => {
+                    console.log("hello-world: " + JSON.stringify(payload));
+                }
+            }]
+        };
+        Tealium.initialize(config, success => {
+            if (!success) {
+                console.log("Tealium not initialized")
+                return
+            } 
+            console.log("Tealium initialized")
+            Tealium.setConsentStatus(ConsentStatus.consented)
+            Tealium.addRemoteCommand("hello", payload => {
+                console.log('hello remote command');
+                console.log(JSON.stringify(payload));
+            });
+        });
         Tealium.setVisitorServiceListener(profile => {
             console.log("audiences: ");
             console.log(JSON.stringify(profile["audiences"]));
@@ -97,10 +138,6 @@ export default class App extends Component < {} > {
     }
 
     addRemoteCommand() {
-        Tealium.addRemoteCommand('hello', payload => {
-            console.log('hello remote command');
-            console.log(JSON.stringify(payload));
-        });
         Tealium.addRemoteCommand('example', payload => {
             console.log('example remote command');
             console.log(JSON.stringify(payload));

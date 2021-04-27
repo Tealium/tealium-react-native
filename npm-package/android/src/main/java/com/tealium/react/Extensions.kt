@@ -163,27 +163,27 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
     return config
 }
 
-private fun ReadableMap.safeGetString(key: String): String? {
+internal fun ReadableMap.safeGetString(key: String): String? {
     return if (hasValue(key, ReadableType.String)) getString(key) else null
 }
 
-private fun ReadableMap.safeGetBoolean(key: String): Boolean? {
+internal fun ReadableMap.safeGetBoolean(key: String): Boolean? {
     return if (hasValue(key, ReadableType.Boolean)) getBoolean(key) else null
 }
 
-private fun ReadableMap.safeGetInt(key: String): Int? {
+internal fun ReadableMap.safeGetInt(key: String): Int? {
     return if (hasValue(key, ReadableType.Number)) getInt(key) else null
 }
 
-private fun ReadableMap.safeGetDouble(key: String): Double? {
+internal fun ReadableMap.safeGetDouble(key: String): Double? {
     return if (hasValue(key, ReadableType.Number)) getDouble(key) else null
 }
 
-private fun ReadableMap.safeGetArray(key: String): ReadableArray? {
+internal fun ReadableMap.safeGetArray(key: String): ReadableArray? {
     return if (hasValue(key, ReadableType.Array)) getArray(key) else null
 }
 
-private fun ReadableMap.safeGetMap(key: String): ReadableMap? {
+internal fun ReadableMap.safeGetMap(key: String): ReadableMap? {
     return if (hasValue(key, ReadableType.Map)) getMap(key) else null
 }
 

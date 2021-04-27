@@ -14,6 +14,7 @@ import com.tealium.dispatcher.TealiumEvent
 import com.tealium.dispatcher.TealiumView
 import com.tealium.remotecommanddispatcher.RemoteCommandDispatcher
 import com.tealium.remotecommanddispatcher.remoteCommands
+import com.tealium.remotecommands.RemoteCommand
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
@@ -47,11 +48,14 @@ class TealiumReactTests {
     lateinit var mockTealium: Tealium
 
     @RelaxedMockK
+    lateinit var mockRemoteCommandDispatcher: RemoteCommandDispatcher
+
+    @RelaxedMockK
     lateinit var mockCallback: Callback
 
     lateinit var tealiumReact: TealiumReact
 
-    lateinit var minimalConfig: ReadableMap
+    lateinit var minimalConfig: WritableMap
 
     private val foreverExpiry = "forever"
     private val sessionExpiry = "session"
@@ -72,7 +76,13 @@ class TealiumReactTests {
         every { mockActivity.application } returns mockApplication
 
         mockkObject(Tealium)
-        every { Tealium.create(any(), any(), any()) } returns mockTealium
+        val callback = slot<Tealium.() -> Unit>()
+        every { Tealium.create(any(), any(), capture(callback)) } answers {
+            callback.captured(mockTealium)
+            mockTealium
+        }
+        every { mockTealium.remoteCommands } returns mockRemoteCommandDispatcher
+        every { mockRemoteCommandDispatcher.add(any(), any(), any()) } just Runs
 
         minimalConfig = JavaOnlyMap().apply {
             putString(KEY_CONFIG_ACCOUNT, "account")
@@ -80,7 +90,7 @@ class TealiumReactTests {
         }
 
         tealiumReact = TealiumReact(mockReactApplicationContext)
-        tealiumReact.initialize(minimalConfig)
+        tealiumReact.initialize(minimalConfig, null)
     }
 
     @Test
@@ -98,6 +108,113 @@ class TealiumReactTests {
                 it.accountName == "account"
                         && it.profileName == "profile"
             }, any())
+        }
+    }
+
+    @Test
+    fun initialize_CreatesLocalRemoteCommand_WhenCallbackSupplied() {
+        val remoteCommandsArray: WritableArray = JavaOnlyArray()
+        val localRemoteCommand: WritableMap = JavaOnlyMap()
+        localRemoteCommand.putString(KEY_REMOTE_COMMANDS_ID, "some_command")
+        localRemoteCommand.putString(KEY_REMOTE_COMMANDS_CALLBACK, null)
+        remoteCommandsArray.pushMap(localRemoteCommand)
+
+        minimalConfig.putArray(KEY_REMOTE_COMMANDS_CONFIG, remoteCommandsArray)
+        tealiumReact.initialize(minimalConfig, null)
+
+        verify(exactly = 1) {
+            mockRemoteCommandDispatcher.add(match {
+                it.commandName == "some_command"
+            })
+        }
+    }
+
+    @Test
+    fun initialize_CreatesLocalRemoteCommand_WithPathAndUrl() {
+        val remoteCommandsArray: WritableArray = JavaOnlyArray()
+        val localRemoteCommand: WritableMap = JavaOnlyMap()
+        localRemoteCommand.putString(KEY_REMOTE_COMMANDS_ID, "some_command")
+        localRemoteCommand.putString(KEY_REMOTE_COMMANDS_CALLBACK, null)
+        localRemoteCommand.putString(KEY_REMOTE_COMMANDS_PATH, "my-path.json")
+        localRemoteCommand.putString(KEY_REMOTE_COMMANDS_URL, "localhost")
+        remoteCommandsArray.pushMap(localRemoteCommand)
+
+        minimalConfig.putArray(KEY_REMOTE_COMMANDS_CONFIG, remoteCommandsArray)
+        tealiumReact.initialize(minimalConfig, null)
+
+        verify(exactly = 1) {
+            mockRemoteCommandDispatcher.add(match {
+                it.commandName == "some_command"
+            }, "my-path.json", "localhost")
+        }
+    }
+
+    @Test
+    fun initialize_DoesNot_CreateLocalRemoteCommand_WhenMissingIdOrCallback() {
+        var remoteCommandsArray: WritableArray = JavaOnlyArray()
+        var localRemoteCommand: WritableMap = JavaOnlyMap()
+        remoteCommandsArray.pushMap(localRemoteCommand)
+        minimalConfig.putArray(KEY_REMOTE_COMMANDS_CONFIG, remoteCommandsArray)
+        // missing id and callback
+        tealiumReact.initialize(minimalConfig, null)
+
+        // missing callback only
+        remoteCommandsArray = JavaOnlyArray()
+        localRemoteCommand.putString(KEY_REMOTE_COMMANDS_ID, "some_command")
+        remoteCommandsArray.pushMap(localRemoteCommand)
+        minimalConfig.putArray(KEY_REMOTE_COMMANDS_CONFIG, remoteCommandsArray)
+        tealiumReact.initialize(minimalConfig, null)
+
+        // missing id
+        localRemoteCommand = JavaOnlyMap()
+        remoteCommandsArray = JavaOnlyArray()
+        localRemoteCommand.putString(KEY_REMOTE_COMMANDS_CALLBACK, null)
+        remoteCommandsArray.pushMap(localRemoteCommand)
+        minimalConfig.putArray(KEY_REMOTE_COMMANDS_CONFIG, remoteCommandsArray)
+        tealiumReact.initialize(minimalConfig, null)
+    }
+
+    @Test
+    fun initialize_CreatesFactoryRemoteCommand_WhenNoCallback() {
+        val remoteCommandsArray: WritableArray = JavaOnlyArray()
+        val localRemoteCommand: WritableMap = JavaOnlyMap()
+        localRemoteCommand.putString(KEY_REMOTE_COMMANDS_ID, "factory_command")
+        localRemoteCommand.putString(KEY_REMOTE_COMMANDS_PATH, "my-path.json")
+        localRemoteCommand.putString(KEY_REMOTE_COMMANDS_URL, "localhost")
+        remoteCommandsArray.pushMap(localRemoteCommand)
+
+        minimalConfig.putArray(KEY_REMOTE_COMMANDS_CONFIG, remoteCommandsArray)
+        // no factory registered yet; no command should be created.
+        tealiumReact.initialize(minimalConfig, null)
+
+        // register factory
+        tealiumReact.registerRemoteCommandFactory(TestRemoteCommandFactory("factory_command"))
+        tealiumReact.initialize(minimalConfig, null)
+
+        verify(exactly = 1) {
+            mockRemoteCommandDispatcher.add(match {
+                it.commandName == "factory_command"
+            }, "my-path.json", "localhost")
+        }
+    }
+
+    @Test
+    fun initialize_CallsCallback_OnSuccess() {
+        val callback: Callback = mockk(relaxed = true)
+        tealiumReact.initialize(minimalConfig, callback)
+
+        verify(timeout = 1500) {
+            callback.invoke(true)
+        }
+    }
+
+    @Test
+    fun initialize_CallsCallback_OnFailure() {
+        val callback: Callback = mockk(relaxed = true)
+        tealiumReact.initialize(JavaOnlyMap(), callback)
+
+        verify(timeout = 1500) {
+            callback.invoke(false)
         }
     }
 
@@ -696,6 +813,19 @@ class TealiumReactTests {
 
         verify {
             mockCallback.invoke("visitor123")
+        }
+    }
+
+    private class TestRemoteCommandFactory(
+            override val name: String = "factory_command"
+    ) : RemoteCommandFactory {
+
+        override fun create(): RemoteCommand {
+            return object : RemoteCommand(name, "") {
+                override fun onInvoke(p0: Response?) {
+                    // do nothing
+                }
+            }
         }
     }
 }
