@@ -12,6 +12,7 @@
   "dependencies": {
     "react": "^16.8.1",
     "react-native": "0.63.4",
+    "tealium-react-firebase": "../remotecommands/tealium-react-firebase",
     "tealium-react-native": "../npm-package"
   },
   "devDependencies": {
