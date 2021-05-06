@@ -12,7 +12,7 @@ import com.tealium.remotecommands.RemoteCommand
 import com.tealium.remotecommands.firebase.FirebaseRemoteCommand
 import java.util.*
 
-open class FirebasePackage2 : ReactPackage {
+open class FirebasePackage : ReactPackage {
     override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
         return Arrays.asList<NativeModule>(FirebaseModule(reactContext))
     }
