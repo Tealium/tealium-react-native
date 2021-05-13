@@ -1,0 +1,47 @@
+{
+  "name": "tealium-react-braze",
+  "title": "Tealium React Braze",
+  "version": "1.0.0",
+  "description": "Native wrapper for Tealium Braze Remote Command",
+  "main": "index.js",
+  "files": [
+    "README.md",
+    "android",
+    "index.js",
+    "index.d.ts",
+    "ios",
+    "tealium-react-braze.podspec"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tealium/tealium-react-native.git",
+    "baseUrl": "https://github.com/Tealium/tealium-react-native"
+  },
+  "keywords": [
+    "react-native",
+    "tealium",
+    "braze"
+  ],
+  "author": {
+    "name": "Tealium"
+  },
+  "contributors": [
+    "James Keith",
+    "Christina Sund"
+  ],
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "peerDependencies": {
+    "react": "^16.8.1",
+    "react-native": ">=0.60.0-rc.0 <1.0.x",
+    "tealium-react-native": "^2.1.0"
+  },
+  "devDependencies": {
+    "react": "^16.9.0",
+    "react-native": "^0.61.5"
+  }
+}

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Platform, Button, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert, ScrollView, SafeAreaView } from 'react-native';
 import Tealium from 'tealium-react-native';
 import { TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors, ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment, RemoteCommand } from 'tealium-react-native/common';
+// Optional - uncomment for Braze Remote Command support.
+// import BrazeRemoteCommand from 'tealium-react-braze';
 
 export default class App extends Component < {} > {
 
@@ -22,20 +24,15 @@ export default class App extends Component < {} > {
                 Collectors.Connectivity
             ], 
             consentLoggingEnabled: true, 
-            consentExpiry: { 
-                'time': 10,
-                'unit': 'days' 
-            }, 
-            consentPolicy: ConsentPolicy.gdpr, 
+            // consentExpiry: { 
+            //     'time': 10,
+            //     'unit': 'days' 
+            // }, 
+            // consentPolicy: ConsentPolicy.gdpr, 
             batchingEnabled: false, 
             visitorServiceEnabled: true, 
             useRemoteLibrarySettings: false,
-            remoteCommands: [{
-                id: "hello-world",
-                callback: (payload) => {
-                    console.log("hello-world: " + JSON.stringify(payload));
-                }
-            }]
+            remoteCommands: this.createRemoteCommands()
         };
         Tealium.initialize(config, success => {
             if (!success) {
@@ -160,6 +157,35 @@ export default class App extends Component < {} > {
         Tealium.terminateInstance();
     }
 
+    createRemoteCommands() {
+        /*
+            Default Remote Command implementations
+        */
+        let remoteCommands = [] 
+        remoteCommands.push({
+            id: "hello-world",
+            callback: (payload) => {
+                console.log("hello-world: " + JSON.stringify(payload));
+            }
+        })
+
+        /*
+            Optional - BrazeRemoteCommand configuration
+        */
+        // BrazeRemoteCommand.setSessionHandlingEnabled(false)
+        // BrazeRemoteCommand.setRegisterInAppMessenger(false)
+        // BrazeRemoteCommand.setSessionHandlingBlacklist(["<fully qualified class name>"])
+        // BrazeRemoteCommand.setInAppMessengerBlacklist(["<fully qualified class name>"])
+        /*
+            BrazeRemoteCommand configuration
+        */
+        // let brazeCommand: RemoteCommand = {
+        //     id: BrazeRemoteCommand.name,
+        //     path: "braze.json"
+        // }
+        // remoteCommands.push(brazeCommand)
+        return remoteCommands
+    }
 
     render() {
         return (
