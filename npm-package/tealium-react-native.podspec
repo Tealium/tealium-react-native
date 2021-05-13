@@ -19,12 +19,12 @@ Pod::Spec.new do |s|
   s.swift_version = "5.0"
 
   s.dependency "React"
-  s.dependency "tealium-swift/Core", "~> 2.2.2"
-  s.dependency "tealium-swift/TagManagement", "~> 2.2.2"
-  s.dependency "tealium-swift/Collect", "~> 2.2.2"
-  s.dependency "tealium-swift/Lifecycle", "~> 2.2.2"
-  s.dependency "tealium-swift/RemoteCommands", "~> 2.2.2"
-  s.dependency "tealium-swift/VisitorService", "~> 2.2.2"
+  s.dependency "tealium-swift/Core", "~> 2.3"
+  s.dependency "tealium-swift/TagManagement", "~> 2.3"
+  s.dependency "tealium-swift/Collect", "~> 2.3"
+  s.dependency "tealium-swift/Lifecycle", "~> 2.3"
+  s.dependency "tealium-swift/RemoteCommands", "~> 2.3"
+  s.dependency "tealium-swift/VisitorService", "~> 2.3"
 
 end
 
