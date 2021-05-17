@@ -32,6 +32,9 @@ allprojects {
         maven {
             url "https://maven.tealiumiq.com/android/releases/"
         }
+        maven {
+            url "https://appboy.github.io/appboy-android-sdk/sdk"
+        }
 
         google()
         jcenter()
