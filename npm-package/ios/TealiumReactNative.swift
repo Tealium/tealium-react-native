@@ -179,7 +179,7 @@ class VisitorDelegate: VisitorServiceDelegate {
             Visitor.arraysOfNumbers: visitorProfile.currentVisit?.arraysOfNumbers,
             Visitor.tallies: visitorProfile.currentVisit?.tallies,
             Visitor.strings: visitorProfile.currentVisit?.strings,
-            Visitor.arraysOfStrings: visitorProfile,
+            Visitor.arraysOfStrings: visitorProfile.currentVisit?.arraysOfStrings,
             // Sets cannot be serialized to JSON, so convert to array first
             Visitor.setsOfStrings: visitorProfile.currentVisit?.setsOfStrings.map({ (stringSet) -> [String: [String]] in
                 var newValue = [String: [String]]()

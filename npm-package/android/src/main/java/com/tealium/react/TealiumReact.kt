@@ -49,6 +49,7 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
         getApplication()?.let { app ->
             configMap.toTealiumConfig(app)?.let { config ->
                 tealium = Tealium.create(INSTANCE_NAME, config) {
+                    Log.d(TAG, "Instance Initialized: ${this.key}")
                     config.isAutoTrackingEnabled?.let { enabled ->
                         if (enabled) {
                             lifecycle?.onActivityResumed(reactContext.currentActivity)
