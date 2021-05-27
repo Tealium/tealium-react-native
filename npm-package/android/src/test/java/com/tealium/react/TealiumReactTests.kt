@@ -12,6 +12,8 @@ import com.tealium.core.persistence.DataLayer
 import com.tealium.core.persistence.Expiry
 import com.tealium.dispatcher.TealiumEvent
 import com.tealium.dispatcher.TealiumView
+import com.tealium.lifecycle.Lifecycle
+import com.tealium.lifecycle.lifecycle
 import com.tealium.remotecommanddispatcher.RemoteCommandDispatcher
 import com.tealium.remotecommanddispatcher.remoteCommands
 import com.tealium.remotecommands.RemoteCommand
@@ -215,6 +217,32 @@ class TealiumReactTests {
 
         verify(timeout = 1500) {
             callback.invoke(false)
+        }
+    }
+
+    @Test
+    fun initialize_TracksLifecycle_IfEnabled() {
+        val mockLifecycle: Lifecycle = mockk(relaxed = true)
+        every { mockTealium.lifecycle } returns mockLifecycle
+        minimalConfig.putBoolean(KEY_LIFECYCLE_AUTO_TRACKING_ENABLED, true)
+
+        tealiumReact.initialize(minimalConfig, null)
+
+        verify(timeout = 1500) {
+            mockLifecycle.onActivityResumed(any())
+        }
+    }
+
+    @Test
+    fun initialize_DoesNotTrackLifecycle_IfDisabled() {
+        val mockLifecycle: Lifecycle = mockk(relaxed = true)
+        every { mockTealium.lifecycle } returns mockLifecycle
+        minimalConfig.putBoolean(KEY_LIFECYCLE_AUTO_TRACKING_ENABLED, false)
+
+        tealiumReact.initialize(minimalConfig, null)
+
+        verify(exactly = 0, timeout = 1500) {
+            mockLifecycle.onActivityResumed(any())
         }
     }
 
