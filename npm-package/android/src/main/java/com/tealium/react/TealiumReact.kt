@@ -10,6 +10,8 @@ import com.facebook.react.uimanager.ReactShadowNode
 import com.facebook.react.uimanager.ViewManager
 import com.tealium.core.*
 import com.tealium.core.consent.*
+import com.tealium.lifecycle.isAutoTrackingEnabled
+import com.tealium.lifecycle.lifecycle
 import com.tealium.react.BuildConfig.TAG
 import com.tealium.remotecommanddispatcher.remoteCommands
 import com.tealium.remotecommands.RemoteCommand
@@ -48,6 +50,12 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
             configMap.toTealiumConfig(app)?.let { config ->
                 tealium = Tealium.create(INSTANCE_NAME, config) {
                     Log.d(TAG, "Instance Initialized: ${this.key}")
+                    config.isAutoTrackingEnabled?.let { enabled ->
+                        if (enabled) {
+                            lifecycle?.onActivityResumed(reactContext.currentActivity)
+                        }
+                    }
+
                     events.subscribe(EmitterListeners(reactContext))
 
                     configMap.safeGetArray(KEY_REMOTE_COMMANDS_CONFIG)?.let {

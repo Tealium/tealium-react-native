@@ -7,9 +7,6 @@
 //
 
 import Foundation
-#if canImport(React)
-    import React
-#endif
 
 @objc(TealiumWrapper)
 class TealiumWrapper: NSObject {
