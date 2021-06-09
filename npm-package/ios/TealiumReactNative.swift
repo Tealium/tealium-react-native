@@ -8,9 +8,6 @@
 
 import Foundation
 import TealiumSwift
-#if canImport(React)
-    import React
-#endif
 
 @objc(TealiumReactNative)
 class TealiumReactNative: RCTEventEmitter {
