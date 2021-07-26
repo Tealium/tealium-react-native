@@ -11,6 +11,7 @@ const val EVENT_EMITTERS_CONSENT_EXPIRED = "TealiumReactNative.ConsentExpiredEve
 const val KEY_CONFIG_ACCOUNT: String = "account"
 const val KEY_CONFIG_PROFILE: String = "profile"
 const val KEY_CONFIG_ENV: String = "environment"
+const val KEY_CONFIG_CUSTOM_VISITOR_ID = "customVisitorId"
 const val KEY_CONFIG_DATA_SOURCE: String = "dataSource"
 const val KEY_CONFIG_COLLECTORS: String = "collectors"
 const val KEY_CONFIG_MODULES: String = "modules"

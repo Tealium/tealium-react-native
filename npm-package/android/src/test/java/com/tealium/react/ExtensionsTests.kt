@@ -95,6 +95,7 @@ class ExtensionsTests {
 
         // Optional params
         readableMap.putString(KEY_CONFIG_ENV, "dev")
+        readableMap.putString(KEY_CONFIG_CUSTOM_VISITOR_ID, "testVisitorId")
         readableMap.putString(KEY_CONFIG_DATA_SOURCE, "dataSource")
         readableMap.putString(KEY_COLLECT_OVERRIDE_DOMAIN, "domain")
         readableMap.putString(KEY_COLLECT_OVERRIDE_URL, "url.domain")
@@ -115,6 +116,7 @@ class ExtensionsTests {
         assertEquals("test-profile", config?.profileName)
         assertEquals(Environment.DEV, config?.environment)
 
+        assertEquals("testVisitorId", config?.existingVisitorId)
         assertEquals("dataSource", config?.dataSourceId)
         assertEquals("domain", config?.overrideCollectDomain)
         assertEquals("url.domain", config?.overrideCollectUrl)
