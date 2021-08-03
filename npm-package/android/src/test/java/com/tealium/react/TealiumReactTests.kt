@@ -844,6 +844,17 @@ class TealiumReactTests {
         }
     }
 
+    @Test
+    fun getSessionId_CallsCallback() {
+        every { mockTealium.session.id } returns 12345
+
+        tealiumReact.getSessionId(mockCallback)
+
+        verify {
+            mockCallback.invoke("12345")
+        }
+    }
+
     private class TestRemoteCommandFactory(
             override val name: String = "factory_command"
     ) : RemoteCommandFactory {

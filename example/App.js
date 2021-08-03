@@ -62,7 +62,7 @@ export default class App extends Component < {} > {
         });
     }
 
-    trackEvent() {
+    trackEvent() {        
         let event = new TealiumEvent('Test Event', {'event_name': 'test'});
         Tealium.track(event);
     }
@@ -156,6 +156,13 @@ export default class App extends Component < {} > {
         });
     }
 
+    getSessionId() {
+        Tealium.getSessionId(value => {
+            console.log("Session id: " + value)
+            Alert.alert("Session Id: ", value, [{ text: "OK", style: "cancel" }])
+        });
+    }
+
     terminate() {
         Tealium.terminateInstance();
     }
@@ -224,6 +231,10 @@ export default class App extends Component < {} > {
         <View style={styles.space} />
         <TouchableOpacity style={styles.buttonContainer} onPress={this.getVisitorId}>
             <Text style={styles.textStyle}>GET VISITOR ID</Text>
+        </TouchableOpacity>
+        <View style={styles.space} />
+        <TouchableOpacity style={styles.buttonContainer} onPress={this.getSessionId}>
+            <Text style={styles.textStyle}>GET SESSION ID</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity style={styles.buttonContainer} onPress={this.terminate}>

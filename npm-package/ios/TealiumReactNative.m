@@ -36,6 +36,8 @@
 
     RCT_EXTERN_METHOD(getVisitorId:(RCTResponseSenderBlock)callback)
 
+    RCT_EXTERN_METHOD(getSessionId:(RCTResponseSenderBlock)callback)
+
 @end
 
 @interface RCT_EXTERN_MODULE(TealiumReactNative, RCTEventEmitter)
