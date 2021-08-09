@@ -95,6 +95,11 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
             dataSourceId = it
         }
 
+        // Existing visitor id
+        safeGetString(KEY_CONFIG_CUSTOM_VISITOR_ID)?.let {
+            existingVisitorId = it
+        }
+
         // Collect Settings
         safeGetString(KEY_COLLECT_OVERRIDE_URL)?.let {
             overrideCollectUrl = it

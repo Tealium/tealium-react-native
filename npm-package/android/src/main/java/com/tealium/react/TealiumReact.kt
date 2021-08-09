@@ -251,4 +251,9 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
     fun getVisitorId(callback: Callback) {
         callback.invoke(tealium?.visitorId ?: "")
     }
+
+    @ReactMethod
+    fun getSessionId(callback: Callback){
+        callback(tealium?.session?.id.toString())
+    }
 }
