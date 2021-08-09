@@ -44,6 +44,13 @@ class TealiumReactNative: RCTEventEmitter {
         }
     }
     
+    @objc
+    public static var sessionId: String? {
+        get {
+            tealium?.dataLayer.sessionId
+        }
+    }
+
     override init() {
         super.init()
         EventEmitter.shared.registerEventEmitter(eventEmitter: self)

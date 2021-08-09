@@ -9,6 +9,11 @@ declare module 'tealium-react-native' {
 		public static getVisitorId(callback: (response: string) => void): void;
 
 		/**
+		 * Retrieves the Tealium Session ID
+		 */
+		 public static getSessionId(callback: (response: string) => void): void;
+
+		/**
 		 * Initializes the Tealium SDK
 		 * @param config Config options to change SDK behavior
 		 * @param callback Optional callback executed once the underlying Tealium instance is ready.

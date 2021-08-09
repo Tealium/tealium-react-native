@@ -71,6 +71,10 @@ export default class Tealium {
         TealiumWrapper.getVisitorId(callback);
     }
 
+    static getSessionId(callback) {
+        TealiumWrapper.getSessionId(callback);
+    }
+
     static setVisitorServiceListener(callback) {
         const visitor = this.emitter.addListener(EventListenerNames.visitor, profile => {
             callback(profile);

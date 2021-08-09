@@ -6062,7 +6062,7 @@ table@^6.0.9:
     strip-ansi "^6.0.0"
 
 tealium-react-native@../npm-package:
-  version "2.1.1"
+  version "2.1.2"
 
 temp@0.8.3, temp@^0.8.1:
   version "0.8.3"
@@ -6628,8 +6628,3 @@ yargs@^16.0.3:
     string-width "^4.2.0"
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
-
-yarn@^1.22.11:
-  version "1.22.11"
-  resolved "https://registry.npmjs.org/yarn/-/yarn-1.22.11.tgz"
-  integrity sha512-AWje4bzqO9RUn3sdnM5N8n4ZJ0BqCc/kqFJvpOI5/EVkINXui0yuvU7NDCEF//+WaxHuNay2uOHxA4+tq1P3cg==
