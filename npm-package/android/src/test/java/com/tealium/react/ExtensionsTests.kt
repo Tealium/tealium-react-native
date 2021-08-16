@@ -169,6 +169,24 @@ class ExtensionsTests {
     }
 
     @Test
+    fun toTealiumConfig_AddsTimeCollectorByDefault() {
+        val readableMap: WritableMap = JavaOnlyMap()
+
+        assertNull(readableMap.toTealiumConfig(mockApp))
+        readableMap.putString(KEY_CONFIG_ACCOUNT, "test-account")
+        readableMap.putString(KEY_CONFIG_PROFILE, "test-profile")
+        readableMap.putString(KEY_CONFIG_ENV, "dev")
+
+        readableMap.putBoolean(KEY_VISITOR_SERVICE_ENABLED, true)
+        // Lifecycle passed in Collectors.
+        val collectorsArray = JavaOnlyArray().apply { pushString(MODULES_LIFECYCLE) }
+        readableMap.putArray(KEY_CONFIG_COLLECTORS, collectorsArray)
+
+        val config = readableMap.toTealiumConfig(mockApp)!!
+        assertTrue(config.collectors.contains(TimeCollector))
+    }
+
+    @Test
     fun consentPolicyFromString_ReturnsValidPolicyOrNull() {
         assertSame(ConsentPolicy.GDPR, consentPolicyFromString("gdpr"))
         assertSame(ConsentPolicy.GDPR, consentPolicyFromString("Gdpr"))
