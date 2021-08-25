@@ -231,6 +231,10 @@ class ExtensionsTests {
         assertSame(Expiry.SESSION, expiryFromString("SESSION"))
         assertSame(Expiry.SESSION, expiryFromString("SeSSioN"))
 
+        assertSame(Expiry.UNTIL_RESTART, expiryFromString("untilrestart"))
+        assertSame(Expiry.UNTIL_RESTART, expiryFromString("UNTILRESTART"))
+        assertSame(Expiry.UNTIL_RESTART, expiryFromString("UntilRestart"))
+
         assertSame(Expiry.SESSION, expiryFromString(""))
         assertSame(Expiry.SESSION, expiryFromString("invalid"))
     }
