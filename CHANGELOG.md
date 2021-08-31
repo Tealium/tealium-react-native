@@ -4,6 +4,28 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
+- 2.1.3
+  - Kotlin Dependency updates
+    - Support for `Expiry.UntilRestart`
+    - `TimeCollector` now added by default in-line with Swift implementation
+    - Better `customVisitorId` support
+
+- 2.1.2
+  - Android support for customVisitorId
+  - Added support to get session ID - use getSessionId()
+
+- 2.1.1
+  - Android launch event fix + tests
+  - Tealium Android dependencies updated to the latest
+  - iOS VisitorProfile arraysOfStrings update
+  - Update tealium-react-native.podspec to support 0.64+ and Hermes
+  - Update the index.d.ts from this PR
+  - Update example app
+
+- 2.1.0
+  - New optional callback parameter for the initialize() to support methods that should be called once the Tealium instance is ready.
+  - New remoteCommands property on the TealiumConfig object to allow passing RemoteCommands at config time.
+
 - 2.0.3
   - Bug fixes
 	    - `safeGet` extension methods added in Kotlin to check key safety on earlier RN versions (< 0.63.3)
