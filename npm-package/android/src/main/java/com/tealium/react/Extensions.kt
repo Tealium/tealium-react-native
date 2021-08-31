@@ -58,6 +58,9 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
     }
 
     val collectors = safeGetArray(KEY_CONFIG_COLLECTORS)?.toCollectorFactories()
+    // Swift has Timing enabled by default.
+    collectors?.add(TimeCollector)
+
     val modules = Arguments.createArray().let { moduleArray ->
         // Visitor Service passed as boolean
         safeGetBoolean(KEY_VISITOR_SERVICE_ENABLED)?.let { vsEnabled ->
@@ -271,6 +274,7 @@ fun dispatcherFactoryFromString(name: String): DispatcherFactory? {
 
 fun expiryFromString(name: String) = when (name.toLowerCase(Locale.ROOT)) {
     "forever" -> Expiry.FOREVER
+    "untilrestart" -> Expiry.UNTIL_RESTART
     else -> Expiry.SESSION
 }
 
