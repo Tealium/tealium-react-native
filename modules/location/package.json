@@ -1,8 +1,8 @@
 {
-  "name": "tealium-react-native",
-  "title": "Tealium React Native",
-  "version": "2.2.0",
-  "description": "A native module for using Tealium's Kotlin and Swift libraries.",
+  "name": "tealium-react-native-location",
+  "title": "Tealium React Native Location",
+  "version": "1.0.0",
+  "description": "A native module for using Tealium's Location Module for Kotlin and Swift libraries.",
   "main": "index.js",
   "types": "*.ts",
   "homepage": "https://github.com/Tealium/tealium-react-native",
@@ -29,15 +29,15 @@
     "name": "Tealium"
   },
   "contributors": [
-      "James Keith",
-      "Christina Sund"
+      "James Keith"
   ],
   "license": "Commercial",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "peerDependencies": {
     "react": "^16.8.1",
-    "react-native": ">=0.60.0-rc.0 <1.0.x"
+    "react-native": ">=0.60.0-rc.0 <1.0.x",
+    "tealium-react-native": "^2.2.0"
   },
   "devDependencies": {
     "react": "^16.9.0",

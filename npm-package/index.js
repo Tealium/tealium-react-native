@@ -17,7 +17,7 @@ export default class Tealium {
             });
         }
         TealiumWrapper.initialize(config, callback || (response => {}));
-        TealiumWrapper.addToDataLayer({'plugin_name': 'Tealium-ReactNative', 'plugin_version': '2.1.3'}, Expiry.forever);
+        TealiumWrapper.addToDataLayer({'plugin_name': 'Tealium-ReactNative', 'plugin_version': '2.2.0'}, Expiry.forever);
         if (config["dispatchers"].includes(Dispatchers.RemoteCommands)) {
             this.setRemoteCommandListener();
         }
