@@ -1,9 +1,8 @@
 #import <React/RCTBridgeModule.h>
+//@import tealium_react_native;
 
-@interface RCT_EXTERN_MODULE(TealiumReactNativeLocation, NSObject)
-
-RCT_EXTERN_METHOD(multiply:(float)a withB:(float)b
-                 withResolver:(RCTPromiseResolveBlock)resolve
-                 withRejecter:(RCTPromiseRejectBlock)reject)
+@interface RCT_EXTERN_MODULE(TealiumReactLocation, NSObject)
+  
+    RCT_EXTERN_METHOD(configure:(NSDictionary *)config)
 
 @end
