@@ -18,6 +18,7 @@ class TealiumReactNative: RCTEventEmitter {
     static var visitorServiceDelegate: VisitorServiceDelegate = VisitorDelegate()
     static var consentExpiryCallback: (([Any]) -> Void)?
     static var remoteCommandFactories = [String: RemoteCommandFactory]()
+    static var optionalModules = [OptionalModule]()
 
     @objc
     public static var consentStatus: String {
@@ -60,6 +61,10 @@ class TealiumReactNative: RCTEventEmitter {
         remoteCommandFactories[factory.name] = factory
     }
 
+    public static func registerOptionalModule(_ module: OptionalModule) {
+        optionalModules.append(module)
+    }
+    
     @objc
     override static func requiresMainQueueSetup() -> Bool {
         return false

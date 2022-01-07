@@ -29,7 +29,7 @@ export default class TealiumLocation {
      * @param url Url pointing to a file containing geofence configuration
      */
     static setGeofenceUrl(url) {
-        TealiumReactLocation.setGeofenceUrl(path)
+        TealiumReactLocation.setGeofenceUrl(url)
     }
 
     /**

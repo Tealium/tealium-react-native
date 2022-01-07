@@ -13,7 +13,7 @@
     "react": "17.0.1",
     "react-native": "0.64.2",
     "tealium-react-native": "../npm-package",
-    "tealium-react-native-location": "../modules/location/"
+    "tealium-react-native-location": "../modules/location"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
