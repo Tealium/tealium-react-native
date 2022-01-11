@@ -12,6 +12,8 @@ target 'example' do
     :hermes_enabled => true
   )
 
+  pod "tealium-react-native", :path => '../node_modules/tealium-react-native/tealium-react-native.podspec'
+
   target 'exampleTests' do
     inherit! :complete
     # Pods for testing

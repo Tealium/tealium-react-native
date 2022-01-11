@@ -8,6 +8,6 @@
 import Foundation
 import TealiumSwift
 
-protocol OptionalModule {
+public protocol OptionalModule {
     func configure(config: TealiumConfig) -> Void
 }

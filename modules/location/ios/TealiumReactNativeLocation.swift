@@ -6,7 +6,8 @@
 ////
 //
 import Foundation
-import tealium_react_native
+import tealium_react_native_swift
+import TealiumSwift
 ////import tealium_react_native
 //
 @objc(TealiumReactLocation)
@@ -27,11 +28,15 @@ class TealiumReactLocation: NSObject, RCTBridgeModule {
 
     @objc(configure:)
     public func configure(_ config: [String: Any]) {
-//        Tealium
+        TealiumReactLocationModule().configure(config: TealiumConfig(account: "", profile: "", environment: ""))
     }
 }
 //
 //
-////class TealiumReactLocationModule: NSObject, OptionalModule {
-////
-////}
+class TealiumReactLocationModule: NSObject, OptionalModule {
+    func configure(config: TealiumConfig) {
+        print("configure")
+    }
+    
+
+}
