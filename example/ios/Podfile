@@ -12,7 +12,12 @@ target 'example' do
     :hermes_enabled => true
   )
 
-  pod "tealium-react-native", :path => '../node_modules/tealium-react-native/tealium-react-native.podspec'
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy"
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  
+  pod "tealium-react-native-swift", :path => '../node_modules/tealium-react-native/tealium-react-native-swift.podspec'
 
   target 'exampleTests' do
     inherit! :complete

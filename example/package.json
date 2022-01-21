@@ -12,6 +12,7 @@
   "dependencies": {
     "react": "17.0.1",
     "react-native": "0.64.2",
+    "react-native-permissions": "^3.2.0",
     "tealium-react-native": "../npm-package",
     "tealium-react-native-location": "../modules/location"
   },

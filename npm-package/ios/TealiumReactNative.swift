@@ -11,7 +11,7 @@ import TealiumSwift
 import tealium_react_native
 
 @objc(TealiumReactNative)
-class TealiumReactNative: RCTEventEmitter {
+public class TealiumReactNative: RCTEventEmitter {
     
     static var tealium: Tealium?
     private static var config: TealiumConfig?
@@ -52,6 +52,12 @@ class TealiumReactNative: RCTEventEmitter {
             tealium?.dataLayer.sessionId
         }
     }
+    
+    public static var instance: Tealium? {
+        get {
+            tealium
+        }
+    }
 
     override init() {
         super.init()
@@ -67,12 +73,12 @@ class TealiumReactNative: RCTEventEmitter {
     }
     
     @objc
-    override static func requiresMainQueueSetup() -> Bool {
+    public override static func requiresMainQueueSetup() -> Bool {
         return false
     }
     
     @objc
-    override func supportedEvents() -> [String] {
+    public override func supportedEvents() -> [String] {
         return EventEmitter.shared.allEvents
     }
     
@@ -81,6 +87,11 @@ class TealiumReactNative: RCTEventEmitter {
         guard let localConfig = tealiumConfig(from: config) else {
             return completion(false)
         }
+        
+        optionalModules.forEach { module in
+            module.configure(config: localConfig)
+        }
+        
         TealiumReactNative.config = localConfig.copy
         tealium = Tealium(config: localConfig) { _ in
             if let remoteCommands = self.tealium?.remoteCommands,
