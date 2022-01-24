@@ -7,6 +7,9 @@
     RCT_EXTERN_METHOD(setAccuracyString:(String *)isHighAccuracy)
     RCT_EXTERN_METHOD(setGeofenceUrl:(String *)url)
     RCT_EXTERN_METHOD(setGeofenceFile:(String *)path)
+    RCT_EXTERN_METHOD(setGeofenceTrackingEnabled:(Bool *)enabled)
+    RCT_EXTERN_METHOD(setUpdateDistance:(Double *)distance)
+    RCT_EXTERN_METHOD(setDesiredAccuracy:(String *)accuracy)
 
     RCT_EXTERN_METHOD(lastLocation:(RCTResponseSenderBlock)callback)
     RCT_EXTERN_METHOD(startLocationTracking)

@@ -1,4 +1,4 @@
-import { LocationData, TealiumLocationConfig, TealiumLocationCommon, Accuracy } from './common';
+import { LocationData, TealiumLocationConfig, TealiumLocationCommon, Accuracy, DesiredAccuracy } from './common';
 
 declare module 'tealium-react-native-location' {
 	export default TealiumLocation;
@@ -27,6 +27,33 @@ declare module 'tealium-react-native-location' {
 		 * @param path local path pointing to a file containing geofence configuration
 		 */
 		public static setGeofenceFile(path: String): void;
+
+		/**
+		 * Android Only: Specifies the time in ms used to request 
+     	 * location updates.
+		 * @param interval time in ms to request location updates
+		 */
+		public static setInterval(interval: Number): void;
+
+		/**
+		 * iOS only: Enables or disables tracking geofence events
+		 * @param enabled true for enabled, else false
+		 */
+		public static setGeofenceTrackingEnabled(enabled: Boolean): void;
+
+		/**
+		 * iOS only: Specifies the distance interval in meters 
+		 * to use for location updates
+		 * Should only be used when combined with high accuracy
+		 * @param distance distance in meters to receive location updates
+		 */
+		public static setUpdateDistance(distance: Number): void;
+
+		/**
+     	 * iOS Only: Specifies the extended desired accuracy
+		 * @param accuracy extended accuracy value 
+     	*/ 
+		public static setDesiredAccuracy(accuracy: DesiredAccuracy): void;
 
 		/**
 		 * Fetches the last known location, if there is one.

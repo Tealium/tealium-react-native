@@ -20,6 +20,9 @@ class TealiumReactLocation: NSObject, RCTBridgeModule {
     private let KEY_GEOFENCE_FILE = "geofenceFile"
     private let KEY_ACCURACY = "accuracy"
     private let KEY_INTERVAL = "interval"
+    private let KEY_GEOFENCE_ENABLED = "geofenceEnabled"
+    private let KEY_UPDATE_DISTANCE = "updateDistance"
+    private let KEY_DESIRED_ACCURACY = "desiredAccuracy"
     private let KEY_LATITUDE = "lat"
     private let KEY_LONGITUDE = "lng"
 
@@ -38,6 +41,7 @@ class TealiumReactLocation: NSObject, RCTBridgeModule {
         if let accuracy = config[KEY_ACCURACY] as? String {
             setAccuracyString(accuracy)
         }
+        
         if let accuracy = config[KEY_ACCURACY] as? Bool {
             setAccuracyBoolean(accuracy)
         }
@@ -48,6 +52,18 @@ class TealiumReactLocation: NSObject, RCTBridgeModule {
         
         if let path = config[KEY_GEOFENCE_FILE] as? String {
             setGeofenceFile(path)
+        }
+        
+        if let geofenceEnabled = config[KEY_GEOFENCE_ENABLED] as? Bool {
+            setGeofenceTrackingEnabled(geofenceEnabled)
+        }
+        
+        if let updateDistance = config[KEY_UPDATE_DISTANCE] as? Double {
+            setUpdateDistance(updateDistance)
+        }
+        
+        if let desiredAccuracy = config[KEY_DESIRED_ACCURACY] as? String {
+            setDesiredAccuracy(desiredAccuracy)
         }
     }
     
@@ -71,11 +87,26 @@ class TealiumReactLocation: NSObject, RCTBridgeModule {
         module.setGeofenceFile(path)
     }
     
+    @objc(setGeofenceTrackingEnabled:)
+    public func setGeofenceTrackingEnabled(_ enabled: Bool) {
+        module.setGeofenceTrackingEnabled(enabled)
+    }
+    
+    @objc(setUpdateDistance:)
+    public func setUpdateDistance(_ distance: Double) {
+        module.setUpdateDistance(distance)
+    }
+    
+    @objc(setDesiredAccuracy:)
+    public func setDesiredAccuracy(_ accuracy: String) {
+        module.setDesiredAccuracy(accuracy)
+    }
     
     @objc(lastLocation:)
     public func lastLocation(_ callback: RCTResponseSenderBlock) {
         var newData = [String: Any]()
         
+        // ToDo - This doesn't yet work as the `lastLocation` property always returns nil.
         if let location = TealiumReactNative.instance?.location?.lastLocation,
            location.coordinate.latitude != 0.0 && location.coordinate.longitude != 0.0 {
             newData = [KEY_LATITUDE: "\(location.coordinate.latitude)",
@@ -101,6 +132,9 @@ class TealiumReactLocationModule: NSObject, OptionalModule {
     private var highAccuracy = false
     private var geofenceUrl: String? = nil
     private var geofenceFile: String? = nil
+    private var geofenceTrackingEnabled: Bool? = nil
+    private var updateDistance: Double? = nil
+    private var desiredAccuracy: LocationAccuracy? = nil
     
     func configure(config: TealiumConfig) {
         config.collectors?.append(Collectors.Location)
@@ -114,6 +148,18 @@ class TealiumReactLocationModule: NSObject, OptionalModule {
         if let geofenceFile = geofenceFile {
             config.geofenceFileName = geofenceFile
         }
+        
+        if let geofenceTrackingEnabled = geofenceTrackingEnabled {
+            config.geofenceTrackingEnabled = geofenceTrackingEnabled
+        }
+        
+        if let updateDistance = updateDistance {
+            config.updateDistance = updateDistance
+        }
+        
+        if let desiredAccuracy = desiredAccuracy {
+            config.desiredAccuracy = desiredAccuracy
+        }
     }
     
     public func setAccuracyBoolean(_ isHighAccuracy: Bool) {
@@ -124,12 +170,49 @@ class TealiumReactLocationModule: NSObject, OptionalModule {
         highAccuracy = isHighAccuracy == "high"
     }
     
-    
     public func setGeofenceUrl(_ url: String) {
         geofenceUrl = url
     }
     
     public func setGeofenceFile(_ path: String) {
         geofenceFile = path
+    }
+    
+    public func setGeofenceTrackingEnabled(_ trackingEnabled: Bool) {
+        geofenceTrackingEnabled = trackingEnabled
+    }
+    
+    public func setUpdateDistance(_ distance: Double) {
+        updateDistance = distance
+    }
+    
+    public func setDesiredAccuracy(_ accuracy: String) {
+        var acc: LocationAccuracy? = nil
+        switch accuracy {
+        case "bestForNavigation":
+                acc = .bestForNavigation
+        case "best":
+            acc = .best
+        case "nearestTenMeters":
+            acc = .nearestTenMeters
+        case "nearestHundredMeters":
+            acc = .nearestHundredMeters
+        case "reduced":
+            acc = .reduced
+        case "withinOneKilometer":
+            acc = .withinOneKilometer
+        case "withinThreeKilometers":
+            acc = .withinThreeKilometers
+        default:
+            acc = nil
+        }
+        
+        if let acc = acc {
+            setDesiredAccuracy(acc)
+        }
+    }
+    
+    public func setDesiredAccuracy(_ accuracy: LocationAccuracy) {
+        desiredAccuracy = accuracy
     }
 }

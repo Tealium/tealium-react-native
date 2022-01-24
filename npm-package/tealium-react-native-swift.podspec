@@ -21,12 +21,12 @@ Pod::Spec.new do |s|
 
   s.dependency "tealium-react-native"
   s.dependency "React-Core"
-  s.dependency "tealium-swift/Core", "~> 2.3"
-  s.dependency "tealium-swift/TagManagement", "~> 2.3"
-  s.dependency "tealium-swift/Collect", "~> 2.3"
-  s.dependency "tealium-swift/Lifecycle", "~> 2.3"
-  s.dependency "tealium-swift/RemoteCommands", "~> 2.3"
-  s.dependency "tealium-swift/VisitorService", "~> 2.3"
+  s.dependency "tealium-swift/Core", "~> 2.6"
+  s.dependency "tealium-swift/TagManagement", "~> 2.6"
+  s.dependency "tealium-swift/Collect", "~> 2.6"
+  s.dependency "tealium-swift/Lifecycle", "~> 2.6"
+  s.dependency "tealium-swift/RemoteCommands", "~> 2.6"
+  s.dependency "tealium-swift/VisitorService", "~> 2.6"
 
 end
 

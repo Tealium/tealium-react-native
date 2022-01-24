@@ -41,6 +41,41 @@ export default class TealiumLocation {
     }
 
     /**
+     * Android Only: Specifies the time in ms used to request 
+     * location updates.
+     * @param interval time in ms to request location updates
+     */
+    static setInterval(interval) {
+        TealiumReactLocation.setInterval(interval)
+    }
+
+    /**
+     * iOS only: Enables or disables tracking geofence events
+     * @param enabled true for enabled, else false
+     */
+    static setGeofenceTrackingEnabled(enabled) {
+        TealiumReactLocation.setGeofenceTrackingEnabled(enabled)
+    }
+
+    /**
+     * iOS only: Specifies the distance interval in meters 
+     * to use for location updates
+     * Should only be used when combined with high accuracy
+     * @param distance distance in meters to receive location updates
+     */
+    static setUpdateDistance(distance) {
+        TealiumReactLocation.setUpdateDistance(distance)
+    }
+
+    /**
+     * iOS Only: Specifies the extended desired accuracy
+     * @param accuracy extended accuracy value 
+    */ 
+    static setDesiredAccuracy(accuracy) {
+        TealiumReactLocation.setDesiredAccuracy(accuracy)
+    }
+
+    /**
      * Fetches the last known location, if there is one.
      * @param callback function to receive the last known location if available, else null
      */

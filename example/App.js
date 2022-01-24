@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Platform, Button, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert, ScrollView, SafeAreaView } from 'react-native';
 import Tealium from 'tealium-react-native';
 import TealiumLocation from 'tealium-react-native-location';
-import { TealiumLocationConfig, Accuracy } from 'tealium-react-native-location/common';
+import { TealiumLocationConfig, Accuracy, DesiredAccuracy } from 'tealium-react-native-location/common';
 import { TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors, ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment, RemoteCommand } from 'tealium-react-native/common';
 import { checkAndRequestPermissions }  from "./Utils"
 
@@ -10,7 +10,9 @@ export default class App extends Component < {} > {
 
     componentDidMount() {
         let locationConfig: TealiumLocationConfig = {
-            accuracy: Accuracy.high
+            accuracy: Accuracy.high,
+            desiredAccuracy: DesiredAccuracy.best,
+            updateDistance: 150
         }
 
         TealiumLocation.configure(locationConfig);
