@@ -46,7 +46,9 @@ export default class TealiumLocation {
      * @param interval time in ms to request location updates
      */
     static setInterval(interval) {
-        TealiumReactLocation.setInterval(interval)
+        if (Platform.OS === 'android') {
+            TealiumReactLocation.setInterval(interval)
+        }
     }
 
     /**
@@ -54,7 +56,9 @@ export default class TealiumLocation {
      * @param enabled true for enabled, else false
      */
     static setGeofenceTrackingEnabled(enabled) {
-        TealiumReactLocation.setGeofenceTrackingEnabled(enabled)
+        if (Platform.OS === 'ios') {
+            TealiumReactLocation.setGeofenceTrackingEnabled(enabled)
+        }
     }
 
     /**
@@ -64,7 +68,9 @@ export default class TealiumLocation {
      * @param distance distance in meters to receive location updates
      */
     static setUpdateDistance(distance) {
-        TealiumReactLocation.setUpdateDistance(distance)
+        if (Platform.OS === 'ios') {
+            TealiumReactLocation.setUpdateDistance(distance)
+        }
     }
 
     /**
@@ -72,7 +78,9 @@ export default class TealiumLocation {
      * @param accuracy extended accuracy value 
     */ 
     static setDesiredAccuracy(accuracy) {
-        TealiumReactLocation.setDesiredAccuracy(accuracy)
+        if (Platform.OS === 'ios') {
+            TealiumReactLocation.setDesiredAccuracy(accuracy)
+        }
     }
 
     /**
