@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.homepage = "https://github.com/tealium/tealium-react-native"
   s.license = { :type => "Commercial", :file => "LICENSE.txt" }
   s.authors = { "James Keith" => "james.keith@tealium.com" }
-  s.platforms = { :ios => "9.0" }
+  s.platforms = { :ios => "11.0" }
   s.source = { :git => "https://github.com/tealium/tealium-react-native.git", :tag => "#{s.version}" }
   s.source_files = "ios/**/*.{h,c,m,swift}"
   s.requires_arc = true
