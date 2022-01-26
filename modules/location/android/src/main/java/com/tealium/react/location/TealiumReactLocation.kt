@@ -1,4 +1,4 @@
-package com.tealium.react
+package com.tealium.react.location
 
 import android.view.View
 import com.facebook.react.ReactPackage
@@ -10,6 +10,7 @@ import com.tealium.location.Location
 import com.tealium.location.geofenceFilename
 import com.tealium.location.location
 import com.tealium.location.overrideGeofenceUrl
+import com.tealium.react.*
 
 
 class TealiumReactNativeLocation : ReactPackage {
