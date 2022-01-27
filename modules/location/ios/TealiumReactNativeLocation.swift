@@ -103,17 +103,18 @@ class TealiumReactLocation: NSObject, RCTBridgeModule {
     }
     
     @objc(lastLocation:)
-    public func lastLocation(_ callback: RCTResponseSenderBlock) {
-        var newData = [String: Any]()
-        
-        // ToDo - This doesn't yet work as the `lastLocation` property always returns nil.
-        if let location = TealiumReactNative.instance?.location?.lastLocation,
-           location.coordinate.latitude != 0.0 && location.coordinate.longitude != 0.0 {
-            newData = [KEY_LATITUDE: "\(location.coordinate.latitude)",
-                       KEY_LONGITUDE: "\(location.coordinate.longitude)"]
+    public func lastLocation(_ callback: @escaping RCTResponseSenderBlock) {
+        TealiumQueues.secureMainThreadExecution {
+            var newData = [String: Any]()
+            
+            if let location = TealiumReactNative.instance?.location?.tealiumLocationManager?.lastLocation,
+               location.coordinate.latitude != 0.0 && location.coordinate.longitude != 0.0 {
+                newData = [self.KEY_LATITUDE: "\(location.coordinate.latitude)",
+                           self.KEY_LONGITUDE: "\(location.coordinate.longitude)"]
+            }
+            
+            callback([newData])
         }
-        
-        callback([newData])
     }
     
     @objc(startLocationTracking)
