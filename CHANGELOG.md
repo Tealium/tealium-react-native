@@ -4,6 +4,13 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
+- 2.2.0
+  - Support added up to React Native 0.67.1 + gradle 7
+  - Support for additional Optional Modules, as well as packaged Remote Commands
+  - Tealium Kotlin 1.3.0 and Tealium Swift 2.6.0 dependency increases.
+  - Location Module 1.0.0 added
+  - Note. for iOS, the podspec has been split so you should now add `pod "tealium-react-native-swift", :path => '../node_modules/tealium-react-native/tealium-react-native-swift.podspec'` to your `Podfile`.
+
 - 2.1.3
   - Kotlin Dependency updates
     - Support for `Expiry.UntilRestart`
