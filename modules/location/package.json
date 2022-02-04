@@ -1,0 +1,47 @@
+{
+  "name": "tealium-react-native-location",
+  "title": "Tealium React Native Location",
+  "version": "1.0.0",
+  "description": "A native module for using Tealium's Location Module for Kotlin and Swift libraries.",
+  "main": "index.js",
+  "types": "*.ts",
+  "homepage": "https://github.com/Tealium/tealium-react-native",
+  "bugs": "https://github.com/Tealium/tealium-react-native/issues",
+  "files": [
+    "README.md",
+    "LICENSE",
+    "android",
+    "common.ts",
+    "index.js",
+    "index.d.ts",
+    "ios",
+    "tealium-react-native.podspec"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tealium/tealium-react-native.git",
+    "baseUrl": "https://github.com/Tealium/tealium-react-native"
+  },
+  "keywords": [
+    "react-native",
+    "tealium"
+  ],
+  "author": {
+    "name": "Tealium"
+  },
+  "contributors": [
+      "James Keith"
+  ],
+  "license": "Commercial",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "peerDependencies": {
+    "react": "^16.8.1 || ^17.0.0",
+    "react-native": ">=0.60.0-rc.0 <1.0.x",
+    "tealium-react-native": "^2.2.0"
+  },
+  "devDependencies": {
+    "react": "^17.0.2",
+    "react-native": "^0.67.1"
+  }
+}

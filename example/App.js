@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
 import { Platform, Button, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert, ScrollView, SafeAreaView } from 'react-native';
 import Tealium from 'tealium-react-native';
+import TealiumLocation from 'tealium-react-native-location';
+import { TealiumLocationConfig, Accuracy, DesiredAccuracy } from 'tealium-react-native-location/common';
 import { TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors, ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment, RemoteCommand } from 'tealium-react-native/common';
+import { checkAndRequestPermissions }  from "./Utils"
 
 export default class App extends Component < {} > {
 
     componentDidMount() {
+        let locationConfig: TealiumLocationConfig = {
+            accuracy: Accuracy.high,
+            desiredAccuracy: DesiredAccuracy.best,
+            updateDistance: 150
+        }
+
+        TealiumLocation.configure(locationConfig);
+
         let config: TealiumConfig = { 
             account: 'tealiummobile', 
             profile: 'demo', 
@@ -167,6 +178,32 @@ export default class App extends Component < {} > {
         Tealium.terminateInstance();
     }
 
+    async startLocationTracking() {
+        let result = await checkAndRequestPermissions()
+        if (!result) return;
+        
+        TealiumLocation.startLocationTracking();
+    }
+
+    async stopLocationTracking() {
+        let result = await checkAndRequestPermissions()
+        if (!result) return;
+
+        TealiumLocation.stopLocationTracking();
+    }
+
+    async getLastLocation() {
+        let result = await checkAndRequestPermissions()
+        if (!result) return;
+        
+        TealiumLocation.lastLocation((loc) => {
+            if (loc) {
+                Alert.alert(`Lat: ${loc.lat} | Lng: ${loc.lng}`)
+            }
+        })
+        
+    }
+
 
     render() {
         return (
@@ -239,6 +276,18 @@ export default class App extends Component < {} > {
         <View style={styles.space} />
         <TouchableOpacity style={styles.buttonContainer} onPress={this.terminate}>
             <Text style={styles.textStyle}>DISABLE TEALIUM</Text>
+        </TouchableOpacity>
+        <View style={styles.space} />
+        <TouchableOpacity style={styles.buttonContainer} onPress={this.getLastLocation}>
+            <Text style={styles.textStyle}>GET LOCATION</Text>
+        </TouchableOpacity>
+        <View style={styles.space} />
+        <TouchableOpacity style={styles.buttonContainer} onPress={this.startLocationTracking}>
+            <Text style={styles.textStyle}>START TRACKING LOCATION</Text>
+        </TouchableOpacity>
+        <View style={styles.space} />
+        <TouchableOpacity style={styles.buttonContainer} onPress={this.stopLocationTracking}>
+            <Text style={styles.textStyle}>STOP TRACKING_LOCATION</Text>
         </TouchableOpacity>
         </View>
         </ScrollView>
