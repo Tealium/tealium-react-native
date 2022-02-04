@@ -9,6 +9,7 @@
   "bugs": "https://github.com/Tealium/tealium-react-native/issues",
   "files": [
     "README.md",
+    "LICENSE",
     "android",
     "common.ts",
     "index.js",
