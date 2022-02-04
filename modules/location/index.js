@@ -2,6 +2,9 @@ import { NativeModules } from 'react-native';
 
 const { TealiumReactLocation } = NativeModules;
 
+const ios = "ios"
+const android = "android"
+
 export default class TealiumLocation {
 
     /**
@@ -29,7 +32,7 @@ export default class TealiumLocation {
      * @param url Url pointing to a file containing geofence configuration
      */
     static setGeofenceUrl(url) {
-        TealiumReactLocation.setGeofenceUrl(path)
+        TealiumReactLocation.setGeofenceUrl(url)
     }
 
     /**
@@ -38,6 +41,49 @@ export default class TealiumLocation {
      */
     static setGeofenceFile(path) {
         TealiumReactLocation.setGeofenceFile(path)
+    }
+
+    /**
+     * Android Only: Specifies the time in ms used to request 
+     * location updates.
+     * @param interval time in ms to request location updates
+     */
+    static setInterval(interval) {
+        if (Platform.OS === android) {
+            TealiumReactLocation.setInterval(interval)
+        }
+    }
+
+    /**
+     * iOS only: Enables or disables tracking geofence events
+     * @param enabled true for enabled, else false
+     */
+    static setGeofenceTrackingEnabled(enabled) {
+        if (Platform.OS === ios) {
+            TealiumReactLocation.setGeofenceTrackingEnabled(enabled)
+        }
+    }
+
+    /**
+     * iOS only: Specifies the distance interval in meters 
+     * to use for location updates
+     * Should only be used when combined with high accuracy
+     * @param distance distance in meters to receive location updates
+     */
+    static setUpdateDistance(distance) {
+        if (Platform.OS === ios) {
+            TealiumReactLocation.setUpdateDistance(distance)
+        }
+    }
+
+    /**
+     * iOS Only: Specifies the extended desired accuracy
+     * @param accuracy extended accuracy value 
+    */ 
+    static setDesiredAccuracy(accuracy) {
+        if (Platform.OS === ios) {
+            TealiumReactLocation.setDesiredAccuracy(accuracy)
+        }
     }
 
     /**
