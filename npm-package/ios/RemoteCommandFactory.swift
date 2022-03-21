@@ -8,7 +8,7 @@
 import Foundation
 import TealiumSwift
 
-protocol RemoteCommandFactory {
+public protocol RemoteCommandFactory {
     var name: String { get }
     func create() -> RemoteCommand
 }

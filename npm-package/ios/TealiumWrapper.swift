@@ -7,9 +7,7 @@
 //
 
 import Foundation
-#if canImport(React)
-    import React
-#endif
+import tealium_react_native
 
 @objc(TealiumWrapper)
 class TealiumWrapper: NSObject {
@@ -109,4 +107,11 @@ class TealiumWrapper: NSObject {
         callback([visitorId])
     }
     
+    @objc(getSessionId:)
+    public func getSessionId(_ callback: RCTResponseSenderBlock) {
+        guard let sessionId = TealiumReactNative.sessionId else {
+            return
+        }
+        callback([sessionId])
+    }
 }

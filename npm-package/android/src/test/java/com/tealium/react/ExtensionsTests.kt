@@ -95,6 +95,7 @@ class ExtensionsTests {
 
         // Optional params
         readableMap.putString(KEY_CONFIG_ENV, "dev")
+        readableMap.putString(KEY_CONFIG_CUSTOM_VISITOR_ID, "testVisitorId")
         readableMap.putString(KEY_CONFIG_DATA_SOURCE, "dataSource")
         readableMap.putString(KEY_COLLECT_OVERRIDE_DOMAIN, "domain")
         readableMap.putString(KEY_COLLECT_OVERRIDE_URL, "url.domain")
@@ -115,6 +116,7 @@ class ExtensionsTests {
         assertEquals("test-profile", config?.profileName)
         assertEquals(Environment.DEV, config?.environment)
 
+        assertEquals("testVisitorId", config?.existingVisitorId)
         assertEquals("dataSource", config?.dataSourceId)
         assertEquals("domain", config?.overrideCollectDomain)
         assertEquals("url.domain", config?.overrideCollectUrl)
@@ -167,6 +169,24 @@ class ExtensionsTests {
     }
 
     @Test
+    fun toTealiumConfig_AddsTimeCollectorByDefault() {
+        val readableMap: WritableMap = JavaOnlyMap()
+
+        assertNull(readableMap.toTealiumConfig(mockApp))
+        readableMap.putString(KEY_CONFIG_ACCOUNT, "test-account")
+        readableMap.putString(KEY_CONFIG_PROFILE, "test-profile")
+        readableMap.putString(KEY_CONFIG_ENV, "dev")
+
+        readableMap.putBoolean(KEY_VISITOR_SERVICE_ENABLED, true)
+        // Lifecycle passed in Collectors.
+        val collectorsArray = JavaOnlyArray().apply { pushString(MODULES_LIFECYCLE) }
+        readableMap.putArray(KEY_CONFIG_COLLECTORS, collectorsArray)
+
+        val config = readableMap.toTealiumConfig(mockApp)!!
+        assertTrue(config.collectors.contains(TimeCollector))
+    }
+
+    @Test
     fun consentPolicyFromString_ReturnsValidPolicyOrNull() {
         assertSame(ConsentPolicy.GDPR, consentPolicyFromString("gdpr"))
         assertSame(ConsentPolicy.GDPR, consentPolicyFromString("Gdpr"))
@@ -210,6 +230,10 @@ class ExtensionsTests {
         assertSame(Expiry.SESSION, expiryFromString("session"))
         assertSame(Expiry.SESSION, expiryFromString("SESSION"))
         assertSame(Expiry.SESSION, expiryFromString("SeSSioN"))
+
+        assertSame(Expiry.UNTIL_RESTART, expiryFromString("untilrestart"))
+        assertSame(Expiry.UNTIL_RESTART, expiryFromString("UNTILRESTART"))
+        assertSame(Expiry.UNTIL_RESTART, expiryFromString("UntilRestart"))
 
         assertSame(Expiry.SESSION, expiryFromString(""))
         assertSame(Expiry.SESSION, expiryFromString("invalid"))

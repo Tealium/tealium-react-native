@@ -10,12 +10,15 @@ import com.facebook.react.uimanager.ReactShadowNode
 import com.facebook.react.uimanager.ViewManager
 import com.tealium.core.*
 import com.tealium.core.consent.*
+import com.tealium.lifecycle.isAutoTrackingEnabled
+import com.tealium.lifecycle.lifecycle
 import com.tealium.react.BuildConfig.TAG
 import com.tealium.remotecommanddispatcher.remoteCommands
 import com.tealium.remotecommands.RemoteCommand
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import java.lang.Exception
 
 
 class TealiumReactNative : ReactPackage {
@@ -34,6 +37,7 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
     override fun getName(): String = MODULE_NAME
     private var tealium: Tealium? = null
     private val remoteCommandFactories: MutableMap<String, RemoteCommandFactory> = mutableMapOf()
+    private val optionalModules: MutableList<OptionalModule> = mutableListOf()
 
     fun registerRemoteCommandFactory(factory: RemoteCommandFactory) {
         if (remoteCommandFactories.containsKey(factory.name)) {
@@ -42,12 +46,30 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
         remoteCommandFactories[factory.name] = factory
     }
 
+    fun registerOptionalModule(module: OptionalModule) {
+        optionalModules.add(module)
+    }
+
     @ReactMethod
     fun initialize(configMap: ReadableMap, callback: Callback?) {
         getApplication()?.let { app ->
             configMap.toTealiumConfig(app)?.let { config ->
+                optionalModules.forEach { module ->
+                    try {
+                        module.configure(config)
+                    } catch (ex: Exception) {
+                        Log.w(TAG, "Exception configuring optional module: $module", ex)
+                    }
+                }
+
                 tealium = Tealium.create(INSTANCE_NAME, config) {
                     Log.d(TAG, "Instance Initialized: ${this.key}")
+                    config.isAutoTrackingEnabled?.let { enabled ->
+                        if (enabled) {
+                            lifecycle?.onActivityResumed(reactContext.currentActivity)
+                        }
+                    }
+
                     events.subscribe(EmitterListeners(reactContext))
 
                     configMap.safeGetArray(KEY_REMOTE_COMMANDS_CONFIG)?.let {
@@ -242,5 +264,10 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
     @ReactMethod
     fun getVisitorId(callback: Callback) {
         callback.invoke(tealium?.visitorId ?: "")
+    }
+
+    @ReactMethod
+    fun getSessionId(callback: Callback){
+        callback(tealium?.session?.id.toString())
     }
 }

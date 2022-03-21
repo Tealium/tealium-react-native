@@ -9,6 +9,11 @@ declare module 'tealium-react-native' {
 		public static getVisitorId(callback: (response: string) => void): void;
 
 		/**
+		 * Retrieves the Tealium Session ID
+		 */
+		 public static getSessionId(callback: (response: string) => void): void;
+
+		/**
 		 * Initializes the Tealium SDK
 		 * @param config Config options to change SDK behavior
 		 * @param callback Optional callback executed once the underlying Tealium instance is ready.
@@ -24,8 +29,9 @@ declare module 'tealium-react-native' {
 		/**
 		 * Sets up a remote command for later execution
 		 * @param id The ID used to invoke the remote command
+		 * @param callback The callback to execute once the remote command returns a payload
 		 */
-		public static addRemoteCommand(id: string): void;
+		public static addRemoteCommand(id: string, callback: (payload: Record<string, unknown>) => void): void;
 
 		/**
 		 * Removes a remote command

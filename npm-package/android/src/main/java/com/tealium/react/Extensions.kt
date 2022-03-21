@@ -58,6 +58,9 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
     }
 
     val collectors = safeGetArray(KEY_CONFIG_COLLECTORS)?.toCollectorFactories()
+    // Swift has Timing enabled by default.
+    collectors?.add(TimeCollector)
+
     val modules = Arguments.createArray().let { moduleArray ->
         // Visitor Service passed as boolean
         safeGetBoolean(KEY_VISITOR_SERVICE_ENABLED)?.let { vsEnabled ->
@@ -93,6 +96,11 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
         // Data Source Id
         safeGetString(KEY_CONFIG_DATA_SOURCE)?.let {
             dataSourceId = it
+        }
+
+        // Existing visitor id
+        safeGetString(KEY_CONFIG_CUSTOM_VISITOR_ID)?.let {
+            existingVisitorId = it
         }
 
         // Collect Settings
@@ -163,27 +171,27 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
     return config
 }
 
-internal fun ReadableMap.safeGetString(key: String): String? {
+fun ReadableMap.safeGetString(key: String): String? {
     return if (hasValue(key, ReadableType.String)) getString(key) else null
 }
 
-internal fun ReadableMap.safeGetBoolean(key: String): Boolean? {
+fun ReadableMap.safeGetBoolean(key: String): Boolean? {
     return if (hasValue(key, ReadableType.Boolean)) getBoolean(key) else null
 }
 
-internal fun ReadableMap.safeGetInt(key: String): Int? {
+fun ReadableMap.safeGetInt(key: String): Int? {
     return if (hasValue(key, ReadableType.Number)) getInt(key) else null
 }
 
-internal fun ReadableMap.safeGetDouble(key: String): Double? {
+fun ReadableMap.safeGetDouble(key: String): Double? {
     return if (hasValue(key, ReadableType.Number)) getDouble(key) else null
 }
 
-internal fun ReadableMap.safeGetArray(key: String): ReadableArray? {
+fun ReadableMap.safeGetArray(key: String): ReadableArray? {
     return if (hasValue(key, ReadableType.Array)) getArray(key) else null
 }
 
-internal fun ReadableMap.safeGetMap(key: String): ReadableMap? {
+fun ReadableMap.safeGetMap(key: String): ReadableMap? {
     return if (hasValue(key, ReadableType.Map)) getMap(key) else null
 }
 
@@ -266,6 +274,7 @@ fun dispatcherFactoryFromString(name: String): DispatcherFactory? {
 
 fun expiryFromString(name: String) = when (name.toLowerCase(Locale.ROOT)) {
     "forever" -> Expiry.FOREVER
+    "untilrestart" -> Expiry.UNTIL_RESTART
     else -> Expiry.SESSION
 }
 

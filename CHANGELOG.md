@@ -4,6 +4,35 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
+- 2.2.0
+  - Support added up to React Native 0.67.1 + gradle 7
+  - Support for additional Optional Modules, as well as packaged Remote Commands
+  - Tealium Kotlin 1.3.0 and Tealium Swift 2.6.0 dependency increases.
+  - Location Module 1.0.0 added
+  - Note. for iOS, the podspec has been split so you should now add `pod "tealium-react-native-swift", :path => '../node_modules/tealium-react-native/tealium-react-native-swift.podspec'` to your `Podfile`.
+
+- 2.1.3
+  - Kotlin Dependency updates
+    - Support for `Expiry.UntilRestart`
+    - `TimeCollector` now added by default in-line with Swift implementation
+    - Better `customVisitorId` support
+
+- 2.1.2
+  - Android support for customVisitorId
+  - Added support to get session ID - use getSessionId()
+
+- 2.1.1
+  - Android launch event fix + tests
+  - Tealium Android dependencies updated to the latest
+  - iOS VisitorProfile arraysOfStrings update
+  - Update tealium-react-native.podspec to support 0.64+ and Hermes
+  - Update the index.d.ts from this PR
+  - Update example app
+
+- 2.1.0
+  - New optional callback parameter for the initialize() to support methods that should be called once the Tealium instance is ready.
+  - New remoteCommands property on the TealiumConfig object to allow passing RemoteCommands at config time.
+
 - 2.0.3
   - Bug fixes
 	    - `safeGet` extension methods added in Kotlin to check key safety on earlier RN versions (< 0.63.3)

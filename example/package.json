@@ -10,20 +10,22 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "react": "^16.8.1",
-    "react-native": "0.63.4",
+    "react": "17.0.2",
+    "react-native": "0.67.1",
+    "react-native-permissions": "^3.2.0",
+    "tealium-react-native": "../npm-package",
     "tealium-react-firebase": "../remotecommands/tealium-react-firebase",
-    "tealium-react-native": "../npm-package"
+    "tealium-react-native-location": "../modules/location"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/runtime": "^7.12.5",
+    "@babel/core": "^7.14.3",
+    "@babel/runtime": "^7.14.0",
     "@react-native-community/eslint-config": "^2.0.0",
-    "babel-jest": "^26.6.3",
-    "eslint": "^7.15.0",
-    "jest": "^26.6.3",
-    "metro-react-native-babel-preset": "^0.64.0",
-    "react-test-renderer": "16.13.1"
+    "babel-jest": "^27.0.2",
+    "eslint": "^7.28.0",
+    "jest": "^27.0.4",
+    "metro-react-native-babel-preset": "^0.66.0",
+    "react-test-renderer": "17.0.1"
   },
   "jest": {
     "preset": "react-native"

@@ -8,12 +8,10 @@
 
 import Foundation
 import TealiumSwift
-#if canImport(React)
-    import React
-#endif
+import tealium_react_native
 
 @objc(TealiumReactNative)
-class TealiumReactNative: RCTEventEmitter {
+public class TealiumReactNative: RCTEventEmitter {
     
     static var tealium: Tealium?
     private static var config: TealiumConfig?
@@ -21,6 +19,7 @@ class TealiumReactNative: RCTEventEmitter {
     static var visitorServiceDelegate: VisitorServiceDelegate = VisitorDelegate()
     static var consentExpiryCallback: (([Any]) -> Void)?
     static var remoteCommandFactories = [String: RemoteCommandFactory]()
+    static var optionalModules = [OptionalModule]()
 
     @objc
     public static var consentStatus: String {
@@ -47,6 +46,19 @@ class TealiumReactNative: RCTEventEmitter {
         }
     }
     
+    @objc
+    public static var sessionId: String? {
+        get {
+            tealium?.dataLayer.sessionId
+        }
+    }
+    
+    public static var instance: Tealium? {
+        get {
+            tealium
+        }
+    }
+
     override init() {
         super.init()
         EventEmitter.shared.registerEventEmitter(eventEmitter: self)
@@ -56,13 +68,17 @@ class TealiumReactNative: RCTEventEmitter {
         remoteCommandFactories[factory.name] = factory
     }
 
+    public static func registerOptionalModule(_ module: OptionalModule) {
+        optionalModules.append(module)
+    }
+    
     @objc
-    override static func requiresMainQueueSetup() -> Bool {
+    public override static func requiresMainQueueSetup() -> Bool {
         return false
     }
     
     @objc
-    override func supportedEvents() -> [String] {
+    public override func supportedEvents() -> [String] {
         return EventEmitter.shared.allEvents
     }
     
@@ -71,6 +87,11 @@ class TealiumReactNative: RCTEventEmitter {
         guard let localConfig = tealiumConfig(from: config) else {
             return completion(false)
         }
+        
+        optionalModules.forEach { module in
+            module.configure(config: localConfig)
+        }
+        
         TealiumReactNative.config = localConfig.copy
         tealium = Tealium(config: localConfig) { _ in
             if let remoteCommands = self.tealium?.remoteCommands,
@@ -179,7 +200,7 @@ class VisitorDelegate: VisitorServiceDelegate {
             Visitor.arraysOfNumbers: visitorProfile.currentVisit?.arraysOfNumbers,
             Visitor.tallies: visitorProfile.currentVisit?.tallies,
             Visitor.strings: visitorProfile.currentVisit?.strings,
-            Visitor.arraysOfStrings: visitorProfile,
+            Visitor.arraysOfStrings: visitorProfile.currentVisit?.arraysOfStrings,
             // Sets cannot be serialized to JSON, so convert to array first
             Visitor.setsOfStrings: visitorProfile.currentVisit?.setsOfStrings.map({ (stringSet) -> [String: [String]] in
                 var newValue = [String: [String]]()
