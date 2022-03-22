@@ -20,13 +20,12 @@ Pod::Spec.new do |s|
 
   s.source_files = "ios/**/*.{h,c,m,swift}"
   s.requires_arc = true
-  # s.static_framework = true
+  s.static_framework = true
 
   s.dependency "React"
-  # ...
-  s.dependency "tealium-react-native", "~> 2.0.2" # fingers crossed
-  # s.dependency "TealiumFirebase", "~> 2.0.1"
-  # s.dependency "Firebase", "~> 6.3"
-  # s.dependency "FirebaseAnalytics", "~> 6.6"
+  s.dependency "tealium-react-native", "~> 2.2"
+  s.dependency "tealium-react-native-swift", "~> 2.2"
+  s.dependency "tealium-swift/Core", "~> 2.6"
+  s.dependency "TealiumFirebase", "~> 2.0.1"
 end
 
