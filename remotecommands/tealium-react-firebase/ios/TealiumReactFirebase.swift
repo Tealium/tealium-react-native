@@ -7,14 +7,14 @@
 
 import Foundation
 import React
-import tealium_react_native
+import tealium_react_native_swift
 
 @objc(TealiumReactFirebase)
 class TealiumReactFirebase: NSObject, RCTBridgeModule {
     static func moduleName() -> String! {
         "TealiumReactFirebase"
     }
-    let factory = KochavaRemoteCommandWrapper()
+    let factory = FirebaseRemoteCommandWrapper()
     
     // no longer needed.
     weak var bridge: RCTBridge?
@@ -31,7 +31,7 @@ class TealiumReactFirebase: NSObject, RCTBridgeModule {
     
     @objc(initialize)
     public func initialize() {
-        // do nothing
+        TealiumReactNative.registerRemoteCommandFactory(factory)
     }
     
     @objc(configure:)

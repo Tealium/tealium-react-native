@@ -17,7 +17,7 @@ export default class App extends Component < {} > {
         }
 
         TealiumLocation.configure(locationConfig);
-
+        FirebaseRemoteCommand.initialize();
         let config: TealiumConfig = { 
             account: 'tealiummobile', 
             profile: 'demo', 
@@ -42,11 +42,11 @@ export default class App extends Component < {} > {
             consentPolicy: ConsentPolicy.gdpr, 
             batchingEnabled: false, 
             visitorServiceEnabled: true, 
-            useRemoteLibrarySettings: false
-            // remoteCommands: [{
-            //     id: FirebaseRemoteCommand.name,
-            //     path: "firebase.json"
-            // }]
+            useRemoteLibrarySettings: false,
+            remoteCommands: [{
+                id: FirebaseRemoteCommand.name,
+                path: "firebase.json"
+            }]
         };
         Tealium.initialize(config, success => {
             if (!success) {
@@ -74,7 +74,7 @@ export default class App extends Component < {} > {
     }
 
     trackEvent() {        
-        let event = new TealiumEvent('Test Event', {'event_name': 'test'});
+        let event = new TealiumEvent('launch');
         // E-Comm event
         // let event = new TealiumEvent('product', {
         //     'event_name': "view_item",

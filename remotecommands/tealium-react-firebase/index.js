@@ -4,4 +4,8 @@ const { TealiumReactFirebase } = NativeModules;
 
 export default class FirebaseRemoteCommand {
     static name = "FirebaseRemoteCommand";
+
+    static initialize() {
+        TealiumReactFirebase.initialize();
+    }
 };

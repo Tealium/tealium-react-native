@@ -7,11 +7,10 @@
 
 import Foundation
 import TealiumSwift
-import TealiumKochava
-import tealium_react_native
+import TealiumFirebase
+import tealium_react_native_swift
 
-//@objc(KochavaRemoteCommandWrapper)
-class KochavaRemoteCommandWrapper: RemoteCommandFactory {
+class FirebaseRemoteCommandWrapper: RemoteCommandFactory {
     var name: String = "FirebaseRemoteCommand"
     
     // Example Customisable
@@ -19,6 +18,6 @@ class KochavaRemoteCommandWrapper: RemoteCommandFactory {
     
     func create() -> RemoteCommand {
         // could pass `configurableSetting` here if required
-        return KochavaRemoteCommand()
+        return FirebaseRemoteCommand()
     }
 }

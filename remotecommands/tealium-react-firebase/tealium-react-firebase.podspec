@@ -15,17 +15,17 @@ Pod::Spec.new do |s|
   # optional - use expanded license entry instead:
   # s.license    = { :type => "MIT", :file => "LICENSE" }
   s.authors      = { "Your Name" => "yourname@email.com" }
-  s.platforms    = { :ios => "10.0" }
+  s.platforms    = { :ios => "11.0" }
   s.source       = { :git => "https://github.com/github_account/tealium-react-firebase.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,c,m,swift}"
   s.requires_arc = true
   s.static_framework = true
 
-  s.dependency "React"
+  s.dependency "React-Core"
   s.dependency "tealium-react-native", "~> 2.2"
   s.dependency "tealium-react-native-swift", "~> 2.2"
   s.dependency "tealium-swift/Core", "~> 2.6"
-  s.dependency "TealiumFirebase", "~> 2.0.1"
+  s.dependency "TealiumFirebase", "~> 2.1.0"
 end
 

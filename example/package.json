@@ -13,8 +13,8 @@
     "react": "17.0.2",
     "react-native": "0.67.1",
     "react-native-permissions": "^3.2.0",
-    "tealium-react-native": "../npm-package",
     "tealium-react-firebase": "../remotecommands/tealium-react-firebase",
+    "tealium-react-native": "../npm-package",
     "tealium-react-native-location": "../modules/location"
   },
   "devDependencies": {

@@ -7,10 +7,22 @@ target 'example' do
   use_frameworks! :linkage => :static
   config = use_native_modules!
 
+  pre_install do |installer|
+    Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+
+    installer.pod_targets.each do |pod|
+      if pod.name.eql?('RNPermissions') || pod.name.start_with?('Permission-')
+        def pod.build_type;
+          Pod::BuildType.static_library # >= 1.9
+        end
+      end
+    end
+  end
+
   use_react_native!(
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
-    :hermes_enabled => false
+    :hermes_enabled => true
   )
 
   permissions_path = '../node_modules/react-native-permissions/ios'
@@ -29,9 +41,24 @@ target 'example' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable the next line.
- # use_flipper!()
+  #use_flipper!()
 
-  #post_install do |installer|
-   #react_native_post_install(installer)
-  #end
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+#    if target.name == 'tealium-react-native'
+#       target.build_configurations.each do |config|
+#         config.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = "YES"
+#       end
+#    end
+    if target.name == 'RCT-Folly'
+        target.build_configurations.each do |config|
+            config.build_settings['HEADER_SEARCH_PATHS'] = "$(inherited) ${PODS_ROOT}/fmt/include"
+        end
+    end
+  end
+
+  react_native_post_install(installer)
+  __apply_Xcode_12_5_M1_post_install_workaround(installer)
+end
+
 end
