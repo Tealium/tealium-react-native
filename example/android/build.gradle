@@ -36,6 +36,9 @@ allprojects {
         maven {
             url "https://maven.tealiumiq.com/android/releases/"
         }
+        maven {
+            url "https://appboy.github.io/appboy-android-sdk/sdk"
+        }
 
         mavenCentral {
             // We don't want to fetch react-native from Maven Central as there are

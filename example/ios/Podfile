@@ -45,11 +45,6 @@ target 'example' do
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
-#    if target.name == 'tealium-react-native'
-#       target.build_configurations.each do |config|
-#         config.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = "YES"
-#       end
-#    end
     if target.name == 'RCT-Folly'
         target.build_configurations.each do |config|
             config.build_settings['HEADER_SEARCH_PATHS'] = "$(inherited) ${PODS_ROOT}/fmt/include"
