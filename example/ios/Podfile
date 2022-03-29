@@ -43,17 +43,16 @@ target 'example' do
   # you should disable the next line.
   #use_flipper!()
 
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    if target.name == 'RCT-Folly'
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      if target.name == 'RCT-Folly'
         target.build_configurations.each do |config|
             config.build_settings['HEADER_SEARCH_PATHS'] = "$(inherited) ${PODS_ROOT}/fmt/include"
         end
+      end
     end
+
+    react_native_post_install(installer)
+    __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
-
-  react_native_post_install(installer)
-  __apply_Xcode_12_5_M1_post_install_workaround(installer)
-end
-
 end

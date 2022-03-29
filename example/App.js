@@ -79,15 +79,7 @@ export default class App extends Component < {} > {
     }
 
     trackEvent() {        
-        let event = new TealiumEvent('launch');
-        // E-Comm event
-        // let event = new TealiumEvent('product', {
-        //     'event_name': "view_item",
-        //     'product_id': ["sku12345","sku123"],
-        //     'product_unit_price': [10, 15],
-        //     'product_quantity': [2,1],
-        //     "order_total": 35
-        // });
+        let event = new TealiumEvent('Test Event', {'event_name': 'test'});
         Tealium.track(event);
     }
 
