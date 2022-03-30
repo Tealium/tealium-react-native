@@ -1,5 +1,5 @@
 //
-//  BrazeRemoteCOmmandWrapper.swift
+//  BrazeRemoteCommandWrapper.swift
 //  tealium-react-firebase
 //
 //  Created by Tyler Rister on 03/25/2022.
