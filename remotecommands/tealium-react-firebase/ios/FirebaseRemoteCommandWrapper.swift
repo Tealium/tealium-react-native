@@ -1,5 +1,5 @@
 //
-//  KochavaRemoteCommandWrapper.swift
+//  FirebaseRemoteCommandWrapper.swift
 //  tealium-react-firebase
 //
 //  Created by James Keith on 11/03/2021.
