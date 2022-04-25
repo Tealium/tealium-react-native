@@ -16,16 +16,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tyler.rister/tealium-react-braze.git",
-    "baseUrl": "https://github.com/tyler.rister/tealium-react-braze"
+    "url": "git+https://github.com/Tealium/tealium-react-native.git",
+    "baseUrl": "https://github.com/Tealium/tealium-react-native"
   },
   "keywords": [
     "react-native"
   ],
   "author": {
-    "name": "Tyler Rister",
-    "email": "tyler.rister@tealium.com"
+    "name": "Tealium"
   },
+  "contributors": [
+    "Tyler Rister",
+    "James Keith"
+  ],
   "license": "MIT",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
