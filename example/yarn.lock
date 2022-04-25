@@ -6149,6 +6149,9 @@ table@^6.0.9:
     string-width "^4.2.3"
     strip-ansi "^6.0.1"
 
+tealium-react-braze@../remotecommands/tealium-react-braze:
+  version "1.0.0"
+
 tealium-react-firebase@../remotecommands/tealium-react-firebase:
   version "1.0.0"
 

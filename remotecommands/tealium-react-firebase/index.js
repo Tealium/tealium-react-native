@@ -6,6 +6,8 @@ export default class FirebaseRemoteCommand {
     static name = "FirebaseRemoteCommand";
 
     static initialize() {
-        TealiumReactFirebase.initialize();
+        if (Platform.OS == 'ios') {
+            TealiumReactFirebase.initialize();
+        }
     }
 };

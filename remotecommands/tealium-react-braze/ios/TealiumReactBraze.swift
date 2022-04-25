@@ -1,20 +1,20 @@
 //
-//  TealiumReactFirebase.swift
-//  tealium-react-firebase
+//  TealiumReactBraze.swift
+//  tealium-react-braze
 //
-//  Created by James Keith on 11/03/2021.
+//  Created by Tyler Rister on 03/25/2022.
 //
 
 import Foundation
 import React
 import tealium_react_native_swift
 
-@objc(TealiumReactFirebase)
-class TealiumReactFirebase: NSObject, RCTBridgeModule {
+@objc(TealiumReactBraze)
+class TealiumReactBraze: NSObject, RCTBridgeModule {
     static func moduleName() -> String! {
-        "TealiumReactFirebase"
+        "TealiumReactBraze"
     }
-    let factory = FirebaseRemoteCommandWrapper()
+    let factory = BrazeRemoteCommandWrapper()
     
     // no longer needed.
     weak var bridge: RCTBridge?
