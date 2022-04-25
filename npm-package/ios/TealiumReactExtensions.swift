@@ -214,7 +214,7 @@ extension TealiumReactNative {
             }
             
             if let path = commandPayload[.path] as? String {
-                remoteCommand.type = .local(file: path, bundle: nil)
+                remoteCommand.type = .local(file: (path as NSString).deletingPathExtension, bundle: nil)
             } else if let url = commandPayload[.url] as? String {
                 remoteCommand.type = .remote(url: url)
             }

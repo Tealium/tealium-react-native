@@ -4,6 +4,8 @@ import Tealium from 'tealium-react-native';
 import TealiumLocation from 'tealium-react-native-location';
 import { TealiumLocationConfig, Accuracy, DesiredAccuracy } from 'tealium-react-native-location/common';
 import { TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors, ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment, RemoteCommand } from 'tealium-react-native/common';
+import FirebaseRemoteCommand from 'tealium-react-firebase';
+import BrazeRemoteCommand from 'tealium-react-braze';
 import { checkAndRequestPermissions }  from "./Utils"
 
 export default class App extends Component < {} > {
@@ -16,7 +18,8 @@ export default class App extends Component < {} > {
         }
 
         TealiumLocation.configure(locationConfig);
-
+        FirebaseRemoteCommand.initialize();
+        BrazeRemoteCommand.initialize();
         let config: TealiumConfig = { 
             account: 'tealiummobile', 
             profile: 'demo', 
@@ -32,6 +35,7 @@ export default class App extends Component < {} > {
                 Collectors.Lifecycle, 
                 Collectors.Connectivity
             ], 
+            lifecycleAutotrackingEnabled: true,
             consentLoggingEnabled: true, 
             consentExpiry: { 
                 'time': 10,
@@ -42,10 +46,11 @@ export default class App extends Component < {} > {
             visitorServiceEnabled: true, 
             useRemoteLibrarySettings: false,
             remoteCommands: [{
-                id: "hello-world",
-                callback: (payload) => {
-                    console.log("hello-world: " + JSON.stringify(payload));
-                }
+                id: FirebaseRemoteCommand.name,
+                path: "firebase.json"
+            }, {
+                id: BrazeRemoteCommand.name,
+                path: 'braze.json'
             }]
         };
         Tealium.initialize(config, success => {
