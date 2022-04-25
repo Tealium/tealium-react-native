@@ -34,12 +34,4 @@ class TealiumReactFirebase: NSObject, RCTBridgeModule {
         TealiumReactNative.registerRemoteCommandFactory(factory)
     }
     
-    @objc(configure:)
-    public func configure(_ options: [String: Any]) {
-        if let configurable = options["configurable"] as? Bool {
-            factory.configurableSetting = configurable
-        }
-    }
-    
-    
 }

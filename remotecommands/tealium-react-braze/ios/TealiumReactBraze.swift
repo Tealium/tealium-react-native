@@ -1,6 +1,6 @@
 //
 //  TealiumReactBraze.swift
-//  tealium-react-firebase
+//  tealium-react-braze
 //
 //  Created by Tyler Rister on 03/25/2022.
 //
@@ -33,13 +33,5 @@ class TealiumReactBraze: NSObject, RCTBridgeModule {
     public func initialize() {
         TealiumReactNative.registerRemoteCommandFactory(factory)
     }
-    
-    @objc(configure:)
-    public func configure(_ options: [String: Any]) {
-        if let configurable = options["configurable"] as? Bool {
-            factory.configurableSetting = configurable
-        }
-    }
-    
     
 }

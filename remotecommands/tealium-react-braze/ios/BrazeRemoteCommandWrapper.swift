@@ -1,6 +1,6 @@
 //
 //  BrazeRemoteCommandWrapper.swift
-//  tealium-react-firebase
+//  tealium-react-braze
 //
 //  Created by Tyler Rister on 03/25/2022.
 //
@@ -13,8 +13,6 @@ import tealium_react_native_swift
 class BrazeRemoteCommandWrapper: RemoteCommandFactory {
     var name: String = "BrazeRemoteCommand"
 
-    var configurableSetting: Bool = false
-    
     func create() -> RemoteCommand {
         return BrazeRemoteCommand()
     }
