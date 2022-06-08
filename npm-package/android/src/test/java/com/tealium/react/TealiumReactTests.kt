@@ -713,6 +713,25 @@ class TealiumReactTests {
     }
 
     @Test
+    fun gatherTrackData_Successful() {
+        val callback: Callback = mockk(relaxed = true)
+        every { mockTealium.gatherTrackData() } returns mapOf(
+            "tealium_account" to "account",
+            "tealium_profile" to "profile"
+        )
+
+        tealiumReact.gatherTrackData(callback)
+
+        verify {
+            callback.invoke(match {
+                it is ReadableMap
+                        && it.getString("tealium_account") == "account"
+                        && it.getString("tealium_profile") == "profile"
+            })
+        }
+    }
+
+    @Test
     fun setConsentStatus_AlwaysSetsStatus() {
         val consentManager: ConsentManager = mockk(relaxed = true)
         every { mockTealium.consentManager } returns consentManager

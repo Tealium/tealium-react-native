@@ -6,6 +6,7 @@ import { TealiumLocationConfig, Accuracy, DesiredAccuracy } from 'tealium-react-
 import { TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors, ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment, RemoteCommand } from 'tealium-react-native/common';
 import FirebaseRemoteCommand from 'tealium-react-firebase';
 import BrazeRemoteCommand from 'tealium-react-braze';
+import AdjustRemoteCommand from 'tealium-react-adjust';
 import { checkAndRequestPermissions }  from "./Utils"
 
 export default class App extends Component < {} > {
@@ -20,6 +21,7 @@ export default class App extends Component < {} > {
         TealiumLocation.configure(locationConfig);
         FirebaseRemoteCommand.initialize();
         BrazeRemoteCommand.initialize();
+        AdjustRemoteCommand.initialize();
         let config: TealiumConfig = { 
             account: 'tealiummobile', 
             profile: 'demo', 
@@ -51,6 +53,9 @@ export default class App extends Component < {} > {
             }, {
                 id: BrazeRemoteCommand.name,
                 path: 'braze.json'
+            }, {
+                id: AdjustRemoteCommand.name,
+                path: 'adjust.json'   
             }]
         };
         Tealium.initialize(config, success => {
@@ -145,6 +150,12 @@ export default class App extends Component < {} > {
     getData() {
         Tealium.getData('test_session_data', value => {
             console.log("test_session_data: " + value)
+        })
+    }
+
+    gatherTrackData() {
+        Tealium.gatherTrackData(value => {
+            console.log("Track data: " + JSON.stringify(value))
         })
     }
 
@@ -257,6 +268,10 @@ export default class App extends Component < {} > {
         <View style={styles.space} />
         <TouchableOpacity style={styles.buttonContainer} onPress={this.getData}>
             <Text style={styles.textStyle}>GET DATA</Text>
+        </TouchableOpacity>
+        <View style={styles.space} />
+        <TouchableOpacity style={styles.buttonContainer} onPress={this.gatherTrackData}>
+            <Text style={styles.textStyle}>GATHER TRACK DATA</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity style={styles.buttonContainer} onPress={this.removeData}>

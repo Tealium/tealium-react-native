@@ -116,6 +116,14 @@ extension TealiumReactNative {
         if let overrideCollectBatchURL = dictionary[.overrideCollectBatchURL] as? String {
             localConfig.overrideCollectBatchURL = overrideCollectBatchURL
         }
+
+        if let overrideCollectDomain = dictionary[.overrideCollectDomain] as? String {
+            localConfig.overrideCollectDomain = overrideCollectDomain
+        }
+
+        if let overrideCollectProfile = dictionary[.overrideCollectProfile] as? String {
+            localConfig.overrideCollectProfile = overrideCollectProfile
+        }
         
         if let overrideLibrarySettingsURL = dictionary[.overrideLibrarySettingsURL] as? String {
             localConfig.publishSettingsURL = overrideLibrarySettingsURL
@@ -129,6 +137,10 @@ extension TealiumReactNative {
             configCollectors.append(Collectors.VisitorService)
             localConfig.visitorServiceDelegate = visitorServiceDelegate
         }
+        
+        if let sessionCountingEnabled = dictionary[.sessionCountingEnabled] as? Bool {
+                    localConfig.sessionCountingEnabled = sessionCountingEnabled
+                }
         
         localConfig.memoryReportingEnabled = dictionary[.memoryReportingEnabled] as? Bool ?? true
         localConfig.collectors = configCollectors

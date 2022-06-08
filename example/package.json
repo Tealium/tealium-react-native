@@ -10,11 +10,14 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "react": "17.0.2",
+    "react": "^16.13.1",
     "react-native": "0.67.1",
+    "react-native-material-design": "^0.3.7",
     "react-native-permissions": "^3.2.0",
+    "react-navigation-stack": "^2.10.4",
     "tealium-react-braze": "../remotecommands/tealium-react-braze",
     "tealium-react-firebase": "../remotecommands/tealium-react-firebase",
+    "tealium-react-adjust": "../remotecommands/tealium-react-adjust",
     "tealium-react-native": "../npm-package",
     "tealium-react-native-location": "../modules/location"
   },
