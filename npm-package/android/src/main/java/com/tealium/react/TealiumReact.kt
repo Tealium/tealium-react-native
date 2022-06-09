@@ -212,8 +212,7 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
     @ReactMethod
     fun gatherTrackData(callback: Callback) {
         tealium?.apply {
-            val data = JsonUtils.jsonFor(gatherTrackData())
-            callback.invoke(JSONObject(data.toString()).toWritableMap())
+            callback.invoke(JSONObject(gatherTrackData()).toWritableMap())
         }
     }
 
