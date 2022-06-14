@@ -7,6 +7,7 @@ import { TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatcher
 import FirebaseRemoteCommand from 'tealium-react-firebase';
 import BrazeRemoteCommand from 'tealium-react-braze';
 import AdjustRemoteCommand from 'tealium-react-adjust';
+import { AdjustConfig, AdjustEnvironemnt} from 'tealium-react-adjust/common';
 import { checkAndRequestPermissions }  from "./Utils"
 
 export default class App extends Component < {} > {
@@ -16,6 +17,12 @@ export default class App extends Component < {} > {
             accuracy: Accuracy.high,
             desiredAccuracy: DesiredAccuracy.best,
             updateDistance: 150
+        }
+
+        let adjustConfig: AdjustConfig = {
+            appToken: "someToken", 
+            environment: AdjustEnvironemnt.sandbox, 
+            allowSuppressLogLevel: false 
         }
 
         TealiumLocation.configure(locationConfig);

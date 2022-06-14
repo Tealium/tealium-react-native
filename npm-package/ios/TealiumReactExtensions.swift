@@ -139,8 +139,8 @@ extension TealiumReactNative {
         }
         
         if let sessionCountingEnabled = dictionary[.sessionCountingEnabled] as? Bool {
-                    localConfig.sessionCountingEnabled = sessionCountingEnabled
-                }
+            localConfig.sessionCountingEnabled = sessionCountingEnabled
+        }
         
         localConfig.memoryReportingEnabled = dictionary[.memoryReportingEnabled] as? Bool ?? true
         localConfig.collectors = configCollectors

@@ -16,6 +16,8 @@ Setup the Adjust dependencies according to the standard guides for [iOS](https:/
 ```javascript
 import AdjustRemoteCommand from 'tealium-react-adjust';
 
+AdjustRemoteCommand.initialize();
+
 let config = TealiumConfig {
     // ...
     remoteCommands: [{

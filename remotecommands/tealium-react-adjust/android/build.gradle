@@ -1,7 +1,7 @@
-def DEFAULT_COMPILE_SDK_VERSION = 30
+def DEFAULT_COMPILE_SDK_VERSION = 31
 def DEFAULT_BUILD_TOOLS_VERSION = '30.0.2'
 def DEFAULT_MIN_SDK_VERSION = 21
-def DEFAULT_TARGET_SDK_VERSION = 30
+def DEFAULT_TARGET_SDK_VERSION = 31
 
 def safeExtGet(prop, fallback) {
   rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
@@ -93,8 +93,8 @@ dependencies {
   implementation 'com.facebook.react:react-native:+'
 
   implementation project(":tealium-react-native")
-  implementation 'com.tealium.remotecommands:adjust:1.0.0'
-  implementation 'com.tealium:remotecommands:1.0.1'
+  implementation 'com.tealium.remotecommands:adjust:1.1.0'
+  implementation 'com.tealium:remotecommands:1.0.0'
 
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${project.ext.kotlinVersion}"
 }

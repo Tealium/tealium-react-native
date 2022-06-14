@@ -1,14 +1,15 @@
 import { NativeModules } from 'react-native';
-import { AdjustConfig } from './common';
 
 const { TealiumReactAdjust } = NativeModules;
 
 export default class AdjustRemoteCommand {
     static name = "AdjustRemoteCommand";
 
-    static initialize() {
+    static initialize(config) {
         if (Platform.OS == 'ios') {
             TealiumReactAdjust.initialize();
+        } else {
+            TealiumReactAdjust.initialize(config);
         }
     }
 };
