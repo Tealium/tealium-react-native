@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   # optional - use expanded license entry instead:
   # s.license    = { :type => "MIT", :file => "LICENSE" }
-  s.authors      = { "Tealium" => "yourname@email.com" }
+  s.authors      = { "Tealium" => "mobile-team@tealium.com" }
   s.platforms    = { :ios => "11.0" }
   s.source       = { :git => "https://github.com/github_account/tealium-react-adjust.git", :tag => "#{s.version}" }
 
