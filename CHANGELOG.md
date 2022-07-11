@@ -4,6 +4,12 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
+- 2.2.1
+  - Kotlin dependency upgraded to 1.4.1
+  - Swift dependency upgraded to 2.6.4
+  - Added overrideCollectProfile and sessionCountingEnabled keys to the config
+  - Added gatherTrackData method to tealium instance
+
 - 2.2.0
   - Support added up to React Native 0.67.1 + gradle 7
   - Support for additional Optional Modules, as well as packaged Remote Commands
