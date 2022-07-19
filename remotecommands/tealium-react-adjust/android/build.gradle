@@ -94,7 +94,7 @@ dependencies {
 
   implementation project(":tealium-react-native")
   implementation 'com.tealium.remotecommands:adjust:1.1.0'
-  implementation 'com.tealium:remotecommands:1.0.0'
+  implementation 'com.tealium:remotecommands:1.0.1'
 
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${project.ext.kotlinVersion}"
 }
