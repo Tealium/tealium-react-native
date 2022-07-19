@@ -103,6 +103,7 @@ export interface TealiumConfig {
     overrideCollectURL ? : string;
     overrideCollectBatchURL ? : string;
     overrideCollectDomain ? : string;
+    overrideCollectProfile ? : string;
     overrideLibrarySettingsURL ? : string;
     overrideTagManagementURL ? : string;
     deepLinkTrackingEnabled ? : boolean;
@@ -115,6 +116,7 @@ export interface TealiumConfig {
     lifecycleAutotrackingEnabled ? : boolean;
     useRemoteLibrarySettings ? : boolean;
     visitorServiceEnabled ? : boolean;
+    sessionCountingEnabled ? : boolean;
     remoteCommands ? : RemoteCommand[];
 }
 

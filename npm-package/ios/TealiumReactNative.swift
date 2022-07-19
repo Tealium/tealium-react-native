@@ -148,6 +148,11 @@ public class TealiumReactNative: RCTEventEmitter {
     }
 
     @objc
+    public static func gatherTrackData(completion: @escaping ([String: Any]) -> ()) {
+        tealium?.gatherTrackData(completion: completion)
+    }
+
+    @objc
     public static func addRemoteCommand(id: String) {
         let remoteCommand = self.remoteCommandFor(id)
         tealium?.remoteCommands?.add(remoteCommand)

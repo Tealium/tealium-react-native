@@ -50,12 +50,15 @@ enum TealiumReactConstants {
         case logLevel
         case overrideCollectURL
         case overrideCollectBatchURL
+        case overrideCollectDomain
+        case overrideCollectProfile
         case overrideTagManagementURL
         case overrideLibrarySettingsURL
         case qrTraceEnabled
         case deepLinkTrackingEnabled
         case lifecycleAutotrackingEnabled
         case visitorServiceEnabled
+        case sessionCountingEnabled
         case memoryReportingEnabled
         case remoteCommands
     }

@@ -210,6 +210,13 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
     }
 
     @ReactMethod
+    fun gatherTrackData(callback: Callback) {
+        tealium?.apply {
+            callback.invoke(JSONObject(gatherTrackData()).toWritableMap())
+        }
+    }
+
+    @ReactMethod
     fun setConsentStatus(status: String) {
         tealium?.apply {
             consentManager.userConsentStatus = ConsentStatus.consentStatus(status)

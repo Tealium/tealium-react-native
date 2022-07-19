@@ -53,6 +53,11 @@ declare module 'tealium-react-native' {
 		public static getData(key: string, callback: (response: any) => void): void;
 
 		/**
+		 * Retrieves track data from the data layer and collectors
+		 */
+		 public static gatherTrackData(callback: (response: any) => void): void;
+
+		/**
 		 * Removes data from the data layer
 		 * @param keys The keys of the data to be removed
 		 */

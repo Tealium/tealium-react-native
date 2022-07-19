@@ -59,6 +59,16 @@ class TealiumWrapper: NSObject {
         TealiumReactNative.deleteFromDataLayer(keys: keys)
     }
 
+    @objc(gatherTrackData:)
+    public func gatherTrackData(callback: @escaping RCTResponseSenderBlock) {
+        TealiumReactNative.gatherTrackData(completion: { response in
+            guard let result = response as Any? else {
+                return
+            }
+            callback([result])
+        })
+    }
+
     @objc(addRemoteCommand:)
     public func addRemoteCommand(_ id: String) {
         TealiumReactNative.addRemoteCommand(id: id)

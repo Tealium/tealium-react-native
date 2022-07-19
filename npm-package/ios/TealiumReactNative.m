@@ -26,6 +26,8 @@
 
     RCT_EXTERN_METHOD(deleteFromDataLayer:(NSArray *)keys)
 
+    RCT_EXTERN_METHOD(gatherTrackData:(RCTResponseSenderBlock)callback)
+
     RCT_EXTERN_METHOD(addRemoteCommand:(NSString *)commandId)
 
     RCT_EXTERN_METHOD(removeRemoteCommand:(NSString *)commandId)
