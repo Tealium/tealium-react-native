@@ -1,9 +1,20 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow strict-local
+ */
+
 import React, { Component } from 'react';
-import { Platform, Button, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert, ScrollView, SafeAreaView } from 'react-native';
+import { Platform, Button, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert, ScrollView, 
+SafeAreaView } from 'react-native';
 import Tealium from 'tealium-react-native';
 import TealiumLocation from 'tealium-react-native-location';
 import { TealiumLocationConfig, Accuracy, DesiredAccuracy } from 'tealium-react-native-location/common';
-import { TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors, ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment, RemoteCommand } from 'tealium-react-native/common';
+import { TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors, 
+ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment, RemoteCommand } from 
+'tealium-react-native/common';
 import FirebaseRemoteCommand from 'tealium-react-firebase';
 import BrazeRemoteCommand from 'tealium-react-braze';
 import AdjustRemoteCommand from 'tealium-react-adjust';
@@ -20,39 +31,39 @@ export default class App extends Component < {} > {
         }
 
         let adjustConfig: AdjustConfig = {
-            appToken: "someToken", 
-            environment: AdjustEnvironemnt.sandbox, 
-            allowSuppressLogLevel: false 
+            appToken: "someToken",
+            environment: AdjustEnvironemnt.sandbox,
+            allowSuppressLogLevel: false
         }
 
         TealiumLocation.configure(locationConfig);
         FirebaseRemoteCommand.initialize();
         BrazeRemoteCommand.initialize();
         AdjustRemoteCommand.initialize();
-        let config: TealiumConfig = { 
-            account: 'tealiummobile', 
-            profile: 'demo', 
-            environment: TealiumEnvironment.dev, 
+        let config: TealiumConfig = {
+            account: 'tealiummobile',
+            profile: 'demo',
+            environment: TealiumEnvironment.dev,
             dispatchers: [
-                Dispatchers.Collect, 
-                Dispatchers.TagManagement, 
+                Dispatchers.Collect,
+                Dispatchers.TagManagement,
                 Dispatchers.RemoteCommands
-            ], 
+            ],
             collectors: [
-                Collectors.AppData, 
-                Collectors.DeviceData, 
-                Collectors.Lifecycle, 
+                Collectors.AppData,
+                Collectors.DeviceData,
+                Collectors.Lifecycle,
                 Collectors.Connectivity
-            ], 
+            ],
             lifecycleAutotrackingEnabled: true,
-            consentLoggingEnabled: true, 
-            consentExpiry: { 
+            consentLoggingEnabled: true,
+            consentExpiry: {
                 'time': 10,
-                'unit': 'days' 
-            }, 
-            consentPolicy: ConsentPolicy.gdpr, 
-            batchingEnabled: false, 
-            visitorServiceEnabled: true, 
+                'unit': 'days'
+            },
+            consentPolicy: ConsentPolicy.gdpr,
+            batchingEnabled: false,
+            visitorServiceEnabled: true,
             useRemoteLibrarySettings: false,
             remoteCommands: [{
                 id: FirebaseRemoteCommand.name,
@@ -62,14 +73,14 @@ export default class App extends Component < {} > {
                 path: 'braze.json'
             }, {
                 id: AdjustRemoteCommand.name,
-                path: 'adjust.json'   
+                path: 'adjust.json'
             }]
         };
         Tealium.initialize(config, success => {
             if (!success) {
                 console.log("Tealium not initialized")
                 return
-            } 
+            }
             console.log("Tealium initialized")
             Tealium.setConsentStatus(ConsentStatus.consented)
             Tealium.addRemoteCommand("hello", payload => {
@@ -90,7 +101,7 @@ export default class App extends Component < {} > {
         });
     }
 
-    trackEvent() {        
+    trackEvent() {
         let event = new TealiumEvent('Test Event', {'event_name': 'test'});
         Tealium.track(event);
     }
@@ -105,7 +116,7 @@ export default class App extends Component < {} > {
     }
 
     setRandomConsentCategories() {
-        let randomCategories = 
+        let randomCategories =
             [ConsentCategories.affiliates,
             ConsentCategories.analytics,
             ConsentCategories.bigData,
@@ -204,7 +215,7 @@ export default class App extends Component < {} > {
     async startLocationTracking() {
         let result = await checkAndRequestPermissions()
         if (!result) return;
-        
+
         TealiumLocation.startLocationTracking();
     }
 
@@ -218,13 +229,13 @@ export default class App extends Component < {} > {
     async getLastLocation() {
         let result = await checkAndRequestPermissions()
         if (!result) return;
-        
+
         TealiumLocation.lastLocation((loc) => {
             if (loc) {
                 Alert.alert(`Lat: ${loc.lat} | Lng: ${loc.lng}`)
             }
         })
-        
+
     }
 
 
@@ -353,7 +364,8 @@ class Trace extends Component {
                placeholderTextColor = "#007CC1"
                autoCapitalize = "none"
                onChangeText = {this.handleTraceId}/>
-            <TouchableOpacity style={styles.buttonContainer} onPress={() => this.joinTrace(this.state.traceId)}>
+            <TouchableOpacity style={styles.buttonContainer} onPress={() => 
+this.joinTrace(this.state.traceId)}>
                 <Text style={styles.textStyle}>START TRACE</Text>
             </TouchableOpacity>
             <View style={styles.space} />

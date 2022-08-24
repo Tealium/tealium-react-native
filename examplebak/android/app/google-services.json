@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "898091695173",
+    "project_id": "tealium-ios-demo-app---tyler",
+    "storage_bucket": "tealium-ios-demo-app---tyler.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898091695173:android:386ca0142eea92be09372c",
+        "android_client_info": {
+          "package_name": "com.example"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898091695173-cr8cvnbph2oja7h1ctgm6narpbfsfbbc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARRfjqk2dmy8AGbimrZuTSF4Uzv22NlRA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "898091695173-cr8cvnbph2oja7h1ctgm6narpbfsfbbc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "898091695173-inn9v6ivpbii856m812nei8eeoge15h4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

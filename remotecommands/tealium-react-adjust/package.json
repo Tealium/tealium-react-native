@@ -1,7 +1,7 @@
 {
   "name": "tealium-react-adjust",
   "title": "Tealium React Adjust",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Package to support the Tealium Adjust Remote Command",
   "main": "index.js",
   "files": [
@@ -31,7 +31,7 @@
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "peerDependencies": {
-    "react": ">=16.8.1",
+    "react": ">=16.8.1 || < 19.0.0",
     "react-native": ">=0.60.0-rc.0 <1.0.x",
     "tealium-react-native": "^2.1.0"
   },

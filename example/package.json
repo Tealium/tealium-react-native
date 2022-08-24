@@ -1,6 +1,6 @@
 {
   "name": "example",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -10,11 +10,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "react": "17.0.2",
-    "react-native": "0.67.1",
-    "react-native-material-design": "^0.3.7",
-    "react-native-permissions": "^3.2.0",
-    "react-navigation-stack": "^2.10.4",
+    "react": "18.0.0",
+    "react-native": "0.69.4",
     "tealium-react-braze": "../remotecommands/tealium-react-braze",
     "tealium-react-firebase": "../remotecommands/tealium-react-firebase",
     "tealium-react-adjust": "../remotecommands/tealium-react-adjust",
@@ -22,14 +19,14 @@
     "tealium-react-native-location": "../modules/location"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/runtime": "^7.14.0",
+    "@babel/core": "^7.12.9",
+    "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
-    "babel-jest": "^27.0.2",
-    "eslint": "^7.28.0",
-    "jest": "^27.0.4",
-    "metro-react-native-babel-preset": "^0.66.0",
-    "react-test-renderer": "17.0.1"
+    "babel-jest": "^26.6.3",
+    "eslint": "^7.32.0",
+    "jest": "^26.6.3",
+    "metro-react-native-babel-preset": "^0.70.3",
+    "react-test-renderer": "18.0.0"
   },
   "jest": {
     "preset": "react-native"
