@@ -13,6 +13,18 @@ target 'example' do
   # Flags change depending on the env values.
   flags = get_default_flags()
 
+  pre_install do |installer|
+    Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+
+    installer.pod_targets.each do |pod|
+      if pod.name.eql?('RNPermissions') || pod.name.start_with?('Permission-')
+        def pod.build_type;
+          Pod::BuildType.static_library # >= 1.9
+        end
+      end
+    end
+  end
+
   pod "tealium-react-native-swift", :path => '../node_modules/tealium-react-native/tealium-react-native-swift.podspec'
 
   use_react_native!(
@@ -24,6 +36,11 @@ target 'example' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy"
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
 
   target 'exampleTests' do
     inherit! :complete

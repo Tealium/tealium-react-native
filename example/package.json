@@ -12,9 +12,10 @@
   "dependencies": {
     "react": "18.0.0",
     "react-native": "0.69.4",
+    "react-native-permissions": "^3.6.1",
+    "tealium-react-adjust": "../remotecommands/tealium-react-adjust",
     "tealium-react-braze": "../remotecommands/tealium-react-braze",
     "tealium-react-firebase": "../remotecommands/tealium-react-firebase",
-    "tealium-react-adjust": "../remotecommands/tealium-react-adjust",
     "tealium-react-native": "../npm-package",
     "tealium-react-native-location": "../modules/location"
   },
