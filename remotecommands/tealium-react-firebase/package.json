@@ -1,7 +1,7 @@
 {
   "name": "tealium-react-firebase",
   "title": "Tealium React Firebase",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Package to support the Tealium Firebase Remote Command integration",
   "main": "index.js",
   "files": [
