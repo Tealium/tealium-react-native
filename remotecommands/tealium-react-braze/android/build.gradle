@@ -13,7 +13,7 @@ apply plugin: 'kotlin-android'
 buildscript {
 
     ext {
-        kotlinVersion = '1.4.32'
+        kotlinVersion = '1.6.0'
     }
     // The Android Gradle plugin is only required when opening the android folder stand-alone.
     // This avoids unnecessary downloads and potential conflicts when the library is included as a
@@ -40,7 +40,7 @@ buildscript {
     }
 }
 
-version = "1.0.0"
+version = "1.0.1"
 android {
     compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
     buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)

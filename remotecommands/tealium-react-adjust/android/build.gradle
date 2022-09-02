@@ -15,7 +15,7 @@ buildscript {
 //  def kotlin_version = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : project.properties['TealiumReactAdjust_kotlinVersion']
 
   ext {
-    kotlinVersion = '1.4.32'
+    kotlinVersion = '1.6.0'
   }
 
   if (project == rootProject) {
@@ -39,7 +39,7 @@ buildscript {
   }
 }
 
-version = "1.0.0"
+version = "1.0.1"
 
 android {
   compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
