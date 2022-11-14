@@ -75,6 +75,14 @@ export default class Tealium {
         TealiumWrapper.getVisitorId(callback);
     }
 
+    static resetVisitorId() {
+        TealiumWrapper.resetVisitorId()
+    }
+
+    static clearStoredVisitorIds() {
+        TealiumWrapper.clearStoredVisitorIds()
+    }
+    
     static getSessionId(callback) {
         TealiumWrapper.getSessionId(callback);
     }
@@ -84,6 +92,13 @@ export default class Tealium {
             callback(profile);
         });
         this.emitterSubscriptions.push(visitor);
+    }
+
+    static setVisitorIdListener(callback) {
+        const visitorId = this.emitter.addListener(EventListenerNames.visitorId, id => {
+            callback(id);
+        });
+        this.emitterSubscriptions.push(visitorId);
     }
 
     static setConsentExpiryListener(callback) {

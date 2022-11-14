@@ -274,6 +274,16 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
     }
 
     @ReactMethod
+    fun resetVisitorId() {
+        tealium?.resetVisitorId()
+    }
+
+    @ReactMethod
+    fun clearStoredVisitorIds() {
+        tealium?.clearStoredVisitorIds()
+    }
+
+    @ReactMethod
     fun getSessionId(callback: Callback){
         callback(tealium?.session?.id.toString())
     }
