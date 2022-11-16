@@ -43,7 +43,7 @@ export default class App extends Component<{}> {
         TealiumLocation.configure(locationConfig);
         FirebaseRemoteCommand.initialize();
         BrazeRemoteCommand.initialize();
-        AdjustRemoteCommand.initialize();
+        AdjustRemoteCommand.initialize(adjustConfig);
         let config: TealiumConfig = {
             account: 'tealiummobile',
             profile: 'demo',
