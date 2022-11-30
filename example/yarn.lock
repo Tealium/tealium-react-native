@@ -6282,7 +6282,7 @@ tealium-react-native-location@../modules/location:
   version "1.0.2"
 
 tealium-react-native@../npm-package:
-  version "2.2.2"
+  version "2.3.0"
 
 temp@0.8.3:
   version "0.8.3"

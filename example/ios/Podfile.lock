@@ -425,12 +425,12 @@ PODS:
     - TealiumFirebase (~> 2.1.0)
   - tealium-react-native (2.3.0):
     - React-Core
-    - tealium-swift/Collect (~> 2.8.1)
-    - tealium-swift/Core (~> 2.8.1)
-    - tealium-swift/Lifecycle (~> 2.8.1)
-    - tealium-swift/RemoteCommands (~> 2.8.1)
-    - tealium-swift/TagManagement (~> 2.8.1)
-    - tealium-swift/VisitorService (~> 2.8.1)
+    - tealium-swift/Collect (~> 2.8)
+    - tealium-swift/Core (~> 2.8)
+    - tealium-swift/Lifecycle (~> 2.8)
+    - tealium-swift/RemoteCommands (~> 2.8)
+    - tealium-swift/TagManagement (~> 2.8)
+    - tealium-swift/VisitorService (~> 2.8)
   - tealium-react-native-location (1.0.2):
     - React-Core
     - tealium-react-native (~> 2.2)
@@ -440,12 +440,12 @@ PODS:
   - tealium-react-native-swift (2.3.0):
     - React-Core
     - tealium-react-native
-    - tealium-swift/Collect (~> 2.8.1)
-    - tealium-swift/Core (~> 2.8.1)
-    - tealium-swift/Lifecycle (~> 2.8.1)
-    - tealium-swift/RemoteCommands (~> 2.8.1)
-    - tealium-swift/TagManagement (~> 2.8.1)
-    - tealium-swift/VisitorService (~> 2.8.1)
+    - tealium-swift/Collect (~> 2.8)
+    - tealium-swift/Core (~> 2.8)
+    - tealium-swift/Lifecycle (~> 2.8)
+    - tealium-swift/RemoteCommands (~> 2.8)
+    - tealium-swift/TagManagement (~> 2.8)
+    - tealium-swift/VisitorService (~> 2.8)
   - tealium-swift/Collect (2.8.2):
     - tealium-swift/Core
   - tealium-swift/Core (2.8.2)
@@ -682,9 +682,9 @@ SPEC CHECKSUMS:
   tealium-react-adjust: db2b39f966aeaf6518b2b6c3686e88cb7609d957
   tealium-react-braze: 6d2ff1e72692b0057ee42583ae00bacaa35ce167
   tealium-react-firebase: 5e8120c4a4ffa8a169715839da9fde32a537917a
-  tealium-react-native: fa98a37268061c4f5dac2bb233823f671851fe8b
+  tealium-react-native: 1abd560e688ca1e68f1cf122f1c2565d70eefea2
   tealium-react-native-location: 2bd1b4e1081fd96904195ccbfb08b48b675256b8
-  tealium-react-native-swift: 924c5ac6b5e90841bb3961a02973b9f0a03a0674
+  tealium-react-native-swift: 0867e5455e81fefb0e78f2de2cf76b3cdf386726
   tealium-swift: aa249f29ee10924c1cb373c5313e91a99276bfe6
   TealiumAdjust: e4dc17fd9dad81b37207e8df2b52ab12af36f606
   TealiumBraze: e2090735f38c153711879c328ad6c78608248822
