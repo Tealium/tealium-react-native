@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   s.dependency "React-Core"
   s.dependency "tealium-react-native", "~> 2.2"
   s.dependency "tealium-react-native-swift", "~> 2.2"
-  s.dependency "tealium-swift/Core", "~> 2.6"
-  s.dependency "TealiumFirebase", "~> 2.1.0"
+  s.dependency "tealium-swift/Core", "~> 2.8"
+  s.dependency "TealiumFirebase", "~> 2.2.0"
 end
 
