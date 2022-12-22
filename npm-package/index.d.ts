@@ -9,6 +9,16 @@ declare module 'tealium-react-native' {
 		public static getVisitorId(callback: (response: string) => void): void;
 
 		/**
+		 * Resets the Tealium Visitor ID
+		 */
+		 public static resetVisitorId(): void;
+
+		/**
+		 * Resets the Tealium Visitor ID
+		 */
+		 public static clearStoredVisitorIds(): void;
+
+		/**
 		 * Retrieves the Tealium Session ID
 		 */
 		 public static getSessionId(callback: (response: string) => void): void;
@@ -98,9 +108,15 @@ declare module 'tealium-react-native' {
 
 		/**
 		 * Sets a listener to be called when the AudienceStream visitor profile is updated
-		 * @param callback Callback function to be called when the vistior profile is updated
+		 * @param callback Callback function to be called when the visitor profile is updated
 		 */
 		public static setVisitorServiceListener(callback: (response: any) => void): void;
+
+		/**
+		 * Sets a listener to be called when the Visitor Id is updated
+		 * @param callback Callback function to be called when the visitor id is updated
+		 */
+		 public static setVisitorIdListener(callback: (response: string) => void): void;
 
 		/**
 		 * Sets a listener to be called when the the user's saved consent status has expired

@@ -117,6 +117,16 @@ class TealiumWrapper: NSObject {
         callback([visitorId])
     }
     
+    @objc(resetVisitorId)
+    public func resetVisitorId() {
+        TealiumReactNative.resetVisitorId()
+    }
+    
+    @objc(clearStoredVisitorIds)
+    public func clearStoredVisitorIds() {
+        TealiumReactNative.clearStoredVisitorIds()
+    }
+    
     @objc(getSessionId:)
     public func getSessionId(_ callback: RCTResponseSenderBlock) {
         guard let sessionId = TealiumReactNative.sessionId else {

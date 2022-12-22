@@ -129,6 +129,10 @@ extension TealiumReactNative {
             localConfig.publishSettingsURL = overrideLibrarySettingsURL
         }
         
+        if let visitorIdentityKey = dictionary[.visitorIdentityKey] as? String {
+            localConfig.visitorIdentityKey = visitorIdentityKey
+        }
+        
         localConfig.qrTraceEnabled = dictionary[.qrTraceEnabled] as? Bool ?? true
         localConfig.deepLinkTrackingEnabled = dictionary[.deepLinkTrackingEnabled] as? Bool ?? true
         localConfig.lifecycleAutoTrackingEnabled = dictionary[.lifecycleAutotrackingEnabled] as? Bool ?? true

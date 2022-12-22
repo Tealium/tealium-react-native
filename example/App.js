@@ -6,22 +6,26 @@
  * @flow strict-local
  */
 
-import React, { Component } from 'react';
-import { Platform, Button, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert, ScrollView, 
-SafeAreaView } from 'react-native';
+import React, { Component, useState } from 'react';
+import {
+    Platform, Button, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert, ScrollView,
+    SafeAreaView
+} from 'react-native';
 import Tealium from 'tealium-react-native';
 import TealiumLocation from 'tealium-react-native-location';
 import { TealiumLocationConfig, Accuracy, DesiredAccuracy } from 'tealium-react-native-location/common';
-import { TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors, 
-ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment, RemoteCommand } from 
-'tealium-react-native/common';
+import {
+    TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors,
+    ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment, RemoteCommand
+} from
+    'tealium-react-native/common';
 import FirebaseRemoteCommand from 'tealium-react-firebase';
 import BrazeRemoteCommand from 'tealium-react-braze';
 import AdjustRemoteCommand from 'tealium-react-adjust';
-import { AdjustConfig, AdjustEnvironemnt} from 'tealium-react-adjust/common';
-import { checkAndRequestPermissions }  from "./Utils"
+import { AdjustConfig, AdjustEnvironemnt } from 'tealium-react-adjust/common';
+import { checkAndRequestPermissions } from "./Utils"
 
-export default class App extends Component < {} > {
+export default class App extends Component<{}> {
 
     componentDidMount() {
         let locationConfig: TealiumLocationConfig = {
@@ -39,7 +43,7 @@ export default class App extends Component < {} > {
         TealiumLocation.configure(locationConfig);
         FirebaseRemoteCommand.initialize();
         BrazeRemoteCommand.initialize();
-        AdjustRemoteCommand.initialize();
+        AdjustRemoteCommand.initialize(adjustConfig);
         let config: TealiumConfig = {
             account: 'tealiummobile',
             profile: 'demo',
@@ -74,7 +78,8 @@ export default class App extends Component < {} > {
             }, {
                 id: AdjustRemoteCommand.name,
                 path: 'adjust.json'
-            }]
+            }],
+            visitorIdentityKey: DataLayer.UserIdentity
         };
         Tealium.initialize(config, success => {
             if (!success) {
@@ -96,18 +101,21 @@ export default class App extends Component < {} > {
             console.log("currentVisit: ")
             console.log(JSON.stringify(profile["currentVisit"]));
         });
+        Tealium.setVisitorIdListener(id => {
+            console.log("Visitor Id Updated: " + id);
+        });
         Tealium.setConsentExpiryListener(() => {
             console.log("Consent Expired");
         });
     }
 
     trackEvent() {
-        let event = new TealiumEvent('Test Event', {'event_name': 'test'});
+        let event = new TealiumEvent('Test Event', { [DataLayer.EventName]: 'test' });
         Tealium.track(event);
     }
 
     trackView() {
-        let view = new TealiumView('Test View', {'view_name': 'test'});
+        let view = new TealiumView('Test View', { [DataLayer.ViewName]: 'test' });
         Tealium.track(view);
     }
 
@@ -131,10 +139,10 @@ export default class App extends Component < {} > {
             ConsentCategories.monitoring,
             ConsentCategories.personalization,
             ConsentCategories.social]
-                      .map((a) => ({ sort: Math.random(), value: a }))
-                      .sort((a, b) => a.sort - b.sort)
-                      .map((a) => a.value)
-                      .slice(0, 3);
+                .map((a) => ({ sort: Math.random(), value: a }))
+                .sort((a, b) => a.sort - b.sort)
+                .map((a) => a.value)
+                .slice(0, 3);
         Tealium.setConsentCategories(randomCategories);
     }
 
@@ -160,14 +168,14 @@ export default class App extends Component < {} > {
 
     addData() {
         var data = new Map();
-        data['test_session_data'] = 'test'
-        data['my_test_value'] = 1;
+        data[DataLayer.TestSessionData] = 'test'
+        data[DataLayer.MyTestValue] = 1;
         Tealium.addData(data, Expiry.session);
     }
 
     getData() {
-        Tealium.getData('test_session_data', value => {
-            console.log("test_session_data: " + value)
+        Tealium.getData(DataLayer.TestSessionData, value => {
+            console.log(`${DataLayer.TestSessionData}: ${value}`)
         })
     }
 
@@ -178,8 +186,8 @@ export default class App extends Component < {} > {
     }
 
     removeData() {
-        Tealium.removeData(['test_session_data']);
-        Tealium.removeData(['my_test_value']);
+        Tealium.removeData([DataLayer.TestSessionData]);
+        Tealium.removeData([DataLayer.MyTestValue]);
     }
 
     addRemoteCommand() {
@@ -190,8 +198,8 @@ export default class App extends Component < {} > {
     }
 
     removeRemoteCommand() {
-       Tealium.removeRemoteCommand('hello');
-       Tealium.removeRemoteCommand('example');
+        Tealium.removeRemoteCommand('hello');
+        Tealium.removeRemoteCommand('example');
     }
 
     getVisitorId() {
@@ -199,6 +207,14 @@ export default class App extends Component < {} > {
             console.log("Visitor id: " + value)
             Alert.alert("Visitor Id: ", value, [{ text: "OK", style: "cancel" }])
         });
+    }
+
+    resetVisitorId() {
+        Tealium.resetVisitorId()
+    }
+
+    clearStoredVisitorIds() {
+        Tealium.clearStoredVisitorIds()
     }
 
     getSessionId() {
@@ -235,102 +251,107 @@ export default class App extends Component < {} > {
                 Alert.alert(`Lat: ${loc.lat} | Lng: ${loc.lng}`)
             }
         })
-
     }
 
+    async getLastIdentity() {
+        return new Promise(resolve => {
+            Tealium.getData((data) => {
+                resolve(data)
+            });
+        })
+    }
+
+    joinTrace = (id) => {
+        if (id !== '') {
+            Alert.alert('Trace started with ID: ' + id);
+            Tealium.joinTrace(id);
+            Tealium.track(new TealiumEvent("Start Trace"));
+        }
+    }
+
+    leaveTrace = () => {
+        Tealium.leaveTrace();
+    }
+
+    identify(identity) {
+        if (identity) {
+            Tealium.addData({
+                [DataLayer.UserIdentity]: identity
+            }, Expiry.forever)
+        }
+    }
+
+    getButtonsForSection(sectionFilter) {
+        let filter = sectionFilter || Sections.Misc
+
+        return this.getButtonActions()
+            .filter((action) => {
+                return action.section === filter
+                    || (action.section === undefined && filter === Sections.Misc)
+            });
+    }
+
+    getButtonActions() {
+        return [
+            { section: Sections.Tracking, text: "TRACK VIEW", onPress: this.trackView },
+            { section: Sections.Tracking, text: "TRACK EVENT", onPress: this.trackEvent },
+            { section: Sections.Consent, text: "OPT IN", onPress: this.optIn },
+            { section: Sections.Consent, text: "OPT OUT", onPress: this.optOut },
+            { section: Sections.Consent, text: "GET CONSENT STATUS", onPress: this.getConsentStatus },
+            { section: Sections.Consent, text: "GET CONSENT CATEGORIES", onPress: this.getConsentCategories },
+            { section: Sections.Consent, text: "RESET CONSENT", onPress: this.resetConsent },
+            { section: Sections.Consent, text: "SET CONSENT CATEGORIES", onPress: this.setRandomConsentCategories },
+            { section: Sections.DataLayer, text: "ADD DATA", onPress: this.addData },
+            { section: Sections.DataLayer, text: "GET DATA", onPress: this.getData },
+            { section: Sections.DataLayer, text: "GATHER TRACK DATA", onPress: this.gatherTrackData },
+            { section: Sections.DataLayer, text: "REMOVE DATA", onPress: this.removeData },
+            { section: Sections.RemoteCommand, text: "ADD REMOTE COMMAND", onPress: this.addRemoteCommand },
+            { section: Sections.RemoteCommand, text: "REMOVE REMOTE COMMAND", onPress: this.removeRemoteCommand },
+            { section: Sections.Visitor, text: "GET VISITOR ID", onPress: this.getVisitorId },
+            { section: Sections.Visitor, text: "RESET VISITOR ID", onPress: this.resetVisitorId },
+            { section: Sections.Visitor, text: "CLEAR STORED VISITOR IDS", onPress: this.clearStoredVisitorIds },
+            { section: Sections.Misc, text: "GET SESSION ID", onPress: this.getSessionId },
+            { section: Sections.Misc, text: "DISABLE TEALIUM", onPress: this.terminate },
+            { section: Sections.Location, text: "GET LOCATION", onPress: this.getLastLocation },
+            { section: Sections.Location, text: "START TRACKING LOCATION", onPress: this.startLocationTracking },
+            { section: Sections.Location, text: "STOP TRACKING LOCATION", onPress: this.stopLocationTracking },
+        ]
+    }
 
     render() {
         return (
-        <SafeAreaView style={styles.container}>
-        <Text style={styles.sectionTitle}> Tealium React Native </Text>
-        <View style={{ flexDirection: 'row' }}>
-        <ScrollView style={styles.scrollView}>
-        <Trace />
-        <View style = {styles.inputContainer}>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.trackEvent}>
-            <Text style={styles.textStyle}>TRACK EVENT</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.trackView}>
-            <Text style={styles.textStyle}>TRACK VIEW</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.optIn}>
-            <Text style={styles.textStyle}>OPT IN</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.optOut}>
-            <Text style={styles.textStyle}>OPT OUT</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.getConsentStatus}>
-            <Text style={styles.textStyle}>GET CONSENT STATUS</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.getConsentCategories}>
-            <Text style={styles.textStyle}>GET CONSENT CATEGORIES</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.resetConsent}>
-            <Text style={styles.textStyle}>RESET CONSENT</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.setRandomConsentCategories}>
-            <Text style={styles.textStyle}>SET CONSENT CATEGORIES</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.addData}>
-            <Text style={styles.textStyle}>ADD DATA</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.getData}>
-            <Text style={styles.textStyle}>GET DATA</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.gatherTrackData}>
-            <Text style={styles.textStyle}>GATHER TRACK DATA</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.removeData}>
-            <Text style={styles.textStyle}>REMOVE DATA</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.addRemoteCommand}>
-            <Text style={styles.textStyle}>ADD REMOTE COMMAND</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.removeRemoteCommand}>
-            <Text style={styles.textStyle}>REMOVE REMOTE COMMAND</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.getVisitorId}>
-            <Text style={styles.textStyle}>GET VISITOR ID</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.getSessionId}>
-            <Text style={styles.textStyle}>GET SESSION ID</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.terminate}>
-            <Text style={styles.textStyle}>DISABLE TEALIUM</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.getLastLocation}>
-            <Text style={styles.textStyle}>GET LOCATION</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.startLocationTracking}>
-            <Text style={styles.textStyle}>START TRACKING LOCATION</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.buttonContainer} onPress={this.stopLocationTracking}>
-            <Text style={styles.textStyle}>STOP TRACKING_LOCATION</Text>
-        </TouchableOpacity>
-        </View>
-        </ScrollView>
-        </View>
-      </SafeAreaView>
+            <SafeAreaView style={styles.container}>
+                <Text style={styles.sectionTitle}> Tealium React Native </Text>
+                <View style={{ flexDirection: 'row' }}>
+                    <ScrollView style={styles.scrollView}>
+                        <Section text={Sections.Tracking}>
+                            <TealiumButtonList actions={this.getButtonsForSection(Sections.Tracking)} />
+                        </Section>
+                        <Section text={Sections.Trace}>
+                            <Trace joinTrace={this.joinTrace} leaveTrace={this.leaveTrace} />
+                        </Section>
+                        <Section text={Sections.Consent}>
+                            <TealiumButtonList actions={this.getButtonsForSection(Sections.Consent)} />
+                        </Section>
+                        <Section text={Sections.DataLayer}>
+                            <TealiumButtonList actions={this.getButtonsForSection(Sections.DataLayer)} />
+                        </Section>
+                        <Section text={Sections.RemoteCommand}>
+                            <TealiumButtonList actions={this.getButtonsForSection(Sections.RemoteCommand)} />
+                        </Section>
+                        <Section text={Sections.Visitor}>
+                            <ActionTextField buttonText="Login" placeholder="Set Identity" action={this.identify} />
+                            <TealiumButtonList actions={this.getButtonsForSection(Sections.Visitor)} />
+                        </Section>
+                        <Section text={Sections.Location}>
+                            <TealiumButtonList actions={this.getButtonsForSection(Sections.Location)} />
+                        </Section>
+                        <Section text={Sections.Misc}>
+                            <TealiumButtonList actions={this.getButtonsForSection(Sections.Misc)} />
+                        </Section>
+                    </ScrollView>
+                </View>
+            </SafeAreaView>
         );
     }
 
@@ -340,41 +361,91 @@ export default class App extends Component < {} > {
 
 }
 
-class Trace extends Component {
-   state = {
-      traceId: ''
-   }
-   handleTraceId = (text) => {
-      this.setState({ traceId: text })
-   }
-   joinTrace = (id) => {
-      if (id !== '') {
-            Alert.alert('Trace started with ID: ' + id);
-            Tealium.joinTrace(id);
-            Tealium.track(new TealiumEvent("Start Trace"));
-        }
-   }
-   render() {
-      return (
-         <View style = {styles.inputContainer}>
-            <TextInput style = {styles.input}
-               textAlign={'center'}
-               underlineColorAndroid = "transparent"
-               placeholder = "ENTER TRACE ID"
-               placeholderTextColor = "#007CC1"
-               autoCapitalize = "none"
-               onChangeText = {this.handleTraceId}/>
-            <TouchableOpacity style={styles.buttonContainer} onPress={() => 
-this.joinTrace(this.state.traceId)}>
-                <Text style={styles.textStyle}>START TRACE</Text>
-            </TouchableOpacity>
+const Trace = (props) => {
+    return (
+        <View style={styles.inputContainer}>
+            <ActionTextField placeholder="ENTER TRACE ID" buttonText="START TRACE" action={props.joinTrace} />
             <View style={styles.space} />
-            <TouchableOpacity style={styles.buttonContainer} onPress={this.leaveTrace}>
-                <Text style={styles.textStyle}>LEAVE TRACE</Text>
-            </TouchableOpacity>
-         </View>
-      )
-   }
+            <TealiumButton text="LEAVE TRACE" onPress={props.leaveTrace} />
+        </View>
+    )
+}
+
+const ActionTextField = (props) => {
+    const [inputText, setInputText] = useState()
+
+    return (
+        <View style={styles.inputContainer}>
+            <TextInput style={styles.input}
+                textAlign={'center'}
+                underlineColorAndroid="transparent"
+                placeholder={props.placeholder}
+                placeholderTextColor="#007CC1"
+                autoCapitalize="none"
+                onChangeText={(text) => setInputText(text)} />
+            <TealiumButton text={props.buttonText} onPress={() => {
+                let text = inputText;
+                if (text) {
+                    props.action(text)
+                }
+            }} />
+        </View>
+    )
+}
+
+const TealiumButtonList = (props) => {
+    return (
+        <View style={styles.inputContainer} key={props.actions.key}>
+            {
+                props.actions.map((object, i) => <View key={object.text}>
+                    <View style={styles.space} />
+                    <TealiumButton text={object.text} onPress={object.onPress} />
+                </View>)
+            }
+        </View>
+    )
+}
+
+const TealiumButton = (props) => {
+    return (<TouchableOpacity style={styles.buttonContainer} onPress={props.onPress}>
+        <Text style={styles.textStyle}>{props.text}</Text>
+    </TouchableOpacity>)
+}
+
+const Section = (props) => {
+    let color = props.color || "black";
+    let text = props.text || "Section";
+
+    return (<>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ flex: 1, height: 1, backgroundColor: color }} />
+            <View>
+                <Text style={{ width: 125, textAlign: 'center', fontSize: 24 }}>{text}</Text>
+            </View>
+            <View style={{ flex: 1, height: 1, backgroundColor: color }} />
+        </View>
+        {props.children}
+        <View style={styles.space} />
+    </>)
+}
+
+const DataLayer = {
+    EventName: "event_name",
+    MyTestValue: "my_test_value",
+    TestSessionData: "test_session_data",
+    UserIdentity: "user_identity",
+    ViewName: "view_name",
+}
+
+const Sections = {
+    Trace: "Trace",
+    Tracking: "Tracking",
+    Consent: "Consent",
+    Visitor: "Visitor",
+    Location: "Location",
+    DataLayer: "DataLayer",
+    RemoteCommand: "Remote Commands",
+    Misc: "Misc"
 }
 
 const styles = StyleSheet.create({
@@ -416,14 +487,14 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     input: {
-      marginTop: 20,
-      marginBottom: 20,
-      width: 270,
-      height:60,
-      borderColor: '#007CC1',
-      borderWidth: 1,
-      borderRadius: 10
-   },
+        marginTop: 20,
+        marginBottom: 20,
+        width: 270,
+        height: 60,
+        borderColor: '#007CC1',
+        borderWidth: 1,
+        borderRadius: 10
+    },
     space: {
         width: 20,
         height: 20,

@@ -1,7 +1,7 @@
 {
   "name": "tealium-react-native-location",
   "title": "Tealium React Native Location",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A native module for using Tealium's Location Module for Kotlin and Swift libraries.",
   "main": "index.js",
   "types": "*.ts",

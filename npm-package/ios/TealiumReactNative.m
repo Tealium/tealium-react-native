@@ -38,6 +38,10 @@
 
     RCT_EXTERN_METHOD(getVisitorId:(RCTResponseSenderBlock)callback)
 
+    RCT_EXTERN_METHOD(resetVisitorId)
+
+    RCT_EXTERN_METHOD(clearStoredVisitorIds)
+
     RCT_EXTERN_METHOD(getSessionId:(RCTResponseSenderBlock)callback)
 
 @end

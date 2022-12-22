@@ -23,9 +23,9 @@ Pod::Spec.new do |s|
   s.static_framework = true
 
   s.dependency "React-Core"
-  s.dependency "tealium-react-native", "~> 2.2.1"
-  s.dependency "tealium-react-native-swift", "~> 2.2.1"
-  s.dependency "tealium-swift/Core", "~> 2.6.4"
+  s.dependency "tealium-react-native", "~> 2.2"
+  s.dependency "tealium-react-native-swift", "~> 2.2"
+  s.dependency "tealium-swift/Core", "~> 2.6"
   s.dependency "TealiumAdjust", "~> 1.1.0"
 end
 

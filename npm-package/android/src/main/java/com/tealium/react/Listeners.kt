@@ -8,19 +8,21 @@ import com.tealium.core.consent.ConsentManagementPolicy
 import com.tealium.core.consent.ConsentStatus
 import com.tealium.core.consent.UserConsentPreferences
 import com.tealium.core.messaging.UserConsentPreferencesUpdatedListener
+import com.tealium.core.messaging.VisitorIdUpdatedListener
 import com.tealium.remotecommands.RemoteCommand
 import com.tealium.visitorservice.VisitorProfile
 import com.tealium.visitorservice.VisitorUpdatedListener
 import org.json.JSONException
 
-class EmitterListeners(private val reactContext: ReactApplicationContext) : VisitorUpdatedListener, UserConsentPreferencesUpdatedListener {
+class EmitterListeners(private val reactContext: ReactApplicationContext) : VisitorUpdatedListener,
+    UserConsentPreferencesUpdatedListener, VisitorIdUpdatedListener {
 
     override fun onVisitorUpdated(visitorProfile: VisitorProfile) {
         try {
             VisitorProfile.toFriendlyJson(visitorProfile).toWritableMap()?.let {
                 reactContext
-                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
-                        .emit(EVENT_EMITTERS_VISITOR, it)
+                    .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+                    .emit(EVENT_EMITTERS_VISITOR, it)
             }
         } catch (jex: JSONException) {
             Logger.qa(BuildConfig.TAG, "Error converting VisitorProfile to WritableMap.")
@@ -28,23 +30,36 @@ class EmitterListeners(private val reactContext: ReactApplicationContext) : Visi
         }
     }
 
-    override fun onUserConsentPreferencesUpdated(userConsentPreferences: UserConsentPreferences, policy: ConsentManagementPolicy) {
+    override fun onUserConsentPreferencesUpdated(
+        userConsentPreferences: UserConsentPreferences,
+        policy: ConsentManagementPolicy
+    ) {
         if (userConsentPreferences.consentStatus != ConsentStatus.UNKNOWN) return
 
         reactContext
-                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
-                .emit(EVENT_EMITTERS_CONSENT_EXPIRED, Arguments.createMap())
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+            .emit(EVENT_EMITTERS_CONSENT_EXPIRED, Arguments.createMap())
+    }
+
+    override fun onVisitorIdUpdated(visitorId: String) {
+        reactContext
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+            .emit(EVENT_EMITTERS_VISITOR_ID_UPDATED, visitorId)
     }
 }
 
-class RemoteCommandListener(private val reactContext: ReactApplicationContext, id: String, description: String = id) : RemoteCommand(id, description) {
+class RemoteCommandListener(
+    private val reactContext: ReactApplicationContext,
+    id: String,
+    description: String = id
+) : RemoteCommand(id, description) {
     public override fun onInvoke(response: Response) {
         response.requestPayload.put("command_id", commandName)
         try {
             response.requestPayload.toWritableMap()?.let {
                 reactContext
-                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
-                        .emit(EVENT_EMITTERS_REMOTE_COMMAND, it)
+                    .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+                    .emit(EVENT_EMITTERS_REMOTE_COMMAND, it)
             }
         } catch (jex: JSONException) {
             Logger.qa(BuildConfig.TAG, "Error converting Payload to WritableMap.")

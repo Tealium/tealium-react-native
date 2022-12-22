@@ -85,7 +85,7 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
     val dispatchers = safeGetArray(KEY_CONFIG_DISPATCHERS)?.toDispatcherFactories()
 
     val config = TealiumConfig(application, account, profile, environment,
-            collectors = collectors ?: Collectors.core,
+            collectors = collectors ?: Collectors.core.toMutableSet(),
             modules = modules ?: mutableSetOf(),
             dispatchers = dispatchers ?: mutableSetOf())
 
@@ -99,6 +99,10 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
         // Existing visitor id
         safeGetString(KEY_CONFIG_CUSTOM_VISITOR_ID)?.let {
             existingVisitorId = it
+        }
+
+        safeGetString(KEY_CONFIG_VISITOR_IDENTITY_KEY)?.let {
+            visitorIdentityKey = it
         }
 
         // Collect Settings

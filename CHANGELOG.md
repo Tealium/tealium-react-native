@@ -4,6 +4,15 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
+- 2.3.0
+  - Visitor Switching support
+  - Kotlin/Swift SDK dependencies updated
+
+- 2.2.2
+  - Added React 18 to supported react versions for all packages
+  - All remote commands and location module updated to support React 18
+  - Upgraded Kotlin version to 1.6.0
+
 - 2.2.1
   - Kotlin dependency upgraded to 1.4.1
   - Swift dependency upgraded to 2.6.4
