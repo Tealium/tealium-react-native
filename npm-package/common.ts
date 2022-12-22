@@ -1,7 +1,8 @@
 export enum EventListenerNames {
     visitor = 'TealiumReactNative.VisitorServiceEvent',
     remoteCommand = 'TealiumReactNative.RemoteCommandEvent',
-    consentExpired = 'TealiumReactNative.ConsentExpiredEvent'
+    consentExpired = 'TealiumReactNative.ConsentExpiredEvent',
+    visitorId = 'TealiumReactNative.VisitorIdUpdatedEvent'
 }
 
 export enum Collectors {
@@ -118,6 +119,7 @@ export interface TealiumConfig {
     visitorServiceEnabled ? : boolean;
     sessionCountingEnabled ? : boolean;
     remoteCommands ? : RemoteCommand[];
+    visitorIdentityKey ? : string;
 }
 
 export interface RemoteCommand {

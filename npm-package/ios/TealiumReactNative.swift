@@ -102,6 +102,12 @@ public class TealiumReactNative: RCTEventEmitter {
                     remoteCommands.add($0)
                 }
             }
+
+            self.tealium?.onVisitorId?.subscribe { visitorId in
+                EventEmitter.shared
+                    .dispatch(name: TealiumReactConstants.Events.visitorId.rawValue,
+                              body: visitorId)
+            }
         
             completion(true)
         }
@@ -187,6 +193,15 @@ public class TealiumReactNative: RCTEventEmitter {
         tealium?.leaveTrace()
     }
     
+    @objc
+    public static func resetVisitorId() {
+        tealium?.resetVisitorId()
+    }
+    
+    @objc
+    public static func clearStoredVisitorIds() {
+        tealium?.clearStoredVisitorIds()
+    }
 }
 
 class VisitorDelegate: VisitorServiceDelegate {

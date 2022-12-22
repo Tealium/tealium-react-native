@@ -17,7 +17,7 @@ export default class Tealium {
             });
         }
         TealiumWrapper.initialize(config, callback || (response => {}));
-        TealiumWrapper.addToDataLayer({'plugin_name': 'Tealium-ReactNative', 'plugin_version': '2.2.1'}, Expiry.forever);
+        TealiumWrapper.addToDataLayer({'plugin_name': 'Tealium-ReactNative', 'plugin_version': '2.3.0'}, Expiry.forever);
         if (config["dispatchers"].includes(Dispatchers.RemoteCommands)) {
             this.setRemoteCommandListener();
         }
@@ -75,6 +75,14 @@ export default class Tealium {
         TealiumWrapper.getVisitorId(callback);
     }
 
+    static resetVisitorId() {
+        TealiumWrapper.resetVisitorId()
+    }
+
+    static clearStoredVisitorIds() {
+        TealiumWrapper.clearStoredVisitorIds()
+    }
+    
     static getSessionId(callback) {
         TealiumWrapper.getSessionId(callback);
     }
@@ -84,6 +92,13 @@ export default class Tealium {
             callback(profile);
         });
         this.emitterSubscriptions.push(visitor);
+    }
+
+    static setVisitorIdListener(callback) {
+        const visitorId = this.emitter.addListener(EventListenerNames.visitorId, id => {
+            callback(id);
+        });
+        this.emitterSubscriptions.push(visitorId);
     }
 
     static setConsentExpiryListener(callback) {

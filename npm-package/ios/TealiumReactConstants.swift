@@ -61,6 +61,7 @@ enum TealiumReactConstants {
         case sessionCountingEnabled
         case memoryReportingEnabled
         case remoteCommands
+        case visitorIdentityKey
     }
     
     enum Dispatch: String {
@@ -74,6 +75,7 @@ enum TealiumReactConstants {
         case remoteCommand = "TealiumReactNative.RemoteCommandEvent"
         case visitorService = "TealiumReactNative.VisitorServiceEvent"
         case consent = "TealiumReactNative.ConsentExpiredEvent"
+        case visitorId = "TealiumReactNative.VisitorIdUpdatedEvent"
     }
     
     enum Visitor {
