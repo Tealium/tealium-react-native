@@ -395,12 +395,12 @@ const ActionTextField = (props) => {
 
 const TealiumButtonList = (props) => {
     return (
-        <View style={styles.inputContainer}>
+        <View style={styles.inputContainer} key={props.actions.key}>
             {
-                props.actions.map((object, i) => <>
+                props.actions.map((object, i) => <View key={object.text}>
                     <View style={styles.space} />
-                    <TealiumButton text={object.text} onPress={object.onPress} key={i} />
-                </>)
+                    <TealiumButton text={object.text} onPress={object.onPress} />
+                </View>)
             }
         </View>
     )

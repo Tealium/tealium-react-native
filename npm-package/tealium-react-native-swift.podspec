@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
                   Tealium React Native Plugin
                    DESC
   s.homepage = "https://github.com/tealium/tealium-react-native"
-  s.license = { :type => "Commercial", :file => "LICENSE.txt" }
+  s.license = { :type => "Commercial", :file => "LICENSE" }
   s.authors = { "Christina Sund" => "christina.sund@tealium.com", "James Keith" => "james.keith@tealium.com" }
   s.platforms = { :ios => "11.0" }
   s.source = { :git => "https://github.com/tealium/tealium-react-native.git", :tag => "#{s.version}" }
