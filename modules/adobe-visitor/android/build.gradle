@@ -89,7 +89,9 @@ dependencies {
   // noinspection GradleDynamicVersion
   implementation 'com.facebook.react:react-native:+'
 
-//  implementation project(":tealium-react-native")
+  // Tealium React Native
+  implementation project(":tealium-react-native")
+
   // Tealium
   implementation 'com.tealium:kotlin-adobe-visitor:1.1.0'
 
