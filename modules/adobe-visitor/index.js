@@ -11,15 +11,15 @@ export default class TealiumAdobeVisitor {
         TealiumReactAdobeVisitor.configure(config)
     }
 
-    static linkExistingEcidToKnownIdentifier() {
-        TealiumReactAdobeVisitor.linkExistingEcidToKnownIdentifier()
+    static linkExistingEcidToKnownIdentifier(knownId, adobeDataProviderId) {
+        TealiumReactAdobeVisitor.linkExistingEcidToKnownIdentifier(knownId, adobeDataProviderId)
     }
 
     static resetVisitor() {
         TealiumReactAdobeVisitor.resetVisitor()
     }
 
-    static decorateUrl() {
-        TealiumReactAdobeVisitor.decorateUrl()
+    static decorateUrl(url, callback) {
+        TealiumReactAdobeVisitor.decorateUrl(url, callback)
     }
 }

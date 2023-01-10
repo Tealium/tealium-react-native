@@ -1,8 +1,163 @@
-@objc(TealiumReactAdobeVisitor)
-class TealiumReactAdobeVisitor: NSObject {
+import Foundation
+import tealium_react_native_swift
+import TealiumAdobeVisitorAPI
+import TealiumSwift
 
-  @objc(multiply:withB:withResolver:withRejecter:)
-  func multiply(a: Float, b: Float, resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
-    resolve(a*b)
-  }
+@objc(TealiumReactAdobeVisitor)
+class TealiumReactAdobeVisitor: NSObject, RCTBridgeModule {
+    static func moduleName() -> String! {
+        return "TealiumReactAdobeVisitor"
+    }
+    private let KEY_ADOBE_VISITOR_ORG_ID = "adobeVisitorOrgId"
+    private let KEY_ADOBE_VISITOR_EXISTING_ECID = "adobeVisitorExistingEcid"
+    private let KEY_ADOBE_VISITOR_RETRIES = "adobeVisitorRetries"
+    private let KEY_ADOBE_VISITOR_AUTH_STATE = "adobeVisitorAuthState"
+    private let KEY_ADOBE_VISITOR_DATA_PROVIDER_ID = "adobeVisitorDataProviderId"
+    private let KEY_ADOBE_VISITOR_CUSTOM_VISITOR_ID = "adobeVisitorCustomVisitorId"
+    let module = TealiumReactAdobeVisitorModule()
+
+    override init() {
+        super.init()
+        TealiumReactNative.registerOptionalModule(module)
+    }
+
+    @objc(configure:)
+    public func configure(_ config: [String: Any]) {
+        if let adobeVisitorOrgId = config[KEY_ADOBE_VISITOR_ORG_ID] as? String {
+            setOrgId(adobeVisitorOrgId)
+        }
+        if let adobeExistingEcid = config[KEY_ADOBE_VISITOR_EXISTING_ECID] as? String {
+            setExistingEcid(adobeExistingEcid)
+        }
+        if let adobeVisitorRetries = config[KEY_ADOBE_VISITOR_RETRIES] as? Int {
+            setVisitorRetries(adobeVisitorRetries)
+        }
+        if let adobeVisitorAuthState = config[KEY_ADOBE_VISITOR_AUTH_STATE] as? String {
+            setVisitorAuthState(adobeVisitorAuthState)
+        }
+        if let adobeVisitorDataProviderId = config[KEY_ADOBE_VISITOR_DATA_PROVIDER_ID] as? String {
+            setDataProviderId(adobeVisitorDataProviderId)
+        }
+        if let adobeVisitorCustomVisitorId = config[KEY_ADOBE_VISITOR_CUSTOM_VISITOR_ID] as? String {
+            setCustomVisitorId(adobeVisitorCustomVisitorId)
+        }
+    }
+    
+    @objc(setOrgId:)
+    public func setOrgId(_ orgId: String) {
+        module.setOrgId(orgId: orgId)
+    }
+    
+    @objc(setExistingEcid:)
+    public func setExistingEcid(_ ecid: String) {
+        module.setExistingEcid(ecid: ecid)
+    }
+    
+    @objc(setVisitorRetries:)
+    public func setVisitorRetries(_ retries: Int) {
+        module.setRetries(retries: retries)
+    }
+    
+    @objc(setVisitorAuthState:)
+    public func setVisitorAuthState(_ authState: String) {
+        module.setAuthState(state: authState)
+    }
+    
+    @objc(setDataProviderId:)
+    public func setDataProviderId(_ providerId: String) {
+        module.setDataProviderId(dataProviderId: providerId)
+    }
+    
+    @objc(setCustomVisitorId:)
+    public func setCustomVisitorId(_ customId: String) {
+        module.setCustomVisitorId(customId: customId)
+    }
+    
+    @objc(linkExistingEcidToKnownIdentifier:adobeDataProviderId:)
+    public func linkExistingEcidToKnownIdentifier(knownId: String, adobeDataProviderId: String) {
+        module.linkExistingEcidToKnownIdentifier(knownId: knownId, adobeDataProviderId: adobeDataProviderId)
+    }
+    
+    @objc(resetVisitor)
+    public func resetVisitor() {
+        module.resetVisitor()
+    }
+    
+    @objc(decorateUrl:completion:)
+    public func decorateUrl(url: String, completion: @escaping ((String) -> ())) {
+        if let url = URL(string: url) {
+            module.decorateUrl(url: url, completion: completion)
+        }
+    }
+    
+}
+
+
+class TealiumReactAdobeVisitorModule: NSObject, OptionalModule {
+    
+    private var adobeOrgId: String? = nil
+    private var adobeExistingECID: String? = nil
+    private var adobeRetries: Int? = nil
+    private var adobeAuthState: String? = nil
+    private var adobeDataProviderId: String? = nil
+    private var adobeCustomVisitorId: String? = nil
+    
+    func configure(config: TealiumConfig) {
+        if let adobeOrgId = adobeOrgId {
+            config.adobeVisitorOrgId = adobeOrgId
+        }
+        if let adobeExistingECID = adobeExistingECID {
+            config.adobeVisitorExistingEcid = adobeExistingECID
+        }
+        if let adobeRetries = adobeRetries {
+            config.adobeVisitorRetries = adobeRetries
+        }
+        if let adobeAuthState = adobeAuthState {
+            //config.adobeVisitorAuthState = adobeAuthState
+        }
+        if let adobeDataProviderId = adobeDataProviderId {
+            config.adobeVisitorDataProviderId = adobeDataProviderId
+        }
+        if let adobeCustomVisitorId = adobeCustomVisitorId {
+            config.adobeVisitorCustomVisitorId = adobeCustomVisitorId
+        }
+    }
+    
+    public func linkExistingEcidToKnownIdentifier(knownId: String, adobeDataProviderId: String) {
+        TealiumReactNative.instance?.adobeVisitorApi?.linkECIDToKnownIdentifier(knownId, adobeDataProviderId: adobeDataProviderId)
+    }
+    
+    public func resetVisitor() {
+        TealiumReactNative.instance?.adobeVisitorApi?.resetVisitor()
+    }
+    
+    public func decorateUrl(url: URL, completion:  @escaping ((String) -> ())) {
+        TealiumReactNative.instance?.adobeVisitorApi?.decorateUrl(url, completion: { url in
+            completion(url.absoluteString)
+        })
+    }
+    
+    func setOrgId(orgId: String) {
+        adobeOrgId = orgId
+    }
+
+    func setExistingEcid(ecid: String) {
+        adobeExistingECID = ecid
+    }
+
+    func setRetries(retries: Int) {
+        adobeRetries = retries
+    }
+
+    func setAuthState(state: String) {
+        adobeAuthState = state
+    }
+
+    func setDataProviderId(dataProviderId: String) {
+        adobeDataProviderId = dataProviderId
+    }
+
+    func setCustomVisitorId(customId: String) {
+        adobeCustomVisitorId = customId
+    }
 }
