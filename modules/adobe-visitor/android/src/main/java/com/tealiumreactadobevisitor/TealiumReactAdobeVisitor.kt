@@ -109,12 +109,21 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
         adobeDataProviderId: String,
         authState: Int?
     ) {
-        Tealium[INSTANCE_NAME]?.adobeVisitorApi?.linkEcidToKnownIdentifier(
-            knownId,
-            adobeDataProviderId,
-            authState,
-            AdobeResponseListener(reactContext)
-        )
+        authState?.let {
+            Tealium[INSTANCE_NAME]?.adobeVisitorApi?.linkEcidToKnownIdentifier(
+                knownId,
+                adobeDataProviderId,
+                authState,
+                AdobeResponseListener(reactContext)
+            )
+        } ?: run {
+            Tealium[INSTANCE_NAME]?.adobeVisitorApi?.linkEcidToKnownIdentifier(
+                knownId= knownId,
+                adobeDataProviderId = adobeDataProviderId,
+                authState = null,
+                adobeResponseListener = AdobeResponseListener(reactContext)
+            )
+        }
     }
 
     @ReactMethod
@@ -175,16 +184,6 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
         private const val KEY_ADOBE_VISITOR_AUTH_STATE = "adobeVisitorAuthState"
         private const val KEY_ADOBE_VISITOR_DATA_PROVIDER_ID = "adobeVisitorDataProviderId"
         private const val KEY_ADOBE_VISITOR_CUSTOM_VISITOR_ID = "adobeVisitorCustomVisitorId"
-
-        fun AdobeVisitor.toMap(): ReadableMap {
-            val map = Arguments.createMap()
-            map.putString("experienceCloudId", this.experienceCloudId)
-            map.putInt("idSyncTtl", this.idSyncTTL)
-            map.putInt("region", this.region)
-            map.putString("blob", this.blob)
-            map.putString("nextRefresh", this.nextRefresh.time.toString()) // convert to...?
-            return map
-        }
     }
 }
 

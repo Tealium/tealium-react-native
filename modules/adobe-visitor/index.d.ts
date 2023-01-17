@@ -18,7 +18,7 @@ declare module 'tealium-react-native-adobe-visitor' {
         /**
          * Resets current visitor
          */
-        public static getCurretnVisitor(callback:(response: String) => void): void;
+        public static getAdobeVisitor(callback:(response: String) => void): void;
 
         /**
          * Resets current visitor

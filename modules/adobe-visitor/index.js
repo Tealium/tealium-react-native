@@ -21,7 +21,7 @@ export default class TealiumAdobeVisitor {
         this.emitterSubscriptions.push(response)
     }
 
-    static getCurretnVisitor(callback) {
+    static getAdobeVisitor(callback) {
         TealiumReactAdobeVisitor.getCurrentAdobeVisitor(callback)
     }
 

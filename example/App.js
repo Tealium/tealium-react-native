@@ -32,7 +32,7 @@ export default class App extends Component<{}> {
 
     componentDidMount() {
         let adobeVisitorConfig: TealiumAdobeVisitorConfig = {
-            adobeVisitorOrgId: "<YOUR-ADOBE-ORG-ID>"
+            adobeVisitorOrgId: "1E2D776A524450EE0A490D44@AdobeOrg" //"<YOUR-ADOBE-ORG-ID>"
         }
         
         let locationConfig: TealiumLocationConfig = {
@@ -258,33 +258,56 @@ export default class App extends Component<{}> {
             if (loc) {
                 Alert.alert(`Lat: ${loc.lat} | Lng: ${loc.lng}`)
             }
-        })
+        });
     }
 
-    async linkExistingAdobeVisitor() {
-        TealiumAdobeVisitor.linkExistingEcidToKnownIdentifier(
-            "","", AuthState.authenticated, value => {
-                console.log("AdobeVisotr Data: " + JSON.stringify(value))
-            }
-        )
-
+    async linkExistingAdobeVisitor (id, providerId, authState) {
+        if(authState == null) {
+            TealiumAdobeVisitor.linkExistingEcidToKnownIdentifier(
+                id, providerId, value => {
+                    console.log("AdobeVisotr Data: " + JSON.stringify(value))
+                }
+            );
+        } else if (parseInt(authState) == 0) {
+            var state = 
+            TealiumAdobeVisitor.linkExistingEcidToKnownIdentifier(
+                id, providerId, value => {
+                    console.log("AdobeVisotr Data: " + JSON.stringify(value))
+                }, AuthState.unknown
+            );
+        } else if (parseInt(authState) == 1) {
+            var state = 
+            TealiumAdobeVisitor.linkExistingEcidToKnownIdentifier(
+                id, providerId, value => {
+                    console.log("AdobeVisotr Data: " + JSON.stringify(value))
+                }, AuthState.authenticated
+            );
+        }
+        else if (parseInt(authState) == 2) {
+            var state = 
+            TealiumAdobeVisitor.linkExistingEcidToKnownIdentifier(
+                id, providerId, value => {
+                    console.log("AdobeVisotr Data: " + JSON.stringify(value))
+                }, AuthState.loggedOut
+            );
+        }
     }
 
-    async getCurrentAdobeVisitor() {
-        TealiumAdobeVisitor.getCurretnVisitor(value => {
-            console.log("AdobeVisotr Data: " + JSON.stringify(value))
-        })
+    getCurrentAdobeVisitor() {
+        TealiumAdobeVisitor.getAdobeVisitor(value => {
+            console.log("Current Adobe Visitor: " + JSON.stringify(value))
+        });
     }
 
-    async decorateUrl() {
+    decorateUrl() {
         TealiumAdobeVisitor.decorateUrl("https://tealium.com", value => {
             console.log("Decorated URL: " + value)
             Alert.alert("Decorated URL: ", value, [{ text: "OK", style: "cancel" }])
         });
     }
 
-    async resetAdobeVisitor() {
-        TealiumAdobeVisitor.resetVisitor()
+    resetAdobeVisitor() {
+        TealiumAdobeVisitor.resetVisitor();
     }
 
     async getLastIdentity() {
