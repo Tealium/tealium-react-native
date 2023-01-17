@@ -13,12 +13,16 @@ export default class TealiumAdobeVisitor {
         TealiumReactAdobeVisitor.configure(config)
     }
 
-    static linkExistingEcidToKnownIdentifier(knownId, adobeDataProviderId, authState, callback) {
+    static linkExistingEcidToKnownIdentifier(knownId, adobeDataProviderId, callback, authState) {
         TealiumReactAdobeVisitor.linkEcidToKnownIdentifier(knownId, adobeDataProviderId, authState)
         const response = this.emitter.addListener(AdobeVisitorEventListenerNames.responseListener, data => {
             callback(data)
         })
         this.emitterSubscriptions.push(response)
+    }
+
+    static getCurretnVisitor(callback) {
+        TealiumReactAdobeVisitor.getCurrentAdobeVisitor(callback)
     }
 
     static resetVisitor() {

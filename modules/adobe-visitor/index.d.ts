@@ -13,7 +13,12 @@ declare module 'tealium-react-native-adobe-visitor' {
         /**
          * Sets an existing ECID for a known visitor
          */
-        public static linkExistingEcidToKnownIdentifier(knownId: String, adobeDataProviderId: String, authState: AuthState, callback:(response: any) => void): void;
+        public static linkExistingEcidToKnownIdentifier(knownId: String, adobeDataProviderId: String, callback:(response: any) => void, authState?: AuthState): void;
+
+        /**
+         * Resets current visitor
+         */
+        public static getCurretnVisitor(callback:(response: String) => void): void;
 
         /**
          * Resets current visitor

@@ -107,7 +107,7 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
     fun linkEcidToKnownIdentifier(
         knownId: String,
         adobeDataProviderId: String,
-        authState: Int
+        authState: Int?
     ) {
         Tealium[INSTANCE_NAME]?.adobeVisitorApi?.linkEcidToKnownIdentifier(
             knownId,

@@ -32,7 +32,7 @@ export default class App extends Component<{}> {
 
     componentDidMount() {
         let adobeVisitorConfig: TealiumAdobeVisitorConfig = {
-            adobeVisitorOrgId: "<YOUR-ADOBE-ORG-ID"
+            adobeVisitorOrgId: "<YOUR-ADOBE-ORG-ID>"
         }
         
         let locationConfig: TealiumLocationConfig = {
@@ -270,6 +270,12 @@ export default class App extends Component<{}> {
 
     }
 
+    async getCurrentAdobeVisitor() {
+        TealiumAdobeVisitor.getCurretnVisitor(value => {
+            console.log("AdobeVisotr Data: " + JSON.stringify(value))
+        })
+    }
+
     async decorateUrl() {
         TealiumAdobeVisitor.decorateUrl("https://tealium.com", value => {
             console.log("Decorated URL: " + value)
@@ -343,7 +349,7 @@ export default class App extends Component<{}> {
             { section: Sections.Location, text: "GET LOCATION", onPress: this.getLastLocation },
             { section: Sections.Location, text: "START TRACKING LOCATION", onPress: this.startLocationTracking },
             { section: Sections.Location, text: "STOP TRACKING LOCATION", onPress: this.stopLocationTracking },
-            { section: Sections.AdobeVisitorService, text: "LINK EXISTING ADOBE VISITOR", onPress: this.linkExistingAdobeVisitor },
+            { section: Sections.AdobeVisitorService, text: "GET CURRENT ADOBE VISITOR", onPress: this.getCurrentAdobeVisitor },
             { section: Sections.AdobeVisitorService, text: "DECORATE URL", onPress: this.decorateUrl },
             { section: Sections.AdobeVisitorService, text: "RESET ADOBE VISITOR", onPress: this.resetAdobeVisitor },
         ]
@@ -378,6 +384,7 @@ export default class App extends Component<{}> {
                             <TealiumButtonList actions={this.getButtonsForSection(Sections.Location)} />
                         </Section>
                         <Section text={Sections.AdobeVisitorService}>
+                            <AdobeVisitor action={this.linkExistingAdobeVisitor} />
                             <TealiumButtonList actions={this.getButtonsForSection(Sections.AdobeVisitorService)} />
                         </Section>
                         <Section text={Sections.Misc}>
@@ -401,6 +408,47 @@ const Trace = (props) => {
             <ActionTextField placeholder="ENTER TRACE ID" buttonText="START TRACE" action={props.joinTrace} />
             <View style={styles.space} />
             <TealiumButton text="LEAVE TRACE" onPress={props.leaveTrace} />
+        </View>
+    )
+}
+
+const AdobeVisitor = (props) => {
+    const [inputVisitorIdText, setVisitorIdText] = useState()
+    const [inputDataProviderText, setDataProviderText] = useState()
+    const [inputAuthStateText, setAuthStateText] = useState()
+    return (
+        <View style={styles.inputContainer}>
+            <TextInput style={styles.input}
+                textAlign={'center'}
+                underlineColorAndroid="transparent"
+                placeholder="ENTER KNOWN VISITOR ID"//{props.placeholder}
+                placeholderTextColor="#007CC1"
+                autoCapitalize="none"
+                onChangeText={(id) => setVisitorIdText(id)} />
+            <TextInput style={styles.input}
+                textAlign={'center'}
+                underlineColorAndroid="transparent"
+                placeholder= "ENTER DATA PROVIDER" //{props.placeholder}
+                placeholderTextColor="#007CC1"
+                autoCapitalize="none"
+                onChangeText={(dataProvider) => setDataProviderText(dataProvider)} />
+            <TextInput style={styles.input}
+                textAlign={'center'}
+                underlineColorAndroid="transparent"
+                placeholder= "(OPTIONAL) ENTER AUTH STATE" //{props.placeholder}
+                placeholderTextColor="#007CC1"
+                autoCapitalize="none"
+                onChangeText={(authState) => setAuthStateText(authState)} />
+            <TealiumButton text="LINK ADOBE VISITOR" onPress={() => {
+                let id = inputVisitorIdText;
+                let dataProvider = inputDataProviderText
+                let authState = inputAuthStateText
+                if (authState) {
+                    props.action(id, dataProvider, authState)
+                } else {
+                    props.action(id, dataProvider)
+                }
+            }} />
         </View>
     )
 }
