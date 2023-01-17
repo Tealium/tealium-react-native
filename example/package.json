@@ -16,8 +16,8 @@
     "tealium-react-adjust": "../remotecommands/tealium-react-adjust",
     "tealium-react-braze": "../remotecommands/tealium-react-braze",
     "tealium-react-firebase": "../remotecommands/tealium-react-firebase",
-    "tealium-react-native": "../npm-package",
-    "tealium-react-native-adobe-visitor": "file:../modules/adobe-visitor",
+    "tealium-react-native": "^2.3.0",
+    "tealium-react-native-adobe-visitor": "../modules/adobe-visitor",
     "tealium-react-native-location": "../modules/location"
   },
   "devDependencies": {

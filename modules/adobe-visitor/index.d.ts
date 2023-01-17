@@ -1,4 +1,4 @@
-import { TealiumAdobeVisitorConfig, TealiumAdobeVisitorCommon} from './common';
+import { TealiumAdobeVisitorConfig, TealiumAdobeVisitorCommon, AuthState} from './common';
 
 declare module 'tealium-react-native-adobe-visitor' {
 	export default TealiumAdobeVisitor;
@@ -13,7 +13,7 @@ declare module 'tealium-react-native-adobe-visitor' {
         /**
          * Sets an existing ECID for a known visitor
          */
-        public static linkExistingEcidToKnownIdentifier(knownId: String, adobeDataProviderId: String): void;
+        public static linkExistingEcidToKnownIdentifier(knownId: String, adobeDataProviderId: String, authState: AuthState, callback:(response: any) => void): void;
 
         /**
          * Resets current visitor
@@ -23,7 +23,7 @@ declare module 'tealium-react-native-adobe-visitor' {
         /**
          * Decorates url with ECID visitor data
          */
-        public static decorateUrl(url: String, completion:(response: String) => void): void;
+        public static decorateUrl(url: String, callback:(response: String) => void): void;
 
     }
 }

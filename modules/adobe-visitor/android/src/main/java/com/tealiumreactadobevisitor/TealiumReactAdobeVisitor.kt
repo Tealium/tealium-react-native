@@ -2,7 +2,17 @@ package com.tealiumreactadobevisitor
 
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.*
+import com.facebook.react.modules.core.DeviceEventManagerModule
 import com.facebook.react.uimanager.ViewManager
+import com.tealium.adobe.api.AdobeVisitor
+import com.tealium.adobe.api.ResponseListener
+import com.tealium.adobe.api.UrlDecoratorHandler
+import com.tealium.adobe.kotlin.*
+import com.tealium.core.Collectors
+import com.tealium.core.Tealium
+import com.tealium.core.TealiumConfig
+import com.tealium.react.*
+import java.net.URL
 
 class TealiumReactNativeAdobeVisitor : ReactPackage {
     override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
@@ -21,7 +31,7 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
     private var _adobe_org_id: String? = null
     private var _adobe_existing_ecid: String? = null
     private var _adobe_retries: Int? = null
-    private var _adobe_auth_state: String? = null
+    private var _adobe_auth_state: Int? = null
     private var _adobe_data_provider_id: String? = null
     private var _adobe_custom_visitor_id: String? = null
 
@@ -30,8 +40,35 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
         reactContext.getNativeModule(TealiumReact::class.java)?.registerOptionalModule(this)
     }
 
-    // Example method
-    // See https://reactnative.dev/docs/native-modules-android
+    override fun configure(config: TealiumConfig) {
+        // add the module reference
+        config.collectors.add(Collectors.AdobeVisitor)
+
+        _adobe_org_id?.let {
+            config.adobeVisitorOrgId = it
+        }
+
+        _adobe_existing_ecid?.let {
+            config.existingVisitorId = it
+        }
+
+        _adobe_retries?.let {
+            config.adobeVisitorRetries = it
+        }
+
+        _adobe_auth_state?.let {
+            config.adobeVisitorAuthState = it
+        }
+
+        _adobe_data_provider_id?.let {
+            config.adobeVisitorDataProviderId = it
+        }
+
+        _adobe_custom_visitor_id?.let {
+            config.adobeVisitorCustomVisitorId = it
+        }
+    }
+
     @ReactMethod
     fun configure(config: ReadableMap?) {
         config?.let {
@@ -47,7 +84,7 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
                 setRetries(it)
             }
 
-            it.safeGetString(KEY_ADOBE_VISITOR_AUTH_STATE)?.let {
+            it.safeGetInt(KEY_ADOBE_VISITOR_AUTH_STATE)?.let {
                 setAuthState(it)
             }
 
@@ -59,22 +96,38 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
                 setCustomVisitorId(it)
             }
         }
-
     }
 
     @ReactMethod
-    fun linkExistingEcidToKnownIdentifier() {
-        Tealium[INSTANCE_NAME]?.adobeVisitor?.linkExistingEcidToKnownIdentifier()
+    fun getCurrentAdobeVisitor(callback: Callback) {
+        callback.invoke(Tealium[INSTANCE_NAME]?.adobeVisitorApi?.visitor?.toMap())
+    }
+
+    @ReactMethod
+    fun linkEcidToKnownIdentifier(
+        knownId: String,
+        adobeDataProviderId: String,
+        authState: Int
+    ) {
+        Tealium[INSTANCE_NAME]?.adobeVisitorApi?.linkEcidToKnownIdentifier(
+            knownId,
+            adobeDataProviderId,
+            authState,
+            AdobeResponseListener(reactContext)
+        )
     }
 
     @ReactMethod
     fun resetVisitor() {
-        Tealium[INSTANCE_NAME]?.adobeVisitor?.resetVisitor()
+        Tealium[INSTANCE_NAME]?.adobeVisitorApi?.resetVisitor()
     }
 
     @ReactMethod
-    fun decorateUrl() {
-        Tealium[INSTANCE_NAME]?.adobeVisitor?.decorateUrl()
+    fun decorateUrl(url: String) {
+        Tealium[INSTANCE_NAME]?.adobeVisitorApi?.decorateUrl(
+            URL(url),
+            UrlDecoratorHandlerListener(reactContext)
+        )
     }
 
     @ReactMethod
@@ -93,7 +146,7 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
     }
 
     @ReactMethod
-    fun setAuthState(state: String) {
+    fun setAuthState(state: Int) {
         _adobe_auth_state = state
     }
 
@@ -113,6 +166,8 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
 
     companion object {
         const val MODULE_NAME = "TealiumReactAdobeVisitor"
+        const val EVENT_EMITTERS_ADOBE_VISITOR_DECORATE_URL = "TealiumReactAdobeVisitor.DecorateUrlEvent"
+        const val EVENT_EMITTERS_ADOBE_VISITOR_RESPONSE = "TealiumReactAdobeVisitor.ResponseListener"
 
         private const val KEY_ADOBE_VISITOR_ORG_ID = "adobeVisitorOrgId"
         private const val KEY_ADOBE_VISITOR_EXISTING_ECID = "adobeVisitorExistingEcid"
@@ -120,5 +175,37 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
         private const val KEY_ADOBE_VISITOR_AUTH_STATE = "adobeVisitorAuthState"
         private const val KEY_ADOBE_VISITOR_DATA_PROVIDER_ID = "adobeVisitorDataProviderId"
         private const val KEY_ADOBE_VISITOR_CUSTOM_VISITOR_ID = "adobeVisitorCustomVisitorId"
+
+        fun AdobeVisitor.toMap(): ReadableMap {
+            val map = Arguments.createMap()
+            map.putString("experienceCloudId", this.experienceCloudId)
+            map.putInt("idSyncTtl", this.idSyncTTL)
+            map.putInt("region", this.region)
+            map.putString("blob", this.blob)
+            map.putString("nextRefresh", this.nextRefresh.time.toString()) // convert to...?
+            return map
+        }
+    }
+}
+
+class UrlDecoratorHandlerListener(private val reactContext: ReactApplicationContext) : UrlDecoratorHandler {
+    override fun onDecorateUrl(url: URL) {
+        reactContext
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+            .emit(TealiumReactAdobeVisitor.EVENT_EMITTERS_ADOBE_VISITOR_DECORATE_URL, url.toString())
+    }
+}
+
+class AdobeResponseListener(private val reactContext: ReactApplicationContext) : ResponseListener<AdobeVisitor> {
+    override fun failure(errorCode: Int, ex: Exception?) {
+        reactContext
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+            .emit(TealiumReactAdobeVisitor.EVENT_EMITTERS_ADOBE_VISITOR_RESPONSE, "Failed to link existing Ecid with error code: $errorCode and exception ${ex?.message}")
+    }
+
+    override fun success(data: AdobeVisitor) {
+        reactContext
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+            .emit(TealiumReactAdobeVisitor.EVENT_EMITTERS_ADOBE_VISITOR_RESPONSE, data.toMap()) // needs to be readableMap
     }
 }

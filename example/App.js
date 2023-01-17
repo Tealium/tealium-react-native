@@ -13,7 +13,9 @@ import {
 } from 'react-native';
 import Tealium from 'tealium-react-native';
 import TealiumLocation from 'tealium-react-native-location';
+import TealiumAdobeVisitor from 'tealium-react-native-adobe-visitor';
 import { TealiumLocationConfig, Accuracy, DesiredAccuracy } from 'tealium-react-native-location/common';
+import { TealiumAdobeVisitorConfig } from 'tealium-react-native-adobevisitor/common';
 import {
     TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors,
     ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment, RemoteCommand
@@ -24,10 +26,15 @@ import BrazeRemoteCommand from 'tealium-react-braze';
 import AdjustRemoteCommand from 'tealium-react-adjust';
 import { AdjustConfig, AdjustEnvironemnt } from 'tealium-react-adjust/common';
 import { checkAndRequestPermissions } from "./Utils"
+import { AuthState } from 'tealium-react-native-adobe-visitor/common';
 
 export default class App extends Component<{}> {
 
     componentDidMount() {
+        let adobeVisitorConfig: TealiumAdobeVisitorConfig = {
+            adobeVisitorOrgId: "<YOUR-ADOBE-ORG-ID"
+        }
+        
         let locationConfig: TealiumLocationConfig = {
             accuracy: Accuracy.high,
             desiredAccuracy: DesiredAccuracy.best,
@@ -40,6 +47,7 @@ export default class App extends Component<{}> {
             allowSuppressLogLevel: false
         }
 
+        TealiumAdobeVisitor.configure(adobeVisitorConfig)
         TealiumLocation.configure(locationConfig);
         FirebaseRemoteCommand.initialize();
         BrazeRemoteCommand.initialize();
@@ -253,6 +261,26 @@ export default class App extends Component<{}> {
         })
     }
 
+    async linkExistingAdobeVisitor() {
+        TealiumAdobeVisitor.linkExistingEcidToKnownIdentifier(
+            "","", AuthState.authenticated, value => {
+                console.log("AdobeVisotr Data: " + JSON.stringify(value))
+            }
+        )
+
+    }
+
+    async decorateUrl() {
+        TealiumAdobeVisitor.decorateUrl("https://tealium.com", value => {
+            console.log("Decorated URL: " + value)
+            Alert.alert("Decorated URL: ", value, [{ text: "OK", style: "cancel" }])
+        });
+    }
+
+    async resetAdobeVisitor() {
+        TealiumAdobeVisitor.resetVisitor()
+    }
+
     async getLastIdentity() {
         return new Promise(resolve => {
             Tealium.getData((data) => {
@@ -315,6 +343,9 @@ export default class App extends Component<{}> {
             { section: Sections.Location, text: "GET LOCATION", onPress: this.getLastLocation },
             { section: Sections.Location, text: "START TRACKING LOCATION", onPress: this.startLocationTracking },
             { section: Sections.Location, text: "STOP TRACKING LOCATION", onPress: this.stopLocationTracking },
+            { section: Sections.AdobeVisitorService, text: "LINK EXISTING ADOBE VISITOR", onPress: this.linkExistingAdobeVisitor },
+            { section: Sections.AdobeVisitorService, text: "DECORATE URL", onPress: this.decorateUrl },
+            { section: Sections.AdobeVisitorService, text: "RESET ADOBE VISITOR", onPress: this.resetAdobeVisitor },
         ]
     }
 
@@ -345,6 +376,9 @@ export default class App extends Component<{}> {
                         </Section>
                         <Section text={Sections.Location}>
                             <TealiumButtonList actions={this.getButtonsForSection(Sections.Location)} />
+                        </Section>
+                        <Section text={Sections.AdobeVisitorService}>
+                            <TealiumButtonList actions={this.getButtonsForSection(Sections.AdobeVisitorService)} />
                         </Section>
                         <Section text={Sections.Misc}>
                             <TealiumButtonList actions={this.getButtonsForSection(Sections.Misc)} />
@@ -445,6 +479,7 @@ const Sections = {
     Location: "Location",
     DataLayer: "DataLayer",
     RemoteCommand: "Remote Commands",
+    AdobeVisitorService: "Adobe Visitor Service",
     Misc: "Misc"
 }
 

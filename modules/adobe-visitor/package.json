@@ -44,6 +44,6 @@
     "react-native": "^0.67.1"
   },
   "dependencies": {
-    "tealium-react-native": "../../npm-package"
+    "tealium-react-native": "^2.3.0"
   }
 }
