@@ -1,5 +1,4 @@
 export enum AdobeVisitorEventListenerNames {
-    decoratedUrl = 'TealiumReactAdobeVisitor.DecorateUrlEvent',
     responseListener = 'TealiumReactAdobeVisitor.ResponseListener'
 }
 

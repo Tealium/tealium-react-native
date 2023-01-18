@@ -32,7 +32,7 @@ export default class App extends Component<{}> {
 
     componentDidMount() {
         let adobeVisitorConfig: TealiumAdobeVisitorConfig = {
-            adobeVisitorOrgId: "<YOUR-ADOBE-ORG-ID>"
+            adobeVisitorOrgId: "1E2D776A524450EE0A490D44@AdobeOrg" //"<YOUR-ADOBE-ORG-ID>"
         }
         
         let locationConfig: TealiumLocationConfig = {
@@ -261,34 +261,18 @@ export default class App extends Component<{}> {
         });
     }
 
-    async linkExistingAdobeVisitor (id, providerId, authState) {
+    linkExistingAdobeVisitor (id, providerId, authState) {
         if(authState == null) {
             TealiumAdobeVisitor.linkExistingEcidToKnownIdentifier(
-                id, providerId, value => {
-                    console.log("AdobeVisotr Data: " + JSON.stringify(value))
+                id, providerId, undefined, value => {
+                    console.log("AdobeVisotr Data: " + value)
                 }
             );
-        } else if (parseInt(authState) == 0) {
-            var state = 
+        } else {
             TealiumAdobeVisitor.linkExistingEcidToKnownIdentifier(
-                id, providerId, value => {
+                id, providerId, parseInt(authState), value => {
                     console.log("AdobeVisotr Data: " + JSON.stringify(value))
-                }, AuthState.unknown
-            );
-        } else if (parseInt(authState) == 1) {
-            var state = 
-            TealiumAdobeVisitor.linkExistingEcidToKnownIdentifier(
-                id, providerId, value => {
-                    console.log("AdobeVisotr Data: " + JSON.stringify(value))
-                }, AuthState.authenticated
-            );
-        }
-        else if (parseInt(authState) == 2) {
-            var state = 
-            TealiumAdobeVisitor.linkExistingEcidToKnownIdentifier(
-                id, providerId, value => {
-                    console.log("AdobeVisotr Data: " + JSON.stringify(value))
-                }, AuthState.loggedOut
+                }
             );
         }
     }
@@ -421,6 +405,7 @@ export default class App extends Component<{}> {
 
     componentWillUnmount() {
         Tealium.removeListeners();
+        TealiumAdobeVisitor.removeListeners();
     }
 
 }
@@ -444,21 +429,21 @@ const AdobeVisitor = (props) => {
             <TextInput style={styles.input}
                 textAlign={'center'}
                 underlineColorAndroid="transparent"
-                placeholder="ENTER KNOWN VISITOR ID"//{props.placeholder}
+                placeholder="ENTER KNOWN VISITOR ID"
                 placeholderTextColor="#007CC1"
                 autoCapitalize="none"
                 onChangeText={(id) => setVisitorIdText(id)} />
             <TextInput style={styles.input}
                 textAlign={'center'}
                 underlineColorAndroid="transparent"
-                placeholder= "ENTER DATA PROVIDER" //{props.placeholder}
+                placeholder= "ENTER DATA PROVIDER"
                 placeholderTextColor="#007CC1"
                 autoCapitalize="none"
                 onChangeText={(dataProvider) => setDataProviderText(dataProvider)} />
             <TextInput style={styles.input}
                 textAlign={'center'}
                 underlineColorAndroid="transparent"
-                placeholder= "(OPTIONAL) ENTER AUTH STATE" //{props.placeholder}
+                placeholder= "(OPTIONAL) ENTER AUTH STATE" 
                 placeholderTextColor="#007CC1"
                 autoCapitalize="none"
                 onChangeText={(authState) => setAuthStateText(authState)} />
@@ -466,11 +451,8 @@ const AdobeVisitor = (props) => {
                 let id = inputVisitorIdText;
                 let dataProvider = inputDataProviderText
                 let authState = inputAuthStateText
-                if (authState) {
-                    props.action(id, dataProvider, authState)
-                } else {
-                    props.action(id, dataProvider)
-                }
+                
+                props.action(id, dataProvider, authState)
             }} />
         </View>
     )
