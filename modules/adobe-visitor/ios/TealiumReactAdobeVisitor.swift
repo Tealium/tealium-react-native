@@ -135,12 +135,11 @@ class TealiumReactAdobeVisitor: NSObject, RCTBridgeModule {
     
     @objc
     public func getCurrentAdobeVisitor(callback: RCTResponseSenderBlock) {
-        let visitorInstance = TealiumReactNative.instance
-        if let adobeVisitor = TealiumReactNative.instance?.adobeVisitorApi?.visitor {
-            if let data = adobeVisitor.encoded {
-                callback([data])
-            }
+        guard let adobeVisitorData = TealiumReactNative.instance?.adobeVisitorApi?.visitor.encoded else {
+            callback(nil)
+            return
         }
+        callback([adobeVisitorData])
     }
     
     public func linkEcidToKnownIdentifier(knownId: String, adobeDataProviderId: String, authState: Int? = nil, callback: RCTResponseSenderBlock? = nil) {
