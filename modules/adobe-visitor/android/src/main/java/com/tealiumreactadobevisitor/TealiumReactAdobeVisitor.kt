@@ -107,24 +107,23 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
     fun linkEcidToKnownIdentifier(
         knownId: String,
         adobeDataProviderId: String,
-        authState: Int? = null,
-        callback: Callback? = null
+        authState: Int,
+        callback: Callback
     ) {
         Tealium[INSTANCE_NAME]?.adobeVisitorApi?.linkEcidToKnownIdentifier(
             knownId,
             adobeDataProviderId,
-            authState,
+            if (authState == -1) null else authState,
             object : ResponseListener<AdobeVisitor> {
                 override fun failure(errorCode: Int, ex: Exception?) {
-                    callback?.invoke("Failed to link existing Ecid with error code: $errorCode and exception ${ex?.message}")
+                    callback.invoke("Failed to link existing Ecid with error code: $errorCode and exception ${ex?.message}")
                 }
 
                 override fun success(data: AdobeVisitor) {
-                    callback?.invoke(data.toReadableMap())
+                    callback.invoke(data.toReadableMap())
                 }
             }
         )
-
     }
 
     @ReactMethod
@@ -180,10 +179,6 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
 
     companion object {
         const val MODULE_NAME = "TealiumReactAdobeVisitor"
-        const val EVENT_EMITTERS_ADOBE_VISITOR_DECORATE_URL =
-            "TealiumReactAdobeVisitor.DecorateUrlEvent"
-        const val EVENT_EMITTERS_ADOBE_VISITOR_RESPONSE =
-            "TealiumReactAdobeVisitor.ResponseListener"
 
         private const val KEY_ADOBE_VISITOR_ORG_ID = "adobeVisitorOrgId"
         private const val KEY_ADOBE_VISITOR_EXISTING_ECID = "adobeVisitorExistingEcid"

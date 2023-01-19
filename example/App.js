@@ -264,8 +264,8 @@ export default class App extends Component<{}> {
     linkExistingAdobeVisitor (id, providerId, authState) {
         if(authState == null) {
             TealiumAdobeVisitor.linkExistingEcidToKnownIdentifier(
-                id, providerId, undefined, value => {
-                    console.log("AdobeVisotr Data: " + value)
+                id, providerId, -1, value => {
+                    console.log("AdobeVisotr Data: " + value.stringify)
                 }
             );
         } else {
@@ -451,8 +451,11 @@ const AdobeVisitor = (props) => {
                 let id = inputVisitorIdText;
                 let dataProvider = inputDataProviderText
                 let authState = inputAuthStateText
-                
-                props.action(id, dataProvider, authState)
+                if (authState) {
+                    props.action(id, dataProvider, authState)
+                } else {
+                    props.action(id, dataProvider, undefined)
+                }
             }} />
         </View>
     )

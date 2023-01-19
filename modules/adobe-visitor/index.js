@@ -1,13 +1,10 @@
-import { NativeEventEmitter, NativeModules } from 'react-native';
-import { AdobeVisitorEventListenerNames } from './common';
-const { TealiumReactAdobeVisitor, TealiumReactNativeAdobeVisitor } = NativeModules;
+import { NativeModules } from 'react-native';
+const { TealiumReactAdobeVisitor } = NativeModules;
 
 const ios = "ios"
 const android = "android"
 
 export default class TealiumAdobeVisitor {
-    static emitter = new NativeEventEmitter(TealiumReactNativeAdobeVisitor);
-    static emitterSubscriptions = [];
 
     static configure(config) {
         TealiumReactAdobeVisitor.configure(config)
@@ -27,18 +24,5 @@ export default class TealiumAdobeVisitor {
 
     static decorateUrl(url, callback) {
         TealiumReactAdobeVisitor.decorateUrl(url, callback)
-    }
-
-    static setAdobeVisitorResponseListener(callback){
-        const urlDecorator = this.emitter.addListener(AdobeVisitorEventListenerNames.decoratedUrl, url => {
-            callback(url)
-        })
-        this.emitterSubscriptions.push(urlDecorator)
-    }
-
-    static removeListeners() {
-        this.emitterSubscriptions.forEach(subscription => {
-            subscription.remove();
-        });
     }
 }

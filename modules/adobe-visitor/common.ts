@@ -1,8 +1,5 @@
-export enum AdobeVisitorEventListenerNames {
-    responseListener = 'TealiumReactAdobeVisitor.ResponseListener'
-}
-
 export enum AuthState {
+    undefined = -1,
     unknown = 0,
     authenticated = 1,
     loggedOut = 2
