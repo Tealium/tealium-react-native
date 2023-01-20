@@ -32,8 +32,7 @@ export default class App extends Component<{}> {
 
     componentDidMount() {
         let adobeVisitorConfig: TealiumAdobeVisitorConfig = {
-            adobeVisitorOrgId: "<YOUR-ADOBE-ORG-ID>",
-            adobeVisitorRetries: 1
+            adobeVisitorOrgId: "<YOUR-ADOBE-ORG-ID>"
         }
         
         let locationConfig: TealiumLocationConfig = {
