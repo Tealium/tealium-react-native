@@ -32,7 +32,7 @@ export default class App extends Component<{}> {
 
     componentDidMount() {
         let adobeVisitorConfig: TealiumAdobeVisitorConfig = {
-            adobeVisitorOrgId: "<YOUR-ADOBE-ORG-ID>"
+            adobeVisitorOrgId: "1E2D776A524450EE0A490D44@AdobeOrg" //"<YOUR-ADOBE-ORG-ID>"
         }
         
         let locationConfig: TealiumLocationConfig = {
@@ -262,19 +262,11 @@ export default class App extends Component<{}> {
     }
 
     linkExistingAdobeVisitor (id, providerId, authState) {
-        if(authState == null) {
-            TealiumAdobeVisitor.linkExistingEcidToKnownIdentifier(
-                id, providerId, -1, value => {
-                    console.log("AdobeVisitor Data: " + value.stringify)
-                }
-            );
-        } else {
-            TealiumAdobeVisitor.linkExistingEcidToKnownIdentifier(
-                id, providerId, parseInt(authState), value => {
-                    console.log("AdobeVisitor Data: " + JSON.stringify(value))
-                }
-            );
-        }
+        TealiumAdobeVisitor.linkEcidToKnownIdentifier(
+            id, providerId, authState, value => {
+                console.log("AdobeVisitor Data: " + JSON.stringify(value))
+            }
+        );
     }
 
     getCurrentAdobeVisitor() {
@@ -451,7 +443,7 @@ const AdobeVisitor = (props) => {
                 let dataProvider = inputDataProviderText
                 let authState = inputAuthStateText
                 if (authState) {
-                    props.action(id, dataProvider, authState)
+                    props.action(id, dataProvider, parseInt(authState))
                 } else {
                     props.action(id, dataProvider, undefined)
                 }

@@ -6,7 +6,7 @@ export enum AuthState {
 }
 
 export interface TealiumAdobeVisitorConfig {
-    adobeVisitorOrgId ?: string;
+    adobeVisitorOrgId : string;
     adobeVisitorExistingEcid ?: string;
     adobeVisitorRetries ?: number;
     adobeVisitorAuthState ?: AuthState;

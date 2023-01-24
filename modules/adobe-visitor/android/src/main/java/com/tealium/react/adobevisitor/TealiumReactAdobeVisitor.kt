@@ -1,4 +1,4 @@
-package com.tealiumreactadobevisitor
+package com.tealium.react.adobevisitor
 
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.*
@@ -28,12 +28,12 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
     ReactContextBaseJavaModule(reactContext),
     OptionalModule {
 
-    private var _adobe_org_id: String? = null
-    private var _adobe_existing_ecid: String? = null
-    private var _adobe_retries: Int? = null
-    private var _adobe_auth_state: Int? = null
-    private var _adobe_data_provider_id: String? = null
-    private var _adobe_custom_visitor_id: String? = null
+    private var _adobeOrgId: String? = null
+    private var _adobeExistingEcid: String? = null
+    private var _adobeRetries: Int? = null
+    private var _adobeAuthState: Int? = null
+    private var _adobeDataProviderId: String? = null
+    private var _adobeCustomVisitorId: String? = null
 
     override fun initialize() {
         super.initialize()
@@ -44,27 +44,27 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
         // add the module reference
         config.collectors.add(Collectors.AdobeVisitor)
 
-        _adobe_org_id?.let {
+        _adobeOrgId?.let {
             config.adobeVisitorOrgId = it
         }
 
-        _adobe_existing_ecid?.let {
+        _adobeExistingEcid?.let {
             config.existingVisitorId = it
         }
 
-        _adobe_retries?.let {
+        _adobeRetries?.let {
             config.adobeVisitorRetries = it
         }
 
-        _adobe_auth_state?.let {
+        _adobeAuthState?.let {
             config.adobeVisitorAuthState = it
         }
 
-        _adobe_data_provider_id?.let {
+        _adobeDataProviderId?.let {
             config.adobeVisitorDataProviderId = it
         }
 
-        _adobe_custom_visitor_id?.let {
+        _adobeCustomVisitorId?.let {
             config.adobeVisitorCustomVisitorId = it
         }
     }
@@ -72,28 +72,28 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
     @ReactMethod
     fun configure(config: ReadableMap?) {
         config?.let {
-            it.safeGetString(KEY_ADOBE_VISITOR_ORG_ID)?.let {
-                setOrgId(it)
+            it.safeGetString(KEY_ADOBE_VISITOR_ORG_ID)?.let { orgId ->
+                _adobeOrgId = orgId
             }
 
-            it.safeGetString(KEY_ADOBE_VISITOR_EXISTING_ECID)?.let {
-                setExistingEcid(it)
+            it.safeGetString(KEY_ADOBE_VISITOR_EXISTING_ECID)?.let { ecid ->
+                _adobeExistingEcid = ecid
             }
 
-            it.safeGetInt(KEY_ADOBE_VISITOR_RETRIES)?.let {
-                setRetries(it)
+            it.safeGetInt(KEY_ADOBE_VISITOR_RETRIES)?.let { retries ->
+                _adobeRetries = retries
             }
 
-            it.safeGetInt(KEY_ADOBE_VISITOR_AUTH_STATE)?.let {
-                setAuthState(it)
+            it.safeGetInt(KEY_ADOBE_VISITOR_AUTH_STATE)?.let { state ->
+                _adobeAuthState = state
             }
 
-            it.safeGetString(KEY_ADOBE_VISITOR_DATA_PROVIDER_ID)?.let {
-                setDataProviderId(it)
+            it.safeGetString(KEY_ADOBE_VISITOR_DATA_PROVIDER_ID)?.let { dataProviderId ->
+                _adobeDataProviderId = dataProviderId
             }
 
-            it.safeGetString(KEY_ADOBE_VISITOR_CUSTOM_VISITOR_ID)?.let {
-                setCustomVisitorId(it)
+            it.safeGetString(KEY_ADOBE_VISITOR_CUSTOM_VISITOR_ID)?.let { customId ->
+                _adobeCustomVisitorId = customId
             }
         }
     }
@@ -108,19 +108,19 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
         knownId: String,
         adobeDataProviderId: String,
         authState: Int,
-        callback: Callback
+        callback: Callback?
     ) {
         Tealium[INSTANCE_NAME]?.adobeVisitorApi?.linkEcidToKnownIdentifier(
             knownId,
             adobeDataProviderId,
-            if (authState == -1) null else authState,
+            authState,
             object : ResponseListener<AdobeVisitor> {
                 override fun failure(errorCode: Int, ex: Exception?) {
-                    callback.invoke("Failed to link existing Ecid with error code: $errorCode and exception ${ex?.message}")
+                    callback?.invoke("Failed to link existing Ecid with error code: $errorCode and exception ${ex?.message}")
                 }
 
                 override fun success(data: AdobeVisitor) {
-                    callback.invoke(data.toReadableMap())
+                    callback?.invoke(data.toReadableMap())
                 }
             }
         )
@@ -141,36 +141,6 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
                 }
             }
         )
-    }
-
-    @ReactMethod
-    fun setOrgId(orgId: String) {
-        _adobe_org_id = orgId
-    }
-
-    @ReactMethod
-    fun setExistingEcid(ecid: String) {
-        _adobe_existing_ecid = ecid
-    }
-
-    @ReactMethod
-    fun setRetries(retries: Int) {
-        _adobe_retries = retries
-    }
-
-    @ReactMethod
-    fun setAuthState(state: Int) {
-        _adobe_auth_state = state
-    }
-
-    @ReactMethod
-    fun setDataProviderId(dataProviderId: String) {
-        _adobe_data_provider_id = dataProviderId
-    }
-
-    @ReactMethod
-    fun setCustomVisitorId(customId: String) {
-        _adobe_custom_visitor_id = customId
     }
 
     override fun getName(): String {

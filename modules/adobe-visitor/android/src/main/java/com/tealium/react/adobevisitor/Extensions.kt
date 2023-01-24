@@ -1,4 +1,4 @@
-package com.tealiumreactadobevisitor
+package com.tealium.react.adobevisitor
 
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReadableMap

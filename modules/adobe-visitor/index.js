@@ -1,8 +1,6 @@
 import { NativeModules } from 'react-native';
+import { AuthState } from './common';
 const { TealiumReactAdobeVisitor } = NativeModules;
-
-const ios = "ios"
-const android = "android"
 
 export default class TealiumAdobeVisitor {
 
@@ -10,8 +8,12 @@ export default class TealiumAdobeVisitor {
         TealiumReactAdobeVisitor.configure(config)
     }
 
-    static linkExistingEcidToKnownIdentifier(knownId, adobeDataProviderId, authState, callback) {
-        TealiumReactAdobeVisitor.linkEcidToKnownIdentifier(knownId, adobeDataProviderId, authState, callback)
+    static linkEcidToKnownIdentifier(knownId, adobeDataProviderId, authState, callback) {
+        if(authState == undefined) {
+            TealiumReactAdobeVisitor.linkEcidToKnownIdentifier(knownId, adobeDataProviderId, -1, callback)
+        } else {
+            TealiumReactAdobeVisitor.linkEcidToKnownIdentifier(knownId, adobeDataProviderId, authState, callback)
+        }
     }
 
     static getAdobeVisitor(callback) {

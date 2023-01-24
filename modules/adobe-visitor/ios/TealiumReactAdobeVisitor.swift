@@ -29,53 +29,23 @@ class TealiumReactAdobeVisitor: NSObject, RCTBridgeModule {
     @objc(configure:)
     public func configure(_ config: [String: Any]) {
         if let adobeVisitorOrgId = config[KEY_ADOBE_VISITOR_ORG_ID] as? String {
-            setOrgId(adobeVisitorOrgId)
+            module.setOrgId(orgId: adobeVisitorOrgId)
         }
         if let adobeExistingEcid = config[KEY_ADOBE_VISITOR_EXISTING_ECID] as? String {
-            setExistingEcid(adobeExistingEcid)
+            module.setExistingEcid(ecid: adobeExistingEcid)
         }
         if let adobeVisitorRetries = config[KEY_ADOBE_VISITOR_RETRIES] as? Int {
-            setVisitorRetries(adobeVisitorRetries)
+            module.setRetries(retries: adobeVisitorRetries)
         }
         if let adobeVisitorAuthState = config[KEY_ADOBE_VISITOR_AUTH_STATE] as? Int {
-            setVisitorAuthState(adobeVisitorAuthState)
+            module.setAuthState(state: adobeVisitorAuthState)
         }
         if let adobeVisitorDataProviderId = config[KEY_ADOBE_VISITOR_DATA_PROVIDER_ID] as? String {
-            setDataProviderId(adobeVisitorDataProviderId)
+            module.setDataProviderId(dataProviderId: adobeVisitorDataProviderId)
         }
         if let adobeVisitorCustomVisitorId = config[KEY_ADOBE_VISITOR_CUSTOM_VISITOR_ID] as? String {
-            setCustomVisitorId(adobeVisitorCustomVisitorId)
+            module.setCustomVisitorId(customId: adobeVisitorCustomVisitorId)
         }
-    }
-    
-    @objc(setOrgId:)
-    public func setOrgId(_ orgId: String) {
-        module.setOrgId(orgId: orgId)
-    }
-    
-    @objc(setExistingEcid:)
-    public func setExistingEcid(_ ecid: String) {
-        module.setExistingEcid(ecid: ecid)
-    }
-    
-    @objc(setVisitorRetries:)
-    public func setVisitorRetries(_ retries: Int) {
-        module.setRetries(retries: retries)
-    }
-    
-    @objc(setVisitorAuthState:)
-    public func setVisitorAuthState(_ authState: Int) {
-        module.setAuthState(state: authState)
-    }
-    
-    @objc(setDataProviderId:)
-    public func setDataProviderId(_ providerId: String) {
-        module.setDataProviderId(dataProviderId: providerId)
-    }
-    
-    @objc(setCustomVisitorId:)
-    public func setCustomVisitorId(_ customId: String) {
-        module.setCustomVisitorId(customId: customId)
     }
     
     @objc(linkEcidToKnownIdentifier:adobeDataProviderId:authState:callback:)
@@ -147,6 +117,7 @@ class TealiumReactAdobeVisitor: NSObject, RCTBridgeModule {
         if let authState = authState {
             newAuthState = AdobeVisitorAuthState(rawValue: authState)
         }
+
         TealiumReactNative.instance?.adobeVisitorApi?.linkECIDToKnownIdentifier(knownId, adobeDataProviderId: adobeDataProviderId, authState: newAuthState, completion: { visitorResult in
             if let callback = callback {
                 switch visitorResult {
@@ -157,7 +128,6 @@ class TealiumReactAdobeVisitor: NSObject, RCTBridgeModule {
                 }
             }
         })
-        TealiumReactNative.instance?.adobeVisitorApi?.linkECIDToKnownIdentifier(knownId, adobeDataProviderId: adobeDataProviderId)
     }
     
     public func resetVisitor() {
@@ -170,7 +140,7 @@ class TealiumReactAdobeVisitor: NSObject, RCTBridgeModule {
             completion([url.absoluteString])
         })
     }
-    
+
     func setOrgId(orgId: String) {
         adobeOrgId = orgId
     }
