@@ -1,31 +1,18 @@
-# tealium-react-adobe-visitor
+## Tealium React Native
 
-A native module for Tealium's Adobe Visitor Service
+This repository contains the necessary assets for exposing Tealium's native [Android](https://docs.tealium.com/platforms/android-kotlin/) and [iOS](https://docs.tealium.com/platforms/ios-swift/) mobile libraries to the JavaScript code in your React Native project. This includes code for exposing the native APIs for both platforms through React Native's bridging system, and a basic helper class in JavaScript to create a single cross platform API.
 
-## Installation
+You can also find a example application demonstrating how everything is put together and how the API gets called in JavaScript.
 
-```sh
-npm install tealium-react-adobe-visitor
-```
+## Documentation
+For full documentation, please see the Tealium Developer Docs website:
 
-## Usage
-
-```js
-import { multiply } from 'tealium-react-adobe-visitor';
-
-// ...
-
-const result = await multiply(3, 7);
-```
-
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+[Tealium React Native Documentation](https://docs.tealium.com/platforms/react-native/install/)
 
 ## License
 
-MIT
+Use of this software is subject to the terms and conditions of the license agreement contained in the file titled "LICENSE.txt".  Please read the license before downloading or using any of the files contained in this repository. By downloading or using any of these files, you are agreeing to be bound by and comply with the license agreement.
 
+ 
 ---
-
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+Copyright (C) 2012-2023, Tealium Inc.
