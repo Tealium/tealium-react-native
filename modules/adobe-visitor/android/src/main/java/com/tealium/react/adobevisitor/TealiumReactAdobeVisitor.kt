@@ -49,7 +49,7 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
         }
 
         _adobeExistingEcid?.let {
-            config.existingVisitorId = it
+            config.adobeVisitorExistingEcid = it
         }
 
         _adobeRetries?.let {
@@ -113,7 +113,7 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
         Tealium[INSTANCE_NAME]?.adobeVisitorApi?.linkEcidToKnownIdentifier(
             knownId,
             adobeDataProviderId,
-            authState,
+            if (authState == -1) null else authState,
             object : ResponseListener<AdobeVisitor> {
                 override fun failure(errorCode: Int, ex: Exception?) {
                     callback?.invoke("Failed to link existing Ecid with error code: $errorCode and exception ${ex?.message}")

@@ -5,8 +5,8 @@ declare module 'tealium-react-native-adobe-visitor' {
 	class TealiumAdobeVisitor extends TealiumAdobeVisitorCommon {
 
         /**
-         * Configres the Tealium Adobe Visitor module
-         * @param config configuration properties for Adocbe Visitor module
+         * Configures the Tealium Adobe Visitor module
+         * @param config configuration properties for Adobe Visitor module
          */
         public static configure(config: TealiumAdobeVisitorConfig): void;
 

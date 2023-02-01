@@ -122,7 +122,7 @@ class TealiumReactAdobeVisitor: NSObject, RCTBridgeModule {
             if let callback = callback {
                 switch visitorResult {
                 case .success(let visitor):
-                    callback([visitor])
+                    callback([visitor.encoded])
                 case .failure(let error):
                     callback(["Failed to link existing Ecid with error code: $errorCode and exception \(error.localizedDescription)"])
                 }
