@@ -13,7 +13,9 @@ import {
 } from 'react-native';
 import Tealium from 'tealium-react-native';
 import TealiumLocation from 'tealium-react-native-location';
+import TealiumAdobeVisitor from 'tealium-react-native-adobe-visitor';
 import { TealiumLocationConfig, Accuracy, DesiredAccuracy } from 'tealium-react-native-location/common';
+import { TealiumAdobeVisitorConfig } from 'tealium-react-native-adobevisitor/common';
 import {
     TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors,
     ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment, RemoteCommand
@@ -24,10 +26,15 @@ import BrazeRemoteCommand from 'tealium-react-braze';
 import AdjustRemoteCommand from 'tealium-react-adjust';
 import { AdjustConfig, AdjustEnvironemnt } from 'tealium-react-adjust/common';
 import { checkAndRequestPermissions } from "./Utils"
+import { AuthState } from 'tealium-react-native-adobe-visitor/common';
 
 export default class App extends Component<{}> {
 
     componentDidMount() {
+        let adobeVisitorConfig: TealiumAdobeVisitorConfig = {
+            adobeVisitorOrgId: "<YOUR-ADOBE-ORG-ID>"
+        }
+        
         let locationConfig: TealiumLocationConfig = {
             accuracy: Accuracy.high,
             desiredAccuracy: DesiredAccuracy.best,
@@ -40,6 +47,7 @@ export default class App extends Component<{}> {
             allowSuppressLogLevel: false
         }
 
+        TealiumAdobeVisitor.configure(adobeVisitorConfig)
         TealiumLocation.configure(locationConfig);
         FirebaseRemoteCommand.initialize();
         BrazeRemoteCommand.initialize();
@@ -250,7 +258,32 @@ export default class App extends Component<{}> {
             if (loc) {
                 Alert.alert(`Lat: ${loc.lat} | Lng: ${loc.lng}`)
             }
-        })
+        });
+    }
+
+    linkExistingAdobeVisitor (id, providerId, authState) {
+        TealiumAdobeVisitor.linkEcidToKnownIdentifier(
+            id, providerId, authState, value => {
+                console.log("AdobeVisitor Data: " + JSON.stringify(value))
+            }
+        );
+    }
+
+    getCurrentAdobeVisitor() {
+        TealiumAdobeVisitor.getAdobeVisitor(value => {
+            console.log("Current Adobe Visitor: " + JSON.stringify(value))
+        });
+    }
+
+    decorateUrl() {
+        TealiumAdobeVisitor.decorateUrl("https://tealium.com", value => {
+            console.log("Decorated URL: " + value)
+            Alert.alert("Decorated URL: ", value, [{ text: "OK", style: "cancel" }])
+        });
+    }
+
+    resetAdobeVisitor() {
+        TealiumAdobeVisitor.resetVisitor();
     }
 
     async getLastIdentity() {
@@ -315,6 +348,9 @@ export default class App extends Component<{}> {
             { section: Sections.Location, text: "GET LOCATION", onPress: this.getLastLocation },
             { section: Sections.Location, text: "START TRACKING LOCATION", onPress: this.startLocationTracking },
             { section: Sections.Location, text: "STOP TRACKING LOCATION", onPress: this.stopLocationTracking },
+            { section: Sections.AdobeVisitorService, text: "GET CURRENT ADOBE VISITOR", onPress: this.getCurrentAdobeVisitor },
+            { section: Sections.AdobeVisitorService, text: "DECORATE URL", onPress: this.decorateUrl },
+            { section: Sections.AdobeVisitorService, text: "RESET ADOBE VISITOR", onPress: this.resetAdobeVisitor },
         ]
     }
 
@@ -346,6 +382,10 @@ export default class App extends Component<{}> {
                         <Section text={Sections.Location}>
                             <TealiumButtonList actions={this.getButtonsForSection(Sections.Location)} />
                         </Section>
+                        <Section text={Sections.AdobeVisitorService}>
+                            <AdobeVisitor action={this.linkExistingAdobeVisitor} />
+                            <TealiumButtonList actions={this.getButtonsForSection(Sections.AdobeVisitorService)} />
+                        </Section>
                         <Section text={Sections.Misc}>
                             <TealiumButtonList actions={this.getButtonsForSection(Sections.Misc)} />
                         </Section>
@@ -367,6 +407,47 @@ const Trace = (props) => {
             <ActionTextField placeholder="ENTER TRACE ID" buttonText="START TRACE" action={props.joinTrace} />
             <View style={styles.space} />
             <TealiumButton text="LEAVE TRACE" onPress={props.leaveTrace} />
+        </View>
+    )
+}
+
+const AdobeVisitor = (props) => {
+    const [inputVisitorIdText, setVisitorIdText] = useState()
+    const [inputDataProviderText, setDataProviderText] = useState()
+    const [inputAuthStateText, setAuthStateText] = useState()
+    return (
+        <View style={styles.inputContainer}>
+            <TextInput style={styles.input}
+                textAlign={'center'}
+                underlineColorAndroid="transparent"
+                placeholder="ENTER KNOWN VISITOR ID"
+                placeholderTextColor="#007CC1"
+                autoCapitalize="none"
+                onChangeText={(id) => setVisitorIdText(id)} />
+            <TextInput style={styles.input}
+                textAlign={'center'}
+                underlineColorAndroid="transparent"
+                placeholder= "ENTER DATA PROVIDER"
+                placeholderTextColor="#007CC1"
+                autoCapitalize="none"
+                onChangeText={(dataProvider) => setDataProviderText(dataProvider)} />
+            <TextInput style={styles.input}
+                textAlign={'center'}
+                underlineColorAndroid="transparent"
+                placeholder= "(OPTIONAL) ENTER AUTH STATE" 
+                placeholderTextColor="#007CC1"
+                autoCapitalize="none"
+                onChangeText={(authState) => setAuthStateText(authState)} />
+            <TealiumButton text="LINK ADOBE VISITOR" onPress={() => {
+                let id = inputVisitorIdText;
+                let dataProvider = inputDataProviderText
+                let authState = inputAuthStateText
+                if (authState) {
+                    props.action(id, dataProvider, parseInt(authState))
+                } else {
+                    props.action(id, dataProvider, undefined)
+                }
+            }} />
         </View>
     )
 }
@@ -445,6 +526,7 @@ const Sections = {
     Location: "Location",
     DataLayer: "DataLayer",
     RemoteCommand: "Remote Commands",
+    AdobeVisitorService: "Adobe Visitor Service",
     Misc: "Misc"
 }
 
