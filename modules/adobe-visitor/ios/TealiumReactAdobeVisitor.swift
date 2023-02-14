@@ -105,11 +105,11 @@ class TealiumReactAdobeVisitor: NSObject, RCTBridgeModule {
     
     @objc
     public func getCurrentAdobeVisitor(callback: RCTResponseSenderBlock) {
-        guard let adobeVisitorData = TealiumReactNative.instance?.adobeVisitorApi?.visitor.encoded else {
+        guard let adobeVisitorData = TealiumReactNative.instance?.adobeVisitorApi?.visitor else {
             callback(nil)
             return
         }
-        callback([adobeVisitorData])
+        callback([adobeVisitorData.asDictionary()])
     }
     
     public func linkEcidToKnownIdentifier(knownId: String, adobeDataProviderId: String, authState: Int? = nil, callback: RCTResponseSenderBlock? = nil) {
@@ -122,7 +122,7 @@ class TealiumReactAdobeVisitor: NSObject, RCTBridgeModule {
             if let callback = callback {
                 switch visitorResult {
                 case .success(let visitor):
-                    callback([visitor.encoded])
+                    callback([visitor.asDictionary()])
                 case .failure(let error):
                     callback(["Failed to link existing Ecid with error code: $errorCode and exception \(error.localizedDescription)"])
                 }
