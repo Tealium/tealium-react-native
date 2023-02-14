@@ -15,7 +15,7 @@
     "index.js",
     "index.d.ts",
     "ios",
-    "tealium-react-native.podspec"
+    "tealium-react-adobe-visitor.podspec"
   ],
   "repository": {
     "type": "git",
