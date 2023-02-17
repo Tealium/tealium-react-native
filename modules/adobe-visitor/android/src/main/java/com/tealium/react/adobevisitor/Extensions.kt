@@ -10,6 +10,6 @@ fun AdobeVisitor.toReadableMap(): ReadableMap {
     map.putInt("idSyncTtl", this.idSyncTTL)
     map.putInt("region", this.region)
     map.putString("blob", this.blob)
-    map.putString("nextRefresh", this.nextRefresh.time.toString()) // convert to...?
+    map.putDouble("nextRefresh", this.nextRefresh.time.toDouble())
     return map
 }
