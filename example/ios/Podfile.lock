@@ -1,24 +1,27 @@
 PODS:
-  - Adjust (4.33.3):
-    - Adjust/Core (= 4.33.3)
-  - Adjust/Core (4.33.3)
-  - Appboy-iOS-SDK (4.5.2):
-    - Appboy-iOS-SDK/UI (= 4.5.2)
-  - Appboy-iOS-SDK/ContentCards (4.5.2):
+  - Adjust (4.33.4):
+    - Adjust/Core (= 4.33.4)
+  - Adjust/Core (4.33.4)
+  - Appboy-iOS-SDK (4.5.4):
+    - Appboy-iOS-SDK/UI (= 4.5.4)
+  - Appboy-iOS-SDK/ContentCards (4.5.4):
     - Appboy-iOS-SDK/Core
     - SDWebImage (< 6, >= 5.8.2)
-  - Appboy-iOS-SDK/Core (4.5.2)
-  - Appboy-iOS-SDK/InAppMessage (4.5.2):
+  - Appboy-iOS-SDK/Core (4.5.4)
+  - Appboy-iOS-SDK/InAppMessage (4.5.4):
     - Appboy-iOS-SDK/Core
     - SDWebImage (< 6, >= 5.8.2)
-  - Appboy-iOS-SDK/NewsFeed (4.5.2):
+  - Appboy-iOS-SDK/NewsFeed (4.5.4):
     - Appboy-iOS-SDK/Core
     - SDWebImage (< 6, >= 5.8.2)
-  - Appboy-iOS-SDK/UI (4.5.2):
+  - Appboy-iOS-SDK/UI (4.5.4):
     - Appboy-iOS-SDK/ContentCards
     - Appboy-iOS-SDK/Core
     - Appboy-iOS-SDK/InAppMessage
     - Appboy-iOS-SDK/NewsFeed
+  - AppsFlyerFramework (6.10.1):
+    - AppsFlyerFramework/Main (= 6.10.1)
+  - AppsFlyerFramework/Main (6.10.1)
   - boost (1.76.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.69.4)
@@ -93,41 +96,41 @@ PODS:
     - GoogleUtilities/Network (~> 7.7)
     - "GoogleUtilities/NSData+zlib (~> 7.7)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleDataTransport (9.2.0):
+  - GoogleDataTransport (9.2.2):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/AppDelegateSwizzler (7.11.0):
+  - GoogleUtilities/AppDelegateSwizzler (7.11.1):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.11.0):
+  - GoogleUtilities/Environment (7.11.1):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.11.0):
+  - GoogleUtilities/Logger (7.11.1):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.11.0):
+  - GoogleUtilities/MethodSwizzler (7.11.1):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.11.0):
+  - GoogleUtilities/Network (7.11.1):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.11.0)"
-  - GoogleUtilities/Reachability (7.11.0):
+  - "GoogleUtilities/NSData+zlib (7.11.1)"
+  - GoogleUtilities/Reachability (7.11.1):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.11.0):
+  - GoogleUtilities/UserDefaults (7.11.1):
     - GoogleUtilities/Logger
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
-  - Permission-LocationAccuracy (3.6.1):
+  - Permission-LocationAccuracy (3.8.0):
     - RNPermissions
-  - Permission-LocationAlways (3.6.1):
+  - Permission-LocationAlways (3.8.0):
     - RNPermissions
-  - Permission-LocationWhenInUse (3.6.1):
+  - Permission-LocationWhenInUse (3.8.0):
     - RNPermissions
-  - PromisesObjC (2.1.1)
+  - PromisesObjC (2.2.0)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
     - DoubleConversion
@@ -403,23 +406,29 @@ PODS:
     - React-jsi (= 0.69.4)
     - React-logger (= 0.69.4)
     - React-perflogger (= 0.69.4)
-  - RNPermissions (3.6.1):
+  - RNPermissions (3.8.0):
     - React-Core
-  - SDWebImage (5.15.0):
-    - SDWebImage/Core (= 5.15.0)
-  - SDWebImage/Core (5.15.0)
+  - SDWebImage (5.15.5):
+    - SDWebImage/Core (= 5.15.5)
+  - SDWebImage/Core (5.15.5)
   - tealium-react-adjust (1.0.2):
     - React-Core
     - tealium-react-native (~> 2.2)
     - tealium-react-native-swift (~> 2.2)
     - tealium-swift/Core (~> 2.6)
     - TealiumAdjust (~> 1.1.0)
-  - tealium-react-adobe-visitor (1.0.0):
+  - tealium-react-adobe-visitor (1.0.1):
     - React-Core
     - tealium-react-native (~> 2.2)
     - tealium-react-native-swift (~> 2.2)
     - tealium-swift/Core (~> 2.6)
     - TealiumAdobeVisitorAPI (~> 1.1)
+  - tealium-react-appsflyer (1.0.0):
+    - React
+    - tealium-react-native (~> 2.2)
+    - tealium-react-native-swift (~> 2.2)
+    - tealium-swift/Core (~> 2.9)
+    - TealiumAppsFlyer (~> 2.1.2)
   - tealium-react-braze (1.0.2):
     - React
     - tealium-react-native (~> 2.2)
@@ -455,18 +464,18 @@ PODS:
     - tealium-swift/RemoteCommands (~> 2.8)
     - tealium-swift/TagManagement (~> 2.8)
     - tealium-swift/VisitorService (~> 2.8)
-  - tealium-swift/Collect (2.8.2):
+  - tealium-swift/Collect (2.9.1):
     - tealium-swift/Core
-  - tealium-swift/Core (2.8.2)
-  - tealium-swift/Lifecycle (2.8.2):
+  - tealium-swift/Core (2.9.1)
+  - tealium-swift/Lifecycle (2.9.1):
     - tealium-swift/Core
-  - tealium-swift/Location (2.8.2):
+  - tealium-swift/Location (2.9.1):
     - tealium-swift/Core
-  - tealium-swift/RemoteCommands (2.8.2):
+  - tealium-swift/RemoteCommands (2.9.1):
     - tealium-swift/Core
-  - tealium-swift/TagManagement (2.8.2):
+  - tealium-swift/TagManagement (2.9.1):
     - tealium-swift/Core
-  - tealium-swift/VisitorService (2.8.2):
+  - tealium-swift/VisitorService (2.9.1):
     - tealium-swift/Core
   - TealiumAdjust (1.1.0):
     - Adjust (~> 4.29)
@@ -474,6 +483,10 @@ PODS:
     - tealium-swift/RemoteCommands (~> 2.6)
   - TealiumAdobeVisitorAPI (1.1.0):
     - tealium-swift/Core (~> 2.8)
+  - TealiumAppsFlyer (2.1.2):
+    - AppsFlyerFramework (~> 6.9)
+    - tealium-swift/Core (~> 2.9)
+    - tealium-swift/RemoteCommands (~> 2.9)
   - TealiumBraze (2.1.0):
     - Appboy-iOS-SDK (~> 4.4)
     - tealium-swift/Core (~> 2.6)
@@ -527,6 +540,7 @@ DEPENDENCIES:
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - tealium-react-adjust (from `../node_modules/tealium-react-adjust`)
   - tealium-react-adobe-visitor (from `../node_modules/tealium-react-native-adobe-visitor`)
+  - tealium-react-appsflyer (from `../node_modules/tealium-react-appsflyer`)
   - tealium-react-braze (from `../node_modules/tealium-react-braze`)
   - tealium-react-firebase (from `../node_modules/tealium-react-firebase`)
   - tealium-react-native (from `../node_modules/tealium-react-native`)
@@ -538,6 +552,7 @@ SPEC REPOS:
   trunk:
     - Adjust
     - Appboy-iOS-SDK
+    - AppsFlyerFramework
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -554,6 +569,7 @@ SPEC REPOS:
     - tealium-swift
     - TealiumAdjust
     - TealiumAdobeVisitorAPI
+    - TealiumAppsFlyer
     - TealiumBraze
     - TealiumFirebase
 
@@ -632,6 +648,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/tealium-react-adjust"
   tealium-react-adobe-visitor:
     :path: "../node_modules/tealium-react-native-adobe-visitor"
+  tealium-react-appsflyer:
+    :path: "../node_modules/tealium-react-appsflyer"
   tealium-react-braze:
     :path: "../node_modules/tealium-react-braze"
   tealium-react-firebase:
@@ -646,8 +664,9 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Adjust: 41d0d5c031409aebe7fb1f5703ff0d3306133439
-  Appboy-iOS-SDK: cc7c70b595499bd8d1338aa66f3c9e7a71f81bc0
+  Adjust: 4690e07ea401ee56d4d3f4f5bdad86c94f51903f
+  Appboy-iOS-SDK: 2fc5b290fe1caa85718b811a19b303d45caea975
+  AppsFlyerFramework: 88a6eed37ad52bcee4ad74232efa8e22809d06c9
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: c71b8c429a8af2aff1013934a7152e9d9d0c937d
@@ -661,13 +680,13 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 3d02b25ca00c2d456734d0bcff864cbc62f6ae1a
   GoogleAppMeasurement: 6de2b1a69e4326eb82ee05d138f6a5cb7311bcb1
-  GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
-  GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
+  GoogleDataTransport: 8378d1fa8ac49753ea6ce70d65a7cb70ce5f66e6
+  GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
-  Permission-LocationAccuracy: 76df17de5c6b8bc2eee34e61ee92cdd7a864c73d
-  Permission-LocationAlways: 8d99b025c9f73c696e0cdb367e42525f2e9a26f2
-  Permission-LocationWhenInUse: 3ba99e45c852763f730eabecec2870c2382b7bd4
-  PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  Permission-LocationAccuracy: d6aa5146c084e7077e7efc4cbb543c7f6c72c51a
+  Permission-LocationAlways: e7ce67f3091ec096b6ac274bc30a18830a66b33c
+  Permission-LocationWhenInUse: 1c80e4797ae587642a83125e80b86686cefeba53
+  PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   RCT-Folly: b9d9fe1fc70114b751c076104e52f3b1b5e5a95a
   RCTRequired: bd9d2ab0fda10171fcbcf9ba61a7df4dc15a28f4
   RCTTypeSafety: e44e139bf6ec8042db396201834fc2372f6a21cd
@@ -694,18 +713,20 @@ SPEC CHECKSUMS:
   React-RCTVibration: 9adb4a3cbb598d1bbd46a05256f445e4b8c70603
   React-runtimeexecutor: 61ee22a8cdf8b6bb2a7fb7b4ba2cc763e5285196
   ReactCommon: 8f67bd7e0a6afade0f20718f859dc8c2275f2e83
-  RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
-  SDWebImage: 9bec4c5cdd9579e1f57104735ee0c37df274d593
+  RNPermissions: 215c54462104b3925b412b0fb3c9c497b21c358b
+  SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
   tealium-react-adjust: db2b39f966aeaf6518b2b6c3686e88cb7609d957
-  tealium-react-adobe-visitor: 1c2820986ca3a7ead4aa26f0ce2aa30eb6a7b8cb
+  tealium-react-adobe-visitor: 486bda1ea272c70b4ae1e1041c4e9118cc4e0033
+  tealium-react-appsflyer: 51ebdf3621a7fa49bccfc33b836d02eebb50106f
   tealium-react-braze: 6d2ff1e72692b0057ee42583ae00bacaa35ce167
   tealium-react-firebase: d0dd5c684849d1efc9ff72a1ee08f118ede17a43
   tealium-react-native: 6b0bdc76aab9ccf73edb187348819b9aa8f3daef
   tealium-react-native-location: 2bd1b4e1081fd96904195ccbfb08b48b675256b8
   tealium-react-native-swift: 70eb309868a7cc41731d801dbbc8d20f4a19a5b4
-  tealium-swift: aa249f29ee10924c1cb373c5313e91a99276bfe6
+  tealium-swift: 137769254e97d4c9f7ed6e16e0768b40888e6452
   TealiumAdjust: e4dc17fd9dad81b37207e8df2b52ab12af36f606
   TealiumAdobeVisitorAPI: 461c387286df99cb17ffb342a56b02d852978240
+  TealiumAppsFlyer: 091f216de29ef5152a2a8575db82b3ea7e48d7c7
   TealiumBraze: e2090735f38c153711879c328ad6c78608248822
   TealiumFirebase: 19183d16c5e3a12d55231e52de49a398f9397d37
   Yoga: ff994563b2fd98c982ca58e8cd9db2cdaf4dda74
