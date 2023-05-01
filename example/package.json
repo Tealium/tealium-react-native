@@ -13,12 +13,13 @@
     "react": "18.0.0",
     "react-native": "0.69.4",
     "react-native-permissions": "^3.6.1",
-    "tealium-react-adjust": "../remotecommands/tealium-react-adjust",
-    "tealium-react-braze": "../remotecommands/tealium-react-braze",
-    "tealium-react-firebase": "../remotecommands/tealium-react-firebase",
-    "tealium-react-native": "../npm-package",
-    "tealium-react-native-adobe-visitor": "../modules/adobe-visitor",
-    "tealium-react-native-location": "../modules/location"
+    "tealium-react-adjust": "../remotecommands/tealium-react-adjust/",
+    "tealium-react-appsflyer": "../remotecommands/tealium-react-appsflyer/",
+    "tealium-react-braze": "../remotecommands/tealium-react-braze/",
+    "tealium-react-firebase": "../remotecommands/tealium-react-firebase/",
+    "tealium-react-native": "../npm-package/",
+    "tealium-react-native-adobe-visitor": "../modules/adobe-visitor/",
+    "tealium-react-native-location": "../modules/location/"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

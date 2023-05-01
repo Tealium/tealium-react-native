@@ -1,0 +1,42 @@
+{
+  "name": "tealium-react-appsflyer",
+  "title": "Tealium React AppsFlyer",
+  "version": "1.0.0",
+  "description": "Package to support the Tealium AppsFlyer Remote Command",
+  "main": "index.js",
+  "files": [
+    "README.md",
+    "android",
+    "index.js",
+    "ios",
+    "tealium-react-appsflyer.podspec"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tealium/tealium-react-native.git",
+    "baseUrl": "https://github.com/Tealium/tealium-react-native"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "author": {
+    "name": "Tealium"
+  },
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "peerDependencies": {
+    "react": ">=16.8.1 || < 19.0.0",
+    "react-native": ">=0.60.0-rc.0 <1.0.x",
+    "tealium-react-native": "^2.1.0"
+  },
+  "devDependencies": {
+    "react": "^16.9.0",
+    "react-native": "^0.61.5"
+  }
+}
