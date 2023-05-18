@@ -14,8 +14,12 @@ import {
 import Tealium from 'tealium-react-native';
 import TealiumLocation from 'tealium-react-native-location';
 import { TealiumLocationConfig, Accuracy, DesiredAccuracy } from 'tealium-react-native-location/common';
+
+// Note. NPM package will need to be added before uncommenting 
+// e.g. `yarn add ../modules/adobe-visitor` or `yarn add tealium-react-native-adobe-visitor` 
 // import TealiumAdobeVisitor from 'tealium-react-native-adobe-visitor';
 // import { TealiumAdobeVisitorConfig } from 'tealium-react-native-adobevisitor/common';
+
 import {
     TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors,
     ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment, RemoteCommand
