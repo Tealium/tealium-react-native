@@ -13,9 +13,13 @@ import {
 } from 'react-native';
 import Tealium from 'tealium-react-native';
 import TealiumLocation from 'tealium-react-native-location';
-import TealiumAdobeVisitor from 'tealium-react-native-adobe-visitor';
 import { TealiumLocationConfig, Accuracy, DesiredAccuracy } from 'tealium-react-native-location/common';
-import { TealiumAdobeVisitorConfig } from 'tealium-react-native-adobevisitor/common';
+
+// Note. NPM package will need to be added before uncommenting 
+// e.g. `yarn add ../modules/adobe-visitor` or `yarn add tealium-react-native-adobe-visitor` 
+// import TealiumAdobeVisitor from 'tealium-react-native-adobe-visitor';
+// import { TealiumAdobeVisitorConfig } from 'tealium-react-native-adobevisitor/common';
+
 import {
     TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors,
     ConsentPolicy, Expiry, ConsentExpiry, TimeUnit, ConsentStatus, TealiumEnvironment, RemoteCommand
@@ -32,9 +36,9 @@ import { AuthState } from 'tealium-react-native-adobe-visitor/common';
 export default class App extends Component<{}> {
 
     componentDidMount() {
-        let adobeVisitorConfig: TealiumAdobeVisitorConfig = {
-            adobeVisitorOrgId: "<YOUR-ADOBE-ORG-ID>"
-        }
+        // let adobeVisitorConfig: TealiumAdobeVisitorConfig = {
+            // adobeVisitorOrgId: "<YOUR-ADOBE-ORG-ID>"
+        // }
         
         let locationConfig: TealiumLocationConfig = {
             accuracy: Accuracy.high,
@@ -48,7 +52,7 @@ export default class App extends Component<{}> {
             allowSuppressLogLevel: false
         }
 
-        TealiumAdobeVisitor.configure(adobeVisitorConfig)
+        // TealiumAdobeVisitor.configure(adobeVisitorConfig)
         TealiumLocation.configure(locationConfig);
         FirebaseRemoteCommand.initialize();
         BrazeRemoteCommand.initialize();
