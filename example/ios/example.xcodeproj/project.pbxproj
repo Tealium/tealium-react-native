@@ -14,7 +14,6 @@
 		1BF9905FA5AACA6FB2B7A9E5 /* Pods_example_exampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87DA30AA721C25AACEFE87D8 /* Pods_example_exampleTests.framework */; };
 		7604AD4A0FDDD8C269FBB9B5 /* Pods_example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43288D8BC71232B1C641498B /* Pods_example.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		E18EECBC29F06D450062D59B /* appsflyer.json in Resources */ = {isa = PBXBuildFile; fileRef = E18EECBB29F06D450062D59B /* appsflyer.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +30,10 @@
 		00E356EE1AD99517003FC87E /* exampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = exampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* exampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = exampleTests.m; sourceTree = "<group>"; };
+		08FA752B2A3B11B700139C00 /* firebase.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = firebase.json; path = example/firebase.json; sourceTree = "<group>"; };
+		08FA752C2A3B11B700139C00 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "example/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		08FA752F2A3B18D900139C00 /* braze.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = braze.json; path = example/braze.json; sourceTree = "<group>"; };
+		08FA75302A3B18D900139C00 /* adjust.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = adjust.json; path = example/adjust.json; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = example/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = example/AppDelegate.mm; sourceTree = "<group>"; };
@@ -119,6 +122,10 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				08FA75302A3B18D900139C00 /* adjust.json */,
+				08FA752F2A3B18D900139C00 /* braze.json */,
+				08FA752B2A3B11B700139C00 /* firebase.json */,
+				08FA752C2A3B11B700139C00 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* example */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* exampleTests */,
@@ -246,7 +253,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				E18EECBC29F06D450062D59B /* appsflyer.json in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

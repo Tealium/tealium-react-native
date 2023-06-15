@@ -2,27 +2,11 @@ PODS:
   - Adjust (4.33.4):
     - Adjust/Core (= 4.33.4)
   - Adjust/Core (4.33.4)
-  - Appboy-iOS-SDK (4.5.4):
-    - Appboy-iOS-SDK/UI (= 4.5.4)
-  - Appboy-iOS-SDK/ContentCards (4.5.4):
-    - Appboy-iOS-SDK/Core
-    - SDWebImage (< 6, >= 5.8.2)
-  - Appboy-iOS-SDK/Core (4.5.4)
-  - Appboy-iOS-SDK/InAppMessage (4.5.4):
-    - Appboy-iOS-SDK/Core
-    - SDWebImage (< 6, >= 5.8.2)
-  - Appboy-iOS-SDK/NewsFeed (4.5.4):
-    - Appboy-iOS-SDK/Core
-    - SDWebImage (< 6, >= 5.8.2)
-  - Appboy-iOS-SDK/UI (4.5.4):
-    - Appboy-iOS-SDK/ContentCards
-    - Appboy-iOS-SDK/Core
-    - Appboy-iOS-SDK/InAppMessage
-    - Appboy-iOS-SDK/NewsFeed
   - AppsFlyerFramework (6.11.2):
     - AppsFlyerFramework/Main (= 6.11.2)
   - AppsFlyerFramework/Main (6.11.2)
   - boost (1.76.0)
+  - BrazeKit (5.14.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.71.10)
   - FBReactNativeSpec (0.71.10):
@@ -462,9 +446,6 @@ PODS:
     - React-perflogger (= 0.71.10)
   - RNPermissions (3.8.0):
     - React-Core
-  - SDWebImage (5.16.0):
-    - SDWebImage/Core (= 5.16.0)
-  - SDWebImage/Core (5.16.0)
   - tealium-react-adjust (1.0.3):
     - React-Core
     - tealium-react-native (~> 2.2)
@@ -482,7 +463,7 @@ PODS:
     - tealium-react-native (~> 2.2)
     - tealium-react-native-swift (~> 2.2)
     - tealium-swift/Core (~> 2.6)
-    - TealiumBraze (~> 2.1)
+    - TealiumBraze (~> 3.0)
   - tealium-react-firebase (1.0.4):
     - React-Core
     - tealium-react-native (~> 2.2)
@@ -533,11 +514,10 @@ PODS:
     - AppsFlyerFramework (~> 6.9)
     - tealium-swift/Core (~> 2.9)
     - tealium-swift/RemoteCommands (~> 2.9)
-  - TealiumBraze (2.1.0):
-    - Appboy-iOS-SDK (~> 4.4)
-    - tealium-swift/Core (~> 2.6)
-    - tealium-swift/RemoteCommands (~> 2.6)
-    - tealium-swift/TagManagement (~> 2.6)
+  - TealiumBraze (3.0.0):
+    - BrazeKit (~> 5.8)
+    - tealium-swift/Core (~> 2.8)
+    - tealium-swift/RemoteCommands (~> 2.8)
   - TealiumFirebase (3.0.0):
     - Firebase (~> 10.7)
     - FirebaseAnalytics (~> 10.7)
@@ -597,8 +577,8 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Adjust
-    - Appboy-iOS-SDK
     - AppsFlyerFramework
+    - BrazeKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -610,7 +590,6 @@ SPEC REPOS:
     - libevent
     - nanopb
     - PromisesObjC
-    - SDWebImage
     - tealium-swift
     - TealiumAdjust
     - TealiumAppsFlyer
@@ -711,9 +690,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Adjust: 4690e07ea401ee56d4d3f4f5bdad86c94f51903f
-  Appboy-iOS-SDK: 2fc5b290fe1caa85718b811a19b303d45caea975
   AppsFlyerFramework: e22e8f0e746b4f568d9bb0b078180c6ad95e2609
-  boost: a7c83b31436843459a1961bfd74b96033dc77234
+  boost: 57d2868c099736d80fcd648bf211b4431e51a558
+  BrazeKit: 2df1928c02f5630ed718f06b7bdeecc9faf8d970
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: ddb55c55295ea51ed98aa7e2e08add2f826309d5
   FBReactNativeSpec: 90fc1a90b4b7a171e0a7c20ea426c1bf6ce4399c
@@ -723,7 +702,7 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: 9e46c82a14a3b3a25be4e1e151ce6d21536b89c0
   FirebaseInstallations: 2a2c6859354cbec0a228a863d4daf6de7c74ced4
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 3d02b25ca00c2d456734d0bcff864cbc62f6ae1a
+  glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   GoogleAppMeasurement: d3dabccdb336fc0ae44b633c8abaa26559893cd9
   GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
   hermes-engine: d27603b55a48402501ad1928c05411dae9cd6b85
@@ -761,10 +740,9 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: a9a1cd79996c9a0846e3232ecb25c64e1cc0172e
   ReactCommon: e7a0cdbb67f8da60677db83d693dea816780a6e9
   RNPermissions: 215c54462104b3925b412b0fb3c9c497b21c358b
-  SDWebImage: 2aea163b50bfcb569a2726b6a754c54a4506fcf6
   tealium-react-adjust: ae9cb0658f21293ca1bd8240cbc01e6da744d3cc
   tealium-react-appsflyer: 041783acc14ac5a3ca416cc6e0a92dd3e5c81ecb
-  tealium-react-braze: c1d8971e9e4606a4879415a7974654bc5feff059
+  tealium-react-braze: d6ade22e3147b74338a93f572d2ce984f19c5a36
   tealium-react-firebase: e8d20c3ea0d36c0b56afbdd75b6d43057abc93ab
   tealium-react-native: 2a5481ab4be78106f33447a93b035725b1aa957e
   tealium-react-native-location: 2bd1b4e1081fd96904195ccbfb08b48b675256b8
@@ -772,7 +750,7 @@ SPEC CHECKSUMS:
   tealium-swift: 92ac60201de69b342ecc2d52e2207796cf936cf8
   TealiumAdjust: e4dc17fd9dad81b37207e8df2b52ab12af36f606
   TealiumAppsFlyer: 091f216de29ef5152a2a8575db82b3ea7e48d7c7
-  TealiumBraze: e2090735f38c153711879c328ad6c78608248822
+  TealiumBraze: df84e4b662a376d165025d9c84cf7141bfd6505e
   TealiumFirebase: 49aef245aa7e5e6826a7fa1594538f2c7f1750d2
   Yoga: e7ea9e590e27460d28911403b894722354d73479
 
