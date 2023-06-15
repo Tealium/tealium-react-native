@@ -98,7 +98,7 @@ dependencies {
     implementation 'com.facebook.react:react-native:+'  // From node_modules
 
     //Tealium
-    implementation 'com.tealium:kotlin-core:1.5.2'
+    implementation 'com.tealium:kotlin-core:1.5.3'
     implementation 'com.tealium:kotlin-collect-dispatcher:1.1.0'
     implementation 'com.tealium:kotlin-tagmanagement-dispatcher:1.2.0'
     implementation 'com.tealium:kotlin-remotecommand-dispatcher:1.2.1'

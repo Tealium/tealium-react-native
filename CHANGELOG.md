@@ -4,6 +4,13 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
+- 2.3.1
+  - Android-Kotlin dependencies updated including severa fixes listed below.
+    - Core 1.5.3, Visitor Service 1.2.0 and Lifecycle 1.2.0
+    - Fix: Some event sending delayed by Visitor Service updates
+    - Fix: Lifecycle negative values
+    - Fix: ModuleManager crashes caused by concurrent modification
+
 - 2.3.0
   - Visitor Switching support
   - Kotlin/Swift SDK dependencies updated
