@@ -32,6 +32,7 @@ import { AdjustConfig, AdjustEnvironemnt } from 'tealium-react-adjust/common';
 import AppsFlyerRemoteCommand from 'tealium-react-appsflyer';
 import { checkAndRequestPermissions } from "./Utils"
 import { AuthState } from 'tealium-react-native-adobe-visitor/common';
+import TealiumCrashReporter from 'tealium-react-native-crash-reporter';
 
 export default class App extends Component<{}> {
 
@@ -57,7 +58,8 @@ export default class App extends Component<{}> {
         FirebaseRemoteCommand.initialize();
         BrazeRemoteCommand.initialize();
         AdjustRemoteCommand.initialize(adjustConfig);
-        AppsFlyerRemoteCommand.initialize()
+        AppsFlyerRemoteCommand.initialize();
+        TealiumCrashReporter.initialize();
         let config: TealiumConfig = {
             account: 'tealiummobile',
             profile: 'demo',
@@ -241,6 +243,10 @@ export default class App extends Component<{}> {
         });
     }
 
+    forceCrash() {
+        console.log(test.should.crash);
+    }
+
     terminate() {
         Tealium.terminateInstance();
     }
@@ -353,6 +359,7 @@ export default class App extends Component<{}> {
             { section: Sections.Visitor, text: "RESET VISITOR ID", onPress: this.resetVisitorId },
             { section: Sections.Visitor, text: "CLEAR STORED VISITOR IDS", onPress: this.clearStoredVisitorIds },
             { section: Sections.Misc, text: "GET SESSION ID", onPress: this.getSessionId },
+            { section: Sections.Misc, text: "FORCE TEST CRASH", onPress: this.forceCrash },
             { section: Sections.Misc, text: "DISABLE TEALIUM", onPress: this.terminate },
             { section: Sections.Location, text: "GET LOCATION", onPress: this.getLastLocation },
             { section: Sections.Location, text: "START TRACKING LOCATION", onPress: this.startLocationTracking },
