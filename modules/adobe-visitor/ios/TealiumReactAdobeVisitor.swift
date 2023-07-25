@@ -65,6 +65,13 @@ class TealiumReactAdobeVisitor: NSObject, RCTBridgeModule {
             module.decorateUrl(url: url, completion: callback)
         }
     }
+
+    @objc(getUrlParameters:callback:)
+    public func getUrlParameters(callback: @escaping RCTResponseSenderBlock) {
+        module.getURLParameters { params in
+            callback([params?.description ?? ""])
+        }
+    }
     
     @objc(getCurrentAdobeVisitor:)
     public func getCurrentAdobeVisitor(callback: RCTResponseSenderBlock) {

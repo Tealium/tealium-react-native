@@ -143,6 +143,21 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
         )
     }
 
+    @ReactMethod
+    fun getUrlParameters(callback: Callback) {
+        Tealium[INSTANCE_NAME]?.adobeVisitorApi?.getUrlParameters(
+            object : GetUrlParametersHandler {
+                override fun onRetrieveParameters(params: Map<String, String>?) {
+                    params?.let {
+                        val params = it.entries.iterator().next()
+                        val queryItem = params.key + "=" + params.value
+                        callback.invoke(queryItem.toString())
+                    }
+                }
+            }
+        )
+    }
+
     override fun getName(): String {
         return MODULE_NAME
     }

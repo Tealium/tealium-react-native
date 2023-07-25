@@ -291,6 +291,13 @@ export default class App extends Component<{}> {
         });
     }
 
+    getUrlParameters() {
+        TealiumAdobeVisitor.getUrlParameters(value => {
+            console.log("Retrieved URL Parameters:" + value)
+            Alert.alert("Retrieved URL Parameters: ", value, [{ text: "OK", style: "cancel" }])
+        });
+    }
+
     resetAdobeVisitor() {
         TealiumAdobeVisitor.resetVisitor();
     }
