@@ -66,11 +66,9 @@ class TealiumReactAdobeVisitor: NSObject, RCTBridgeModule {
         }
     }
 
-    @objc(getUrlParameters:callback:)
+    @objc(getUrlParameters:)
     public func getUrlParameters(callback: @escaping RCTResponseSenderBlock) {
-        module.getURLParameters { params in
-            callback([params?.description ?? ""])
-        }
+        module.getUrlParameters(completion: callback)
     }
     
     @objc(getCurrentAdobeVisitor:)
@@ -146,6 +144,17 @@ class TealiumReactAdobeVisitor: NSObject, RCTBridgeModule {
         TealiumReactNative.instance?.adobeVisitorApi?.decorateUrl(url, completion: { url in
             completion([url.absoluteString])
         })
+    }
+
+    public func getUrlParameters(completion:  @escaping RCTResponseSenderBlock) {
+        TealiumReactNative.instance?.adobeVisitorApi?.getURLParameters { params in
+            guard let params = params else {
+                completion(nil)
+                return
+            }
+            // Return type looks strange, but works around an issue on Android where returning a WritableMap causes a crash, but a WritableArray works fine. Requires a double array, as return type on iOS is implicitly an array, so RN strips out the first array
+            completion([[["key": params.name, "value": params.value]]])
+        }
     }
 
     func setOrgId(orgId: String) {

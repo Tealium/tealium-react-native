@@ -7,6 +7,7 @@ import com.facebook.react.uimanager.ViewManager
 import com.tealium.adobe.api.AdobeVisitor
 import com.tealium.adobe.api.ResponseListener
 import com.tealium.adobe.api.UrlDecoratorHandler
+import com.tealium.adobe.api.GetUrlParametersHandler
 import com.tealium.adobe.kotlin.*
 import com.tealium.core.Collectors
 import com.tealium.core.Tealium
@@ -149,10 +150,16 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
             object : GetUrlParametersHandler {
                 override fun onRetrieveParameters(params: Map<String, String>?) {
                     params?.let {
-                        val params = it.entries.iterator().next()
-                        val queryItem = params.key + "=" + params.value
-                        callback.invoke(queryItem.toString())
-                    }
+                        val (key, value) = it.entries.iterator().next()
+                        val writableArray = Arguments.createArray()
+                        val writableMap = Arguments.createMap()
+                        writableMap.putString("key", key)
+                        writableMap.putString("value", value)
+                        writableArray.pushMap(writableMap)
+                        callback.invoke(writableArray)
+                    } ?: run {
+                        callback.invoke(null)
+                    } 
                 }
             }
         )

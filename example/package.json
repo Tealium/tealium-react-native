@@ -18,6 +18,7 @@
     "tealium-react-braze": "../remotecommands/tealium-react-braze/",
     "tealium-react-firebase": "file:../remotecommands/tealium-react-firebase",
     "tealium-react-native": "../npm-package/",
+    "tealium-react-native-adobe-visitor": "../modules/adobe-visitor",
     "tealium-react-native-location": "../modules/location/"
   },
   "devDependencies": {

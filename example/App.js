@@ -17,8 +17,8 @@ import { TealiumLocationConfig, Accuracy, DesiredAccuracy } from 'tealium-react-
 
 // Note. NPM package will need to be added before uncommenting 
 // e.g. `yarn add ../modules/adobe-visitor` or `yarn add tealium-react-native-adobe-visitor` 
-// import TealiumAdobeVisitor from 'tealium-react-native-adobe-visitor';
-// import { TealiumAdobeVisitorConfig } from 'tealium-react-native-adobevisitor/common';
+import TealiumAdobeVisitor from 'tealium-react-native-adobe-visitor';
+import { TealiumAdobeVisitorConfig } from 'tealium-react-native-adobevisitor/common';
 
 import {
     TealiumConfig, TealiumView, TealiumEvent, ConsentCategories, Dispatchers, Collectors,
@@ -36,9 +36,9 @@ import { AuthState } from 'tealium-react-native-adobe-visitor/common';
 export default class App extends Component<{}> {
 
     componentDidMount() {
-        // let adobeVisitorConfig: TealiumAdobeVisitorConfig = {
-            // adobeVisitorOrgId: "<YOUR-ADOBE-ORG-ID>"
-        // }
+        let adobeVisitorConfig: TealiumAdobeVisitorConfig = {
+            adobeVisitorOrgId: "1E2D776A524450EE0A490D44@AdobeOrg"
+        }
         
         let locationConfig: TealiumLocationConfig = {
             accuracy: Accuracy.high,
@@ -52,7 +52,7 @@ export default class App extends Component<{}> {
             allowSuppressLogLevel: false
         }
 
-        // TealiumAdobeVisitor.configure(adobeVisitorConfig)
+        TealiumAdobeVisitor.configure(adobeVisitorConfig)
         TealiumLocation.configure(locationConfig);
         FirebaseRemoteCommand.initialize();
         BrazeRemoteCommand.initialize();
@@ -293,8 +293,11 @@ export default class App extends Component<{}> {
 
     getUrlParameters() {
         TealiumAdobeVisitor.getUrlParameters(value => {
-            console.log("Retrieved URL Parameters:" + value)
-            Alert.alert("Retrieved URL Parameters: ", value, [{ text: "OK", style: "cancel" }])
+            if (value === null) {
+                Alert.alert("Null Visitor","No data available for Adobe Visitor", [{ text: "OK", style: "cancel" }]);
+                return;
+            }
+            Alert.alert("Retrieved URL Parameters: ", value[0]["key"] + "=" + value[0]["value"], [{ text: "OK", style: "cancel" }]);
         });
     }
 
@@ -366,6 +369,7 @@ export default class App extends Component<{}> {
             { section: Sections.Location, text: "STOP TRACKING LOCATION", onPress: this.stopLocationTracking },
             { section: Sections.AdobeVisitorService, text: "GET CURRENT ADOBE VISITOR", onPress: this.getCurrentAdobeVisitor },
             { section: Sections.AdobeVisitorService, text: "DECORATE URL", onPress: this.decorateUrl },
+            { section: Sections.AdobeVisitorService, text: "GET URL PARAMS", onPress: this.getUrlParameters },
             { section: Sections.AdobeVisitorService, text: "RESET ADOBE VISITOR", onPress: this.resetAdobeVisitor },
         ]
     }
