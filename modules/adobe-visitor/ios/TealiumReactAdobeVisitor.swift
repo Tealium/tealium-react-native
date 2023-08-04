@@ -152,8 +152,7 @@ class TealiumReactAdobeVisitor: NSObject, RCTBridgeModule {
                 completion(nil)
                 return
             }
-            // Return type looks strange, but works around an issue on Android where returning a WritableMap causes a crash, but a WritableArray works fine. Requires a double array, as return type on iOS is implicitly an array, so RN strips out the first array
-            completion([[["key": params.name, "value": params.value]]])
+            completion([[params.name:  params.value]])
         }
     }
 

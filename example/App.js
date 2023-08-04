@@ -37,7 +37,7 @@ export default class App extends Component<{}> {
 
     componentDidMount() {
         // let adobeVisitorConfig: TealiumAdobeVisitorConfig = {
-        //     adobeVisitorOrgId: "<YOUR-ADOBE-ORG-ID>"
+        //     adobeVisitorOrgId: "YOUR-ADOBE-ORG-ID"
         // }
         
         let locationConfig: TealiumLocationConfig = {
@@ -52,7 +52,7 @@ export default class App extends Component<{}> {
             allowSuppressLogLevel: false
         }
 
-        // TealiumAdobeVisitor.configure(adobeVisitorConfig)
+        // TealiumAdobeVisitor.configure(adobeVisitorConfig);
         TealiumLocation.configure(locationConfig);
         FirebaseRemoteCommand.initialize();
         BrazeRemoteCommand.initialize();
@@ -293,11 +293,15 @@ export default class App extends Component<{}> {
 
     getUrlParameters() {
         TealiumAdobeVisitor.getUrlParameters(value => {
-            if (value === null) {
+            if (value === null || value === undefined) {
                 Alert.alert("Null Visitor","No data available for Adobe Visitor", [{ text: "OK", style: "cancel" }]);
                 return;
+            } else {
+                for (var key of Object.keys(value)) {
+                    Alert.alert("Retrieved URL Parameters: ", key + "=" + value[key], [{ text: "OK", style: "cancel" }]);
+                    break;
+                }
             }
-            Alert.alert("Retrieved URL Parameters: ", value[0]["key"] + "=" + value[0]["value"], [{ text: "OK", style: "cancel" }]);
         });
     }
 

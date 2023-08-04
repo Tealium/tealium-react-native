@@ -452,7 +452,7 @@ PODS:
     - tealium-react-native-swift (~> 2.2)
     - tealium-swift/Core (~> 2.6)
     - TealiumAdjust (~> 1.1)
-  - tealium-react-adobe-visitor (1.0.1):
+  - tealium-react-adobe-visitor (1.0.2):
     - React-Core
     - tealium-react-native (~> 2.2)
     - tealium-react-native-swift (~> 2.2)
@@ -753,7 +753,7 @@ SPEC CHECKSUMS:
   ReactCommon: e7a0cdbb67f8da60677db83d693dea816780a6e9
   RNPermissions: 215c54462104b3925b412b0fb3c9c497b21c358b
   tealium-react-adjust: ae9cb0658f21293ca1bd8240cbc01e6da744d3cc
-  tealium-react-adobe-visitor: 486bda1ea272c70b4ae1e1041c4e9118cc4e0033
+  tealium-react-adobe-visitor: 8493ca729d41f3290d1c16ac521b405dbc004fb4
   tealium-react-appsflyer: 041783acc14ac5a3ca416cc6e0a92dd3e5c81ecb
   tealium-react-braze: d6ade22e3147b74338a93f572d2ce984f19c5a36
   tealium-react-firebase: e8d20c3ea0d36c0b56afbdd75b6d43057abc93ab

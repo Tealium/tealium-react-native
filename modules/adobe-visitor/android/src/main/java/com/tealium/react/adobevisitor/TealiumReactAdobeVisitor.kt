@@ -13,6 +13,7 @@ import com.tealium.core.Collectors
 import com.tealium.core.Tealium
 import com.tealium.core.TealiumConfig
 import com.tealium.react.*
+import org.json.JSONObject
 import java.net.URL
 
 class TealiumReactNativeAdobeVisitor : ReactPackage {
@@ -150,16 +151,10 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
             object : GetUrlParametersHandler {
                 override fun onRetrieveParameters(params: Map<String, String>?) {
                     params?.let {
-                        val (key, value) = it.entries.iterator().next()
-                        val writableArray = Arguments.createArray()
-                        val writableMap = Arguments.createMap()
-                        writableMap.putString("key", key)
-                        writableMap.putString("value", value)
-                        writableArray.pushMap(writableMap)
-                        callback.invoke(writableArray)
+                        callback.invoke(JSONObject(it).toWritableMap())
                     } ?: run {
                         callback.invoke(null)
-                    } 
+                    }
                 }
             }
         )
