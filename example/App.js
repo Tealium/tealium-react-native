@@ -31,14 +31,14 @@ import AdjustRemoteCommand from 'tealium-react-adjust';
 import { AdjustConfig, AdjustEnvironemnt } from 'tealium-react-adjust/common';
 import AppsFlyerRemoteCommand from 'tealium-react-appsflyer';
 import { checkAndRequestPermissions } from "./Utils"
-import { AuthState } from 'tealium-react-native-adobe-visitor/common';
+// import { AuthState } from 'tealium-react-native-adobe-visitor/common';
 import TealiumCrashReporter from 'tealium-react-native-crash-reporter';
 
 export default class App extends Component<{}> {
 
     componentDidMount() {
         // let adobeVisitorConfig: TealiumAdobeVisitorConfig = {
-            // adobeVisitorOrgId: "<YOUR-ADOBE-ORG-ID>"
+        //     adobeVisitorOrgId: "YOUR-ADOBE-ORG-ID"
         // }
         
         let locationConfig: TealiumLocationConfig = {
@@ -53,7 +53,7 @@ export default class App extends Component<{}> {
             allowSuppressLogLevel: false
         }
 
-        // TealiumAdobeVisitor.configure(adobeVisitorConfig)
+        // TealiumAdobeVisitor.configure(adobeVisitorConfig);
         TealiumLocation.configure(locationConfig);
         FirebaseRemoteCommand.initialize();
         BrazeRemoteCommand.initialize();
@@ -297,6 +297,20 @@ export default class App extends Component<{}> {
         });
     }
 
+    getUrlParameters() {
+        TealiumAdobeVisitor.getUrlParameters(value => {
+            if (value === null || value === undefined) {
+                Alert.alert("Null Visitor","No data available for Adobe Visitor", [{ text: "OK", style: "cancel" }]);
+                return;
+            } else {
+                for (var key of Object.keys(value)) {
+                    Alert.alert("Retrieved URL Parameters: ", key + "=" + value[key], [{ text: "OK", style: "cancel" }]);
+                    break;
+                }
+            }
+        });
+    }
+
     resetAdobeVisitor() {
         TealiumAdobeVisitor.resetVisitor();
     }
@@ -366,6 +380,7 @@ export default class App extends Component<{}> {
             { section: Sections.Location, text: "STOP TRACKING LOCATION", onPress: this.stopLocationTracking },
             { section: Sections.AdobeVisitorService, text: "GET CURRENT ADOBE VISITOR", onPress: this.getCurrentAdobeVisitor },
             { section: Sections.AdobeVisitorService, text: "DECORATE URL", onPress: this.decorateUrl },
+            { section: Sections.AdobeVisitorService, text: "GET URL PARAMS", onPress: this.getUrlParameters },
             { section: Sections.AdobeVisitorService, text: "RESET ADOBE VISITOR", onPress: this.resetAdobeVisitor },
         ]
     }

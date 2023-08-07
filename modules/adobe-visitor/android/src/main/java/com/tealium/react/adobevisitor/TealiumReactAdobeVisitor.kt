@@ -7,11 +7,13 @@ import com.facebook.react.uimanager.ViewManager
 import com.tealium.adobe.api.AdobeVisitor
 import com.tealium.adobe.api.ResponseListener
 import com.tealium.adobe.api.UrlDecoratorHandler
+import com.tealium.adobe.api.GetUrlParametersHandler
 import com.tealium.adobe.kotlin.*
 import com.tealium.core.Collectors
 import com.tealium.core.Tealium
 import com.tealium.core.TealiumConfig
 import com.tealium.react.*
+import org.json.JSONObject
 import java.net.URL
 
 class TealiumReactNativeAdobeVisitor : ReactPackage {
@@ -138,6 +140,21 @@ class TealiumReactAdobeVisitor(private val reactContext: ReactApplicationContext
             object : UrlDecoratorHandler {
                 override fun onDecorateUrl(url: URL) {
                     callback.invoke(url.toString())
+                }
+            }
+        )
+    }
+
+    @ReactMethod
+    fun getUrlParameters(callback: Callback) {
+        Tealium[INSTANCE_NAME]?.adobeVisitorApi?.getUrlParameters(
+            object : GetUrlParametersHandler {
+                override fun onRetrieveParameters(params: Map<String, String>?) {
+                    params?.let {
+                        callback.invoke(JSONObject(it).toWritableMap())
+                    } ?: run {
+                        callback.invoke(null)
+                    }
                 }
             }
         )

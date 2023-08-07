@@ -6,4 +6,5 @@
     RCT_EXTERN_METHOD(linkEcidToKnownIdentifier:(NSString)knownId adobeDataProviderId: (NSString)adobeDataProviderId authState: (nonnull NSNumber*)authState callback: (RCTResponseSenderBlock*)callback)
     RCT_EXTERN_METHOD(resetVisitor)
     RCT_EXTERN_METHOD(decorateUrl:(NSString)url callback: (RCTResponseSenderBlock))
+    RCT_EXTERN_METHOD(getUrlParameters:(RCTResponseSenderBlock)callback)
 @end

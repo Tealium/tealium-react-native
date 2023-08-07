@@ -29,5 +29,10 @@ declare module 'tealium-react-native-adobe-visitor' {
          * Decorates url with ECID visitor data
          */
         public static decorateUrl(url: String, callback:(response: String) => void): void;
+
+        /**
+         * Retrieves URL parameters to be manually appended to a URL for special URL schemes (e.g. Angular)
+         */
+        public static getUrlParameters(callback:(response: any) => void): void;
     }
 }

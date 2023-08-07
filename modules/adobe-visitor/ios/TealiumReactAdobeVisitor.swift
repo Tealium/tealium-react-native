@@ -65,6 +65,11 @@ class TealiumReactAdobeVisitor: NSObject, RCTBridgeModule {
             module.decorateUrl(url: url, completion: callback)
         }
     }
+
+    @objc(getUrlParameters:)
+    public func getUrlParameters(callback: @escaping RCTResponseSenderBlock) {
+        module.getUrlParameters(completion: callback)
+    }
     
     @objc(getCurrentAdobeVisitor:)
     public func getCurrentAdobeVisitor(callback: RCTResponseSenderBlock) {
@@ -139,6 +144,16 @@ class TealiumReactAdobeVisitor: NSObject, RCTBridgeModule {
         TealiumReactNative.instance?.adobeVisitorApi?.decorateUrl(url, completion: { url in
             completion([url.absoluteString])
         })
+    }
+
+    public func getUrlParameters(completion:  @escaping RCTResponseSenderBlock) {
+        TealiumReactNative.instance?.adobeVisitorApi?.getURLParameters { params in
+            guard let params = params else {
+                completion(nil)
+                return
+            }
+            completion([[params.name:  params.value]])
+        }
     }
 
     func setOrgId(orgId: String) {

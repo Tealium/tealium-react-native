@@ -27,4 +27,8 @@ export default class TealiumAdobeVisitor {
     static decorateUrl(url, callback) {
         TealiumReactAdobeVisitor.decorateUrl(url, callback)
     }
+
+    static getUrlParameters(callback) {
+        TealiumReactAdobeVisitor.getUrlParameters(callback)
+    }
 }
