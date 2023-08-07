@@ -16,8 +16,10 @@
     "tealium-react-adjust": "../remotecommands/tealium-react-adjust/",
     "tealium-react-appsflyer": "../remotecommands/tealium-react-appsflyer/",
     "tealium-react-braze": "../remotecommands/tealium-react-braze/",
-    "tealium-react-firebase": "file:../remotecommands/tealium-react-firebase",
+    "tealium-react-firebase": "../remotecommands/tealium-react-firebase/",
     "tealium-react-native": "../npm-package/",
+    "tealium-react-native-adobe-visitor": "../modules/adobe-visitor/",
+    "tealium-react-native-crash-reporter": "../modules/crash-reporter/",
     "tealium-react-native-location": "../modules/location/"
   },
   "devDependencies": {

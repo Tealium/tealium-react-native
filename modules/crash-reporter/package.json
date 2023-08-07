@@ -1,8 +1,8 @@
 {
-  "name": "tealium-react-native-adobe-visitor",
-  "title": "Tealium React Native Adobe Visitor Service",
-  "version": "1.0.2",
-  "description": "A native module for using Tealium's Adobe Visitor Service module for Kotlin and Swift libraries.",
+  "name": "tealium-react-native-crash-reporter",
+  "title": "Tealium React Native Crash Reporter",
+  "version": "1.0.0",
+  "description": "A native module for using Tealium's Crash Reporter Module for Kotlin and Swift libraries.",
   "main": "index.js",
   "types": "*.ts",
   "homepage": "https://github.com/Tealium/tealium-react-native",
@@ -15,7 +15,7 @@
     "index.js",
     "index.d.ts",
     "ios",
-    "tealium-react-adobe-visitor.podspec"
+    "tealium-react-native.podspec"
   ],
   "repository": {
     "type": "git",
@@ -30,20 +30,18 @@
     "name": "Tealium"
   },
   "contributors": [
-    "Karen Tamayo"
+      "Karen Tamayo"
   ],
   "license": "Commercial",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "peerDependencies": {
     "react": ">=16.8.1 || < 19.0.0",
-    "react-native": ">=0.60.0-rc.0 <1.0.x"
+    "react-native": ">=0.60.0-rc.0 <1.0.x",
+    "tealium-react-native": "^2.2.0"
   },
   "devDependencies": {
     "react": "^17.0.2",
     "react-native": "^0.67.1"
-  },
-  "dependencies": {
-    "tealium-react-native": "^2.2.0"
   }
 }
