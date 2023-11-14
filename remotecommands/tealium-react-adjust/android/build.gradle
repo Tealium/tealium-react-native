@@ -15,7 +15,7 @@ buildscript {
 //  def kotlin_version = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : project.properties['TealiumReactAdjust_kotlinVersion']
 
   ext {
-    kotlinVersion = '1.6.0'
+    kotlinVersion = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : '1.6.0'
   }
 
   if (project == rootProject) {

@@ -1,7 +1,7 @@
 {
   "name": "tealium-react-adjust",
   "title": "Tealium React Adjust",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Package to support the Tealium Adjust Remote Command",
   "main": "index.js",
   "files": [
