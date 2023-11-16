@@ -1,7 +1,7 @@
 {
   "name": "tealium-react-braze",
   "title": "Tealium React Braze",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Package to support the Tealium Braze Remote Command integration",
   "main": "index.js",
   "files": [

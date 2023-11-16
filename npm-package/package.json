@@ -1,7 +1,7 @@
 {
   "name": "tealium-react-native",
   "title": "Tealium React Native",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "A native module for using Tealium's Kotlin and Swift libraries.",
   "main": "index.js",
   "types": "*.ts",

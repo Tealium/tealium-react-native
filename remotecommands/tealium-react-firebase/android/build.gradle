@@ -13,7 +13,7 @@ apply plugin: 'kotlin-android'
 buildscript {
 
     ext {
-        kotlinVersion = '1.6.0'
+        kotlinVersion = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : '1.6.0'
     }
     // The Android Gradle plugin is only required when opening the android folder stand-alone.
     // This avoids unnecessary downloads and potential conflicts when the library is included as a

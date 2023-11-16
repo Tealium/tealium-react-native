@@ -12,7 +12,7 @@ apply plugin: 'kotlin-android'
 
 buildscript {
   ext {
-    kotlinVersion = '1.6.0'
+    kotlinVersion = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : '1.6.0'
   }
 
   if (project == rootProject) {
