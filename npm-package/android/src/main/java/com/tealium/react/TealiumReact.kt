@@ -35,7 +35,7 @@ class TealiumReactNative : ReactPackage {
 class TealiumReact(private val reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
     override fun getName(): String = MODULE_NAME
-    private var tealium: Tealium? = null
+    internal var tealium: Tealium? = null
     private val remoteCommandFactories: MutableMap<String, RemoteCommandFactory> = mutableMapOf()
     private val optionalModules: MutableList<OptionalModule> = mutableListOf()
 
@@ -124,6 +124,7 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
 
     @ReactMethod
     fun terminateInstance() {
+        tealium = null
         Tealium.destroy(INSTANCE_NAME)
     }
 
@@ -179,25 +180,35 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
 
     @ReactMethod
     fun getFromDataLayer(key: String, callback: Callback) {
-        tealium?.dataLayer?.get(key)?.let {
-            val payload = when (it) {
-                is Array<*> -> JSONArray(it).toWritableArray()
-                is JSONObject -> it.toWritableMap()
-                is String -> {
-                    try {
-                        // Mixed Arrays and Arrays of Arrays/Objects are serialized to string.
-                        // check if we need to deserialize it back here, else return the String value
-                        if (it.startsWith("[") && it.endsWith("]")) {
-                            JSONArray(it).toWritableArray()
-                        } else it
-                    } catch (jex: JSONException) {
-                       it
-                    }
-                }
-                else -> it
-            }
-            callback.invoke(payload)
+        val datalayer = tealium?.dataLayer
+        if (datalayer == null) {
+            callback.invoke(null)
+            return
         }
+
+        val value = datalayer.get(key)
+        if (value == null) {
+            callback.invoke(null)
+            return
+        }
+
+        val payload = when (value) {
+            is Array<*> -> JSONArray(value).toWritableArray()
+            is JSONObject -> value.toWritableMap()
+            is String -> {
+                try {
+                    // Mixed Arrays and Arrays of Arrays/Objects are serialized to string.
+                    // check if we need to deserialize it back here, else return the String value
+                    if (value.startsWith("[") && value.endsWith("]")) {
+                        JSONArray(value).toWritableArray()
+                    } else value
+                } catch (jex: JSONException) {
+                    value
+                }
+            }
+            else -> value
+        }
+        callback.invoke(payload)
     }
 
     @ReactMethod
@@ -211,9 +222,13 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
 
     @ReactMethod
     fun gatherTrackData(callback: Callback) {
-        tealium?.apply {
-            callback.invoke(JSONObject(gatherTrackData()).toWritableMap())
+        val teal = tealium
+        if (teal == null) {
+            callback.invoke(null)
+            return
         }
+
+        callback.invoke(JSONObject(teal.gatherTrackData()).toWritableMap())
     }
 
     @ReactMethod
@@ -270,7 +285,7 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
 
     @ReactMethod
     fun getVisitorId(callback: Callback) {
-        callback.invoke(tealium?.visitorId ?: "")
+        callback.invoke(tealium?.visitorId)
     }
 
     @ReactMethod

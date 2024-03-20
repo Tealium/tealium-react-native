@@ -22,6 +22,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
 import org.json.JSONArray
 import org.json.JSONObject
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -253,6 +254,13 @@ class TealiumReactTests {
         verify {
             Tealium.destroy(INSTANCE_NAME)
         }
+    }
+
+    @Test
+    fun terminate_NullifiesLocalInstance() {
+        tealiumReact.terminateInstance()
+
+        assertNull(tealiumReact.tealium)
     }
 
     @Test
@@ -696,6 +704,32 @@ class TealiumReactTests {
     }
 
     @Test
+    fun getFromDataLayer_ReturnsNull_WhenTealiumNull() {
+        val callback: Callback = mockk(relaxed = true)
+        tealiumReact.tealium = null
+
+        tealiumReact.getFromDataLayer("test", callback)
+
+        verify {
+            callback.invoke(null)
+        }
+    }
+
+    @Test
+    fun getFromDataLayer_ReturnsNull_WhenDataLayerReturnsNull() {
+        val callback: Callback = mockk(relaxed = true)
+        val dataLayer: DataLayer = mockk(relaxed = true)
+        every { mockTealium.dataLayer } returns dataLayer
+        every { dataLayer.get("test") } returns null
+
+        tealiumReact.getFromDataLayer("test", callback)
+
+        verify {
+            callback.invoke(null)
+        }
+    }
+
+    @Test
     fun removeFromDataLayer_CallsRemove_ForEachKey() {
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
@@ -860,6 +894,19 @@ class TealiumReactTests {
 
         verify {
             mockCallback.invoke("visitor123")
+        }
+    }
+
+
+
+    @Test
+    fun getVisitorId_ReturnsNull_When_TealiumNull() {
+        tealiumReact.tealium = null
+
+        tealiumReact.getVisitorId(mockCallback)
+
+        verify {
+            mockCallback.invoke(null)
         }
     }
 
