@@ -9,23 +9,20 @@ Pod::Spec.new do |s|
   s.description  = <<-DESC
                   tealium-react-firebase
                    DESC
-  s.homepage     = "https://github.com/github_account/tealium-react-firebase"
-  # brief license entry:
-  s.license      = "MIT"
-  # optional - use expanded license entry instead:
-  # s.license    = { :type => "MIT", :file => "LICENSE" }
+  s.homepage     = "https://github.com/Tealium/tealium-react-native/remotecommands/tealium-react-firebase"
+  s.license      = { :type => "Commercial", :file => "LICENSE" }
   s.authors      = { "Your Name" => "yourname@email.com" }
-  s.platforms    = { :ios => "11.0" }
-  s.source       = { :git => "https://github.com/github_account/tealium-react-firebase.git", :tag => "#{s.version}" }
+  s.platforms    = { :ios => "12.0" }
+  s.source       = { :git => "https://github.com/Tealium/tealium-react-native.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,c,m,swift}"
   s.requires_arc = true
   s.static_framework = true
 
   s.dependency "React-Core"
-  s.dependency "tealium-react-native", "~> 2.2"
-  s.dependency "tealium-react-native-swift", "~> 2.2"
-  s.dependency "tealium-swift/Core", "~> 2.8"
-  s.dependency "TealiumFirebase", "~> 3.0"
+  s.dependency "tealium-react-native", "~> 2.4"
+  s.dependency "tealium-react-native-swift", "~> 2.4"
+  s.dependency "tealium-swift/Core", "~> 2.12"
+  s.dependency "TealiumFirebase", "~> 3.2"
 end
 

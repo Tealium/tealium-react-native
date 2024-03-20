@@ -12,21 +12,18 @@ Pod::Spec.new do |s|
                   tealium-react-braze
                    DESC
   s.homepage     = "https://github.com/Tealium/tealium-react-native/remotecommands/tealium-react-braze"
-  # brief license entry:
-  s.license      = "MIT"
-  # optional - use expanded license entry instead:
-  # s.license    = { :type => "MIT", :file => "LICENSE" }
+  s.license      = { :type => "Commercial", :file => "LICENSE" }
   s.authors      = { "Tyler Rister" => "tyler.rister@tealium.com" }
-  s.platforms    = { :ios => "11.0" }
-  s.source       = { :git => "https://github.com/tealium-react-native.git", :tag => "#{s.version}" }
+  s.platforms    = { :ios => "12.0" }
+  s.source       = { :git => "https://github.com/Tealium/tealium-react-native.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,c,cc,cpp,m,mm,swift}"
   s.requires_arc = true
 
   s.dependency "React"
-  s.dependency "tealium-react-native", "~> 2.2"
-  s.dependency "tealium-react-native-swift", "~> 2.2"
-  s.dependency "tealium-swift/Core", "~> 2.6"
-  s.dependency "TealiumBraze", "~> 3.0"
+  s.dependency "tealium-react-native", "~> 2.4"
+  s.dependency "tealium-react-native-swift", "~> 2.4"
+  s.dependency "tealium-swift/Core", "~> 2.12"
+  s.dependency "TealiumBraze", "~> 3.2"
 end
 

@@ -1,7 +1,7 @@
 {
   "name": "tealium-react-appsflyer",
   "title": "Tealium React AppsFlyer",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Package to support the Tealium AppsFlyer Remote Command",
   "main": "index.js",
   "files": [
@@ -27,7 +27,7 @@
   "author": {
     "name": "Tealium"
   },
-  "license": "MIT",
+  "license": "Commercial",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "peerDependencies": {

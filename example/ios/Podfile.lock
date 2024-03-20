@@ -1,11 +1,12 @@
 PODS:
-  - Adjust (4.33.6):
-    - Adjust/Core (= 4.33.6)
-  - Adjust/Core (4.33.6)
-  - AppsFlyerFramework (6.12.1):
-    - AppsFlyerFramework/Main (= 6.12.1)
-  - AppsFlyerFramework/Main (6.12.1)
+  - Adjust (4.37.2):
+    - Adjust/Core (= 4.37.2)
+  - Adjust/Core (4.37.2)
+  - AppsFlyerFramework (6.13.1):
+    - AppsFlyerFramework/Main (= 6.13.1)
+  - AppsFlyerFramework/Main (6.13.1)
   - boost (1.76.0)
+  - BrazeKit (7.7.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.71.10)
   - FBReactNativeSpec (0.71.10):
@@ -15,100 +16,109 @@ PODS:
     - React-Core (= 0.71.10)
     - React-jsi (= 0.71.10)
     - ReactCommon/turbomodule/core (= 0.71.10)
-  - Firebase (10.12.0):
-    - Firebase/Core (= 10.12.0)
-  - Firebase/Core (10.12.0):
+  - Firebase (10.22.0):
+    - Firebase/Core (= 10.22.0)
+  - Firebase/Core (10.22.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (~> 10.12.0)
-  - Firebase/CoreOnly (10.12.0):
-    - FirebaseCore (= 10.12.0)
-  - FirebaseAnalytics (10.12.0):
-    - FirebaseAnalytics/AdIdSupport (= 10.12.0)
+    - FirebaseAnalytics (~> 10.22.0)
+  - Firebase/CoreOnly (10.22.0):
+    - FirebaseCore (= 10.22.0)
+  - FirebaseAnalytics (10.22.0):
+    - FirebaseAnalytics/AdIdSupport (= 10.22.0)
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseAnalytics/AdIdSupport (10.12.0):
+    - nanopb (< 2.30911.0, >= 2.30908.0)
+  - FirebaseAnalytics/AdIdSupport (10.22.0):
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
-    - GoogleAppMeasurement (= 10.12.0)
+    - GoogleAppMeasurement (= 10.22.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseCore (10.12.0):
+    - nanopb (< 2.30911.0, >= 2.30908.0)
+  - FirebaseCore (10.22.0):
     - FirebaseCoreInternal (~> 10.0)
-    - GoogleUtilities/Environment (~> 7.8)
-    - GoogleUtilities/Logger (~> 7.8)
-  - FirebaseCoreInternal (10.12.0):
+    - GoogleUtilities/Environment (~> 7.12)
+    - GoogleUtilities/Logger (~> 7.12)
+  - FirebaseCoreInternal (10.22.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseInstallations (10.12.0):
+  - FirebaseInstallations (10.22.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
   - fmt (6.2.1)
   - glog (0.3.5)
-  - GoogleAppMeasurement (10.12.0):
-    - GoogleAppMeasurement/AdIdSupport (= 10.12.0)
+  - GoogleAppMeasurement (10.22.0):
+    - GoogleAppMeasurement/AdIdSupport (= 10.22.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (10.12.0):
-    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.12.0)
+    - nanopb (< 2.30911.0, >= 2.30908.0)
+  - GoogleAppMeasurement/AdIdSupport (10.22.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.22.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleAppMeasurement/WithoutAdIdSupport (10.12.0):
+    - nanopb (< 2.30911.0, >= 2.30908.0)
+  - GoogleAppMeasurement/WithoutAdIdSupport (10.22.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleUtilities/AppDelegateSwizzler (7.11.4):
+    - nanopb (< 2.30911.0, >= 2.30908.0)
+  - GoogleUtilities/AppDelegateSwizzler (7.13.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.11.4):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Environment (7.13.0):
+    - GoogleUtilities/Privacy
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.11.4):
+  - GoogleUtilities/Logger (7.13.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.11.4):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/MethodSwizzler (7.13.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.11.4):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Network (7.13.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Privacy
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.11.4)"
-  - GoogleUtilities/Reachability (7.11.4):
+  - "GoogleUtilities/NSData+zlib (7.13.0)":
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Privacy (7.13.0)
+  - GoogleUtilities/Reachability (7.13.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.11.4):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/UserDefaults (7.13.0):
     - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
   - hermes-engine (0.71.10):
     - hermes-engine/Pre-built (= 0.71.10)
   - hermes-engine/Pre-built (0.71.10)
   - libevent (2.1.12)
-  - nanopb (2.30909.0):
-    - nanopb/decode (= 2.30909.0)
-    - nanopb/encode (= 2.30909.0)
-  - nanopb/decode (2.30909.0)
-  - nanopb/encode (2.30909.0)
-  - Permission-LocationAccuracy (3.8.4):
+  - nanopb (2.30910.0):
+    - nanopb/decode (= 2.30910.0)
+    - nanopb/encode (= 2.30910.0)
+  - nanopb/decode (2.30910.0)
+  - nanopb/encode (2.30910.0)
+  - Permission-LocationAccuracy (3.10.1):
     - RNPermissions
-  - Permission-LocationAlways (3.8.4):
+  - Permission-LocationAlways (3.10.1):
     - RNPermissions
-  - Permission-LocationWhenInUse (3.8.4):
+  - Permission-LocationWhenInUse (3.10.1):
     - RNPermissions
   - PLCrashReporter (1.11.1)
-  - PromisesObjC (2.2.0)
+  - PromisesObjC (2.4.0)
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -444,94 +454,104 @@ PODS:
     - React-jsi (= 0.71.10)
     - React-logger (= 0.71.10)
     - React-perflogger (= 0.71.10)
-  - RNPermissions (3.8.4):
+  - RNPermissions (3.10.1):
     - React-Core
-  - tealium-react-adjust (1.0.3):
+  - tealium-react-adjust (1.1.0):
     - React-Core
-    - tealium-react-native (~> 2.2)
-    - tealium-react-native-swift (~> 2.2)
-    - tealium-swift/Core (~> 2.6)
-    - TealiumAdjust (~> 1.1)
-  - tealium-react-adobe-visitor (1.0.2):
+    - tealium-react-native (~> 2.4)
+    - tealium-react-native-swift (~> 2.4)
+    - tealium-swift/Core (~> 2.12)
+    - TealiumAdjust (~> 1.3)
+  - tealium-react-adobe-visitor (1.1.0):
     - React-Core
-    - tealium-react-native (~> 2.2)
-    - tealium-react-native-swift (~> 2.2)
-    - tealium-swift/Core (~> 2.6)
-    - TealiumAdobeVisitorAPI (~> 1.1)
-  - tealium-react-appsflyer (1.0.1):
+    - tealium-react-native (~> 2.4)
+    - tealium-react-native-swift (~> 2.4)
+    - tealium-swift/Core (~> 2.12)
+    - TealiumAdobeVisitorAPI (~> 1.2)
+  - tealium-react-appsflyer (1.1.0):
     - React
-    - tealium-react-native (~> 2.2)
-    - tealium-react-native-swift (~> 2.2)
-    - tealium-swift/Core (~> 2.9)
-    - TealiumAppsFlyer (~> 2.1)
-  - tealium-react-firebase (1.0.4):
+    - tealium-react-native (~> 2.4)
+    - tealium-react-native-swift (~> 2.4)
+    - tealium-swift/Core (~> 2.12)
+    - TealiumAppsFlyer (~> 3.0)
+  - tealium-react-braze (1.1.0):
+    - React
+    - tealium-react-native (~> 2.4)
+    - tealium-react-native-swift (~> 2.4)
+    - tealium-swift/Core (~> 2.12)
+    - TealiumBraze (~> 3.2)
+  - tealium-react-firebase (1.1.0):
     - React-Core
-    - tealium-react-native (~> 2.2)
-    - tealium-react-native-swift (~> 2.2)
-    - tealium-swift/Core (~> 2.8)
-    - TealiumFirebase (~> 3.0)
-  - tealium-react-native (2.3.1):
+    - tealium-react-native (~> 2.4)
+    - tealium-react-native-swift (~> 2.4)
+    - tealium-swift/Core (~> 2.12)
+    - TealiumFirebase (~> 3.2)
+  - tealium-react-native (2.4.0):
     - React-Core
-    - tealium-swift/Collect (~> 2.8)
-    - tealium-swift/Core (~> 2.8)
-    - tealium-swift/Lifecycle (~> 2.8)
-    - tealium-swift/RemoteCommands (~> 2.8)
-    - tealium-swift/TagManagement (~> 2.8)
-    - tealium-swift/VisitorService (~> 2.8)
-  - tealium-react-native-crash-reporter (1.0.0):
+    - tealium-swift/Collect (~> 2.12)
+    - tealium-swift/Core (~> 2.12)
+    - tealium-swift/Lifecycle (~> 2.12)
+    - tealium-swift/RemoteCommands (~> 2.12)
+    - tealium-swift/TagManagement (~> 2.12)
+    - tealium-swift/VisitorService (~> 2.12)
+  - tealium-react-native-crash-reporter (1.1.0):
     - React-Core
-    - tealium-react-native (~> 2.2)
-    - tealium-react-native-swift (~> 2.2)
-    - tealium-swift/Core (~> 2.6)
-    - TealiumCrashModule (~> 2.3)
-  - tealium-react-native-location (1.0.2):
+    - tealium-react-native (~> 2.4)
+    - tealium-react-native-swift (~> 2.4)
+    - tealium-swift/Core (~> 2.12)
+    - TealiumCrashModule (~> 2.5)
+  - tealium-react-native-location (1.1.0):
     - React-Core
-    - tealium-react-native (~> 2.2)
-    - tealium-react-native-swift (~> 2.2)
-    - tealium-swift/Core (~> 2.6)
-    - tealium-swift/Location (~> 2.6)
-  - tealium-react-native-swift (2.3.1):
+    - tealium-react-native (~> 2.4)
+    - tealium-react-native-swift (~> 2.4)
+    - tealium-swift/Core (~> 2.12)
+    - tealium-swift/Location (~> 2.12)
+  - tealium-react-native-swift (2.4.0):
     - React-Core
     - tealium-react-native
-    - tealium-swift/Collect (~> 2.8)
-    - tealium-swift/Core (~> 2.8)
-    - tealium-swift/Lifecycle (~> 2.8)
-    - tealium-swift/RemoteCommands (~> 2.8)
-    - tealium-swift/TagManagement (~> 2.8)
-    - tealium-swift/VisitorService (~> 2.8)
-  - tealium-swift/Collect (2.10.0):
+    - tealium-swift/Collect (~> 2.12)
+    - tealium-swift/Core (~> 2.12)
+    - tealium-swift/Lifecycle (~> 2.12)
+    - tealium-swift/RemoteCommands (~> 2.12)
+    - tealium-swift/TagManagement (~> 2.12)
+    - tealium-swift/VisitorService (~> 2.12)
+  - tealium-swift/Collect (2.12.2):
     - tealium-swift/Core
-  - tealium-swift/Core (2.10.0)
-  - tealium-swift/Lifecycle (2.10.0):
+  - tealium-swift/Core (2.12.2)
+  - tealium-swift/Lifecycle (2.12.2):
     - tealium-swift/Core
-  - tealium-swift/Location (2.10.0):
+  - tealium-swift/Location (2.12.2):
     - tealium-swift/Core
-  - tealium-swift/RemoteCommands (2.10.0):
+  - tealium-swift/RemoteCommands (2.12.2):
     - tealium-swift/Core
-  - tealium-swift/TagManagement (2.10.0):
+  - tealium-swift/TagManagement (2.12.2):
     - tealium-swift/Core
-  - tealium-swift/VisitorService (2.10.0):
+  - tealium-swift/VisitorService (2.12.2):
     - tealium-swift/Core
-  - TealiumAdjust (1.1.0):
-    - Adjust (~> 4.29)
-    - tealium-swift/Core (~> 2.6)
-    - tealium-swift/RemoteCommands (~> 2.6)
-  - TealiumAdobeVisitorAPI (1.1.1):
-    - tealium-swift/Core (~> 2.8)
-  - TealiumAppsFlyer (2.1.2):
+  - TealiumAdjust (1.3.0):
+    - Adjust (~> 4.34)
+    - tealium-swift/Core (~> 2.12)
+    - tealium-swift/RemoteCommands (~> 2.12)
+  - TealiumAdobeVisitorAPI (1.2.0):
+    - tealium-swift/Core (~> 2.12)
+  - TealiumAppsFlyer (3.0.0):
     - AppsFlyerFramework (~> 6.9)
-    - tealium-swift/Core (~> 2.9)
-    - tealium-swift/RemoteCommands (~> 2.9)
-  - TealiumCrashModule (2.3.0):
-    - TealiumCrashModule/Crash (= 2.3.0)
-  - TealiumCrashModule/Crash (2.3.0):
-    - PLCrashReporter
-    - tealium-swift/Core
-  - TealiumFirebase (3.0.0):
+    - tealium-swift/Core (~> 2.12)
+    - tealium-swift/RemoteCommands (~> 2.12)
+  - TealiumBraze (3.2.0):
+    - BrazeKit (~> 7.2)
+    - tealium-swift/Core (~> 2.12)
+    - tealium-swift/RemoteCommands (~> 2.12)
+  - TealiumCrashModule (2.5.0):
+    - TealiumCrashModule/Crash (= 2.5.0)
+  - TealiumCrashModule/Crash (2.5.0):
+    - PLCrashReporter (~> 1.11)
+    - tealium-swift/Core (~> 2.12)
+  - TealiumFirebase (3.2.0):
     - Firebase (~> 10.7)
     - FirebaseAnalytics (~> 10.7)
-    - tealium-swift/Core (~> 2.9)
-    - tealium-swift/RemoteCommands (~> 2.9)
+    - tealium-swift/Core (~> 2.12)
+    - tealium-swift/RemoteCommands (~> 2.12)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -577,6 +597,7 @@ DEPENDENCIES:
   - tealium-react-adjust (from `../node_modules/tealium-react-adjust`)
   - tealium-react-adobe-visitor (from `../node_modules/tealium-react-native-adobe-visitor`)
   - tealium-react-appsflyer (from `../node_modules/tealium-react-appsflyer`)
+  - tealium-react-braze (from `../node_modules/tealium-react-braze`)
   - tealium-react-firebase (from `../node_modules/tealium-react-firebase`)
   - tealium-react-native (from `../node_modules/tealium-react-native`)
   - tealium-react-native-crash-reporter (from `../node_modules/tealium-react-native-crash-reporter`)
@@ -588,6 +609,7 @@ SPEC REPOS:
   trunk:
     - Adjust
     - AppsFlyerFramework
+    - BrazeKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -604,6 +626,7 @@ SPEC REPOS:
     - TealiumAdjust
     - TealiumAdobeVisitorAPI
     - TealiumAppsFlyer
+    - TealiumBraze
     - TealiumCrashModule
     - TealiumFirebase
 
@@ -688,6 +711,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/tealium-react-native-adobe-visitor"
   tealium-react-appsflyer:
     :path: "../node_modules/tealium-react-appsflyer"
+  tealium-react-braze:
+    :path: "../node_modules/tealium-react-braze"
   tealium-react-firebase:
     :path: "../node_modules/tealium-react-firebase"
   tealium-react-native:
@@ -702,29 +727,30 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Adjust: c3b6c3734928a617fefce81dc223fd5f104162be
-  AppsFlyerFramework: e29b63fc5441400a38a31c5501c1da500b9d53d0
+  Adjust: a830d963025334aee8a62a7bac87825e297a841e
+  AppsFlyerFramework: 971521cf5b890c2afeab2f2c91734547b8b169ca
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
+  BrazeKit: ee31d3b5113646cbd6ad44eafc93b14c3c3c504c
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: ddb55c55295ea51ed98aa7e2e08add2f826309d5
   FBReactNativeSpec: 90fc1a90b4b7a171e0a7c20ea426c1bf6ce4399c
-  Firebase: 07150e75d142fb9399f6777fa56a187b17f833a0
-  FirebaseAnalytics: 0270389efbe3022b54ec4588862dabec3477ee98
-  FirebaseCore: f86a1394906b97ac445ae49c92552a9425831bed
-  FirebaseCoreInternal: 950500ad8a08963657f6d8c67b579740c06d6aa1
-  FirebaseInstallations: 7b99ef103f013624444c614397038219c45f8e63
+  Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
+  FirebaseAnalytics: 8d0ff929c63b7f72260f332b86ccf569776b75d3
+  FirebaseCore: 0326ec9b05fbed8f8716cddbf0e36894a13837f7
+  FirebaseCoreInternal: bca337352024b18424a61e478460547d46c4c753
+  FirebaseInstallations: 763814908793c0da14c18b3dcffdec71e29ed55e
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
-  GoogleAppMeasurement: 2d800fab85e7848b1e66a6f8ce5bca06c5aad892
-  GoogleUtilities: c63691989bf362ba0505507da00eeb326192e83e
+  GoogleAppMeasurement: ccefe3eac9b0aa27f96066809fb1a7fe4b462626
+  GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   hermes-engine: d27603b55a48402501ad1928c05411dae9cd6b85
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
-  Permission-LocationAccuracy: a38ddb5c5d0b8e656f3c86e4a500f9bb88bc099d
-  Permission-LocationAlways: 8fd5518716c3045f9c4edf77b901126098d79b60
-  Permission-LocationWhenInUse: 24d97eeb25d8ff9f2232e070f792eeb1360ccaf0
+  nanopb: 438bc412db1928dac798aa6fd75726007be04262
+  Permission-LocationAccuracy: dc0b0989dd004f183a32ad5f99802d9e09b0571a
+  Permission-LocationAlways: 0a0de4637662cfdf3603d6933779da2bdd657306
+  Permission-LocationWhenInUse: 31f52ebddef50c306a585b5a82ca16c8ff582dec
   PLCrashReporter: 5d2d3967afe0efad61b3048d617e2199a5d1b787
-  PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
+  PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 8ef706f91e2b643cd32c26a57700b5f24fab0585
   RCTTypeSafety: 5fbddd8eb9242b91ac0d901c01da3673f358b1b7
@@ -752,23 +778,25 @@ SPEC CHECKSUMS:
   React-RCTVibration: d13cc2d63286c633393d3a7f6f607cc2a09ec011
   React-runtimeexecutor: a9a1cd79996c9a0846e3232ecb25c64e1cc0172e
   ReactCommon: e7a0cdbb67f8da60677db83d693dea816780a6e9
-  RNPermissions: f1b49dd05fa9b83993cd05a9ee115247944d8f1a
-  tealium-react-adjust: ae9cb0658f21293ca1bd8240cbc01e6da744d3cc
-  tealium-react-adobe-visitor: 8493ca729d41f3290d1c16ac521b405dbc004fb4
-  tealium-react-appsflyer: 041783acc14ac5a3ca416cc6e0a92dd3e5c81ecb
-  tealium-react-firebase: e8d20c3ea0d36c0b56afbdd75b6d43057abc93ab
-  tealium-react-native: 2a5481ab4be78106f33447a93b035725b1aa957e
-  tealium-react-native-crash-reporter: b83046fe9a3c7e83a6554311e28993fc3673bf2f
-  tealium-react-native-location: 2bd1b4e1081fd96904195ccbfb08b48b675256b8
-  tealium-react-native-swift: c1302b2ba205cf9fb75ab27373e32c2bb4de4e6f
-  tealium-swift: 92ac60201de69b342ecc2d52e2207796cf936cf8
-  TealiumAdjust: e4dc17fd9dad81b37207e8df2b52ab12af36f606
-  TealiumAdobeVisitorAPI: dbcc822fad80ade2edcb731f732f0cb43048c604
-  TealiumAppsFlyer: 091f216de29ef5152a2a8575db82b3ea7e48d7c7
-  TealiumCrashModule: 49826bdeb10b24407296463cd30a9ee00ca43232
-  TealiumFirebase: 49aef245aa7e5e6826a7fa1594538f2c7f1750d2
+  RNPermissions: 4e3714e18afe7141d000beae3755e5b5fb2f5e05
+  tealium-react-adjust: f3ef6ba43238d4cbc9483f0aa38738a3eb892fbf
+  tealium-react-adobe-visitor: 140c65d5cd476edd285b4943b75f9aafcd698077
+  tealium-react-appsflyer: 1be2e9df2dde521ebcd9b4324ddf78ce688ee995
+  tealium-react-braze: f72256073bf99902dbfbfcd875399cd0fac61796
+  tealium-react-firebase: 44bc3f5f8294a0f9fc2fba5ebd109bde31a141e5
+  tealium-react-native: 88d35a0e0e57dcb58d43af0422c15225e60de3b4
+  tealium-react-native-crash-reporter: b6bbb018f2d3fc1c27a0423aca58c33820395d41
+  tealium-react-native-location: 7f275669c9434c0877e8ba20af06ac37c003657f
+  tealium-react-native-swift: 3a6978cb7bcf1a9f6444d4bd7a507be890c1b9a6
+  tealium-swift: 4b7e3dda42d7c1de6acb769abad9920346d17d43
+  TealiumAdjust: 7a8c033c93f5aaf306ebecaa2e575a5958e55e87
+  TealiumAdobeVisitorAPI: dd487f3e130829a15b9cdc7de7b2841a200214e2
+  TealiumAppsFlyer: 7736e28b06462c2fe2349040adce06a8ba6b27b1
+  TealiumBraze: 9de0067b72a00c7d3b0ad67bee501a34518b4e06
+  TealiumCrashModule: f52a33391a599e6b62983caff5432cd7e536104d
+  TealiumFirebase: b489c74d3a1d7d81ad806e4da4638be6ea9870b9
   Yoga: e7ea9e590e27460d28911403b894722354d73479
 
 PODFILE CHECKSUM: 832c551ff313519d4cfb80ad52278076f6e41133
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.15.2

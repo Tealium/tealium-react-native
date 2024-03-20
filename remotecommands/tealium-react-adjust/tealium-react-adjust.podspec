@@ -9,23 +9,20 @@ Pod::Spec.new do |s|
   s.description  = <<-DESC
                   tealium-react-adjust
                    DESC
-  s.homepage     = "https://github.com/github_account/tealium-react-adjust"
-  # brief license entry:
-  s.license      = "MIT"
-  # optional - use expanded license entry instead:
-  # s.license    = { :type => "MIT", :file => "LICENSE" }
+  s.homepage     = "https://github.com/Tealium/tealium-react-native/remotecommands/tealium-react-adjust"
+  s.license      = { :type => "Commercial", :file => "LICENSE" }
   s.authors      = { "Tealium" => "mobile-team@tealium.com" }
-  s.platforms    = { :ios => "11.0" }
-  s.source       = { :git => "https://github.com/github_account/tealium-react-adjust.git", :tag => "#{s.version}" }
+  s.platforms    = { :ios => "12.0" }
+  s.source       = { :git => "https://github.com/Tealium/tealium-react-native.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,c,m,swift}"
   s.requires_arc = true
   s.static_framework = true
 
   s.dependency "React-Core"
-  s.dependency "tealium-react-native", "~> 2.2"
-  s.dependency "tealium-react-native-swift", "~> 2.2"
-  s.dependency "tealium-swift/Core", "~> 2.6"
-  s.dependency "TealiumAdjust", "~> 1.1"
+  s.dependency "tealium-react-native", "~> 2.4"
+  s.dependency "tealium-react-native-swift", "~> 2.4"
+  s.dependency "tealium-swift/Core", "~> 2.12"
+  s.dependency "TealiumAdjust", "~> 1.3"
 end
 
