@@ -111,11 +111,11 @@ PODS:
     - nanopb/encode (= 2.30910.0)
   - nanopb/decode (2.30910.0)
   - nanopb/encode (2.30910.0)
-  - Permission-LocationAccuracy (3.8.0):
+  - Permission-LocationAccuracy (3.10.1):
     - RNPermissions
-  - Permission-LocationAlways (3.8.0):
+  - Permission-LocationAlways (3.10.1):
     - RNPermissions
-  - Permission-LocationWhenInUse (3.8.0):
+  - Permission-LocationWhenInUse (3.10.1):
     - RNPermissions
   - PLCrashReporter (1.11.1)
   - PromisesObjC (2.4.0)
@@ -454,7 +454,7 @@ PODS:
     - React-jsi (= 0.71.10)
     - React-logger (= 0.71.10)
     - React-perflogger (= 0.71.10)
-  - RNPermissions (3.8.0):
+  - RNPermissions (3.10.1):
     - React-Core
   - tealium-react-adjust (1.1.0):
     - React-Core
@@ -729,7 +729,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Adjust: a830d963025334aee8a62a7bac87825e297a841e
   AppsFlyerFramework: 971521cf5b890c2afeab2f2c91734547b8b169ca
-  boost: a7c83b31436843459a1961bfd74b96033dc77234
+  boost: 57d2868c099736d80fcd648bf211b4431e51a558
   BrazeKit: ee31d3b5113646cbd6ad44eafc93b14c3c3c504c
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: ddb55c55295ea51ed98aa7e2e08add2f826309d5
@@ -740,15 +740,15 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: bca337352024b18424a61e478460547d46c4c753
   FirebaseInstallations: 763814908793c0da14c18b3dcffdec71e29ed55e
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 3d02b25ca00c2d456734d0bcff864cbc62f6ae1a
+  glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   GoogleAppMeasurement: ccefe3eac9b0aa27f96066809fb1a7fe4b462626
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   hermes-engine: d27603b55a48402501ad1928c05411dae9cd6b85
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
-  Permission-LocationAccuracy: d6aa5146c084e7077e7efc4cbb543c7f6c72c51a
-  Permission-LocationAlways: e7ce67f3091ec096b6ac274bc30a18830a66b33c
-  Permission-LocationWhenInUse: 1c80e4797ae587642a83125e80b86686cefeba53
+  Permission-LocationAccuracy: dc0b0989dd004f183a32ad5f99802d9e09b0571a
+  Permission-LocationAlways: 0a0de4637662cfdf3603d6933779da2bdd657306
+  Permission-LocationWhenInUse: 31f52ebddef50c306a585b5a82ca16c8ff582dec
   PLCrashReporter: 5d2d3967afe0efad61b3048d617e2199a5d1b787
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
@@ -778,7 +778,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: d13cc2d63286c633393d3a7f6f607cc2a09ec011
   React-runtimeexecutor: a9a1cd79996c9a0846e3232ecb25c64e1cc0172e
   ReactCommon: e7a0cdbb67f8da60677db83d693dea816780a6e9
-  RNPermissions: 215c54462104b3925b412b0fb3c9c497b21c358b
+  RNPermissions: 4e3714e18afe7141d000beae3755e5b5fb2f5e05
   tealium-react-adjust: f3ef6ba43238d4cbc9483f0aa38738a3eb892fbf
   tealium-react-adobe-visitor: 140c65d5cd476edd285b4943b75f9aafcd698077
   tealium-react-appsflyer: 1be2e9df2dde521ebcd9b4324ddf78ce688ee995
@@ -799,4 +799,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 832c551ff313519d4cfb80ad52278076f6e41133
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.15.2
