@@ -114,7 +114,7 @@ class TealiumWrapper: NSObject {
     @objc(getVisitorId:)
     public func getVisitorId(_ callback: RCTResponseSenderBlock) {
         guard let visitorId = TealiumReactNative.visitorId else {
-            callback(nil)
+            callback([""])
             return
         }
         callback([visitorId])
@@ -133,7 +133,7 @@ class TealiumWrapper: NSObject {
     @objc(getSessionId:)
     public func getSessionId(_ callback: RCTResponseSenderBlock) {
         guard let sessionId = TealiumReactNative.sessionId else {
-            callback(nil)
+            callback([""])
             return
         }
         callback([sessionId])

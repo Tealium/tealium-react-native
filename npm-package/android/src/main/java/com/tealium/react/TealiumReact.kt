@@ -285,7 +285,7 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
 
     @ReactMethod
     fun getVisitorId(callback: Callback) {
-        callback.invoke(tealium?.visitorId)
+        callback.invoke(tealium?.visitorId ?: "")
     }
 
     @ReactMethod
@@ -300,6 +300,11 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
 
     @ReactMethod
     fun getSessionId(callback: Callback){
-        callback(tealium?.session?.id.toString())
+        val id = tealium?.session?.id
+        if (id == null) {
+            callback("")
+        } else {
+            callback(id.toString())
+        }
     }
 }

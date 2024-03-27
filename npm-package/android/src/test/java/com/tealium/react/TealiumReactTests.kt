@@ -900,13 +900,13 @@ class TealiumReactTests {
 
 
     @Test
-    fun getVisitorId_ReturnsNull_When_TealiumNull() {
+    fun getVisitorId_ReturnsEmptyString_When_TealiumNull() {
         tealiumReact.tealium = null
 
         tealiumReact.getVisitorId(mockCallback)
 
         verify {
-            mockCallback.invoke(null)
+            mockCallback.invoke("")
         }
     }
 
@@ -918,6 +918,17 @@ class TealiumReactTests {
 
         verify {
             mockCallback.invoke("12345")
+        }
+    }
+
+    @Test
+    fun getSessionId_ReturnsEmptyString_When_TealiumNull() {
+        tealiumReact.tealium = null
+
+        tealiumReact.getSessionId(mockCallback)
+
+        verify {
+            mockCallback.invoke("")
         }
     }
 
