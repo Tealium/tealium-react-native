@@ -897,8 +897,6 @@ class TealiumReactTests {
         }
     }
 
-
-
     @Test
     fun getVisitorId_ReturnsEmptyString_When_TealiumNull() {
         tealiumReact.tealium = null
