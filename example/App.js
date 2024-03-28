@@ -196,6 +196,20 @@ export default class App extends Component<{}> {
         Tealium.getData(DataLayer.TestSessionData, value => {
             console.log(`${DataLayer.TestSessionData}: ${value}`)
         })
+
+        new Promise((resolve, reject) => {
+            Tealium.getData("missing_data", value => {
+                if (value) {
+                    resolve(value)
+                } else {
+                    reject("Data for 'missing_data' not found.")
+                }
+            })
+        }).then((value) => {
+                console.log("missing_data: " + value)
+            }).catch((err) => {
+                console.log("Error fetching data: " + err)
+            })
     }
 
     gatherTrackData() {
