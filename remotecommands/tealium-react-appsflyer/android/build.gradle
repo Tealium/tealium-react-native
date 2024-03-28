@@ -54,11 +54,17 @@ android {
     disable "GradleCompatible"
   }
 
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
+  def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0].toInteger()
+  if(agpVersion < 8) {
+    compileOptions {
+      sourceCompatibility JavaVersion.VERSION_11
+      targetCompatibility JavaVersion.VERSION_11
+    }
 
+    kotlinOptions {
+      jvmTarget = JavaVersion.VERSION_11
+    }
+  }
 }
 
 repositories {
