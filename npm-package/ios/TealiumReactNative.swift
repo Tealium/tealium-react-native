@@ -154,8 +154,12 @@ public class TealiumReactNative: RCTEventEmitter {
     }
 
     @objc
-    public static func gatherTrackData(completion: @escaping ([String: Any]) -> ()) {
-        tealium?.gatherTrackData(completion: completion)
+    public static func gatherTrackData(completion: @escaping ([String: Any]?) -> ()) {
+        guard let tealium = tealium else {
+            completion(nil)
+            return
+        }
+        tealium.gatherTrackData(completion: completion)
     }
 
     @objc
