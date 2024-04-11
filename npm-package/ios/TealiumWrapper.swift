@@ -49,6 +49,7 @@ class TealiumWrapper: NSObject {
     @objc(getFromDataLayer:callback:)
     public func getFromDataLayer(_ key: String, callback: RCTResponseSenderBlock) {
         guard let item = TealiumReactNative.getFromDataLayer(key: key) else {
+            callback(nil)
             return
         }
         callback([item])
@@ -63,6 +64,7 @@ class TealiumWrapper: NSObject {
     public func gatherTrackData(callback: @escaping RCTResponseSenderBlock) {
         TealiumReactNative.gatherTrackData(completion: { response in
             guard let result = response as Any? else {
+                callback(nil)
                 return
             }
             callback([result])
@@ -112,6 +114,7 @@ class TealiumWrapper: NSObject {
     @objc(getVisitorId:)
     public func getVisitorId(_ callback: RCTResponseSenderBlock) {
         guard let visitorId = TealiumReactNative.visitorId else {
+            callback([""])
             return
         }
         callback([visitorId])
@@ -130,6 +133,7 @@ class TealiumWrapper: NSObject {
     @objc(getSessionId:)
     public func getSessionId(_ callback: RCTResponseSenderBlock) {
         guard let sessionId = TealiumReactNative.sessionId else {
+            callback([""])
             return
         }
         callback([sessionId])

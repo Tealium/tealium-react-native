@@ -1,7 +1,7 @@
 {
   "name": "tealium-react-firebase",
   "title": "Tealium React Firebase",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "Package to support the Tealium Firebase Remote Command integration",
   "main": "index.js",
   "files": [
@@ -30,7 +30,7 @@
     "James Keith",
     "Christina Sund"
   ],
-  "license": "MIT",
+  "license": "Commercial",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "peerDependencies": {

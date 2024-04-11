@@ -40,7 +40,7 @@ buildscript {
     }
 }
 
-version = "1.0.3"
+version = "1.1.0"
 android {
     compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
     buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
@@ -74,7 +74,6 @@ repositories {
     maven {
         url "https://maven.tealiumiq.com/android/releases/"
     }
-    maven { url "https://appboy.github.io/appboy-android-sdk/sdk" }
     google()
     mavenCentral()
 }
@@ -84,7 +83,6 @@ dependencies {
     implementation project(':tealium-react-native')
 
     implementation 'com.facebook.react:react-native:+'  // From node_modules
-    implementation 'com.tealium:remotecommands:1.0.0'
-    implementation 'com.tealium.remotecommands:braze:1.1.1'
-    implementation 'com.appboy:android-sdk-ui:13.1.2'
+    implementation 'com.tealium:remotecommands:1.0.2'
+    implementation 'com.tealium.remotecommands:braze:3.0.0'
 }
