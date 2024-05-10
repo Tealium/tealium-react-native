@@ -10,8 +10,6 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-community/cli-platform-android": "^13.6.6",
-    "@react-native-community/cli-platform-ios": "^13.6.6",
     "react": "18.2.0",
     "react-native": "0.71.10",
     "react-native-permissions": "^3.6.1",
