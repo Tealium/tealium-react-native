@@ -29,10 +29,12 @@ import FirebaseRemoteCommand from 'tealium-react-firebase';
 import BrazeRemoteCommand from 'tealium-react-braze';
 import AdjustRemoteCommand from 'tealium-react-adjust';
 import { AdjustConfig, AdjustEnvironemnt } from 'tealium-react-adjust/common';
-import AppsFlyerRemoteCommand from 'tealium-react-appsflyer';
+// import AppsFlyerRemoteCommand from 'tealium-react-appsflyer';
 import { checkAndRequestPermissions } from "./Utils"
 // import { AuthState } from 'tealium-react-native-adobe-visitor/common';
 import TealiumCrashReporter from 'tealium-react-native-crash-reporter';
+import TealiumInstallReferrerAttribution from 'tealium-react-native-install-referrer-attribution';
+import AttributionConfig from 'tealium-react-native-install-referrer-attribution/common'
 
 export default class App extends Component<{}> {
 
@@ -53,13 +55,17 @@ export default class App extends Component<{}> {
             allowSuppressLogLevel: false
         }
 
+        // let attributionConfig: AttributionConfig = {}
+
         // TealiumAdobeVisitor.configure(adobeVisitorConfig);
         TealiumLocation.configure(locationConfig);
         FirebaseRemoteCommand.initialize();
         BrazeRemoteCommand.initialize();
         AdjustRemoteCommand.initialize(adjustConfig);
-        AppsFlyerRemoteCommand.initialize();
+        // AppsFlyerRemoteCommand.initialize();
         TealiumCrashReporter.initialize();
+        TealiumInstallReferrerAttribution.configure();
+
         let config: TealiumConfig = {
             account: 'tealiummobile',
             profile: 'demo',
@@ -94,10 +100,11 @@ export default class App extends Component<{}> {
             }, {
                 id: AdjustRemoteCommand.name,
                 path: 'adjust.json'
-            }, {
-                id: AppsFlyerRemoteCommand.name,
-                path: 'appsflyer.json'
-            }],
+            }, //{
+            //     id: AppsFlyerRemoteCommand.name,
+            //     path: 'appsflyer.json'
+            // }
+        ],
             visitorIdentityKey: DataLayer.UserIdentity
         };
         Tealium.initialize(config, success => {

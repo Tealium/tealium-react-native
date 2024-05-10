@@ -2,9 +2,9 @@ PODS:
   - Adjust (4.37.2):
     - Adjust/Core (= 4.37.2)
   - Adjust/Core (4.37.2)
-  - AppsFlyerFramework (6.13.1):
-    - AppsFlyerFramework/Main (= 6.13.1)
-  - AppsFlyerFramework/Main (6.13.1)
+  - AppsFlyerFramework (6.14.3):
+    - AppsFlyerFramework/Main (= 6.14.3)
+  - AppsFlyerFramework/Main (6.14.3)
   - boost (1.76.0)
   - BrazeKit (7.7.0)
   - DoubleConversion (1.1.6)
@@ -486,6 +486,12 @@ PODS:
     - tealium-react-native-swift (~> 2.4)
     - tealium-swift/Core (~> 2.12)
     - TealiumFirebase (~> 3.2)
+  - tealium-react-install-referrer-attribution (1.1.0):
+    - React-Core
+    - tealium-react-native (~> 2.4)
+    - tealium-react-native-swift (~> 2.4)
+    - tealium-swift/Attribution (~> 2.12)
+    - tealium-swift/Core (~> 2.12)
   - tealium-react-native (2.4.0):
     - React-Core
     - tealium-swift/Collect (~> 2.12)
@@ -515,6 +521,8 @@ PODS:
     - tealium-swift/RemoteCommands (~> 2.12)
     - tealium-swift/TagManagement (~> 2.12)
     - tealium-swift/VisitorService (~> 2.12)
+  - tealium-swift/Attribution (2.12.2):
+    - tealium-swift/Core
   - tealium-swift/Collect (2.12.2):
     - tealium-swift/Core
   - tealium-swift/Core (2.12.2)
@@ -599,6 +607,7 @@ DEPENDENCIES:
   - tealium-react-appsflyer (from `../node_modules/tealium-react-appsflyer`)
   - tealium-react-braze (from `../node_modules/tealium-react-braze`)
   - tealium-react-firebase (from `../node_modules/tealium-react-firebase`)
+  - tealium-react-install-referrer-attribution (from `../node_modules/tealium-react-native-install-referrer-attribution`)
   - tealium-react-native (from `../node_modules/tealium-react-native`)
   - tealium-react-native-crash-reporter (from `../node_modules/tealium-react-native-crash-reporter`)
   - tealium-react-native-location (from `../node_modules/tealium-react-native-location`)
@@ -715,6 +724,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/tealium-react-braze"
   tealium-react-firebase:
     :path: "../node_modules/tealium-react-firebase"
+  tealium-react-install-referrer-attribution:
+    :path: "../node_modules/tealium-react-native-install-referrer-attribution"
   tealium-react-native:
     :path: "../node_modules/tealium-react-native"
   tealium-react-native-crash-reporter:
@@ -728,7 +739,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Adjust: a830d963025334aee8a62a7bac87825e297a841e
-  AppsFlyerFramework: 971521cf5b890c2afeab2f2c91734547b8b169ca
+  AppsFlyerFramework: 0a68f5b72bbbadfa71d4ae3eaf040e82d62e8518
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   BrazeKit: ee31d3b5113646cbd6ad44eafc93b14c3c3c504c
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
@@ -784,6 +795,7 @@ SPEC CHECKSUMS:
   tealium-react-appsflyer: 1be2e9df2dde521ebcd9b4324ddf78ce688ee995
   tealium-react-braze: f72256073bf99902dbfbfcd875399cd0fac61796
   tealium-react-firebase: 44bc3f5f8294a0f9fc2fba5ebd109bde31a141e5
+  tealium-react-install-referrer-attribution: 36b50c10db62a71b9af5b01f49a024efa0e63793
   tealium-react-native: 88d35a0e0e57dcb58d43af0422c15225e60de3b4
   tealium-react-native-crash-reporter: b6bbb018f2d3fc1c27a0423aca58c33820395d41
   tealium-react-native-location: 7f275669c9434c0877e8ba20af06ac37c003657f

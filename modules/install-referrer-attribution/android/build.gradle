@@ -1,0 +1,105 @@
+def DEFAULT_COMPILE_SDK_VERSION = 31
+def DEFAULT_BUILD_TOOLS_VERSION = '30.0.2'
+def DEFAULT_MIN_SDK_VERSION = 21
+def DEFAULT_TARGET_SDK_VERSION = 31
+
+def safeExtGet(prop, fallback) {
+  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+buildscript {
+  ext {
+    kotlinVersion = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : '1.6.0'
+  }
+
+  if (project == rootProject) {
+    repositories {
+      google()
+      mavenCentral()
+      maven {
+        url "https://maven.tealiumiq.com/android/releases/"
+      }
+    }
+    dependencies {
+      classpath 'com.android.tools.build:gradle:4.2.2'
+    }
+  }
+
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${project.ext.kotlinVersion}"
+  }
+}
+
+version = "1.0.0"
+
+android {
+  compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
+  buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
+
+  defaultConfig {
+    minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
+    targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
+    versionCode 1
+    versionName "1.0"
+
+    buildConfigField "String", "TAG", "\"Tealium-React-Install-Referrer-Attribution-$version\""
+  }
+
+  lintOptions {
+    disable 'GradleCompatible'
+  }
+
+  def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0].toInteger()
+  if(agpVersion < 8) {
+    compileOptions {
+      sourceCompatibility JavaVersion.VERSION_11
+      targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+      jvmTarget = JavaVersion.VERSION_11
+    }
+  }
+}
+
+repositories {
+  // ref: https://www.baeldung.com/maven-local-repository
+  mavenLocal()
+  maven {
+    // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+    url "$rootDir/../node_modules/react-native/android"
+  }
+
+  maven {
+    // Android JSC is installed from npm
+    url "$rootDir/../node_modules/jsc-android/dist"
+  }
+
+  maven {
+    url "https://maven.tealiumiq.com/android/releases/"
+  }
+
+  google()
+  mavenCentral()
+}
+
+
+dependencies {
+  // noinspection GradleDynamicVersion
+  implementation 'com.facebook.react:react-native:+'
+
+  // Tealium React Native
+  implementation project(":tealium-react-native")
+
+  // Tealium Install Referrer
+  implementation 'com.tealium:kotlin-install-referrer:1.1.1'
+  implementation 'com.tealium:kotlin-ad-identifier:1.1.2'
+
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${project.ext.kotlinVersion}"
+}
