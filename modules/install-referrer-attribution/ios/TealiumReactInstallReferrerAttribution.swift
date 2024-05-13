@@ -29,11 +29,11 @@ class TealiumReactInstallReferrerAttribution: NSObject, RCTBridgeModule {
             module.setSearchAdsEnabled(enabled: searchAds)
         }
 
-        if let skAdAttribution = config[KEY_ATTRIBUTION_SEARCH_ADS_ENABLED] as? Bool {
+        if let skAdAttribution = config[KEY_ATTRIBUTION_SKAD_ATTRIBUTION_ENABLED] as? Bool {
             module.setSkAdAttributionEnabled(enabled: skAdAttribution)
         }
 
-        if let skAdKeys = config[KEY_ATTRIBUTION_SEARCH_ADS_ENABLED] as? [String: String] {
+        if let skAdKeys = config[KEY_ATTRIBUTION_SKAD_CONVERSION_KEYS] as? [String: String] {
             module.setSkAdConversionKeys(keys: skAdKeys)
         }
     }

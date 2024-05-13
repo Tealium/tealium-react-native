@@ -1,7 +1,7 @@
 export interface AttributionConfig {
     searchAdsEnabled?: boolean;
     skAdAttributionEnabled?: boolean;
-    skAdConversionKeys?: Object;
+    skAdConversionKeys?: { [key: string]: string };
 }
 
 export class TealiumInstallReferrerAttributionCommon{}

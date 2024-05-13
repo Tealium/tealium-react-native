@@ -31,7 +31,7 @@ import AdjustRemoteCommand from 'tealium-react-adjust';
 import { AdjustConfig, AdjustEnvironemnt } from 'tealium-react-adjust/common';
 import AppsFlyerRemoteCommand from 'tealium-react-appsflyer';
 import { checkAndRequestPermissions } from "./Utils"
-import { AuthState } from 'tealium-react-native-adobe-visitor/common';
+// import { AuthState } from 'tealium-react-native-adobe-visitor/common';
 import TealiumCrashReporter from 'tealium-react-native-crash-reporter';
 import TealiumInstallReferrerAttribution from 'tealium-react-native-install-referrer-attribution';
 import AttributionConfig from 'tealium-react-native-install-referrer-attribution/common'
@@ -55,7 +55,11 @@ export default class App extends Component<{}> {
             allowSuppressLogLevel: false
         }
 
-        // let attributionConfig: AttributionConfig = {}
+        let attributionConfig: AttributionConfig = {
+            searchAdsEnabled: true,
+            skAdAttributionEnabled: true,
+            skAdConversionKeys: {"event": "conversion_value"}
+        }
 
         // TealiumAdobeVisitor.configure(adobeVisitorConfig);
         TealiumLocation.configure(locationConfig);
@@ -64,7 +68,7 @@ export default class App extends Component<{}> {
         AdjustRemoteCommand.initialize(adjustConfig);
         AppsFlyerRemoteCommand.initialize();
         TealiumCrashReporter.initialize();
-        TealiumInstallReferrerAttribution.configure();
+        TealiumInstallReferrerAttribution.configure(attributionConfig);
 
         let config: TealiumConfig = {
             account: 'tealiummobile',
