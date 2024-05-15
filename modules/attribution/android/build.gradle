@@ -48,7 +48,7 @@ android {
     versionCode 1
     versionName "1.0"
 
-    buildConfigField "String", "TAG", "\"Tealium-React-Install-Referrer-Attribution-$version\""
+    buildConfigField "String", "TAG", "\"Tealium-React-Attribution-$version\""
   }
 
   lintOptions {

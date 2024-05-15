@@ -1,7 +1,7 @@
 import { NativeModules } from 'react-native';
-const { TealiumReactInstallReferrerAttribution } = NativeModules;
+const { TealiumReactAttribution } = NativeModules;
 
-export default class TealiumInstallReferrerAttribution {
+export default class TealiumAttribution {
 
     /**
      * iOS only. Configures the Tealium Attrubtion module in Tealium
@@ -9,12 +9,10 @@ export default class TealiumInstallReferrerAttribution {
      * @param config configuration properties for Attribution modile
      */
     static configure(config) {
-        if (Platform.OS === 'ios') {
-            if (config === null || config === undefined) {
-                TealiumReactInstallReferrerAttribution.configure({})
-            } else {
-                TealiumReactInstallReferrerAttribution.configure(config)
-            }
+        if (config === null || config === undefined) {
+            TealiumReactAttribution.configure({})
+        } else {
+            TealiumReactAttribution.configure(config)
         }
     }
 
@@ -25,7 +23,7 @@ export default class TealiumInstallReferrerAttribution {
      */
     static removeAdInfo() {
         if (Platform.OS === 'android') {
-            TealiumReactInstallReferrerAttribution.removeAdInfo()
+            TealiumReactAttribution.removeAdInfo()
         }
     }
     
@@ -36,7 +34,7 @@ export default class TealiumInstallReferrerAttribution {
      */
     static removeAppSetIdInfo() {
         if (Platform.OS === 'android') {
-            TealiumReactInstallReferrerAttribution.removeAppSetIdInfo()
+            TealiumReactAttribution.removeAppSetIdInfo()
         }
     }
 }

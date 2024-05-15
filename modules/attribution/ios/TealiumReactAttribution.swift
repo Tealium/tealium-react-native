@@ -2,16 +2,16 @@ import Foundation
 import tealium_react_native_swift
 import TealiumSwift
 
-@objc(TealiumReactInstallReferrerAttribution)
-class TealiumReactInstallReferrerAttribution: NSObject, RCTBridgeModule {
+@objc(TealiumReactAttribution)
+class TealiumReactAttribution: NSObject, RCTBridgeModule {
     static func moduleName() -> String! {
-        return "TealiumReactInstallReferrerAttribution"
+        return "TealiumReactAttribution"
     }
     
-    private let KEY_ATTRIBUTION_SEARCH_ADS_ENABLED = "searchAdsEnabled"
-    private let KEY_ATTRIBUTION_SKAD_ATTRIBUTION_ENABLED = "skAdAttributionEnabled"
-    private let KEY_ATTRIBUTION_SKAD_CONVERSION_KEYS = "skAdConversionKeys"
-    let module = TealiumReactInstallReferrerAttributionModule()
+    private let KEY_ATTRIBUTION_SEARCH_ADS_ENABLED = "iosSearchAdsEnabled"
+    private let KEY_ATTRIBUTION_SKAD_ATTRIBUTION_ENABLED = "iosSkAdAttributionEnabled"
+    private let KEY_ATTRIBUTION_SKAD_CONVERSION_KEYS = "iosSkAdConversionKeys"
+    let module = TealiumReactAttributionModule()
     
     @objc
     static func requiresMainQueueSetup() -> Bool {
@@ -39,7 +39,7 @@ class TealiumReactInstallReferrerAttribution: NSObject, RCTBridgeModule {
     }
 }
 
-@objc class TealiumReactInstallReferrerAttributionModule: NSObject, OptionalModule {
+@objc class TealiumReactAttributionModule: NSObject, OptionalModule {
     private var searchAdsEnabled: Bool? = nil
     private var skAdAttributionEnabled: Bool? = nil
     private var skAdConversionKeys: [String: String]? = nil

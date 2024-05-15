@@ -20,7 +20,7 @@
     "tealium-react-native": "../npm-package/",
     "tealium-react-native-adobe-visitor": "../modules/adobe-visitor/",
     "tealium-react-native-crash-reporter": "../modules/crash-reporter/",
-    "tealium-react-native-install-referrer-attribution": "../modules/install-referrer-attribution/",
+    "tealium-react-native-attribution": "../modules/attribution/",
     "tealium-react-native-location": "../modules/location/"
   },
   "devDependencies": {

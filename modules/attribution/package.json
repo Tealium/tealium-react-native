@@ -1,6 +1,6 @@
 {
-  "name": "tealium-react-native-install-referrer-attribution",
-  "title": "Tealium React Native Install Referrer and Attribution",
+  "name": "tealium-react-native-attribution",
+  "title": "Tealium React Native Attribution Module",
   "version": "1.0.0",
   "description": "A native module for using Tealium's Install Referrer and Ad Identifier for Kotlin library, as well as Attribution for Swift library.",
   "main": "index.js",
@@ -15,7 +15,7 @@
     "index.js",
     "index.d.ts",
     "ios",
-    "tealium-react-install-referrer-attribution.podspec"
+    "tealium-react-attribution.podspec"
   ],
   "repository": {
     "type": "git",

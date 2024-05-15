@@ -1,12 +1,12 @@
-import { AttributionConfig, TealiumInstallReferrerAttributionCommon } from "./common";
+import { AttributionConfig, TealiumAttributionCommon } from "./common";
 
-declare module 'tealium-react-native-install-referrer-attribution'{
-    export default TealiumInstallReferrerAttribution;
-    class TealiumInstallReferrerAttribution extends TealiumInstallReferrerAttributionCommon {
+declare module 'tealium-react-native-attribution'{
+    export default TealiumAttribution;
+    class TealiumAttribution extends TealiumAttributionCommon {
 
         /**
          * Configures Tealium Install Referrer Attrubtion module
-         * @param config iOS only. Configuration properties for Attribution modile
+         * @param config Configuration properties for Attribution modile
          */
         public static configure(config?: AttributionConfig): void;
 
