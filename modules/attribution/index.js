@@ -4,16 +4,11 @@ const { TealiumReactAttribution } = NativeModules;
 export default class TealiumAttribution {
 
     /**
-     * iOS only. Configures the Tealium Attrubtion module in Tealium
-     * Swift library.
+     * Configures the Tealium Attrubtion module.
      * @param config configuration properties for Attribution modile
      */
     static configure(config) {
-        if (config === null || config === undefined) {
-            TealiumReactAttribution.configure({})
-        } else {
-            TealiumReactAttribution.configure(config)
-        }
+        TealiumReactAttribution.configure(config || {})
     }
 
     /**

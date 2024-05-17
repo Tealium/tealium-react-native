@@ -40,7 +40,7 @@ class TealiumReactAttribution(private val reactContext: ReactApplicationContext)
         reactContext.getNativeModule(TealiumReact::class.java)?.registerOptionalModule(this)
     }
 
-        override fun configure(config: TealiumConfig) {
+    override fun configure(config: TealiumConfig) {
         if (_installReferrerEnabled == true) {
             config.modules.add(Modules.InstallReferrer)
         }
@@ -56,8 +56,8 @@ class TealiumReactAttribution(private val reactContext: ReactApplicationContext)
                 _installReferrerEnabled = installReferrerEnabled
             }
 
-            it.safeGetBoolean(KEY_AD_IDENTIFIER_ENABLED)?.let { AdIdEnabled ->
-                _adIdentifierEnabled = AdIdEnabled
+            it.safeGetBoolean(KEY_AD_IDENTIFIER_ENABLED)?.let { adIdEnabled ->
+                _adIdentifierEnabled = adIdEnabled
             }
         }
     }

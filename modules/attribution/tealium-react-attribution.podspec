@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.version = package["version"]
   s.summary = package["description"]
   s.description = <<-DESC
-                  Tealium React Native Install Referrer and Attribution Plugin
+                  Tealium React Native Attribution Plugin
                    DESC
   s.homepage = "https://github.com/Tealium/tealium-react-native/modules"
   s.license = { :type => "Commercial", :file => "LICENSE" }

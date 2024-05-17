@@ -5,7 +5,7 @@ declare module 'tealium-react-native-attribution'{
     class TealiumAttribution extends TealiumAttributionCommon {
 
         /**
-         * Configures Tealium Install Referrer Attrubtion module
+         * Configures Tealium Attrubtion module.
          * @param config Configuration properties for Attribution modile
          */
         public static configure(config?: AttributionConfig): void;
