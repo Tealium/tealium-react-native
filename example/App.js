@@ -33,6 +33,8 @@ import AppsFlyerRemoteCommand from 'tealium-react-appsflyer';
 import { checkAndRequestPermissions } from "./Utils"
 // import { AuthState } from 'tealium-react-native-adobe-visitor/common';
 import TealiumCrashReporter from 'tealium-react-native-crash-reporter';
+import TealiumAttribution from 'tealium-react-native-attribution';
+import AttributionConfig from 'tealium-react-native-attribution/common'
 
 export default class App extends Component<{}> {
 
@@ -53,6 +55,14 @@ export default class App extends Component<{}> {
             allowSuppressLogLevel: false
         }
 
+        let attributionConfig: AttributionConfig = {
+            androidInstallReferrerEnabled: true,
+            androidAdIdentifierEnabled: true,
+            iosSearchAdsEnabled: true,
+            iosSkAdAttributionEnabled: true,
+            iosSkAdConversionKeys: {"event": "conversion_value"}
+        }
+
         // TealiumAdobeVisitor.configure(adobeVisitorConfig);
         TealiumLocation.configure(locationConfig);
         FirebaseRemoteCommand.initialize();
@@ -60,6 +70,8 @@ export default class App extends Component<{}> {
         AdjustRemoteCommand.initialize(adjustConfig);
         AppsFlyerRemoteCommand.initialize();
         TealiumCrashReporter.initialize();
+        TealiumAttribution.configure(attributionConfig);
+
         let config: TealiumConfig = {
             account: 'tealiummobile',
             profile: 'demo',
@@ -97,7 +109,8 @@ export default class App extends Component<{}> {
             }, {
                 id: AppsFlyerRemoteCommand.name,
                 path: 'appsflyer.json'
-            }],
+            }
+        ],
             visitorIdentityKey: DataLayer.UserIdentity
         };
         Tealium.initialize(config, success => {
