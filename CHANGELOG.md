@@ -4,8 +4,28 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
+- 2.4.1
+  - Update Tealium dependencies to the latest on both platforms
+    - Android-Kotlin: Core 1.6.0, Tag Management 1.2.3, Remote Commands 1.4.0
+    - Swift Modules: 2.13.0
+
+- 2.4.0
+  - Core:
+    - Fixes: 
+      - Callbacks for some methods not being notified on error
+      - Android failing to de-initialize correctly
+    - XCode 15 support, now targeting iOS 12+
+    - arm64 exclusions removed from iOS
+    - Gradle 8+ support
+    - Tealium dependencies updated to the latest on both platforms
+  - Modules and Remote Commands 1.1.0:
+    - XCode 15 and Gradle 8+ support
+
+- 2.3.2
+  - Update Android `build.gradle` files to allow the use of Kotlin version from parent project
+
 - 2.3.1
-  - Android-Kotlin dependencies updated including severa fixes listed below.
+  - Android-Kotlin dependencies updated including several fixes listed below.
     - Core 1.5.3, Visitor Service 1.2.0 and Lifecycle 1.2.0
     - Fix: Some event sending delayed by Visitor Service updates
     - Fix: Lifecycle negative values
