@@ -43,7 +43,7 @@ buildscript {
     }
 }
 
-version = "2.4.0"
+version = "2.4.1"
 android {
     compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
     buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
@@ -101,10 +101,10 @@ dependencies {
     implementation 'com.facebook.react:react-native:+'  // From node_modules
 
     //Tealium
-    implementation 'com.tealium:kotlin-core:1.5.5'
+    implementation 'com.tealium:kotlin-core:1.6.0'
     implementation 'com.tealium:kotlin-collect-dispatcher:1.1.1'
-    implementation 'com.tealium:kotlin-tagmanagement-dispatcher:1.2.1'
-    implementation 'com.tealium:kotlin-remotecommand-dispatcher:1.3.1'
+    implementation 'com.tealium:kotlin-tagmanagement-dispatcher:1.2.3'
+    implementation 'com.tealium:kotlin-remotecommand-dispatcher:1.4.0'
     implementation 'com.tealium:kotlin-lifecycle:1.2.0'
     implementation 'com.tealium:kotlin-visitor-service:1.2.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${project.ext.kotlinVersion}"
