@@ -111,7 +111,6 @@ class TealiumReactTests {
         }
 
         tealiumReact = TealiumReact(mockReactApplicationContext)
-//        tealiumReact.initialize(minimalConfig, null)
     }
 
     @Test
