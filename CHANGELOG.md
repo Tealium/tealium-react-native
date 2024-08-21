@@ -4,6 +4,9 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
+- 2.4.2
+  - Android fix: added check during initialization to ensure only a single instance of Tealium is running. Pre-existing instances are shutdown.
+
 - 2.4.1
   - Update Tealium dependencies to the latest on both platforms
     - Android-Kotlin: Core 1.6.0, Tag Management 1.2.3, Remote Commands 1.4.0

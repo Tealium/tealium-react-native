@@ -53,6 +53,10 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
     @ReactMethod
     fun initialize(configMap: ReadableMap, callback: Callback?) {
         getApplication()?.let { app ->
+            if (tealium != null) {
+                terminateInstance()
+            }
+
             configMap.toTealiumConfig(app)?.let { config ->
                 optionalModules.forEach { module ->
                     try {
@@ -100,7 +104,7 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
         return app
     }
 
-    private fun createRemoteCommands(commands: ReadableArray) {
+    internal fun createRemoteCommands(commands: ReadableArray) {
         for (i in 0 until commands.size()) {
             val cmd = commands.getMap(i)
             if (cmd is ReadableMap) {

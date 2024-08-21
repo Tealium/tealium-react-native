@@ -5,6 +5,7 @@ import android.app.Application
 import android.util.Log
 import com.facebook.react.bridge.*
 import com.tealium.core.Tealium
+import com.tealium.core.TealiumConfig
 import com.tealium.core.consent.ConsentCategory
 import com.tealium.core.consent.ConsentManager
 import com.tealium.core.consent.ConsentStatus
@@ -22,6 +23,8 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
 import org.json.JSONArray
 import org.json.JSONObject
+import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -49,6 +52,12 @@ class TealiumReactTests {
 
     @RelaxedMockK
     lateinit var mockTealium: Tealium
+
+    @RelaxedMockK
+    lateinit var mockTealium2: Tealium
+
+    @RelaxedMockK
+    lateinit var mockTealium3: Tealium
 
     @RelaxedMockK
     lateinit var mockRemoteCommandDispatcher: RemoteCommandDispatcher
@@ -81,10 +90,19 @@ class TealiumReactTests {
         mockkObject(Tealium)
         val callback = slot<Tealium.() -> Unit>()
         every { Tealium.create(any(), any(), capture(callback)) } answers {
-            callback.captured(mockTealium)
+            callback.captured.invoke(mockTealium)
             mockTealium
+        } andThenAnswer  {
+            callback.captured.invoke(mockTealium2)
+            mockTealium2
+        } andThenAnswer  {
+            callback.captured.invoke(mockTealium3)
+            mockTealium3
         }
+
         every { mockTealium.remoteCommands } returns mockRemoteCommandDispatcher
+        every { mockTealium2.remoteCommands } returns mockRemoteCommandDispatcher
+        every { mockTealium3.remoteCommands } returns mockRemoteCommandDispatcher
         every { mockRemoteCommandDispatcher.add(any(), any(), any()) } just Runs
 
         minimalConfig = JavaOnlyMap().apply {
@@ -93,7 +111,6 @@ class TealiumReactTests {
         }
 
         tealiumReact = TealiumReact(mockReactApplicationContext)
-        tealiumReact.initialize(minimalConfig, null)
     }
 
     @Test
@@ -105,6 +122,7 @@ class TealiumReactTests {
 
     @Test
     fun initialize_UsesMain_InstanceName() {
+        tealiumReact.initialize(minimalConfig, null)
         // init called in @Before
         verify {
             Tealium.create(INSTANCE_NAME, match {
@@ -112,6 +130,33 @@ class TealiumReactTests {
                         && it.profileName == "profile"
             }, any())
         }
+    }
+
+    @Test
+    fun initialize_SecondInstance_TerminatesCurrentInstance() {
+        tealiumReact.initialize(minimalConfig, null)
+            verify {
+                Tealium.create(INSTANCE_NAME, match {
+                    it.accountName == "account"
+                            && it.profileName == "profile"
+                }, any())
+            }
+
+        val config = JavaOnlyMap().apply {
+            putString(KEY_CONFIG_ACCOUNT, "test")
+            putString(KEY_CONFIG_PROFILE, "testProfile")
+        }
+        tealiumReact.initialize(config, callback = null)
+
+        verify {
+            Tealium.destroy(any())
+            Tealium.create(INSTANCE_NAME, match {
+                it.accountName == "test"
+                        && it.profileName == "testProfile"
+            }, any())
+        }
+
+        assertEquals(mockTealium2, tealiumReact.tealium)
     }
 
     @Test
@@ -124,6 +169,8 @@ class TealiumReactTests {
 
         minimalConfig.putArray(KEY_REMOTE_COMMANDS_CONFIG, remoteCommandsArray)
         tealiumReact.initialize(minimalConfig, null)
+        minimalConfig.safeGetArray(KEY_REMOTE_COMMANDS_CONFIG)
+            ?.let { tealiumReact.createRemoteCommands(it) }
 
         verify(exactly = 1) {
             mockRemoteCommandDispatcher.add(match {
@@ -144,6 +191,9 @@ class TealiumReactTests {
 
         minimalConfig.putArray(KEY_REMOTE_COMMANDS_CONFIG, remoteCommandsArray)
         tealiumReact.initialize(minimalConfig, null)
+        minimalConfig.safeGetArray(KEY_REMOTE_COMMANDS_CONFIG)?.let {
+            tealiumReact.createRemoteCommands(it)
+        }
 
         verify(exactly = 1) {
             mockRemoteCommandDispatcher.add(match {
@@ -193,6 +243,9 @@ class TealiumReactTests {
         // register factory
         tealiumReact.registerRemoteCommandFactory(TestRemoteCommandFactory("factory_command"))
         tealiumReact.initialize(minimalConfig, null)
+        minimalConfig.safeGetArray(KEY_REMOTE_COMMANDS_CONFIG)?.let {
+            tealiumReact.createRemoteCommands(it)
+        }
 
         verify(exactly = 1) {
             mockRemoteCommandDispatcher.add(match {
@@ -265,6 +318,7 @@ class TealiumReactTests {
 
     @Test
     fun track_CallsTrack() {
+        tealiumReact.initialize(minimalConfig, null)
         val eventMap = JavaOnlyMap().apply {
             putString(KEY_TRACK_EVENT_TYPE, "event")
             putString(KEY_TRACK_EVENT_NAME, "myEvent")
@@ -291,6 +345,7 @@ class TealiumReactTests {
 
     @Test
     fun addToDataLayer_String() {
+        tealiumReact.initialize(minimalConfig, null)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
 
@@ -306,6 +361,7 @@ class TealiumReactTests {
 
     @Test
     fun addToDataLayer_Int() {
+        tealiumReact.initialize(minimalConfig, null)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
 
@@ -322,6 +378,7 @@ class TealiumReactTests {
 
     @Test
     fun addToDataLayer_Double() {
+        tealiumReact.initialize(minimalConfig, null)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
 
@@ -337,6 +394,7 @@ class TealiumReactTests {
 
     @Test
     fun addToDataLayer_Boolean() {
+        tealiumReact.initialize(minimalConfig, null)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
 
@@ -352,6 +410,7 @@ class TealiumReactTests {
 
     @Test
     fun addToDataLayer_StringArray() {
+        tealiumReact.initialize(minimalConfig, null)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
 
@@ -370,6 +429,7 @@ class TealiumReactTests {
 
     @Test
     fun addToDataLayer_IntArray() {
+        tealiumReact.initialize(minimalConfig, null)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
 
@@ -389,6 +449,7 @@ class TealiumReactTests {
 
     @Test
     fun addToDataLayer_DoubleArray() {
+        tealiumReact.initialize(minimalConfig, null)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
 
@@ -407,6 +468,7 @@ class TealiumReactTests {
 
     @Test
     fun addToDataLayer_BooleanArray() {
+        tealiumReact.initialize(minimalConfig, null)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
 
@@ -425,6 +487,7 @@ class TealiumReactTests {
 
     @Test
     fun addToDataLayer_ObjectArray() {
+        tealiumReact.initialize(minimalConfig, null)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
 
@@ -456,6 +519,7 @@ class TealiumReactTests {
 
     @Test
     fun addToDataLayer_MixedArray() {
+        tealiumReact.initialize(minimalConfig, null)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
 
@@ -486,6 +550,7 @@ class TealiumReactTests {
 
     @Test
     fun addToDataLayer_Object() {
+        tealiumReact.initialize(minimalConfig, null)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
 
@@ -507,6 +572,7 @@ class TealiumReactTests {
 
     @Test
     fun getFromDataLayer_String() {
+        tealiumReact.initialize(minimalConfig, null)
         val callback: Callback = mockk(relaxed = true)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
@@ -521,6 +587,7 @@ class TealiumReactTests {
 
     @Test
     fun getFromDataLayer_Int() {
+        tealiumReact.initialize(minimalConfig, null)
         val callback: Callback = mockk(relaxed = true)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
@@ -535,6 +602,7 @@ class TealiumReactTests {
 
     @Test
     fun getFromDataLayer_Double() {
+        tealiumReact.initialize(minimalConfig, null)
         val callback: Callback = mockk(relaxed = true)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
@@ -549,6 +617,7 @@ class TealiumReactTests {
 
     @Test
     fun getFromDataLayer_Boolean() {
+        tealiumReact.initialize(minimalConfig, null)
         val callback: Callback = mockk(relaxed = true)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
@@ -563,6 +632,7 @@ class TealiumReactTests {
 
     @Test
     fun getFromDataLayer_StringArray() {
+        tealiumReact.initialize(minimalConfig, null)
         val callback: Callback = mockk(relaxed = true)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
@@ -581,6 +651,7 @@ class TealiumReactTests {
 
     @Test
     fun getFromDataLayer_IntArray() {
+        tealiumReact.initialize(minimalConfig, null)
         val callback: Callback = mockk(relaxed = true)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
@@ -600,6 +671,7 @@ class TealiumReactTests {
 
     @Test
     fun getFromDataLayer_DoubleArray() {
+        tealiumReact.initialize(minimalConfig, null)
         val callback: Callback = mockk(relaxed = true)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
@@ -618,6 +690,7 @@ class TealiumReactTests {
 
     @Test
     fun getFromDataLayer_BooleanArray() {
+        tealiumReact.initialize(minimalConfig, null)
         val callback: Callback = mockk(relaxed = true)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
@@ -636,6 +709,7 @@ class TealiumReactTests {
 
     @Test
     fun getFromDataLayer_ObjectArray() {
+        tealiumReact.initialize(minimalConfig, null)
         val callback: Callback = mockk(relaxed = true)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
@@ -660,6 +734,7 @@ class TealiumReactTests {
 
     @Test
     fun getFromDataLayer_MixedArray() {
+        tealiumReact.initialize(minimalConfig, null)
         val callback: Callback = mockk(relaxed = true)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
@@ -685,6 +760,7 @@ class TealiumReactTests {
 
     @Test
     fun getFromDataLayer_Object() {
+        tealiumReact.initialize(minimalConfig, null)
         val callback: Callback = mockk(relaxed = true)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
@@ -731,6 +807,7 @@ class TealiumReactTests {
 
     @Test
     fun removeFromDataLayer_CallsRemove_ForEachKey() {
+        tealiumReact.initialize(minimalConfig, null)
         val dataLayer: DataLayer = mockk(relaxed = true)
         every { mockTealium.dataLayer } returns dataLayer
 
@@ -748,6 +825,7 @@ class TealiumReactTests {
 
     @Test
     fun gatherTrackData_Successful() {
+        tealiumReact.initialize(minimalConfig, null)
         val callback: Callback = mockk(relaxed = true)
         every { mockTealium.gatherTrackData() } returns mapOf(
             "tealium_account" to "account",
@@ -767,6 +845,7 @@ class TealiumReactTests {
 
     @Test
     fun setConsentStatus_AlwaysSetsStatus() {
+        tealiumReact.initialize(minimalConfig, null)
         val consentManager: ConsentManager = mockk(relaxed = true)
         every { mockTealium.consentManager } returns consentManager
 
@@ -787,6 +866,7 @@ class TealiumReactTests {
 
     @Test
     fun setConsentCategories_SetsCategoryList() {
+        tealiumReact.initialize(minimalConfig, null)
         val consentManager: ConsentManager = mockk(relaxed = true)
         every { mockTealium.consentManager } returns consentManager
 
@@ -820,6 +900,7 @@ class TealiumReactTests {
 
     @Test
     fun getConsentCategories_CallsCallback() {
+        tealiumReact.initialize(minimalConfig, null)
         val consentManager: ConsentManager = mockk(relaxed = true)
         every { mockTealium.consentManager } returns consentManager
         every { consentManager.userConsentCategories } returns setOf(ConsentCategory.AFFILIATES, ConsentCategory.ANALYTICS)
@@ -837,6 +918,7 @@ class TealiumReactTests {
 
     @Test
     fun addRemoteCommand_AddsRemoteCommandListener() {
+        tealiumReact.initialize(minimalConfig, null)
         val remoteCommandDispatcher: RemoteCommandDispatcher = mockk(relaxed = true)
         every { mockTealium.remoteCommands } returns remoteCommandDispatcher
         every { remoteCommandDispatcher.add(any()) } just Runs
@@ -853,6 +935,7 @@ class TealiumReactTests {
 
     @Test
     fun removeRemoteCommand_RemovesById() {
+        tealiumReact.initialize(minimalConfig, null)
         val remoteCommandDispatcher: RemoteCommandDispatcher = mockk(relaxed = true)
         every { mockTealium.remoteCommands } returns remoteCommandDispatcher
         every { remoteCommandDispatcher.remove(any()) } just Runs
@@ -866,6 +949,7 @@ class TealiumReactTests {
 
     @Test
     fun joinTrace_JoinsProvidedTraceId() {
+        tealiumReact.initialize(minimalConfig, null)
         every { mockTealium.joinTrace(any()) } just Runs
 
         tealiumReact.joinTrace("id")
@@ -877,6 +961,7 @@ class TealiumReactTests {
 
     @Test
     fun leaveTrace_LeavesTrace() {
+        tealiumReact.initialize(minimalConfig, null)
         every { mockTealium.leaveTrace() } just Runs
 
         tealiumReact.leaveTrace()
@@ -888,6 +973,7 @@ class TealiumReactTests {
 
     @Test
     fun getVisitorId_CallsCallback() {
+        tealiumReact.initialize(minimalConfig, null)
         every { mockTealium.visitorId } returns "visitor123"
 
         tealiumReact.getVisitorId(mockCallback)
@@ -910,6 +996,7 @@ class TealiumReactTests {
 
     @Test
     fun getSessionId_CallsCallback() {
+        tealiumReact.initialize(minimalConfig, null)
         every { mockTealium.session.id } returns 12345
 
         tealiumReact.getSessionId(mockCallback)
