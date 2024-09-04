@@ -70,7 +70,6 @@ android {
 
 repositories {
   // ref: https://www.baeldung.com/maven-local-repository
-  mavenLocal()
   maven {
     // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
     url "$rootDir/../node_modules/react-native/android"
@@ -98,7 +97,7 @@ dependencies {
   implementation project(":tealium-react-native")
 
   // Tealium Moments API
-  implementation 'com.tealium:kotlin-momentsapi:1.0.0'
+  implementation 'com.tealium:kotlin-momentsapi:1.0.2'
 
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${project.ext.kotlinVersion}"
 }

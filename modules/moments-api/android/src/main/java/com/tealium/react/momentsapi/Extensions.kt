@@ -1,15 +1,23 @@
 package com.tealium.react.momentsapi
 
-import com.facebook.react.bridge.Arguments
-import com.facebook.react.bridge.ReadableMap
+import com.facebook.react.bridge.WritableMap
+import com.tealium.momentsapi.EngineResponse
+import com.tealium.momentsapi.MomentsApiRegion
+import com.tealium.react.toWritableMap
 
-fun EngineResponse.toReadableMap(): ReadableMap {
-    val map = Arguments.createMap()
-    map.putString("attributes", this.strings)
-    map.putInt("audiences", this.audiences)
-    map.putInt("booleans", this.booleans)
-    map.putString("dates", this.dates)
-    map.putDouble("badges", this.badges)
-    map.putDouble("numbers", this.numbers)
-    return map
+
+fun EngineResponse.toWritableMap(): WritableMap? {
+    return EngineResponse.toJson(this).toWritableMap()
+}
+
+fun regionFromString(region: String): MomentsApiRegion {
+    return when (region.lowercase()) {
+        "germany" -> MomentsApiRegion.Germany
+        "us_east" -> MomentsApiRegion.UsEast
+        "sydney" -> MomentsApiRegion.Sydney
+        "oregon" -> MomentsApiRegion.Oregon
+        "tokyo" -> MomentsApiRegion.Tokyo
+        "hong_kong" -> MomentsApiRegion.HongKong
+        else -> MomentsApiRegion.Custom(region)
+    }
 }
