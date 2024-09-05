@@ -1,4 +1,4 @@
-import { MomentsApiConfig, TealiumMomentsApiCommon} from './common';
+import { MomentsApiConfig, EngineResponse, TealiumMomentsApiCommon} from './common';
 
 declare module 'tealium-react-native-moments-api' {
 	export default TealiumMomentsApi;
@@ -15,6 +15,6 @@ declare module 'tealium-react-native-moments-api' {
          * @param engineId The ID of the engine to fetch the response for.
          * @param callback The callback to recieve the engine response.
          */
-        public static fetchEngineResponse(engineId: String, callback:(response: String) => void): void;
+        public static fetchEngineResponse(engineId: String, callback:(response: EngineResponse | String) => void): void;
     }
 }

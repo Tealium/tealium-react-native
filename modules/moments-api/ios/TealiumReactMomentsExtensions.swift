@@ -5,21 +5,26 @@ import TealiumSwift
 extension EngineResponse {
     func asDictionary() -> [String: Any] {
         var dict = [String: Any]()
-        if let attributes = self.strings {
-            dict["attributes"] = attributes
-        }
-        if let booleans = self.booleans {
-            dict["booleans"] = booleans
-        }
-        if let audiences = self.audiences {
-            dict["audiences"] = audiences
-        }
-        if let dateAttributes = self.dates {
-            dict["dates"] = dateAttributes
-        }
         if let badges = self.badges {
             dict["badges"] = badges
         }
+        
+        if let audiences = self.audiences {
+            dict["audiences"] = audiences
+        }
+
+        if let strings = self.strings {
+            dict["strings"] = strings
+        }
+
+        if let booleans = self.booleans {
+            dict["booleans"] = booleans
+        }
+        
+        if let dateAttributes = self.dates {
+            dict["dates"] = dateAttributes
+        }
+        
         if let numbers = self.numbers {
             dict["numbers"] = numbers
         }
