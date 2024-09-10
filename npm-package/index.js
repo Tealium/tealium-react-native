@@ -1,5 +1,5 @@
 import { NativeEventEmitter, NativeModules } from 'react-native';
-import { Expiry, Dispatchers, EventListenerNames, RemoteCommand } from './common';
+import { Expiry, Dispatchers, EventListenerNames, RemoteCommand, VisitorProfile, CurrentVisit } from './common';
 import { platform } from 'os';
 const { TealiumWrapper, TealiumReactNative } = NativeModules;
 
@@ -91,10 +91,10 @@ export default class Tealium {
     static setVisitorServiceListener(callback) {
         const visitor = this.emitter.addListener(EventListenerNames.visitor, profile => {
             if (Platform.OS == 'android' && typeof profile === 'object') {
-                this.convertToDateStringsToNumber(profile)
+                this.convertDateStringsToNumber(profile)
 
                 if(profile.currentVisit) {
-                    this.convertToDateStringsToNumber(profile.currentVisit)
+                    this.convertDateStringsToNumber(profile.currentVisit)
                 }
             } 
 
@@ -103,7 +103,7 @@ export default class Tealium {
         this.emitterSubscriptions.push(visitor);
     }
 
-    static convertToDateStringsToNumber(obj) {
+    static convertDateStringsToNumber(obj) {
         if (obj.dates) {
             obj.dates = Object.fromEntries(
                 Object.entries(obj.dates).map(([key, value]) => [

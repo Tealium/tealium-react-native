@@ -6,6 +6,7 @@
 
 - 2.4.3
   - Android fix: update VisitorProfile date types to align with iOS
+  - Added `VisitorProfile` type definition
 - 2.4.2
   - Android fix: added check during initialization to ensure only a single instance of Tealium is running. Pre-existing instances are shutdown.
 

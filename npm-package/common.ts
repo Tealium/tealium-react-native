@@ -129,4 +129,31 @@ export interface RemoteCommand {
     callback?(payload: Object) : void;
 }
 
+export interface VisitorProfile {
+    audiences?: object;
+    badges?: object;
+    dates?: object;
+    booleans?: object;
+    arrayOfBooleans?: object;
+    numbers?: object;
+    arrayOfNumbers?: object;
+    tallies?: object;
+    strings?: object;
+    arrayOfStrings?: object;
+    setsOfStrings?: object;
+    currentVisit?: CurrentVisit;
+}
+
+export interface CurrentVisit {
+    dates?: object;
+    booleans?: object;
+    arrayOfBooleans?: object;
+    numbers?: object;
+    arrayOfNumbers?: object;
+    tallies?: object;
+    strings?: object;
+    arrayOfStrings?: object;
+    setsOfStrings?: object;
+}
+
 export class TealiumCommon {}
