@@ -133,6 +133,7 @@ export default class App extends Component<{}> {
             });
         });
         Tealium.setVisitorServiceListener(profile => {
+            console.log("VisitorProfile: " + JSON.stringify(profile));
             console.log("audiences: ");
             console.log(JSON.stringify(profile["audiences"]));
             console.log("tallies: ")

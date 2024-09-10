@@ -1,5 +1,6 @@
 import { NativeEventEmitter, NativeModules } from 'react-native';
 import { Expiry, Dispatchers, EventListenerNames, RemoteCommand } from './common';
+import { platform } from 'os';
 const { TealiumWrapper, TealiumReactNative } = NativeModules;
 
 export default class Tealium {
@@ -17,7 +18,7 @@ export default class Tealium {
             });
         }
         TealiumWrapper.initialize(config, callback || (response => {}));
-        TealiumWrapper.addToDataLayer({'plugin_name': 'Tealium-ReactNative', 'plugin_version': '2.4.2'}, Expiry.forever);
+        TealiumWrapper.addToDataLayer({'plugin_name': 'Tealium-ReactNative', 'plugin_version': '2.4.3'}, Expiry.forever);
         if (config["dispatchers"].includes(Dispatchers.RemoteCommands)) {
             this.setRemoteCommandListener();
         }
@@ -89,9 +90,28 @@ export default class Tealium {
 
     static setVisitorServiceListener(callback) {
         const visitor = this.emitter.addListener(EventListenerNames.visitor, profile => {
+            if (Platform.OS == 'android' && typeof profile === 'object') {
+                this.convertToDateStringsToNumber(profile)
+
+                if(profile.currentVisit) {
+                    this.convertToDateStringsToNumber(profile.currentVisit)
+                }
+            } 
+
             callback(profile);
         });
         this.emitterSubscriptions.push(visitor);
+    }
+
+    static convertToDateStringsToNumber(obj) {
+        if (obj.dates) {
+            obj.dates = Object.fromEntries(
+                Object.entries(obj.dates).map(([key, value]) => [
+                    key,
+                    Number(value)
+                ])
+            );
+        }
     }
 
     static setVisitorIdListener(callback) {

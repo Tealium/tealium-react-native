@@ -43,7 +43,7 @@ buildscript {
     }
 }
 
-version = "2.4.2"
+version = "2.4.3"
 android {
     compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
     buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
