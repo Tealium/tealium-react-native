@@ -39,6 +39,8 @@ buildscript {
 version = "1.0.0"
 
 android {
+  namespace "com.tealium.react.momentsapi"
+  
   compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
   buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
 

@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "react": "^17.0.2",
-    "react-native": "^0.67.1"
+    "react-native": "^0.71.0"
   },
   "dependencies": {
     "tealium-react-native": "^2.2.0"

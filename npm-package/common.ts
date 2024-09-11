@@ -130,30 +130,30 @@ export interface RemoteCommand {
 }
 
 export interface VisitorProfile {
-    audiences?: object;
-    badges?: object;
-    dates?: object;
-    booleans?: object;
-    arrayOfBooleans?: object;
-    numbers?: object;
-    arrayOfNumbers?: object;
-    tallies?: object;
-    strings?: object;
-    arrayOfStrings?: object;
-    setsOfStrings?: object;
+    audiences?: string[];
+    badges?: string[];
+    dates?: { [key: string]: string};
+    booleans?: { [key: string]: boolean};
+    arrayOfBooleans?: { [key: string]: boolean[] };
+    numbers?: { [key: string]: number};
+    arrayOfNumbers?: { [key: string]: number[] };
+    tallies?: { [key: string]: { [key: string]: number} };
+    strings?: { [key: string]: string};
+    arrayOfStrings?: { [key: string]: string[]};
+    setsOfStrings?: { [key: string]: string[]};
     currentVisit?: CurrentVisit;
 }
 
 export interface CurrentVisit {
-    dates?: object;
-    booleans?: object;
-    arrayOfBooleans?: object;
-    numbers?: object;
-    arrayOfNumbers?: object;
-    tallies?: object;
-    strings?: object;
-    arrayOfStrings?: object;
-    setsOfStrings?: object;
+    dates?: { [key: string]: string};
+    booleans?: { [key: string]: boolean};
+    arrayOfBooleans?: { [key: string]: boolean[] };
+    numbers?: { [key: string]: number};
+    arrayOfNumbers?: { [key: string]: number[] };
+    tallies?: { [key: string]: { [key: string]: number} };
+    strings?: { [key: string]: string};
+    arrayOfStrings?: { [key: string]: string[]};
+    setsOfStrings?: { [key: string]: string[]};
 }
 
 export class TealiumCommon {}

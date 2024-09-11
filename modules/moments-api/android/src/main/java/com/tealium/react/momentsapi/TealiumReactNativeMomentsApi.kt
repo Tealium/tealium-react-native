@@ -79,8 +79,7 @@ class TealiumReactMomentsApi(private val reactContext: ReactApplicationContext) 
             override fun failure(errorCode: ErrorCode, message: String) {
                 callback.invoke("Failed to fetch engine response with error code: $errorCode - $message")
             }
-        })
-
+        }) ?: callback.invoke("Unable to retrieve MomentsAPI module. Please check your configuration.")
     }
 
     override fun getName(): String {
@@ -90,7 +89,7 @@ class TealiumReactMomentsApi(private val reactContext: ReactApplicationContext) 
     companion object {
         const val NAME = "TealiumReactMomentsApi"
 
-        private const val KEY_MOMENTS_API_REGION = "region"
-        private const val KEY_MOMENTS_API_REFERRER = "referrer"
+        private const val KEY_MOMENTS_API_REGION = "momentsApiRegion"
+        private const val KEY_MOMENTS_API_REFERRER = "momentsApiReferrer"
     }
 }

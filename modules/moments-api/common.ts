@@ -1,5 +1,3 @@
-import { Double } from "react-native/Libraries/Types/CodegenTypes";
-
 export enum MomentsApiRegion {
     Germany = 'germany',
     UsEast = 'us_east',
@@ -11,7 +9,7 @@ export enum MomentsApiRegion {
 
 export interface MomentsApiConfig {
     momentsApiRegion : string;
-    momentsApiReferrer ?: string;
+    momentsApiReferrer ?: MomentsApiRegion | string;
 }
 
 export interface EngineResponse {

@@ -9,8 +9,8 @@ class TealiumReactMomentsApi: NSObject, RCTBridgeModule {
         return "TealiumReactMomentsApi"
     }
     
-    private let KEY_MOMENTS_API_REGION = "region"
-    private let KEY_MOMENTS_API_REFERRER = "referrer"
+    private let KEY_MOMENTS_API_REGION = "momentsApiRegion"
+    private let KEY_MOMENTS_API_REFERRER = "momentsApiReferrer"
     
     let module = TealiumReactMomentsAPIModule()
     
@@ -59,14 +59,18 @@ class TealiumReactMomentsApi: NSObject, RCTBridgeModule {
     }
     
     func fetchEngineResponse(engineId: String, callback: @escaping RCTResponseSenderBlock) {
-        TealiumReactNative.instance?.momentsAPI?.fetchEngineResponse(engineID: engineId) { engineResponse in
+        guard let instance = TealiumReactNative.instance, let momentsAPI = instance.momentsAPI else {
+            callback(["Unable to retrieve MomentsAPI module. Please check your configuration."])
+            return
+        }
+        
+        momentsAPI.fetchEngineResponse(engineID: engineId) { engineResponse in
             switch engineResponse {
-            case .success(let response):
-                callback([response.asDictionary()])
-            case .failure(let error):
-                callback(["Failed to fetch engine response with error code: \(error.localizedDescription)"])
+                case .success(let response):
+                    callback([response.asDictionary()])
+                case .failure(let error):
+                    callback(["Failed to fetch engine response with error code: \(error.localizedDescription)"])
             }
-            
         }
     }
     
