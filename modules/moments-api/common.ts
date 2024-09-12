@@ -8,8 +8,8 @@ export enum MomentsApiRegion {
 }
 
 export interface MomentsApiConfig {
-    momentsApiRegion : string;
-    momentsApiReferrer ?: MomentsApiRegion | string;
+    momentsApiRegion : MomentsApiRegion | string;
+    momentsApiReferrer ?: string;
 }
 
 export interface EngineResponse {
