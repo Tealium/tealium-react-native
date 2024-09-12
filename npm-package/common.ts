@@ -130,10 +130,10 @@ export interface RemoteCommand {
 }
 
 export interface VisitorProfile {
-    audiences?: string[];
-    badges?: string[];
-    dates?: { [key: string]: string};
-    booleans?: { [key: string]: boolean};
+    audiences?: { [key: string]: string };
+    badges?: { [key: string]: string };
+    dates?: { [key: string]: number };
+    booleans?: { [key: string]: boolean };
     arrayOfBooleans?: { [key: string]: boolean[] };
     numbers?: { [key: string]: number};
     arrayOfNumbers?: { [key: string]: number[] };
@@ -145,7 +145,7 @@ export interface VisitorProfile {
 }
 
 export interface CurrentVisit {
-    dates?: { [key: string]: string};
+    dates?: { [key: string]: number};
     booleans?: { [key: string]: boolean};
     arrayOfBooleans?: { [key: string]: boolean[] };
     numbers?: { [key: string]: number};
