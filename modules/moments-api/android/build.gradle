@@ -39,8 +39,6 @@ buildscript {
 version = "1.0.0"
 
 android {
-  namespace "com.tealium.react.momentsapi"
-  
   compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
   buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
 
@@ -59,6 +57,8 @@ android {
 
   def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0].toInteger()
   if(agpVersion < 8) {
+    namespace "com.tealium.react.momentsapi"
+    
     compileOptions {
       sourceCompatibility JavaVersion.VERSION_11
       targetCompatibility JavaVersion.VERSION_11
