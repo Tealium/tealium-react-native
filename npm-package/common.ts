@@ -131,7 +131,7 @@ export interface RemoteCommand {
 
 export interface VisitorProfile {
     audiences?: { [key: string]: string };
-    badges?: { [key: string]: string };
+    badges?: { [key: string]: boolean };
     dates?: { [key: string]: number };
     booleans?: { [key: string]: boolean };
     arrayOfBooleans?: { [key: string]: boolean[] };
