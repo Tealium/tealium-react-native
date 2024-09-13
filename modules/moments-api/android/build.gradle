@@ -55,10 +55,12 @@ android {
     disable 'GradleCompatible'
   }
 
+  if (project.android.hasProperty("namespace")) {
+        namespace "com.tealium.react.momentsapi"
+  }
+
   def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0].toInteger()
-  if(agpVersion < 8) {
-    namespace "com.tealium.react.momentsapi"
-    
+  if(agpVersion < 8) { 
     compileOptions {
       sourceCompatibility JavaVersion.VERSION_11
       targetCompatibility JavaVersion.VERSION_11
