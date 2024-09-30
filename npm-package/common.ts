@@ -129,4 +129,31 @@ export interface RemoteCommand {
     callback?(payload: Object) : void;
 }
 
+export interface VisitorProfile {
+    audiences?: { [key: string]: string };
+    badges?: { [key: string]: boolean };
+    dates?: { [key: string]: number };
+    booleans?: { [key: string]: boolean };
+    arrayOfBooleans?: { [key: string]: boolean[] };
+    numbers?: { [key: string]: number};
+    arrayOfNumbers?: { [key: string]: number[] };
+    tallies?: { [key: string]: { [key: string]: number} };
+    strings?: { [key: string]: string};
+    arrayOfStrings?: { [key: string]: string[]};
+    setsOfStrings?: { [key: string]: string[]};
+    currentVisit?: CurrentVisit;
+}
+
+export interface CurrentVisit {
+    dates?: { [key: string]: number};
+    booleans?: { [key: string]: boolean};
+    arrayOfBooleans?: { [key: string]: boolean[] };
+    numbers?: { [key: string]: number};
+    arrayOfNumbers?: { [key: string]: number[] };
+    tallies?: { [key: string]: { [key: string]: number} };
+    strings?: { [key: string]: string};
+    arrayOfStrings?: { [key: string]: string[]};
+    setsOfStrings?: { [key: string]: string[]};
+}
+
 export class TealiumCommon {}

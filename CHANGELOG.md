@@ -4,6 +4,11 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
+- 2.5.0
+  - Android fix: VisitorProfile dates now displayed as numerical timestamps instead of strings
+  - Added `VisitorProfile` type definition
+  - New module: MomentsAPI Module 1.0.0 added
+
 - 2.4.2
   - Android fix: added check during initialization to ensure only a single instance of Tealium is running. Pre-existing instances are shutdown.
 

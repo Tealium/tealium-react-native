@@ -1,4 +1,4 @@
-import { ConsentCategories, ConsentStatus, Expiry, TealiumCommon, TealiumConfig, TealiumDispatch } from './common';
+import { ConsentCategories, ConsentStatus, Expiry, TealiumCommon, TealiumConfig, TealiumDispatch, VisitorProfile } from './common';
 
 declare module 'tealium-react-native' {
 	export default Tealium;
@@ -110,7 +110,7 @@ declare module 'tealium-react-native' {
 		 * Sets a listener to be called when the AudienceStream visitor profile is updated
 		 * @param callback Callback function to be called when the visitor profile is updated
 		 */
-		public static setVisitorServiceListener(callback: (response: any) => void): void;
+		public static setVisitorServiceListener(callback: (response: VisitorProfile) => void): void;
 
 		/**
 		 * Sets a listener to be called when the Visitor Id is updated

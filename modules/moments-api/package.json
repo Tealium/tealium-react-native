@@ -1,8 +1,8 @@
 {
-  "name": "tealium-react-native",
-  "title": "Tealium React Native",
-  "version": "2.5.0",
-  "description": "A native module for using Tealium's Kotlin and Swift libraries.",
+  "name": "tealium-react-native-moments-api",
+  "title": "Tealium React Native Moments API Module",
+  "version": "1.0.0",
+  "description": "A native module for using Tealium's Moments API module for Kotlin and Swift libraries.",
   "main": "index.js",
   "types": "*.ts",
   "homepage": "https://github.com/Tealium/tealium-react-native",
@@ -15,8 +15,7 @@
     "index.js",
     "index.d.ts",
     "ios",
-    "tealium-react-native.podspec",
-    "tealium-react-native-swift.podspec"
+    "tealium-react-moments-api.podspec"
   ],
   "repository": {
     "type": "git",
@@ -31,8 +30,7 @@
     "name": "Tealium"
   },
   "contributors": [
-    "James Keith",
-    "Christina Sund"
+    "Karen Tamayo"
   ],
   "license": "Commercial",
   "licenseFilename": "LICENSE",
@@ -43,6 +41,9 @@
   },
   "devDependencies": {
     "react": "^17.0.2",
-    "react-native": "^0.67.1"
+    "react-native": "^0.71.0"
+  },
+  "dependencies": {
+    "tealium-react-native": "^2.2.0"
   }
 }

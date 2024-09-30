@@ -43,7 +43,7 @@ buildscript {
     }
 }
 
-version = "2.4.2"
+version = "2.5.0"
 android {
     compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
     buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
@@ -61,8 +61,12 @@ android {
         abortOnError false
     }
 
+    if (project.android.hasProperty("namespace")) {
+        namespace "com.tealium.react"
+    }
+
     def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0].toInteger()
-    if(agpVersion < 8) {
+    if(agpVersion < 8) {        
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_11
             targetCompatibility JavaVersion.VERSION_11

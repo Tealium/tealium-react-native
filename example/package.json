@@ -21,7 +21,8 @@
     "tealium-react-native-adobe-visitor": "../modules/adobe-visitor/",
     "tealium-react-native-crash-reporter": "../modules/crash-reporter/",
     "tealium-react-native-attribution": "../modules/attribution/",
-    "tealium-react-native-location": "../modules/location/"
+    "tealium-react-native-location": "../modules/location/",
+    "tealium-react-native-moments-api": "../modules/moments-api/"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

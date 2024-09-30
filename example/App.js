@@ -34,7 +34,9 @@ import { checkAndRequestPermissions } from "./Utils"
 // import { AuthState } from 'tealium-react-native-adobe-visitor/common';
 import TealiumCrashReporter from 'tealium-react-native-crash-reporter';
 import TealiumAttribution from 'tealium-react-native-attribution';
-import AttributionConfig from 'tealium-react-native-attribution/common'
+import AttributionConfig from 'tealium-react-native-attribution/common';
+import TealiumMomentsApi from 'tealium-react-native-moments-api';
+import { MomentsApiConfig, MomentsApiRegion} from 'tealium-react-native-moments-api/common';
 
 export default class App extends Component<{}> {
 
@@ -63,6 +65,10 @@ export default class App extends Component<{}> {
             iosSkAdConversionKeys: {"event": "conversion_value"}
         }
 
+        let momentsApiConfig: MomentsApiConfig = {
+            momentsApiRegion: MomentsApiRegion.UsEast
+        }
+
         // TealiumAdobeVisitor.configure(adobeVisitorConfig);
         TealiumLocation.configure(locationConfig);
         FirebaseRemoteCommand.initialize();
@@ -71,6 +77,7 @@ export default class App extends Component<{}> {
         AppsFlyerRemoteCommand.initialize();
         TealiumCrashReporter.initialize();
         TealiumAttribution.configure(attributionConfig);
+        TealiumMomentsApi.configure(momentsApiConfig);
 
         let config: TealiumConfig = {
             account: 'tealiummobile',
@@ -126,12 +133,13 @@ export default class App extends Component<{}> {
             });
         });
         Tealium.setVisitorServiceListener(profile => {
+            console.log("VisitorProfile: " + JSON.stringify(profile));
             console.log("audiences: ");
-            console.log(JSON.stringify(profile["audiences"]));
+            console.log(JSON.stringify(profile.audiences));
             console.log("tallies: ")
-            console.log(JSON.stringify(profile["tallies"]));
+            console.log(JSON.stringify(profile.tallies));
             console.log("currentVisit: ")
-            console.log(JSON.stringify(profile["currentVisit"]));
+            console.log(JSON.stringify(profile.currentVisit));
         });
         Tealium.setVisitorIdListener(id => {
             console.log("Visitor Id Updated: " + id);
@@ -303,6 +311,15 @@ export default class App extends Component<{}> {
         });
     }
 
+    fetchEngineResponse(id) {
+        TealiumMomentsApi.fetchEngineResponse(
+            id,
+            value => {
+                console.log("Engine Response data: " + JSON.stringify(value))
+            }
+        );
+    }
+
     linkExistingAdobeVisitor (id, providerId, authState) {
         TealiumAdobeVisitor.linkEcidToKnownIdentifier(
             id, providerId, authState, value => {
@@ -444,6 +461,9 @@ export default class App extends Component<{}> {
                             <AdobeVisitor action={this.linkExistingAdobeVisitor} />
                             <TealiumButtonList actions={this.getButtonsForSection(Sections.AdobeVisitorService)} />
                         </Section>
+                        <Section text={Sections.MomentsAPI}>
+                            <MomentsAPI action={this.fetchEngineResponse} />
+                        </Section>
                         <Section text={Sections.Misc}>
                             <TealiumButtonList actions={this.getButtonsForSection(Sections.Misc)} />
                         </Section>
@@ -475,7 +495,7 @@ const AdobeVisitor = (props) => {
     const [inputAuthStateText, setAuthStateText] = useState()
     return (
         <View style={styles.inputContainer}>
-            <TextInput style={styles.input}
+             <TextInput style={styles.input}
                 textAlign={'center'}
                 underlineColorAndroid="transparent"
                 placeholder="ENTER KNOWN VISITOR ID"
@@ -504,6 +524,27 @@ const AdobeVisitor = (props) => {
                     props.action(id, dataProvider, parseInt(authState))
                 } else {
                     props.action(id, dataProvider, undefined)
+                }
+            }} />
+        </View>
+    )
+}
+
+const MomentsAPI = (props) => {
+    const [inputEngineIdIdText, setEngineIdText] = useState()
+    return (
+        <View style={styles.inputContainer}>
+            <TextInput style={styles.input}
+                textAlign={'center'}
+                underlineColorAndroid="transparent"
+                placeholder="ENTER MOMENTS API ENGINE ID"
+                placeholderTextColor="#007CC1"
+                autoCapitalize="none"
+                onChangeText={(id) => setEngineIdText(id)} />
+            <TealiumButton text="FETCH ENGINE RESPONSE" onPress={() => {
+                let id = inputEngineIdIdText;
+                if (id) {
+                    props.action(id)
                 }
             }} />
         </View>
@@ -585,6 +626,7 @@ const Sections = {
     DataLayer: "DataLayer",
     RemoteCommand: "Remote Commands",
     AdobeVisitorService: "Adobe Visitor Service",
+    MomentsAPI: "Moments API",
     Misc: "Misc"
 }
 
