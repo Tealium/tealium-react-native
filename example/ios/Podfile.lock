@@ -498,7 +498,7 @@ PODS:
     - tealium-react-native-swift (~> 2.4)
     - tealium-swift/Core (~> 2.14)
     - tealium-swift/MomentsAPI (~> 2.14)
-  - tealium-react-native (2.5.0):
+  - tealium-react-native (2.5.1):
     - React-Core
     - tealium-swift/Collect (~> 2.13)
     - tealium-swift/Core (~> 2.13)
@@ -518,7 +518,7 @@ PODS:
     - tealium-react-native-swift (~> 2.4)
     - tealium-swift/Core (~> 2.12)
     - tealium-swift/Location (~> 2.12)
-  - tealium-react-native-swift (2.5.0):
+  - tealium-react-native-swift (2.5.1):
     - React-Core
     - tealium-react-native
     - tealium-swift/Collect (~> 2.13)
@@ -808,10 +808,10 @@ SPEC CHECKSUMS:
   tealium-react-braze: f72256073bf99902dbfbfcd875399cd0fac61796
   tealium-react-firebase: 44bc3f5f8294a0f9fc2fba5ebd109bde31a141e5
   tealium-react-moments-api: 34241abf796c723cdee660dd15dc7ff17ac41acb
-  tealium-react-native: 63c63a846552771b3c98e2b9fdfd85954864d1e6
+  tealium-react-native: f13fda95069e73fbf17d762ea9412b5a9224fcd5
   tealium-react-native-crash-reporter: b6bbb018f2d3fc1c27a0423aca58c33820395d41
   tealium-react-native-location: 7f275669c9434c0877e8ba20af06ac37c003657f
-  tealium-react-native-swift: 6a5ec3a0297a38fd6f437935cbc2c34361bfdb0f
+  tealium-react-native-swift: 72d2f1c2dac5758e1b45041edffe98c6a33f0937
   tealium-swift: d2a1f3ee12f3a0aa759ab43c07005b24148b6f75
   TealiumAdjust: 7a8c033c93f5aaf306ebecaa2e575a5958e55e87
   TealiumAdobeVisitorAPI: dd487f3e130829a15b9cdc7de7b2841a200214e2
