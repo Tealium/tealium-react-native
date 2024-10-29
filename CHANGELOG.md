@@ -4,6 +4,9 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
+-2.5.1
+  - Android fix: Added proper error handling for loading from file and saving VisitorProfile
+
 - 2.5.0
   - Android fix: VisitorProfile dates now displayed as numerical timestamps instead of strings
   - Added `VisitorProfile` type definition
