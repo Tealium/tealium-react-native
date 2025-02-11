@@ -131,6 +131,7 @@ export default class App extends Component<{}> {
                 console.log('hello remote command');
                 console.log(JSON.stringify(payload));
             });
+            Tealium.track(new TealiumEvent("init"));
         });
         Tealium.setVisitorServiceListener(profile => {
             console.log("VisitorProfile: " + JSON.stringify(profile));
@@ -155,7 +156,7 @@ export default class App extends Component<{}> {
     }
 
     trackView() {
-        let view = new TealiumView('Test View', { [DataLayer.ViewName]: 'test' });
+        let view = new TealiumView('screen_view', { [DataLayer.ViewName]: 'test' });
         Tealium.track(view);
     }
 
