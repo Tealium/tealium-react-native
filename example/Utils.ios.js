@@ -5,8 +5,8 @@ const checkAndRequestPermissions = async () => {
     const granted = await request(
         PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
         {
-          title: 'TealiumDemoApp',
-          message: 'TeailiumDemoApp would like access to your location ',
+          title: 'Example App',
+          message: 'Example App would like to access your location ',
         }
       ).catch();
     

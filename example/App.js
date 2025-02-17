@@ -131,6 +131,8 @@ export default class App extends Component<{}> {
                 console.log('hello remote command');
                 console.log(JSON.stringify(payload));
             });
+            // Uncommenting next line leads to Firebase.configure call, be sure you're prepared (https://tealium.atlassian.net/wiki/spaces/MOB/pages/556433576/React+Native#Activating-Firebase-instance)
+            //Tealium.track(new TealiumEvent("init"));
         });
         Tealium.setVisitorServiceListener(profile => {
             console.log("VisitorProfile: " + JSON.stringify(profile));
@@ -155,7 +157,7 @@ export default class App extends Component<{}> {
     }
 
     trackView() {
-        let view = new TealiumView('Test View', { [DataLayer.ViewName]: 'test' });
+        let view = new TealiumView('screen_view', { [DataLayer.ViewName]: 'test' });
         Tealium.track(view);
     }
 

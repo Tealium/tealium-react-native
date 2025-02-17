@@ -14,6 +14,7 @@
 		579D6C8BF62933106E9F07ED /* Pods_example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E71B93DA0B9CC6ECDE11419 /* Pods_example.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		C5B007C8D31C9BF8700B21DB /* Pods_example_exampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D894BD98BF06EA15EB677A9C /* Pods_example_exampleTests.framework */; };
+		EC0D84DF2D5B6E1300436087 /* firebase.json in Resources */ = {isa = PBXBuildFile; fileRef = 08FA752B2A3B11B700139C00 /* firebase.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -254,6 +255,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				EC0D84DF2D5B6E1300436087 /* firebase.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
