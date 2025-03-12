@@ -1,6 +1,5 @@
-import { NativeEventEmitter, NativeModules } from 'react-native';
+import { NativeEventEmitter, NativeModules, Platform } from 'react-native';
 import { Expiry, Dispatchers, EventListenerNames, RemoteCommand, VisitorProfile, CurrentVisit } from './common';
-import { platform } from 'os';
 const { TealiumWrapper, TealiumReactNative } = NativeModules;
 
 export default class Tealium {

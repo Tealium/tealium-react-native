@@ -294,11 +294,21 @@ fun dispatchFromMap(map: ReadableMap): Dispatch {
     return when (eventType.toLowerCase(Locale.ROOT)) {
         DispatchType.VIEW -> TealiumView(map.getString(KEY_TRACK_VIEW_NAME)
                 ?: DispatchType.VIEW,
-                map.safeGetMap(KEY_TRACK_DATALAYER)?.toHashMap())
+                map.safeGetMap(KEY_TRACK_DATALAYER).asMap())
         else -> TealiumEvent(map.getString(KEY_TRACK_EVENT_NAME)
                 ?: DispatchType.EVENT,
-                map.safeGetMap(KEY_TRACK_DATALAYER)?.toHashMap())
+                map.safeGetMap(KEY_TRACK_DATALAYER).asMap())
     }
+}
+
+private fun ReadableMap?.asMap() : Map<String, Any>? {
+    val hashMap = this?.toHashMap() ?: return null
+
+    return hashMap.mapNotNull { entry ->
+        entry.value?.let { value ->
+            entry.key to value
+        }
+    }.toMap()
 }
 
 fun ReadableArray.isSingleType(): Boolean {
