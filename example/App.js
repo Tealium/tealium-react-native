@@ -29,12 +29,12 @@ import FirebaseRemoteCommand from 'tealium-react-firebase';
 import BrazeRemoteCommand from 'tealium-react-braze';
 import AdjustRemoteCommand from 'tealium-react-adjust';
 import { AdjustConfig, AdjustEnvironemnt } from 'tealium-react-adjust/common';
-import AppsFlyerRemoteCommand from 'tealium-react-appsflyer';
+// import AppsFlyerRemoteCommand from 'tealium-react-appsflyer';
 import { checkAndRequestPermissions } from "./Utils"
 // import { AuthState } from 'tealium-react-native-adobe-visitor/common';
 import TealiumCrashReporter from 'tealium-react-native-crash-reporter';
 import TealiumAttribution from 'tealium-react-native-attribution';
-import AttributionConfig from 'tealium-react-native-attribution/common';
+import { AttributionConfig } from 'tealium-react-native-attribution/common';
 import TealiumMomentsApi from 'tealium-react-native-moments-api';
 import { MomentsApiConfig, MomentsApiRegion} from 'tealium-react-native-moments-api/common';
 
@@ -74,7 +74,7 @@ export default class App extends Component<{}> {
         FirebaseRemoteCommand.initialize();
         BrazeRemoteCommand.initialize();
         AdjustRemoteCommand.initialize(adjustConfig);
-        AppsFlyerRemoteCommand.initialize();
+        // AppsFlyerRemoteCommand.initialize();
         TealiumCrashReporter.initialize();
         TealiumAttribution.configure(attributionConfig);
         TealiumMomentsApi.configure(momentsApiConfig);
@@ -98,7 +98,7 @@ export default class App extends Component<{}> {
             consentLoggingEnabled: true,
             consentExpiry: {
                 'time': 10,
-                'unit': 'days'
+                'unit': TimeUnit.days
             },
             consentPolicy: ConsentPolicy.gdpr,
             batchingEnabled: false,
@@ -113,10 +113,10 @@ export default class App extends Component<{}> {
             }, {
                 id: AdjustRemoteCommand.name,
                 path: 'adjust.json'
-            }, {
-                id: AppsFlyerRemoteCommand.name,
-                path: 'appsflyer.json'
-            }
+             }//, {
+                // id: AppsFlyerRemoteCommand.name,
+                // path: 'appsflyer.json'
+            // }
         ],
             visitorIdentityKey: DataLayer.UserIdentity
         };
