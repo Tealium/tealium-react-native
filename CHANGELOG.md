@@ -4,6 +4,11 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
+-2.5.2
+ - Android fix: Compilation error against Kotlinified `ReadbleMap.toHashMap()`
+ - Removed unnecessary import of `platform` from `os`
+ - Updated Tealium Android and iOS SDK dependencies to latest.
+
 -2.5.1
   - Android fix: Added proper error handling for loading from file and saving VisitorProfile
 
