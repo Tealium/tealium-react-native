@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.static_framework = true
 
   s.dependency "React-Core"
-  s.dependency "tealium-react-native", "~> 2.5"
+  s.dependency "tealium-react-native", "~> 2.6"
   s.dependency "tealium-swift/Core", "~> 2.15"
   s.dependency "TealiumFirebase", "~> 3.4"
 end

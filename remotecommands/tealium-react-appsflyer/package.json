@@ -1,7 +1,7 @@
 {
   "name": "tealium-react-appsflyer",
   "title": "Tealium React AppsFlyer",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Package to support the Tealium AppsFlyer Remote Command",
   "main": "index.js",
   "files": [
@@ -33,7 +33,7 @@
   "peerDependencies": {
     "react": ">=16.8.1 || < 19.0.0",
     "react-native": ">=0.60.0-rc.0 <1.0.x",
-    "tealium-react-native": "^2.1.0"
+    "tealium-react-native": "^2.6.0"
   },
   "devDependencies": {
     "react": "^16.9.0",
