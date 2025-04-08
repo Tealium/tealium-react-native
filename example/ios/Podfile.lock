@@ -4,6 +4,9 @@ PODS:
   - Adjust/Adjust (5.1.1):
     - AdjustSignature (= 3.35.2)
   - AdjustSignature (3.35.2)
+  - AppsFlyerFramework (6.16.2):
+    - AppsFlyerFramework/Main (= 6.16.2)
+  - AppsFlyerFramework/Main (6.16.2)
   - boost (1.84.0)
   - BrazeKit (9.3.1)
   - DoubleConversion (1.1.6)
@@ -1655,6 +1658,12 @@ PODS:
     - tealium-react-native-swift (~> 2.4)
     - tealium-swift/Core (~> 2.12)
     - TealiumAdjust (~> 1.3)
+  - tealium-react-appsflyer (1.1.0):
+    - React
+    - tealium-react-native (~> 2.4)
+    - tealium-react-native-swift (~> 2.4)
+    - tealium-swift/Core (~> 2.12)
+    - TealiumAppsFlyer (~> 3.0)
   - tealium-react-attribution (1.0.0):
     - React-Core
     - tealium-react-native (~> 2.4)
@@ -1729,6 +1738,10 @@ PODS:
     - Adjust (~> 5.0)
     - tealium-swift/Core (~> 2.14)
     - tealium-swift/RemoteCommands (~> 2.14)
+  - TealiumAppsFlyer (3.0.0):
+    - AppsFlyerFramework (~> 6.9)
+    - tealium-swift/Core (~> 2.12)
+    - tealium-swift/RemoteCommands (~> 2.12)
   - TealiumBraze (3.4.0):
     - BrazeKit (~> 9.0)
     - tealium-swift/Core (~> 2.12)
@@ -1818,6 +1831,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - tealium-react-adjust (from `../node_modules/tealium-react-adjust`)
+  - tealium-react-appsflyer (from `../node_modules/tealium-react-appsflyer`)
   - tealium-react-attribution (from `../node_modules/tealium-react-native-attribution`)
   - tealium-react-braze (from `../node_modules/tealium-react-braze`)
   - tealium-react-firebase (from `../node_modules/tealium-react-firebase`)
@@ -1832,6 +1846,7 @@ SPEC REPOS:
   trunk:
     - Adjust
     - AdjustSignature
+    - AppsFlyerFramework
     - BrazeKit
     - Firebase
     - FirebaseAnalytics
@@ -1846,6 +1861,7 @@ SPEC REPOS:
     - SocketRocket
     - tealium-swift
     - TealiumAdjust
+    - TealiumAppsFlyer
     - TealiumBraze
     - TealiumCrashModule
     - TealiumFirebase
@@ -1992,6 +2008,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-permissions"
   tealium-react-adjust:
     :path: "../node_modules/tealium-react-adjust"
+  tealium-react-appsflyer:
+    :path: "../node_modules/tealium-react-appsflyer"
   tealium-react-attribution:
     :path: "../node_modules/tealium-react-native-attribution"
   tealium-react-braze:
@@ -2014,6 +2032,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Adjust: 5f5e998cf1446d44d93f91ec8b7b7dd40eaa922d
   AdjustSignature: 23b9e5d4adcadffc303bb6b410fde617dd88504f
+  AppsFlyerFramework: fe5303bffcdfd941d5f570c2d21eaaea982e7bdc
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   BrazeKit: 4da9eda353092104add9d3fcbb272afbd14dd3de
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
@@ -2096,6 +2115,7 @@ SPEC CHECKSUMS:
   RNPermissions: fabdb30adcfa59d32f3516a2d6d63529388a501f
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   tealium-react-adjust: f3ef6ba43238d4cbc9483f0aa38738a3eb892fbf
+  tealium-react-appsflyer: 1be2e9df2dde521ebcd9b4324ddf78ce688ee995
   tealium-react-attribution: 5db8c4ccf60c0fea4790afc5a47537d4a198592c
   tealium-react-braze: f72256073bf99902dbfbfcd875399cd0fac61796
   tealium-react-firebase: 9d57364e1356741331e7eba696c0127b93fea3e8
@@ -2106,6 +2126,7 @@ SPEC CHECKSUMS:
   tealium-react-native-swift: 5632002c9abf9b14e3e47fe923e95f113a33e874
   tealium-swift: b288efd08c4721cf0b70dcf1149f055fbaec977b
   TealiumAdjust: efc4ce1286008cebd3eb2c8ed05f36e9b04755e0
+  TealiumAppsFlyer: 7736e28b06462c2fe2349040adce06a8ba6b27b1
   TealiumBraze: af453e2758490a06ea463183a49fc9ec8bad9fc6
   TealiumCrashModule: f52a33391a599e6b62983caff5432cd7e536104d
   TealiumFirebase: 4c81de8f1ae6cfabdd637198981f18e0177f1a7f
