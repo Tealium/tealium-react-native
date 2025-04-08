@@ -1,5 +1,5 @@
 import Foundation
-import tealium_react_native_swift
+import tealium_react_native
 import TealiumSwift
 import TealiumCrashModule
 

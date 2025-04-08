@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.authors = { "Christina Sund" => "christina.sund@tealium.com", "James Keith" => "james.keith@tealium.com" }
   s.platforms = { :ios => "12.0" }
   s.source = { :git => "https://github.com/Tealium/tealium-react-native.git", :tag => "#{s.version}" }
-  s.source_files = "ios/**/*.{h,c,m}"
+  s.source_files = "ios/**/*.{h,c,m,swift}"
   s.requires_arc = true
   s.swift_version = "5.0"
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }

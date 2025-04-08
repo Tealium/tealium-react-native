@@ -20,8 +20,7 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
 
   s.dependency "React-Core"
-  s.dependency "tealium-react-native", "~> 2.4"
-  s.dependency "tealium-react-native-swift", "~> 2.4"
+  s.dependency "tealium-react-native", "~> 2.5"
   s.dependency "TealiumAdobeVisitorAPI", "~> 1.2"
   s.dependency "tealium-swift/Core", "~> 2.12"
 

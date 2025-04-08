@@ -21,8 +21,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.dependency "React"
-  s.dependency "tealium-react-native", "~> 2.4"
-  s.dependency "tealium-react-native-swift", "~> 2.4"
+  s.dependency "tealium-react-native", "~> 2.5"
   s.dependency "tealium-swift/Core", "~> 2.12"
   s.dependency "TealiumBraze", "~> 3.2"
 end

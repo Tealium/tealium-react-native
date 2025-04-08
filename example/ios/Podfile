@@ -30,8 +30,6 @@ target 'example' do
     end
   end
 
-  pod "tealium-react-native-swift", :path => '../node_modules/tealium-react-native/tealium-react-native-swift.podspec'
-
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
