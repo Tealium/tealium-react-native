@@ -7,7 +7,7 @@
 
 import Foundation
 import React
-import tealium_react_native_swift
+import tealium_react_native
 
 @objc(TealiumReactFirebase)
 class TealiumReactFirebase: NSObject, RCTBridgeModule {

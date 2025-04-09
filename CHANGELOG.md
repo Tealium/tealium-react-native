@@ -4,10 +4,12 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
--2.5.2
+-2.6.0
  - Android fix: Compilation error against Kotlinified `ReadbleMap.toHashMap()`
  - Removed unnecessary import of `platform` from `os`
  - Updated Tealium Android and iOS SDK dependencies to latest.
+ - Removed `tealium-react-native-swift.podspec` and included the swift files in the basic `tealium-react-native.podspec`
+ - Updated all the modules and remote commands to use the latest `tealium-react-native` to avoid dependency on the `tealium-react-native-swift` one.
 
 -2.5.1
   - Android fix: Added proper error handling for loading from file and saving VisitorProfile
