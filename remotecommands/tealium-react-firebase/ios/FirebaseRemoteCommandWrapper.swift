@@ -8,7 +8,7 @@
 import Foundation
 import TealiumSwift
 import TealiumFirebase
-import tealium_react_native_swift
+import tealium_react_native
 
 class FirebaseRemoteCommandWrapper: RemoteCommandFactory {
     var name: String = "FirebaseRemoteCommand"

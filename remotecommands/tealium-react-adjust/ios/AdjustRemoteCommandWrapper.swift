@@ -7,7 +7,7 @@
 import Foundation
 import TealiumSwift
 import TealiumAdjust
-import tealium_react_native_swift
+import tealium_react_native
 
 class AdjustRemoteCommandWrapper: RemoteCommandFactory {
     var name: String = "AdjustRemoteCommand"

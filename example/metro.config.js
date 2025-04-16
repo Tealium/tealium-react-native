@@ -24,12 +24,16 @@ const watchFolders = [
   path.resolve(__dirname, '..', 'remotecommands'),
 ];
 
-module.exports = {
+const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
+
+const defaultConfig = getDefaultConfig(__dirname);
+
+const {
+  resolver: { sourceExts, assetExts },
+} = getDefaultConfig(__dirname);
+
+const config = {
   watchFolders,
-  resolver: {
-    extraNodeModules,
-    nodeModulesPaths: [path.resolve(__dirname, 'node_modules')],
-  },
   transformer: {
     getTransformOptions: async () => ({
       transform: {
@@ -37,5 +41,14 @@ module.exports = {
         inlineRequires: true,
       },
     }),
+    babelTransformerPath: require.resolve('react-native-svg-transformer'),
+  },
+  resolver: {
+    nodeModulesPaths: [path.resolve(__dirname, 'node_modules')],
+    extraNodeModules,
+    assetExts: assetExts.filter(ext => ext !== 'svg'),
+    sourceExts: [...sourceExts, 'svg'],
   },
 };
+
+module.exports = mergeConfig(defaultConfig, config);

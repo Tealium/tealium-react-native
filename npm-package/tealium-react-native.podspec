@@ -14,18 +14,18 @@ Pod::Spec.new do |s|
   s.authors = { "Christina Sund" => "christina.sund@tealium.com", "James Keith" => "james.keith@tealium.com" }
   s.platforms = { :ios => "12.0" }
   s.source = { :git => "https://github.com/Tealium/tealium-react-native.git", :tag => "#{s.version}" }
-  s.source_files = "ios/**/*.{h,c,m}"
+  s.source_files = "ios/**/*.{h,c,m,swift}"
   s.requires_arc = true
   s.swift_version = "5.0"
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
 
   s.dependency "React-Core"
-  s.dependency "tealium-swift/Core", "~> 2.13"
-  s.dependency "tealium-swift/TagManagement", "~> 2.13"
-  s.dependency "tealium-swift/Collect", "~> 2.13"
-  s.dependency "tealium-swift/Lifecycle", "~> 2.13"
-  s.dependency "tealium-swift/RemoteCommands", "~> 2.13"
-  s.dependency "tealium-swift/VisitorService", "~> 2.13"
+  s.dependency "tealium-swift/Core", "~> 2.16"
+  s.dependency "tealium-swift/TagManagement", "~> 2.16"
+  s.dependency "tealium-swift/Collect", "~> 2.16"
+  s.dependency "tealium-swift/Lifecycle", "~> 2.16"
+  s.dependency "tealium-swift/RemoteCommands", "~> 2.16"
+  s.dependency "tealium-swift/VisitorService", "~> 2.16"
 
 end
 

@@ -8,7 +8,7 @@
 import Foundation
 import TealiumSwift
 import TealiumBraze
-import tealium_react_native_swift
+import tealium_react_native
 
 class BrazeRemoteCommandWrapper: RemoteCommandFactory {
     var name: String = "BrazeRemoteCommand"

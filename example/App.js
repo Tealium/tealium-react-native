@@ -34,7 +34,7 @@ import { checkAndRequestPermissions } from "./Utils"
 // import { AuthState } from 'tealium-react-native-adobe-visitor/common';
 import TealiumCrashReporter from 'tealium-react-native-crash-reporter';
 import TealiumAttribution from 'tealium-react-native-attribution';
-import AttributionConfig from 'tealium-react-native-attribution/common';
+import { AttributionConfig } from 'tealium-react-native-attribution/common';
 import TealiumMomentsApi from 'tealium-react-native-moments-api';
 import { MomentsApiConfig, MomentsApiRegion} from 'tealium-react-native-moments-api/common';
 
@@ -98,7 +98,7 @@ export default class App extends Component<{}> {
             consentLoggingEnabled: true,
             consentExpiry: {
                 'time': 10,
-                'unit': 'days'
+                'unit': TimeUnit.days
             },
             consentPolicy: ConsentPolicy.gdpr,
             batchingEnabled: false,

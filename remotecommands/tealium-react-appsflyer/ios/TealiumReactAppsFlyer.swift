@@ -1,6 +1,6 @@
 import Foundation
 import React
-import tealium_react_native_swift
+import tealium_react_native
 
 @objc(TealiumReactAppsFlyer)
 class TealiumReactAppsflyer: NSObject, RCTBridgeModule {
