@@ -113,7 +113,7 @@ export default class App extends Component<{}> {
             }, {
                 id: AdjustRemoteCommand.name,
                 path: 'adjust.json'
-             }, {
+            }, {
                 id: AppsFlyerRemoteCommand.name,
                 path: 'appsflyer.json'
             }
