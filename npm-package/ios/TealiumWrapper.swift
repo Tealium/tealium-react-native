@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import tealium_react_native
 
 @objc(TealiumWrapper)
 class TealiumWrapper: NSObject {

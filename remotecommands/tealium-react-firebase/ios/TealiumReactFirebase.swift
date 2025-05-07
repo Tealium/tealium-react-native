@@ -16,12 +16,9 @@ class TealiumReactFirebase: NSObject, RCTBridgeModule {
     }
     let factory = FirebaseRemoteCommandWrapper()
     
-    // no longer needed.
-    weak var bridge: RCTBridge?
-    
     @objc
     static func requiresMainQueueSetup() -> Bool {
-      return false
+        return false
     }
     
     override init() {

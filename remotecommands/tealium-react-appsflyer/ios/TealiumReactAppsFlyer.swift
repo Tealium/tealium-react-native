@@ -9,12 +9,9 @@ class TealiumReactAppsflyer: NSObject, RCTBridgeModule {
     }
     let factory = AppsFlyerRemoteCommandWrapper()
     
-    // no longer needed.
-    weak var bridge: RCTBridge?
-    
     @objc
     static func requiresMainQueueSetup() -> Bool {
-      return false
+        return false
     }
     
     override init() {
