@@ -396,6 +396,21 @@ export default class App extends Component<{}> {
         }
     }
 
+    trackFacebookEvent() {
+        let event = new TealiumEvent('facebook_event', { 
+            event_name: 'fb_mobile_purchase',
+            order_total: 15.99,
+            currency_code: 'USD',
+            event_parameters: {
+                content_type: 'product',
+                content_ids: ['123456', '789012'],
+                value: 15.99,
+                currency: 'USD'
+            }
+        });
+        Tealium.track(event);
+    }
+
     getButtonsForSection(sectionFilter) {
         let filter = sectionFilter || Sections.Misc
 
@@ -435,6 +450,7 @@ export default class App extends Component<{}> {
             { section: Sections.AdobeVisitorService, text: "DECORATE URL", onPress: this.decorateUrl },
             { section: Sections.AdobeVisitorService, text: "GET URL PARAMS", onPress: this.getUrlParameters },
             { section: Sections.AdobeVisitorService, text: "RESET ADOBE VISITOR", onPress: this.resetAdobeVisitor },
+            { section: Sections.Facebook, text: "TRACK FB EVENT", onPress: this.trackFacebookEvent },
         ]
     }
 
@@ -472,6 +488,9 @@ export default class App extends Component<{}> {
                         </Section>
                         <Section text={Sections.MomentsAPI}>
                             <MomentsAPI action={this.fetchEngineResponse} />
+                        </Section>
+                        <Section text={Sections.Facebook}>
+                            <TealiumButtonList actions={this.getButtonsForSection(Sections.Facebook)} />
                         </Section>
                         <Section text={Sections.Misc}>
                             <TealiumButtonList actions={this.getButtonsForSection(Sections.Misc)} />
@@ -636,6 +655,7 @@ const Sections = {
     RemoteCommand: "Remote Commands",
     AdobeVisitorService: "Adobe Visitor Service",
     MomentsAPI: "Moments API",
+    Facebook: "Facebook",
     Misc: "Misc"
 }
 
