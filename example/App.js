@@ -26,6 +26,7 @@ import {
 } from
     'tealium-react-native/common';
 import FirebaseRemoteCommand from 'tealium-react-firebase';
+import FacebookRemoteCommand from 'tealium-react-facebook';
 import BrazeRemoteCommand from 'tealium-react-braze';
 import AdjustRemoteCommand from 'tealium-react-adjust';
 import { AdjustConfig, AdjustEnvironemnt } from 'tealium-react-adjust/common';
@@ -72,6 +73,7 @@ export default class App extends Component<{}> {
         // TealiumAdobeVisitor.configure(adobeVisitorConfig);
         TealiumLocation.configure(locationConfig);
         FirebaseRemoteCommand.initialize();
+        FacebookRemoteCommand.initialize();
         BrazeRemoteCommand.initialize();
         AdjustRemoteCommand.initialize(adjustConfig);
         AppsFlyerRemoteCommand.initialize();
@@ -107,7 +109,12 @@ export default class App extends Component<{}> {
             remoteCommands: [{
                 id: FirebaseRemoteCommand.name,
                 path: "firebase.json"
-            }, {
+            }, 
+            {
+                id: FacebookRemoteCommand.name,
+                path: 'facebook.json'
+            },
+            {
                 id: BrazeRemoteCommand.name,
                 path: 'braze.json'
             }, {
