@@ -8,7 +8,6 @@
 
 import Foundation
 import TealiumSwift
-import tealium_react_native
 
 @objc(TealiumReactNative)
 public class TealiumReactNative: RCTEventEmitter {
