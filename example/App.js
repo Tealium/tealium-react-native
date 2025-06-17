@@ -397,16 +397,12 @@ export default class App extends Component<{}> {
     }
 
     trackFacebookEvent() {
-        let event = new TealiumEvent('facebook_event', { 
-            event_name: 'fb_mobile_purchase',
-            order_total: 15.99,
-            currency_code: 'USD',
-            event_parameters: {
-                content_type: 'product',
-                content_ids: ['123456', '789012'],
-                value: 15.99,
-                currency: 'USD'
-            }
+        let event = new TealiumEvent('logpurchase', { 
+            order_id: "order123",
+            currency: "USD",
+            order_subtotal: 19.99,
+            bulk_discount: "15",
+            online_store_id: "50"
         });
         Tealium.track(event);
     }
