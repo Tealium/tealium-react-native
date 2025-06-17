@@ -25,8 +25,8 @@ open class FacebookPackage : ReactPackage {
 
 class FacebookModule(private val reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
     
-    @ReactMethod
-    fun initialize() {
+    override fun initialize() {
+        super.initialize()
         val factory = FacebookRemoteCommandFactory()
         reactContext.getNativeModule(TealiumReact::class.java)?.registerRemoteCommandFactory(factory)
     }

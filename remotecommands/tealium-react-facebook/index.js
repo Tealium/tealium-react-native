@@ -1,4 +1,4 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 
 const { TealiumReactFacebook } = NativeModules;
 
@@ -6,6 +6,8 @@ export default class FacebookRemoteCommand {
     static name = "FacebookRemoteCommand";
 
     static initialize() {
-        TealiumReactFacebook.initialize();
+        if (Platform.OS == 'ios') {
+            TealiumReactFacebook.initialize();
+        }
     }
 };
