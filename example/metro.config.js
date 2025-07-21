@@ -17,6 +17,7 @@ const extraNodeModules = {
   'tealium-react-appsflyer': path.resolve(__dirname, '..', 'remotecommands', 'tealium-react-appsflyer'),
   'tealium-react-braze': path.resolve(__dirname, '..', 'remotecommands', 'tealium-react-braze'),
   'tealium-react-firebase': path.resolve(__dirname, '..', 'remotecommands', 'tealium-react-firebase'),
+  'tealium-react-facebook': path.resolve(__dirname, '..', 'remotecommands', 'tealium-react-facebook'),
 };
 const watchFolders = [
   path.resolve(__dirname, '..', 'npm-package'),
