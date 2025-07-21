@@ -1,0 +1,59 @@
+{
+  "config": {
+    "api_token": "YOUR_API_TOKEN",
+    "sandbox": true,
+    "settings": {
+      "log_level": "verbose",
+      "allow_iad": true,
+      "allow_ad_services": true,
+      "allow_idfa": true,
+      "event_buffering_enabled": false,
+      "send_in_background": true,
+      "url_strategy": "<your url strategy>"
+    }
+  },
+  "mappings": {
+    "event_token": "event_token",
+    "order_total": "revenue",
+    "order_total_string": "callback.orderTotal",
+    "order_currency": "currency",
+    "order_id": "order_id,callback.order_id,deduplication_id,callback.deduplication_id",
+    "conversion_value": "conversion_value",
+    "sales_region": "sales_region",
+    "callback_id": "callback_id",
+    "ad_revenue_source": "ad_revenue_source",
+    "ad_revenue_amount": "ad_revenue_payload.amount",
+    "ad_revenue_currency": "ad_revenue_payload.currency",
+    "purchase_timestamp": "purchase_time",
+    "deeplink_url": "deeplink_open_url",
+    "push_token": "push_token",
+    "favorite_color": "callback.color,global_callback.color",
+    "num_of_pets": "partner.pets,global_partner.pets",
+    "customer_id": "callback.customerId",
+    "customer_is_member": "partner.isMember",
+    "global_params": "global_callback,global_partner",
+    "remove_global_params": "remove_global_callback_params,remove_global_partner_params",
+    "reset_global_params": "reset_global_callback_params,reset_global_partner_params",
+    "consent_granted": "measurement_consent",
+    "enabled": "enabled",
+    "sharing_options": "third_party_sharing_options"
+  },
+  "commands": {
+    "launch": "initialize",
+    "track_deeplink": "appwillopenurl",
+    "purchase": "trackevent,updateconversionvalue",
+    "event": "trackevent",
+    "contact": "trackevent,addglobalcallbackparams,addglobalpartnerparams",
+    "ad_revenue": "trackadrevenue",
+    "subscribe": "trackevent,tracksubscription",
+    "received_push_token": "setpushtoken",
+    "add_global_parameters": "addglobalcallbackparams,addglobalpartnerparams",
+    "remove_global_parameters": "removeglobalcallbackparams,removeglobalpartnerparams",
+    "reset_global_parameters": "resetglobalcallbackparams,resetglobalpartnerparams",
+    "consent_revoked": "gdprforgetme,trackmeasurementconsent",
+    "consent_granted": "trackmeasurementconsent",
+    "set_enabled": "setenabled",
+    "offline": "setofflinemode",
+    "third_party_sharing": "setthirdpartysharing"
+  }
+}

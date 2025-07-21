@@ -106,25 +106,24 @@ export default class App extends Component<{}> {
             batchingEnabled: false,
             visitorServiceEnabled: true,
             useRemoteLibrarySettings: false,
-            remoteCommands: [{
-                id: FirebaseRemoteCommand.name,
-                path: "firebase.json"
-            }, 
-            {
-                id: FacebookRemoteCommand.name,
-                path: 'facebook.json'
-            },
-            {
-                id: BrazeRemoteCommand.name,
-                path: 'braze.json'
-            }, {
-                id: AdjustRemoteCommand.name,
-                path: 'adjust.json'
-            }, {
-                id: AppsFlyerRemoteCommand.name,
-                path: 'appsflyer.json'
-            }
-        ],
+            remoteCommands: [
+                {
+                    id: FirebaseRemoteCommand.name,
+                    path: "firebase.json"
+                }, {
+                    id: FacebookRemoteCommand.name,
+                    path: 'facebook.json'
+                }, {
+                    id: BrazeRemoteCommand.name,
+                    path: 'braze.json'
+                }, {
+                    id: AdjustRemoteCommand.name,
+                    path: 'adjust.json'
+                }, {
+                    id: AppsFlyerRemoteCommand.name,
+                    path: 'appsflyer.json'
+                }
+            ],
             visitorIdentityKey: DataLayer.UserIdentity
         };
         Tealium.initialize(config, success => {
