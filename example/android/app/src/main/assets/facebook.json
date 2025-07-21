@@ -1,9 +1,9 @@
 {
     "config": {
-        "applicationid": "407125680222876",
-        "clienttoken": "myclienttoken",
-        "accesstoken": "mytoken",
-        "userid": "myuser",
+        "applicationid": "YOUR_APP_ID",
+        "clienttoken": "YOUR_CLIENT_TOKEN",
+        "accesstoken": "YOUR_ACCESS_TOKEN",
+        "userid": "YOUR_USER_ID",
         "auto_log_events_enabled": true,
         "auto_init_enabled": true,
         "advertiser_id_collection_enabled": true,
