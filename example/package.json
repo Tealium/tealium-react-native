@@ -17,6 +17,7 @@
     "tealium-react-adjust": "../remotecommands/tealium-react-adjust",
     "tealium-react-appsflyer": "../remotecommands/tealium-react-appsflyer",
     "tealium-react-braze": "../remotecommands/tealium-react-braze",
+    "tealium-react-facebook": "../remotecommands/tealium-react-facebook",
     "tealium-react-firebase": "../remotecommands/tealium-react-firebase",
     "tealium-react-native": "../npm-package",
     "tealium-react-native-attribution": "../modules/attribution",

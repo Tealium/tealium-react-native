@@ -11,6 +11,11 @@
 		66780A577D80CCE2A99E50C2 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9E8BBF452E2E7AAD00AB5F43 /* firebase.json in Resources */ = {isa = PBXBuildFile; fileRef = 9E8BBF442E2E7AAD00AB5F43 /* firebase.json */; };
+		9E8BBF462E2E7AAD00AB5F43 /* facebook.json in Resources */ = {isa = PBXBuildFile; fileRef = 9E8BBF432E2E7AAD00AB5F43 /* facebook.json */; };
+		9E8BBF472E2E7AAD00AB5F43 /* adjust.json in Resources */ = {isa = PBXBuildFile; fileRef = 9E8BBF402E2E7AAD00AB5F43 /* adjust.json */; };
+		9E8BBF482E2E7AAD00AB5F43 /* braze.json in Resources */ = {isa = PBXBuildFile; fileRef = 9E8BBF422E2E7AAD00AB5F43 /* braze.json */; };
+		9E8BBF492E2E7AAD00AB5F43 /* appsflyer.json in Resources */ = {isa = PBXBuildFile; fileRef = 9E8BBF412E2E7AAD00AB5F43 /* appsflyer.json */; };
 		E763FE36D457E09893DDFE71 /* Pods_example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB2B27FDBD100ED6B97C1BE7 /* Pods_example.framework */; };
 /* End PBXBuildFile section */
 
@@ -22,6 +27,11 @@
 		6714B479A18CE876DFC0E345 /* Pods-example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-example.release.xcconfig"; path = "Target Support Files/Pods-example/Pods-example.release.xcconfig"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = example/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = example/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9E8BBF402E2E7AAD00AB5F43 /* adjust.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = adjust.json; sourceTree = "<group>"; };
+		9E8BBF412E2E7AAD00AB5F43 /* appsflyer.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = appsflyer.json; sourceTree = "<group>"; };
+		9E8BBF422E2E7AAD00AB5F43 /* braze.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = braze.json; sourceTree = "<group>"; };
+		9E8BBF432E2E7AAD00AB5F43 /* facebook.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = facebook.json; sourceTree = "<group>"; };
+		9E8BBF442E2E7AAD00AB5F43 /* firebase.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = firebase.json; sourceTree = "<group>"; };
 		BB2B27FDBD100ED6B97C1BE7 /* Pods_example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8EBDCB448A24C57C3D26779 /* Pods-example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-example.debug.xcconfig"; path = "Target Support Files/Pods-example/Pods-example.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -42,6 +52,11 @@
 		13B07FAE1A68108700A75B9A /* example */ = {
 			isa = PBXGroup;
 			children = (
+				9E8BBF402E2E7AAD00AB5F43 /* adjust.json */,
+				9E8BBF412E2E7AAD00AB5F43 /* appsflyer.json */,
+				9E8BBF422E2E7AAD00AB5F43 /* braze.json */,
+				9E8BBF432E2E7AAD00AB5F43 /* facebook.json */,
+				9E8BBF442E2E7AAD00AB5F43 /* firebase.json */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				761780EC2CA45674006654EE /* AppDelegate.swift */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -159,6 +174,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				9E8BBF452E2E7AAD00AB5F43 /* firebase.json in Resources */,
+				9E8BBF462E2E7AAD00AB5F43 /* facebook.json in Resources */,
+				9E8BBF472E2E7AAD00AB5F43 /* adjust.json in Resources */,
+				9E8BBF482E2E7AAD00AB5F43 /* braze.json in Resources */,
+				9E8BBF492E2E7AAD00AB5F43 /* appsflyer.json in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				66780A577D80CCE2A99E50C2 /* PrivacyInfo.xcprivacy in Resources */,
 			);

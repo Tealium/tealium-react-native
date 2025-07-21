@@ -26,6 +26,7 @@ import {
 } from
     'tealium-react-native/common';
 import FirebaseRemoteCommand from 'tealium-react-firebase';
+import FacebookRemoteCommand from 'tealium-react-facebook';
 import BrazeRemoteCommand from 'tealium-react-braze';
 import AdjustRemoteCommand from 'tealium-react-adjust';
 import { AdjustConfig, AdjustEnvironemnt } from 'tealium-react-adjust/common';
@@ -72,6 +73,7 @@ export default class App extends Component<{}> {
         // TealiumAdobeVisitor.configure(adobeVisitorConfig);
         TealiumLocation.configure(locationConfig);
         FirebaseRemoteCommand.initialize();
+        FacebookRemoteCommand.initialize();
         BrazeRemoteCommand.initialize();
         AdjustRemoteCommand.initialize(adjustConfig);
         AppsFlyerRemoteCommand.initialize();
@@ -104,20 +106,24 @@ export default class App extends Component<{}> {
             batchingEnabled: false,
             visitorServiceEnabled: true,
             useRemoteLibrarySettings: false,
-            remoteCommands: [{
-                id: FirebaseRemoteCommand.name,
-                path: "firebase.json"
-            }, {
-                id: BrazeRemoteCommand.name,
-                path: 'braze.json'
-            }, {
-                id: AdjustRemoteCommand.name,
-                path: 'adjust.json'
-            }, {
-                id: AppsFlyerRemoteCommand.name,
-                path: 'appsflyer.json'
-            }
-        ],
+            remoteCommands: [
+                {
+                    id: FirebaseRemoteCommand.name,
+                    path: "firebase.json"
+                }, {
+                    id: FacebookRemoteCommand.name,
+                    path: 'facebook.json'
+                }, {
+                    id: BrazeRemoteCommand.name,
+                    path: 'braze.json'
+                }, {
+                    id: AdjustRemoteCommand.name,
+                    path: 'adjust.json'
+                }, {
+                    id: AppsFlyerRemoteCommand.name,
+                    path: 'appsflyer.json'
+                }
+            ],
             visitorIdentityKey: DataLayer.UserIdentity
         };
         Tealium.initialize(config, success => {
@@ -389,6 +395,17 @@ export default class App extends Component<{}> {
         }
     }
 
+    trackFacebookEvent() {
+        let event = new TealiumEvent('logpurchase', { 
+            order_id: "order123",
+            currency: "USD",
+            order_subtotal: 19.99,
+            bulk_discount: "15",
+            online_store_id: "50"
+        });
+        Tealium.track(event);
+    }
+
     getButtonsForSection(sectionFilter) {
         let filter = sectionFilter || Sections.Misc
 
@@ -428,6 +445,7 @@ export default class App extends Component<{}> {
             { section: Sections.AdobeVisitorService, text: "DECORATE URL", onPress: this.decorateUrl },
             { section: Sections.AdobeVisitorService, text: "GET URL PARAMS", onPress: this.getUrlParameters },
             { section: Sections.AdobeVisitorService, text: "RESET ADOBE VISITOR", onPress: this.resetAdobeVisitor },
+            { section: Sections.Facebook, text: "TRACK FB EVENT", onPress: this.trackFacebookEvent },
         ]
     }
 
@@ -465,6 +483,9 @@ export default class App extends Component<{}> {
                         </Section>
                         <Section text={Sections.MomentsAPI}>
                             <MomentsAPI action={this.fetchEngineResponse} />
+                        </Section>
+                        <Section text={Sections.Facebook}>
+                            <TealiumButtonList actions={this.getButtonsForSection(Sections.Facebook)} />
                         </Section>
                         <Section text={Sections.Misc}>
                             <TealiumButtonList actions={this.getButtonsForSection(Sections.Misc)} />
@@ -629,6 +650,7 @@ const Sections = {
     RemoteCommand: "Remote Commands",
     AdobeVisitorService: "Adobe Visitor Service",
     MomentsAPI: "Moments API",
+    Facebook: "Facebook",
     Misc: "Misc"
 }
 

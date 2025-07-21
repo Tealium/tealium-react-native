@@ -1,0 +1,58 @@
+{
+  "config": {
+    "api_token": "YOUR_API_TOKEN",
+    "sandbox": true,
+    "settings": {
+      "log_level": "verbose",
+      "url_strategy" : "",
+      "coppa_compliant": true,
+      "play_store_kids_enabled": true
+    }
+  },
+  "mappings": {
+    "event_token": "event_token",
+    "push_token": "push_token",
+    "order_total": "revenue",
+    "order_currency": "currency",
+    "order_id": "order_id",
+    "deduplication_id": "deduplication_id",
+    "callback_id": "callback_id",
+    "source": "ad_revenue_source",
+    "payload": "ad_revenue_payload",
+    "ad_revenue_amount": "ad_revenue_payload.amount",
+    "ad_revenue_currency": "ad_revenue_payload.currency",
+    "deeplink_url": "deeplink_open_url",
+    "sku": "sku",
+    "signature": "signature",
+    "purchase_token": "purchase_token",
+    "event_param_1": "callback.param1",
+    "event_param_2": "callback.param2",
+    "partner_param_1": "partner.param1",
+    "partner_param_2": "partner.param2",
+    "global_param_1": "global_callback.param1",
+    "global_param_2": "global_callback.param2",
+    "global_callback_params": "global_callback",
+    "partner_global_param_1": "global_partner.param1",
+    "partner_global_param_2": "global_partner.param2",
+    "global_partner_params": "global_partner",
+    "consent_granted": "measurement_consent,third_party_sharing_enabled",
+    "consent_opts": "third_party_sharing_options",
+    "enabled": "enabled,offline"
+  },
+  "commands": {
+    "launch": "initialize",
+    "purchase": "trackevent",
+    "event": "trackevent",
+    "track_deeplink": "appwillopenurl",
+    "ad_revenue": "trackadrevenue",
+    "subscribe": "tracksubscription",
+    "push_token": "setpushtoken",
+    "add_global_callback": "addglobalcallbackparams",
+    "add_global_partner": "addglobalpartnerparams",
+    "contact": "trackevent",
+    "consent_revoked": "gdprforgetme,trackmeasurementconsent,setthirdpartysharing",
+    "consent_granted": "trackmeasurementconsent,setthirdpartysharing",
+    "disable": "setenabled",
+    "offline": "setofflinemode"
+  }
+}
