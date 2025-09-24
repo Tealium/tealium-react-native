@@ -4,6 +4,12 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
+-2.6.2
+- iOS-Swift: Updated the dependencies: to 4.0+ for TealiumFirebase and 2.18+ for TealiumSwift
+
+-2.6.1
+- iOS-Swift: Removed RCTBridge from remote commands and removed ignored import in core package
+
 -2.6.0
  - Android fix: Compilation error against Kotlinified `ReadbleMap.toHashMap()`
  - Removed unnecessary import of `platform` from `os`
