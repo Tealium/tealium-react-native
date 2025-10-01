@@ -4,6 +4,14 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
+-2.6.2
+ - Android fix: RemoteAPI now only enabled when RemoteCommands dispatcher is added.
+
+-2.6.1
+ - Removed warning from wrong import of `tealium-react-native` in Swift
+ - Remote Commands: Removed unused RCTBridge variable from remote commands that was causing compile errors on newer versions of react native
+ - Crash Reporter: Fix package json import of the podspec that would cause compile errors on iOS
+
 -2.6.0
  - Android fix: Compilation error against Kotlinified `ReadbleMap.toHashMap()`
  - Removed unnecessary import of `platform` from `os`
