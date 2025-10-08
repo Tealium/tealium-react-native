@@ -2045,7 +2045,7 @@ SPEC CHECKSUMS:
   AppsFlyerFramework: 3e48c87fd356e7cbf09b87e176c0b04dc42f95fe
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   BrazeKit: b21335426470a4e80b0a21fdeec69bdbe6852222
-  DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
+  DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
   FBAEMKit: b2ed182002dbcb65d5a60059c9693d322186cd00
   FBLazyVector: 6fe148afcef2e3213e484758e3459609d40d57f5
@@ -2057,7 +2057,7 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: a9e1ff270f217489d9258563b693d11a312903bf
   FirebaseInstallations: ca48ec60ea51b66b9f214a91847ea3720cde97f5
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
-  glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
+  glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   GoogleAdsOnDeviceConversion: b4fcc557983271d53177d75ddf704c025791d261
   GoogleAppMeasurement: 9074f50943fe26a7829be3a2b0043270ad935b9e
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
