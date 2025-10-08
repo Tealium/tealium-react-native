@@ -1,7 +1,7 @@
 {
   "name": "tealium-react-appsflyer",
   "title": "Tealium React AppsFlyer",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Package to support the Tealium AppsFlyer Remote Command",
   "main": "index.js",
   "files": [

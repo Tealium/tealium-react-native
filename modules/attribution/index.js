@@ -1,4 +1,4 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 const { TealiumReactAttribution } = NativeModules;
 
 export default class TealiumAttribution {
