@@ -6,6 +6,9 @@
 
 -2.6.2
 - iOS-Swift: Updated the dependencies: to 4.0+ for TealiumFirebase and 2.18+ for TealiumSwift
+- Added missing 'Platform' imports to modules and remote commands
+- Removed unused 'configure' method definitions from objc files
+- Updated module versions and tealium SDK dependencies
 
 -2.6.1
 - iOS-Swift: Removed RCTBridge from remote commands and removed ignored import in core package
