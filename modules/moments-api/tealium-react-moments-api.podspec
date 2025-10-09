@@ -25,4 +25,3 @@ Pod::Spec.new do |s|
   s.dependency "tealium-swift/MomentsAPI", "~> 2.18"
 
 end
-

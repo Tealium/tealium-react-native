@@ -25,4 +25,3 @@ Pod::Spec.new do |s|
   s.dependency "tealium-swift/Location", "~> 2.18"
 
 end
-

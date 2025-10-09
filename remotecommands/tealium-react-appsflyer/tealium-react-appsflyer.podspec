@@ -25,4 +25,3 @@ Pod::Spec.new do |s|
   s.dependency "tealium-swift/Core", "~> 2.18"
   s.dependency "TealiumAppsFlyer", "~> 3.0"
 end
-
