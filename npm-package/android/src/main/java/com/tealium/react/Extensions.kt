@@ -21,6 +21,7 @@ import com.tealium.lifecycle.isAutoTrackingEnabled
 import com.tealium.remotecommanddispatcher.RemoteCommandDispatcher
 import com.tealium.tagmanagementdispatcher.TagManagementDispatcher
 import com.tealium.tagmanagementdispatcher.overrideTagManagementUrl
+import com.tealium.tagmanagementdispatcher.remoteApiEnabled
 import com.tealium.tagmanagementdispatcher.sessionCountingEnabled
 import com.tealium.visitorservice.VisitorProfile
 import com.tealium.visitorservice.VisitorService
@@ -176,6 +177,9 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
         safeGetBoolean(KEY_SESSION_COUNTING_ENABLED)?.let {
             sessionCountingEnabled = it
         }
+        
+        // Enable RemoteAPI only when RemoteCommands dispatcher is present
+        remoteApiEnabled = dispatchers?.contains(RemoteCommandDispatcher) ?: false
     }
 
     return config
