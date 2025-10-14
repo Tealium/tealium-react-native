@@ -7,6 +7,9 @@
 -2.6.2
  - Android fix: RemoteAPI now only enabled when RemoteCommands dispatcher is added.
  - iOS-Swift: Updated the dependencies: to 4.0+ for TealiumFirebase and 2.18+ for TealiumSwift
+ - Added missing 'Platform' imports to modules and remote commands
+ - Removed unused 'configure' method definitions from objc files
+ - Updated module versions and tealium SDK dependencies
 
 -2.6.1
  - Removed warning from wrong import of `tealium-react-native` in Swift

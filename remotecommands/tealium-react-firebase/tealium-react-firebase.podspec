@@ -24,4 +24,3 @@ Pod::Spec.new do |s|
   s.dependency "tealium-swift/Core", "~> 2.18"
   s.dependency "TealiumFirebase", "~> 4.0"
 end
-

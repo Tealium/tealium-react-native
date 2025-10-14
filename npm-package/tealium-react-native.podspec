@@ -28,4 +28,3 @@ Pod::Spec.new do |s|
   s.dependency "tealium-swift/VisitorService", "~> 2.18"
 
 end
-

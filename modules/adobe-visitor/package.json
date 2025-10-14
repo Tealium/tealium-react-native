@@ -1,7 +1,7 @@
 {
   "name": "tealium-react-native-adobe-visitor",
   "title": "Tealium React Native Adobe Visitor Service",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A native module for using Tealium's Adobe Visitor Service module for Kotlin and Swift libraries.",
   "main": "index.js",
   "types": "*.ts",

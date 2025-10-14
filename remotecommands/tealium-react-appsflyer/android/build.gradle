@@ -37,12 +37,17 @@ buildscript {
   }
 }
 
+version = "1.2.2"
 android {
   compileSdkVersion safeExtGet("compileSdkVersion", DEFAULT_COMPILE_SDK_VERSION)
-
+  buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
   defaultConfig {
     minSdkVersion safeExtGet("minSdkVersion", DEFAULT_MIN_SDK_VERSION)
     targetSdkVersion safeExtGet("targetSdkVersion", DEFAULT_TARGET_SDK_VERSION)
+
+    buildConfigField "String", "TAG", "\"Tealium-React-Appsflyer-$version\""
+
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
     release {

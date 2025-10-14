@@ -36,7 +36,7 @@ buildscript {
   }
 }
 
-version = "1.0.0"
+version = "1.1.1"
 
 android {
   compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
@@ -45,8 +45,6 @@ android {
   defaultConfig {
     minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
     targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
-    versionCode 1
-    versionName "1.0"
 
     buildConfigField "String", "TAG", "\"Tealium-React-MomentsAPI-$version\""
   }
