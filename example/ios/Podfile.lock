@@ -1685,10 +1685,10 @@ PODS:
     - tealium-react-native (~> 2.6)
     - tealium-swift/Core (~> 2.18)
     - TealiumBraze (~> 3.5)
-  - tealium-react-facebook (1.0.0):
+  - tealium-react-facebook (1.0.1):
     - React
     - tealium-react-native (~> 2.6)
-    - tealium-swift/Core (~> 2.16)
+    - tealium-swift/Core (~> 2.18)
     - TealiumFacebook (~> 2.0)
   - tealium-react-firebase (1.4.1):
     - React-Core
@@ -2132,7 +2132,7 @@ SPEC CHECKSUMS:
   tealium-react-appsflyer: ac522d1ac391448cb58efb57626d6611fb9a5724
   tealium-react-attribution: 1d10191c22b4fb0e30dc9b919a99f9d24f60818d
   tealium-react-braze: c94d1c33e7090e60c436aef293ebbf1c6e49e04b
-  tealium-react-facebook: a9e3e4a2abc6af7e0e3e6433193e61ccb2c530c8
+  tealium-react-facebook: 6cc3609ed4e6569e931c0f21c3f0a736c7a97e88
   tealium-react-firebase: a363750336a0dd7a05a9069c8ad9acf1844e0981
   tealium-react-moments-api: ed82fd21f03f4da4dd77848dd079874f3e5043bb
   tealium-react-native: 7d0e010bcc4d865860b858e7d498d6b44fb2f5ea
