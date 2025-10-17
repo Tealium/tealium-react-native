@@ -94,8 +94,7 @@ class TealiumReact(private val reactContext: ReactApplicationContext) : ReactCon
         // handle the case where it is null properly to avoid an unhandled exception.
         try {
             app = reactApplicationContext.getCurrentActivity()?.getApplication()
-                    ?: currentActivity?.getApplication()
-                            ?: reactApplicationContext.getApplicationContext() as Application
+                    ?: reactApplicationContext.getApplicationContext() as Application
         } catch (ex: NullPointerException) {
             Log.d(TAG, "getApplication: method called on null object. ", ex)
         } catch (ex: ClassCastException) {
