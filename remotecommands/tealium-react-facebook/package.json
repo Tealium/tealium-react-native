@@ -1,7 +1,7 @@
 {
   "name": "tealium-react-facebook",
   "title": "Tealium React Facebook",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Package to support the Tealium Facebook Remote Command integration",
   "main": "index.js",
   "files": [

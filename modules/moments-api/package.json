@@ -1,7 +1,7 @@
 {
   "name": "tealium-react-native-moments-api",
   "title": "Tealium React Native Moments API Module",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A native module for using Tealium's Moments API module for Kotlin and Swift libraries.",
   "main": "index.js",
   "types": "*.ts",

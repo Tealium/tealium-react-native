@@ -21,6 +21,7 @@ import com.tealium.lifecycle.isAutoTrackingEnabled
 import com.tealium.remotecommanddispatcher.RemoteCommandDispatcher
 import com.tealium.tagmanagementdispatcher.TagManagementDispatcher
 import com.tealium.tagmanagementdispatcher.overrideTagManagementUrl
+import com.tealium.tagmanagementdispatcher.remoteApiEnabled
 import com.tealium.tagmanagementdispatcher.sessionCountingEnabled
 import com.tealium.visitorservice.VisitorProfile
 import com.tealium.visitorservice.VisitorService
@@ -49,7 +50,7 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
     }
 
     val environment = try {
-        Environment.valueOf(environmentString?.toUpperCase(Locale.ROOT) ?: "PROD")
+        Environment.valueOf(environmentString?.uppercase(Locale.ROOT) ?: "PROD")
     } catch (iax: IllegalArgumentException) {
         missingRequiredProperty(KEY_CONFIG_ENV)
         Environment.PROD
@@ -176,6 +177,9 @@ fun ReadableMap.toTealiumConfig(application: Application): TealiumConfig? {
         safeGetBoolean(KEY_SESSION_COUNTING_ENABLED)?.let {
             sessionCountingEnabled = it
         }
+        
+        // Enable RemoteAPI only when RemoteCommands dispatcher is present
+        remoteApiEnabled = dispatchers?.contains(RemoteCommandDispatcher) ?: false
     }
 
     return config
@@ -214,7 +218,7 @@ private fun ReadableMap.hasValue(key: String, type: ReadableType) : Boolean {
 
 fun consentPolicyFromString(name: String): ConsentPolicy? {
     return try {
-        ConsentPolicy.valueOf(name.toUpperCase(Locale.ROOT))
+        ConsentPolicy.valueOf(name.uppercase(Locale.ROOT))
     } catch (iax: IllegalArgumentException) {
         null
     }
@@ -282,7 +286,7 @@ fun dispatcherFactoryFromString(name: String): DispatcherFactory? {
     }
 }
 
-fun expiryFromString(name: String) = when (name.toLowerCase(Locale.ROOT)) {
+fun expiryFromString(name: String) = when (name.lowercase(Locale.ROOT)) {
     "forever" -> Expiry.FOREVER
     "untilrestart" -> Expiry.UNTIL_RESTART
     else -> Expiry.SESSION
@@ -291,7 +295,7 @@ fun expiryFromString(name: String) = when (name.toLowerCase(Locale.ROOT)) {
 fun dispatchFromMap(map: ReadableMap): Dispatch {
     val eventType = map.getString(KEY_TRACK_EVENT_TYPE) ?: DispatchType.EVENT
 
-    return when (eventType.toLowerCase(Locale.ROOT)) {
+    return when (eventType.lowercase(Locale.ROOT)) {
         DispatchType.VIEW -> TealiumView(map.getString(KEY_TRACK_VIEW_NAME)
                 ?: DispatchType.VIEW,
                 map.safeGetMap(KEY_TRACK_DATALAYER).asMap())

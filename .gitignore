@@ -41,9 +41,7 @@ local.properties
 
 # node.js
 node_modules/
-package-lock.json
 npm-debug.log
 yarn-error.log
-yarn.lock
 google-services.json
 GoogleService-Info.plist
