@@ -11,6 +11,7 @@
     "README.md",
     "LICENSE",
     "android",
+    "!android/build",
     "common.ts",
     "index.js",
     "index.d.ts",
