@@ -6,7 +6,7 @@
 
 -2.6.3
  - iOS: Fixed module header resolution for tealium-react-native podspec (Xcode 26 compatibility)
- - iOS: Fixed Xcode 26 compile error in fmt pod by enforcing C++17 language standard
+ - iOS Example app: Fixed Xcode 26 compile error in fmt pod by enforcing C++17 language standard (main package not affected)
  - Location Module 1.2.2: Fixed podspec filename reference in package.json
 
 -2.6.2
