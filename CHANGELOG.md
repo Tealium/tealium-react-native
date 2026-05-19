@@ -4,6 +4,11 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
+-2.6.3
+ - iOS: Fixed module header resolution for tealium-react-native podspec (Xcode 26 compatibility)
+ - iOS: Fixed Xcode 26 compile error in fmt pod by enforcing C++17 language standard
+ - Location Module 1.2.2: Fixed podspec filename reference in package.json
+
 -2.6.2
  - Android fix: RemoteAPI now only enabled when RemoteCommands dispatcher is added.
  - iOS-Swift: Updated the dependencies: to 4.0+ for TealiumFirebase and 2.18+ for TealiumSwift
