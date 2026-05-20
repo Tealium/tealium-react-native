@@ -18,6 +18,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.swift_version = "5.0"
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
+  s.header_dir = 'tealium_react_native'
 
   s.dependency "React-Core"
   s.dependency "tealium-swift/Core", "~> 2.18"
