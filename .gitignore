@@ -45,3 +45,6 @@ npm-debug.log
 yarn-error.log
 google-services.json
 GoogleService-Info.plist
+
+# VS Code
+.vscode/
