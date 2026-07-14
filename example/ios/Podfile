@@ -49,14 +49,5 @@ target 'example' do
       # :ccache_enabled => true
     )
 
-    # Xcode 26 compiles the fmt pod in a way that enables stricter compile-time format string checks, which causes fmt to fail
-    # to build in our React Native iOS setup. Forcing the fmt pod to use c++17 avoids that code path and restores compatibility.
-    installer.pods_project.targets.each do |target|
-      if target.name == 'fmt'
-        target.build_configurations.each do |config|
-          config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
-        end
-      end
-    end
   end
 end
