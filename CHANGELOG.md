@@ -6,7 +6,7 @@
 
 -2.6.4
  - iOS: Added `import React` to Swift native modules for compatibility with React Native 0.84+ prebuilt xcframework mode
- - Example app: Updated to React Native 0.85.3 (previous C++17 pod patch on iOS is removed)
+ - Example app: Updated to React Native 0.85.x (previous C++17 pod patch on iOS is removed)
 
 -2.6.3
  - iOS: Fixed module header resolution for tealium-react-native podspec (Xcode 26 compatibility)
