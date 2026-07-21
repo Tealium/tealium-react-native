@@ -4,6 +4,12 @@ This repository contains the necessary assets for exposing Tealium's native [And
 
 You can also find a example application demonstrating how everything is put together and how the API gets called in JavaScript.
 
+### Requirements
+
+- React Native 0.76.0 or later (React 18.2+)
+- iOS 15.1 or later
+- Android API level 24 or later
+
 ### Example App Instructions
 
 In order to run the example application, follow these steps using [yarn](https://yarnpkg.com/package/react-native):
