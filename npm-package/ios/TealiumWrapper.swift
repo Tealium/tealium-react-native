@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import React
 
 @objc(TealiumWrapper)
 class TealiumWrapper: NSObject {

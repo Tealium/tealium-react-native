@@ -35,6 +35,7 @@ Temporary Items
 build/
 .idea
 .gradle
+.settings
 **/.gradle
 local.properties
 *.iml
@@ -43,5 +44,10 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
+
+# Firebase
 google-services.json
 GoogleService-Info.plist
+
+# VS Code
+.vscode/

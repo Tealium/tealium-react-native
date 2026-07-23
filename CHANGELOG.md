@@ -4,6 +4,11 @@
 
 [Full documentation](https://docs.tealium.com/platforms/react-native/install/)
 
+-2.7.0
+ - Raised the minimum supported React Native version to 0.76.0 for the core package and all modules and remote commands (`peerDependencies`). This also requires React 18.2+, iOS 15.1+, and Android minSdk 24 (Braze remote command remains minSdk 25).
+ - iOS: Added `import React` to Swift native modules for compatibility with React Native 0.84+ prebuilt xcframework mode
+ - Example app: Updated to React Native 0.85.x (previous C++17 pod patch on iOS is removed)
+
 -2.6.3
  - iOS: Fixed module header resolution for tealium-react-native podspec (Xcode 26 compatibility)
  - iOS Example app: Fixed Xcode 26 compile error in fmt pod by enforcing C++17 language standard (main package not affected)

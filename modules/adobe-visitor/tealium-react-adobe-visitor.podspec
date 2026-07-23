@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.homepage = "https://github.com/Tealium/tealium-react-native/modules/adobe-visitor"
   s.license = { :type => "Commercial", :file => "LICENSE" }
   s.authors = { "Tyler Rister" => "tyler.rister@tealium.com" }
-  s.platforms = { :ios => "12.0" }
+  s.platforms = { :ios => "15.1" }
   s.source = { :git => "https://github.com/Tealium/tealium-react-native.git", :tag => "#{s.version}" }
   s.source_files = "ios/**/*.{h,c,m,swift}"
   s.requires_arc = true
